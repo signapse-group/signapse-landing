@@ -1,0 +1,85 @@
+---
+import { Logo } from '@/components/logo';
+import type { Locale } from '@/i18n/config';
+import type { Dictionary } from '@/i18n/messages';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { REQUEST_ACCESS_HREF, type LandingAccessModel } from './landing-access';
+import styles from './landing-page.module.css';
+
+interface Props {
+  access: LandingAccessModel;
+  dictionary: Dictionary;
+  locale: Locale;
+}
+
+const { access, dictionary, locale } = Astro.props;
+const t = dictionary.landing;
+const productLinks = [
+  ['#knowledge-graph', t.footer.productMarketView],
+  ['#live-charts', t.footer.productImpact],
+  ['#ai-assistant', t.footer.productAi],
+  ['#telegram', t.footer.productTelegram],
+  ['#strategy-coding', t.footer.productStrategy],
+];
+---
+
+<footer
+  data-landing-part="footer"
+  data-landing-surface="dark"
+  class={`${styles.darkSurface} bg-background`}
+>
+  <div class="mx-auto grid w-full max-w-7xl gap-10 px-4 py-12 sm:grid-cols-2 sm:px-6 lg:grid-cols-[minmax(0,1.3fr)_minmax(10rem,0.7fr)_minmax(10rem,0.7fr)] lg:px-8">
+    <div class="flex max-w-md flex-col gap-4">
+      <a
+        href={getRelativeLocaleUrl(locale)}
+        aria-label={t.footer.brandLabel}
+        class="flex w-fit items-center gap-3 rounded-md font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+      >
+        <span aria-hidden="true">
+          <Logo width={28} height={28} colorScheme="dark" />
+        </span>
+        <span>{dictionary.common.appName}</span>
+      </a>
+      <p class="text-sm leading-6 text-muted-foreground">
+        {t.footer.description}
+      </p>
+    </div>
+    <nav
+      aria-label={t.accessibility.footerNavigation}
+      class="flex flex-col items-start gap-3 text-sm"
+    >
+      <p class="font-semibold text-foreground">{t.footer.productHeading}</p>
+      {productLinks.map(([href, label]) => (
+        <a href={href} class="text-muted-foreground hover:text-foreground">
+          {label}
+        </a>
+      ))}
+    </nav>
+    <nav
+      aria-label={t.footer.contactHeading}
+      class="flex flex-col items-start gap-3 text-sm"
+    >
+      <p class="font-semibold text-foreground">{t.footer.contactHeading}</p>
+      <a href="#access" class="text-muted-foreground hover:text-foreground">
+        {t.footer.demo}
+      </a>
+      <a
+        href={access.footerAppEntry.href}
+        aria-label={access.footerAppEntry.ariaLabel}
+        class="text-muted-foreground hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+      >
+        {access.footerAppEntry.label}
+      </a>
+      <a
+        href={REQUEST_ACCESS_HREF}
+        class="font-mono text-xs text-muted-foreground hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+      >
+        {t.footer.requestAccessEmail}
+      </a>
+    </nav>
+  </div>
+  <div class="mx-auto flex w-full max-w-7xl flex-col gap-2 border-t border-border px-4 py-5 text-xs text-muted-foreground sm:flex-row sm:justify-between sm:px-6 lg:px-8">
+    <span>{t.footer.copyright}</span>
+    <span>{t.footer.disclaimer}</span>
+  </div>
+</footer>

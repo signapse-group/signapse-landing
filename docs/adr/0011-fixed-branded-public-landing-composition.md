@@ -4,12 +4,12 @@ status: accepted
 
 # Use a fixed branded composition for the public landing
 
-The public Signapse landing will render a route-scoped fixed navy-and-mint composition instead of inheriting the protected application's light/dark palette. It uses the approved Signapse palette with dark header, Hero, final CTA, and footer surfaces plus off-white content surfaces; it leaves global tokens and the visitor's stored dashboard theme preference unchanged. This supersedes the landing-specific theme-parity guidance while preserving the Hero figure's geometry, interaction, accessibility, lifecycle, and performance decisions from ADR-0010.
+The landing owns a fixed navy/mint/white composition through src/components/landing/landing-page.module.css. Dark surfaces belong to header, Hero, Audience, final CTA and footer; showcase and provider sections use the light family. Palette, typography and assets in this Astro repository are the source of truth.
 
 ## Consequences
 
-- Landing descendants resolve semantic colors from their route-local palette owner, so changing or persisting the application theme does not recolor the public landing.
-- The landing logo and Hero renderer must choose colors from the landing surface/palette rather than the document's `.dark` class.
-- Product demos render from code using route-local frames and landing tokens. Product screenshots and their fallback catalog were retired on 2026-10-02.
-- The dashboard and shared Nova wrappers retain their existing neutral light/dark behavior.
-- Automated landing tests must cover both global theme settings, preference preservation, palette isolation, and the existing responsive/accessibility/figure contracts. Final WebGL visual review remains a user-owned preview check.
+- Landing descendants and portalled capability popovers resolve colors from their local palette owner. OS or document dark mode does not change the composition; stored theme preference is not read or modified.
+- Logo variants and Three.js colors follow the section surface, not a dashboard provider.
+- Font configuration is self-hosted in src/styles/fonts.css. Tokens and UI primitive chrome are maintained locally with the approved layout and responsive behavior.
+- Product proofs use DOM/SVG code and localized fixtures. Runtime media contains brand/provider/icon/font/social assets only.
+- Verification covers palette isolation, responsive layout, keyboard/touch controls, code fallbacks and the [progressive WebGL contract](0010-use-progressive-webgl-for-landing-context-figure.md).

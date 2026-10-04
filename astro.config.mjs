@@ -24,7 +24,7 @@ export default defineConfig({
       PUBLIC_APP_ORIGIN: envField.string({
         context: 'client',
         access: 'public',
-        optional: true,
+        default: 'http://localhost:3000',
       }),
       SIGNAPSE_PUBLIC_ORIGIN: envField.string({
         context: 'server',
@@ -32,6 +32,11 @@ export default defineConfig({
         optional: true,
       }),
       SIGNAPSE_LANDING_INDEXABLE: envField.boolean({
+        context: 'server',
+        access: 'public',
+        default: false,
+      }),
+      SIGNAPSE_VERCEL_ANALYTICS: envField.boolean({
         context: 'server',
         access: 'public',
         default: false,

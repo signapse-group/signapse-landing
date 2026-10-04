@@ -1,0 +1,101 @@
+---
+import styles from './landing-page.module.css';
+
+interface Props {
+  label: string;
+}
+
+const { label } = Astro.props;
+const providers = [
+  { name: 'OpenAI', logo: '/images/providers/openai.svg', paint: '#0d0d0d' },
+  {
+    name: 'Gemini',
+    logo: '/images/providers/gemini.svg',
+    paint: 'linear-gradient(135deg, #078efb 12%, #a855f7 54%, #ea80b0 88%)',
+  },
+  {
+    name: 'Anthropic',
+    logo: '/images/providers/anthropic.svg',
+    paint: '#d97757',
+  },
+  {
+    name: 'DeepSeek',
+    logo: '/images/providers/deepseek.svg',
+    paint: '#4d6bfe',
+  },
+  { name: 'Groq', logo: '/images/providers/groq.svg', paint: '#f55036' },
+  { name: 'Z.AI', logo: '/images/providers/zai.svg', paint: '#0d0d0d' },
+] as const;
+---
+
+<div class={styles.providerRail}>
+  <div
+    class={styles.providerMarquee}
+    role="region"
+    tabindex="0"
+    aria-label={label}
+    data-provider-marquee
+  >
+    <div class={styles.providerTrack}>
+      {[false, true].map((isDuplicate) => (
+        <ul
+          aria-label={isDuplicate ? undefined : label}
+          aria-hidden={isDuplicate || undefined}
+          class={styles.providerList}
+        >
+          {providers.map((provider) => (
+            <li
+              data-provider-item={isDuplicate ? undefined : provider.name}
+              class={styles.providerItem}
+            >
+              <span
+                aria-hidden="true"
+                data-provider-logo={provider.name}
+                class={styles.providerLogo}
+                style={{
+                  '--provider-logo': `url(${provider.logo})`,
+                  '--provider-paint': provider.paint,
+                }}
+              />
+              <span>{provider.name}</span>
+            </li>
+          ))}
+        </ul>
+      ))}
+    </div>
+  </div>
+</div>
+
+<script>
+  const marquee = document.querySelector<HTMLElement>(
+    '[data-provider-marquee]',
+  );
+  if (marquee) {
+    let visible = false;
+    let observer: IntersectionObserver | null = null;
+    const update = () => {
+      marquee.dataset.marqueePaused = String(!visible || document.hidden);
+    };
+    const start = () => {
+      observer?.disconnect();
+      if (typeof IntersectionObserver !== 'undefined') {
+        observer = new IntersectionObserver(([entry]) => {
+          visible = entry.isIntersecting;
+          update();
+        });
+        observer.observe(marquee);
+      }
+      update();
+      document.addEventListener('visibilitychange', update);
+    };
+    const cleanUp = () => {
+      observer?.disconnect();
+      document.removeEventListener('visibilitychange', update);
+    };
+    start();
+    window.addEventListener('pagehide', cleanUp);
+    window.addEventListener('pageshow', (event) => {
+      if (event.persisted) start();
+    });
+  }
+</script>

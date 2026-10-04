@@ -1,13 +1,27 @@
 ---
 import type { Locale } from '@/i18n/config';
+import { SIGNAPSE_VERCEL_ANALYTICS } from 'astro:env/server';
+import Analytics from '@vercel/analytics/astro';
+import SpeedInsights from '@vercel/speed-insights/astro';
+import { landingMetadata } from '@/lib/landing-metadata';
 import '@/styles/global.css';
 
 interface Props {
   locale: Locale;
   title: string;
+  description: string;
+  socialImageAlt: string;
+  root?: boolean;
 }
 
-const { locale, title } = Astro.props;
+const {
+  locale,
+  title,
+  description,
+  socialImageAlt,
+  root = false,
+} = Astro.props;
+const metadata = landingMetadata(locale, root);
 ---
 
 <!doctype html>
@@ -15,10 +29,39 @@ const { locale, title } = Astro.props;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content="noindex, follow" />
+    <meta name="robots" content={metadata.robots} />
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    {metadata.canonical && <link rel="canonical" href={metadata.canonical} />}
+    {metadata.alternates.map(({ language, href }) => (
+      <link rel="alternate" hreflang={language} href={href} />
+    ))}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Signapse" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content={locale === 'vi' ? 'vi_VN' : 'en_US'} />
+    {metadata.canonical && (
+      <meta property="og:url" content={metadata.canonical} />
+    )}
+    <meta property="og:image" content={metadata.socialImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={socialImageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={metadata.socialImage} />
+    <meta name="twitter:image:alt" content={socialImageAlt} />
   </head>
-  <body class="min-h-svh bg-slate-50 font-sans text-slate-900 antialiased">
+  <body class="min-h-svh font-sans antialiased">
     <slot />
+    {SIGNAPSE_VERCEL_ANALYTICS && (
+      <>
+        <Analytics />
+        <SpeedInsights />
+      </>
+    )}
   </body>
 </html>

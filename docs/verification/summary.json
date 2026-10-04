@@ -1,0 +1,70 @@
+{
+  "repository": "signapse-landing",
+  "verifiedAt": "2026-10-04T16:57:32.371Z",
+  "timezone": "Asia/Ho_Chi_Minh",
+  "authority": "Current accepted Astro implementation, local design contract, source, assets and tests.",
+  "gates": {
+    "check": {
+      "files": 53,
+      "errors": 0,
+      "warnings": 0,
+      "hints": 0
+    },
+    "lint": "passed",
+    "format": "passed",
+    "build": "passed; static /, /vi, /en; dynamic Three chunk size warning"
+  },
+  "tests": {
+    "models": {
+      "passed": 14,
+      "suites": 4,
+      "failed": 0
+    },
+    "browser": {
+      "startTime": "2026-10-04T16:52:22.895Z",
+      "duration": 215745.028,
+      "expected": 31,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  },
+  "screenshots": {
+    "report": "preview/results.json",
+    "preview": 30,
+    "failures": []
+  },
+  "cleanup": {
+    "report": "cleanup-audit.json",
+    "retainedCopyValues": 716,
+    "changedCopyValues": [],
+    "removedUnusedCopyKeys": 34,
+    "assetsChecked": 26,
+    "changedAssetFiles": [
+      "public/fonts/NOTICE.txt"
+    ],
+    "documentsChecked": 9,
+    "localLinksChecked": 49,
+    "brokenDocumentLinks": []
+  },
+  "preview": {
+    "vi": "http://127.0.0.1:4321/vi",
+    "en": "http://127.0.0.1:4321/en",
+    "robots": "noindex, follow",
+    "canonical": null,
+    "appOrigin": "http://localhost:3000",
+    "analytics": false
+  },
+  "retainedEvidence": [
+    "environment-policy.json",
+    "native-visibility.json",
+    "preview/boundary-1024.json",
+    "preview/theme-isolation.json"
+  ],
+  "limitations": [
+    "Native background tab/GPU throttling could not be proven: automation document remains visible; controlled visibilitychange pause/resume passed.",
+    "Zoom and touch use browser emulation; no claim of every physical device.",
+    "Application navigation destinations intercepted; auth/backend/Articles destination behavior belongs to the product application.",
+    "Hosting request-language negotiation, domain redirects, analytics ingestion, hosted CI and deployment not performed."
+  ]
+}

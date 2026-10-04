@@ -1,0 +1,579 @@
+{
+  "repository": "signapse-landing",
+  "origin": "http://127.0.0.1:4321",
+  "capturedAt": "2026-10-04T16:52:23.269Z",
+  "captures": [
+    {
+      "file": "vi-desktop-hero.png",
+      "lang": "vi",
+      "title": "Signapse | Market Intelligence Platform",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": false,
+      "showcase": "true",
+      "context": {
+        "contextStage": "interactive",
+        "contextMode": "graph",
+        "enhanced": "true",
+        "rendererState": "ready",
+        "dragging": "false"
+      },
+      "activeDemo": "knowledge-graph"
+    },
+    {
+      "file": "vi-desktop-full.png",
+      "lang": "vi",
+      "title": "Signapse | Market Intelligence Platform",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": false,
+      "showcase": "true",
+      "context": {
+        "contextStage": "interactive",
+        "contextMode": "graph",
+        "enhanced": "true",
+        "rendererState": "ready",
+        "dragging": "false"
+      },
+      "activeDemo": "knowledge-graph"
+    },
+    {
+      "file": "vi-desktop-knowledge-graph.png",
+      "lang": "vi",
+      "title": "Signapse | Market Intelligence Platform",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": false,
+      "showcase": "true",
+      "context": {
+        "contextStage": "interactive",
+        "contextMode": "graph",
+        "enhanced": "true",
+        "rendererState": "ready",
+        "dragging": "false"
+      },
+      "activeDemo": "knowledge-graph"
+    },
+    {
+      "file": "vi-desktop-market-chart.png",
+      "lang": "vi",
+      "title": "Signapse | Market Intelligence Platform",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": false,
+      "showcase": "true",
+      "context": {
+        "contextStage": "interactive",
+        "contextMode": "graph",
+        "enhanced": "true",
+        "rendererState": "ready",
+        "dragging": "false"
+      },
+      "activeDemo": "market-chart"
+    },
+    {
+      "file": "vi-desktop-ai-conversation.png",
+      "lang": "vi",
+      "title": "Signapse | Market Intelligence Platform",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": false,
+      "showcase": "true",
+      "context": {
+        "contextStage": "interactive",
+        "contextMode": "graph",
+        "enhanced": "true",
+        "rendererState": "ready",
+        "dragging": "false"
+      },
+      "activeDemo": "ai-conversation"
+    },
+    {
+      "file": "vi-desktop-scheduled-telegram.png",
+      "lang": "vi",
+      "title": "Signapse | Market Intelligence Platform",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": false,
+      "showcase": "true",
+      "context": {
+        "contextStage": "interactive",
+        "contextMode": "graph",
+        "enhanced": "true",
+        "rendererState": "ready",
+        "dragging": "false"
+      },
+      "activeDemo": "scheduled-telegram"
+    },
+    {
+      "file": "vi-desktop-capability-keyboard.png",
+      "lang": "vi",
+      "title": "Signapse | Market Intelligence Platform",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": false,
+      "showcase": "true",
+      "context": {
+        "contextStage": "interactive",
+        "contextMode": "graph",
+        "enhanced": "true",
+        "rendererState": "ready",
+        "dragging": "false"
+      },
+      "activeDemo": "scheduled-telegram"
+    },
+    {
+      "file": "vi-tablet-hero.png",
+      "lang": "vi",
+      "title": "Signapse | Market Intelligence Platform",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "overflow": false,
+      "showcase": "false",
+      "context": {
+        "contextStage": "interactive",
+        "contextMode": "graph",
+        "enhanced": "true",
+        "rendererState": "ready",
+        "dragging": "false"
+      },
+      "activeDemo": "knowledge-graph"
+    },
+    {
+      "file": "vi-tablet-full.png",
+      "lang": "vi",
+      "title": "Signapse | Market Intelligence Platform",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "overflow": false,
+      "showcase": "false",
+      "context": {
+        "contextStage": "interactive",
+        "contextMode": "graph",
+        "enhanced": "true",
+        "rendererState": "ready",
+        "dragging": "false"
+      },
+      "activeDemo": "knowledge-graph"
+    },
+    {
+      "file": "vi-mobile-hero.png",
+      "lang": "vi",
+      "title": "Signapse | Market Intelligence Platform",
+      "viewport": {
+        "width": 375,
+        "height": 800
+      },
+      "overflow": false,
+      "showcase": "false",
+      "context": {
+        "contextStage": "interactive",
+        "contextMode": "graph",
+        "enhanced": "true",
+        "rendererState": "ready",
+        "dragging": "false"
+      },
+      "activeDemo": "knowledge-graph"
+    },
+    {
+      "file": "vi-mobile-full.png",
+      "lang": "vi",
+      "title": "Signapse | Market Intelligence Platform",
+      "viewport": {
+        "width": 375,
+        "height": 800
+      },
+      "overflow": false,
+      "showcase": "false",
+      "context": {
+        "contextStage": "interactive",
+        "contextMode": "graph",
+        "enhanced": "true",
+        "rendererState": "ready",
+        "dragging": "false"
+      },
+      "activeDemo": "knowledge-graph"
+    },
+    {
+      "file": "vi-mobile-navigation.png",
+      "lang": "vi",
+      "title": "Signapse | Market Intelligence Platform",
+      "viewport": {
+        "width": 375,
+        "height": 800
+      },
+      "overflow": false,
+      "showcase": "false",
+      "context": {
+        "contextStage": "interactive",
+        "contextMode": "graph",
+        "enhanced": "true",
+        "rendererState": "ready",
+        "dragging": "false"
+      },
+      "activeDemo": "knowledge-graph"
+    },
+    {
+      "file": "vi-short-hero.png",
+      "lang": "vi",
+      "title": "Signapse | Market Intelligence Platform",
+      "viewport": {
+        "width": 1440,
+        "height": 620
+      },
+      "overflow": false,
+      "showcase": "true",
+      "context": {
+        "contextStage": "interactive",
+        "contextMode": "graph",
+        "enhanced": "true",
+        "rendererState": "ready",
+        "dragging": "false"
+      },
+      "activeDemo": "knowledge-graph"
+    },
+    {
+      "file": "vi-short-full.png",
+      "lang": "vi",
+      "title": "Signapse | Market Intelligence Platform",
+      "viewport": {
+        "width": 1440,
+        "height": 620
+      },
+      "overflow": false,
+      "showcase": "true",
+      "context": {
+        "contextStage": "interactive",
+        "contextMode": "graph",
+        "enhanced": "true",
+        "rendererState": "ready",
+        "dragging": "false"
+      },
+      "activeDemo": "knowledge-graph"
+    },
+    {
+      "file": "vi-nojs-full.png",
+      "lang": "vi",
+      "title": "Signapse | Market Intelligence Platform",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": false,
+      "showcase": "false",
+      "context": {
+        "contextStage": "interactive",
+        "contextMode": "graph",
+        "enhanced": "false",
+        "rendererState": "loading",
+        "dragging": "false"
+      },
+      "activeDemo": "knowledge-graph"
+    },
+    {
+      "file": "en-desktop-hero.png",
+      "lang": "en",
+      "title": "Signapse | Market Intelligence Platform",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": false,
+      "showcase": "true",
+      "context": {
+        "contextStage": "interactive",
+        "contextMode": "graph",
+        "enhanced": "true",
+        "rendererState": "ready",
+        "dragging": "false"
+      },
+      "activeDemo": "knowledge-graph"
+    },
+    {
+      "file": "en-desktop-full.png",
+      "lang": "en",
+      "title": "Signapse | Market Intelligence Platform",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": false,
+      "showcase": "true",
+      "context": {
+        "contextStage": "interactive",
+        "contextMode": "graph",
+        "enhanced": "true",
+        "rendererState": "ready",
+        "dragging": "false"
+      },
+      "activeDemo": "knowledge-graph"
+    },
+    {
+      "file": "en-desktop-knowledge-graph.png",
+      "lang": "en",
+      "title": "Signapse | Market Intelligence Platform",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": false,
+      "showcase": "true",
+      "context": {
+        "contextStage": "interactive",
+        "contextMode": "graph",
+        "enhanced": "true",
+        "rendererState": "ready",
+        "dragging": "false"
+      },
+      "activeDemo": "knowledge-graph"
+    },
+    {
+      "file": "en-desktop-market-chart.png",
+      "lang": "en",
+      "title": "Signapse | Market Intelligence Platform",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": false,
+      "showcase": "true",
+      "context": {
+        "contextStage": "interactive",
+        "contextMode": "graph",
+        "enhanced": "true",
+        "rendererState": "ready",
+        "dragging": "false"
+      },
+      "activeDemo": "market-chart"
+    },
+    {
+      "file": "en-desktop-ai-conversation.png",
+      "lang": "en",
+      "title": "Signapse | Market Intelligence Platform",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": false,
+      "showcase": "true",
+      "context": {
+        "contextStage": "interactive",
+        "contextMode": "graph",
+        "enhanced": "true",
+        "rendererState": "ready",
+        "dragging": "false"
+      },
+      "activeDemo": "ai-conversation"
+    },
+    {
+      "file": "en-desktop-scheduled-telegram.png",
+      "lang": "en",
+      "title": "Signapse | Market Intelligence Platform",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": false,
+      "showcase": "true",
+      "context": {
+        "contextStage": "interactive",
+        "contextMode": "graph",
+        "enhanced": "true",
+        "rendererState": "ready",
+        "dragging": "false"
+      },
+      "activeDemo": "scheduled-telegram"
+    },
+    {
+      "file": "en-desktop-capability-keyboard.png",
+      "lang": "en",
+      "title": "Signapse | Market Intelligence Platform",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": false,
+      "showcase": "true",
+      "context": {
+        "contextStage": "interactive",
+        "contextMode": "graph",
+        "enhanced": "true",
+        "rendererState": "ready",
+        "dragging": "false"
+      },
+      "activeDemo": "scheduled-telegram"
+    },
+    {
+      "file": "en-tablet-hero.png",
+      "lang": "en",
+      "title": "Signapse | Market Intelligence Platform",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "overflow": false,
+      "showcase": "false",
+      "context": {
+        "contextStage": "interactive",
+        "contextMode": "graph",
+        "enhanced": "true",
+        "rendererState": "ready",
+        "dragging": "false"
+      },
+      "activeDemo": "knowledge-graph"
+    },
+    {
+      "file": "en-tablet-full.png",
+      "lang": "en",
+      "title": "Signapse | Market Intelligence Platform",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "overflow": false,
+      "showcase": "false",
+      "context": {
+        "contextStage": "interactive",
+        "contextMode": "graph",
+        "enhanced": "true",
+        "rendererState": "ready",
+        "dragging": "false"
+      },
+      "activeDemo": "knowledge-graph"
+    },
+    {
+      "file": "en-mobile-hero.png",
+      "lang": "en",
+      "title": "Signapse | Market Intelligence Platform",
+      "viewport": {
+        "width": 375,
+        "height": 800
+      },
+      "overflow": false,
+      "showcase": "false",
+      "context": {
+        "contextStage": "interactive",
+        "contextMode": "graph",
+        "enhanced": "true",
+        "rendererState": "ready",
+        "dragging": "false"
+      },
+      "activeDemo": "knowledge-graph"
+    },
+    {
+      "file": "en-mobile-full.png",
+      "lang": "en",
+      "title": "Signapse | Market Intelligence Platform",
+      "viewport": {
+        "width": 375,
+        "height": 800
+      },
+      "overflow": false,
+      "showcase": "false",
+      "context": {
+        "contextStage": "interactive",
+        "contextMode": "graph",
+        "enhanced": "true",
+        "rendererState": "ready",
+        "dragging": "false"
+      },
+      "activeDemo": "knowledge-graph"
+    },
+    {
+      "file": "en-mobile-navigation.png",
+      "lang": "en",
+      "title": "Signapse | Market Intelligence Platform",
+      "viewport": {
+        "width": 375,
+        "height": 800
+      },
+      "overflow": false,
+      "showcase": "false",
+      "context": {
+        "contextStage": "interactive",
+        "contextMode": "graph",
+        "enhanced": "true",
+        "rendererState": "ready",
+        "dragging": "false"
+      },
+      "activeDemo": "knowledge-graph"
+    },
+    {
+      "file": "en-short-hero.png",
+      "lang": "en",
+      "title": "Signapse | Market Intelligence Platform",
+      "viewport": {
+        "width": 1440,
+        "height": 620
+      },
+      "overflow": false,
+      "showcase": "true",
+      "context": {
+        "contextStage": "interactive",
+        "contextMode": "graph",
+        "enhanced": "true",
+        "rendererState": "ready",
+        "dragging": "false"
+      },
+      "activeDemo": "knowledge-graph"
+    },
+    {
+      "file": "en-short-full.png",
+      "lang": "en",
+      "title": "Signapse | Market Intelligence Platform",
+      "viewport": {
+        "width": 1440,
+        "height": 620
+      },
+      "overflow": false,
+      "showcase": "true",
+      "context": {
+        "contextStage": "interactive",
+        "contextMode": "graph",
+        "enhanced": "true",
+        "rendererState": "ready",
+        "dragging": "false"
+      },
+      "activeDemo": "knowledge-graph"
+    },
+    {
+      "file": "en-nojs-full.png",
+      "lang": "en",
+      "title": "Signapse | Market Intelligence Platform",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "overflow": false,
+      "showcase": "false",
+      "context": {
+        "contextStage": "interactive",
+        "contextMode": "graph",
+        "enhanced": "false",
+        "rendererState": "loading",
+        "dragging": "false"
+      },
+      "activeDemo": "knowledge-graph"
+    }
+  ],
+  "failures": [],
+  "browser": "145.0.7632.6"
+}

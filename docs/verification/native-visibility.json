@@ -1,0 +1,28 @@
+{
+  "browser": "154.0.4258.53",
+  "focusEmulation": false,
+  "visible": {
+    "hidden": false,
+    "state": "visible",
+    "running": "true",
+    "progress": "3.045"
+  },
+  "hidden": {
+    "hidden": false,
+    "state": "visible",
+    "running": "true",
+    "progress": "4.265"
+  },
+  "afterHidden": {
+    "hidden": false,
+    "state": "visible",
+    "running": "true",
+    "progress": "4.265"
+  },
+  "resumed": {
+    "hidden": false,
+    "state": "visible",
+    "running": "true",
+    "progress": "11.695"
+  }
+}
