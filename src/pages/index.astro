@@ -1,0 +1,35 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+
+import {
+  DEFAULT_LOCALE,
+  LOCALE_LABELS,
+  SUPPORTED_LOCALES,
+} from '@/i18n/config';
+import { messages } from '@/i18n/messages';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+const copy = messages[DEFAULT_LOCALE];
+---
+
+<BaseLayout locale={DEFAULT_LOCALE} title={copy.title}>
+  <main class="mx-auto flex min-h-svh max-w-2xl flex-col justify-center gap-6 p-6">
+    <p class="text-sm font-semibold tracking-wide">Signapse</p>
+    <h1 class="text-3xl font-semibold tracking-tight">
+      {copy.localeNavigation}
+    </h1>
+    <p class="leading-7 text-slate-600">{copy.chooseLocale}</p>
+    <nav aria-label={copy.localeNavigation} class="flex flex-wrap gap-3">
+      {SUPPORTED_LOCALES.map((locale) => (
+        <a
+          href={getRelativeLocaleUrl(locale)}
+          lang={locale}
+          hreflang={locale}
+          class="inline-flex min-h-11 items-center rounded-lg border border-slate-300 bg-white px-4 py-2 font-medium hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-slate-900"
+        >
+          {LOCALE_LABELS[locale]}
+        </a>
+      ))}
+    </nav>
+  </main>
+</BaseLayout>
