@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-05",
+  "kind": "local checks; not hosted CI or deployment",
+  "node": "24.21.0",
+  "pnpm": "10.34.5",
+  "wrangler": "4.143.0",
+  "applicationOrigin": "https://app.example.test (test fixture, intercepted navigation)",
+  "landingOrigin": "https://signapse.cloud",
+  "sourceChecks": [
+    "pnpm check",
+    "pnpm lint",
+    "pnpm format:check",
+    "pnpm build"
+  ],
+  "modelTests": {
+    "passed": 14,
+    "failed": 0
+  },
+  "productionBrowserTests": {
+    "startTime": "2026-10-05T09:21:16.263Z",
+    "duration": 229164.56699999998,
+    "expected": 31,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "releaseOriginValidation": {
+    "passed": 7
+  },
+  "cloudflareRoutingEvidence": "cloudflare-local-routing.json",
+  "hostedDeployment": false,
+  "previewMetadataTests": {
+    "startTime": "2026-10-05T09:31:23.645Z",
+    "duration": 19894.062,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "previewCommand": "pnpm test:browser --grep \"public shell|root is\"",
+  "wranglerDryRun": "passed, compatibility date 2026-10-03",
+  "frozenLockfile": "passed",
+  "workflowYaml": "parsed successfully",
+  "plannedApplicationOrigins": {
+    "preview": "https://dev.signapse.cloud",
+    "production": "https://dashboard.signapse.cloud"
+  },
+  "limits": [
+    "Application navigation intercepted, backend/auth not verified",
+    "Cloudflare token/account, hosted CI, DNS cutover and certificate not verified"
+  ]
+}

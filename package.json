@@ -17,7 +17,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "test:models": "node --experimental-strip-types --test tests/models/*.test.mjs",
-    "test:browser": "playwright test",
+    "test:browser": "node --env-file-if-exists=.env node_modules/@playwright/test/cli.js test",
     "test": "pnpm test:models && pnpm test:browser"
   },
   "dependencies": {
@@ -54,6 +54,7 @@
     "prettier": "3.9.9",
     "prettier-plugin-astro": "1.1.0",
     "typescript": "5.9.3",
-    "typescript-eslint": "8.71.0"
+    "typescript-eslint": "8.71.0",
+    "wrangler": "4.143.0"
   }
 }

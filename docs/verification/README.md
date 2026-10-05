@@ -15,10 +15,14 @@ Repo này là nguồn chuẩn của landing đã được người dùng xác nh
 | Theme             | [OS/class dark isolation](preview/theme-isolation.json)                                                           |
 | Env               | [Policy report](environment-policy.json): canonical/hreflang, indexable validation, app URLs và analytics default |
 | Runtime preview   | [Smoke](final-preview-smoke.json): root/VI/EN, robots và metadata                                                 |
+| Cloudflare release | [Local checks](cloudflare-release-local.json): source checks, 14 model tests, 31 browser tests production, 3 metadata tests preview và validation origins |
+| Cloudflare routing | [Wrangler local](cloudflare-local-routing.json): 10 endpoint checks, URL không slash cuối và 404 thật; không phải hosted deployment |
 | Cleanup           | [Audit](cleanup-audit.json): copy còn dùng giữ nguyên, bytes runtime assets giữ nguyên, liên kết tài liệu hợp lệ  |
 | Native visibility | [Diagnostic](native-visibility.json): giới hạn của automation khi đổi tab/window                                  |
 
 Model và browser tests assert hành vi thay vì dùng screenshot equality làm gate. Build có cảnh báo kích thước dynamic Three chunk; renderer chỉ được tải khi cần.
+
+Lượt chuẩn bị Cloudflare ngày 2026-10-05 dùng Node 24.21.0 / pnpm 10.34.5 / Wrangler 4.143.0, public origin `https://signapse.cloud` và application origin fixture `https://app.example.test`. Browser navigation vẫn intercept app; kết quả không xác nhận dev/dashboard backend. Wrangler config pin compatibility date 2026-10-03 phù hợp runtime local. Hướng dẫn release ở [deploy signapse.cloud](../deployment/signapse-cloud.md).
 
 ## Ma trận browser
 

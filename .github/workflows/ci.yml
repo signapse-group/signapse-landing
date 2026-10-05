@@ -3,17 +3,29 @@ name: Verify
 on:
   push:
   pull_request:
+  workflow_dispatch:
+    inputs:
+      indexable:
+        description: Allow indexing after signapse.cloud is connected
+        type: boolean
+        default: false
 
 permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name != 'workflow_dispatch' }}
 
 jobs:
   check:
+    if: github.event_name != 'workflow_dispatch' || github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    env:
+      PUBLIC_APP_ORIGIN: ${{ github.event_name != 'workflow_dispatch' && 'http://localhost:3000' || vars.PUBLIC_APP_ORIGIN }}
+      SIGNAPSE_PUBLIC_ORIGIN: ${{ github.event_name == 'workflow_dispatch' && vars.SIGNAPSE_PUBLIC_ORIGIN || '' }}
+      SIGNAPSE_LANDING_INDEXABLE: ${{ github.event_name == 'workflow_dispatch' && inputs.indexable && 'true' || 'false' }}
+      SIGNAPSE_VERCEL_ANALYTICS: 'false'
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -29,6 +41,18 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Validate deployment origins
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          node --input-type=module -e '
+            const app = new URL(process.env.PUBLIC_APP_ORIGIN);
+            const landing = new URL(process.env.SIGNAPSE_PUBLIC_ORIGIN);
+            if (app.protocol !== "https:" || app.origin === landing.origin || app.hostname === "www.signapse.cloud")
+              throw new Error("PUBLIC_APP_ORIGIN must be a separate HTTPS application origin.");
+            if (landing.origin !== "https://signapse.cloud")
+              throw new Error("Set SIGNAPSE_PUBLIC_ORIGIN to https://signapse.cloud in GitHub Variables.");
+          '
 
       - name: Check types
         run: pnpm check
@@ -50,3 +74,10 @@ jobs:
 
       - name: Verify production preview in browser
         run: pnpm test:browser
+
+      - name: Deploy verified static output to Cloudflare
+        if: github.event_name == 'workflow_dispatch'
+        run: pnpm exec wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

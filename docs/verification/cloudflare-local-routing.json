@@ -1,0 +1,79 @@
+{
+  "date": "2026-10-05",
+  "kind": "local Wrangler server, not hosted deployment",
+  "compatibilityDate": "2026-10-03",
+  "landingOrigin": "https://signapse.cloud",
+  "applicationOrigin": "https://app.example.test (test fixture)",
+  "routes": [
+    {
+      "path": "/",
+      "status": 200,
+      "location": null,
+      "robots": "noindex, follow",
+      "canonical": "https://signapse.cloud/vi"
+    },
+    {
+      "path": "/vi",
+      "status": 200,
+      "location": null,
+      "robots": "index, follow",
+      "canonical": "https://signapse.cloud/vi"
+    },
+    {
+      "path": "/en",
+      "status": 200,
+      "location": null,
+      "robots": "index, follow",
+      "canonical": "https://signapse.cloud/en"
+    },
+    {
+      "path": "/vi/",
+      "status": 307,
+      "location": "/vi",
+      "robots": null,
+      "canonical": null
+    },
+    {
+      "path": "/en/",
+      "status": 307,
+      "location": "/en",
+      "robots": null,
+      "canonical": null
+    },
+    {
+      "path": "/fr",
+      "status": 404,
+      "location": null,
+      "robots": null,
+      "canonical": null
+    },
+    {
+      "path": "/does-not-exist",
+      "status": 404,
+      "location": null,
+      "robots": null,
+      "canonical": null
+    },
+    {
+      "path": "/vi/dashboard",
+      "status": 404,
+      "location": null,
+      "robots": null,
+      "canonical": null
+    },
+    {
+      "path": "/favicon.svg",
+      "status": 200,
+      "location": null,
+      "robots": null,
+      "canonical": null
+    },
+    {
+      "path": "/social/vi.png",
+      "status": 200,
+      "location": null,
+      "robots": null,
+      "canonical": null
+    }
+  ]
+}

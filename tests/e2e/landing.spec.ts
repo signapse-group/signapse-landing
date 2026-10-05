@@ -27,6 +27,8 @@ const appOrigin = new URL(
     process.env.PUBLIC_APP_ORIGIN ??
     'http://localhost:3000',
 ).origin;
+const indexable = process.env.SIGNAPSE_LANDING_INDEXABLE === 'true';
+const publicOrigin = process.env.SIGNAPSE_PUBLIC_ORIGIN;
 
 async function ready(page: Page, locale: 'vi' | 'en' = 'vi', suffix = '') {
   await page.goto(`/${locale}${suffix}`);
@@ -82,8 +84,26 @@ for (const locale of ['vi', 'en'] as const) {
     );
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
       'content',
-      /noindex/,
+      indexable ? 'index, follow' : 'noindex, follow',
     );
+    if (publicOrigin) {
+      const origin = new URL(publicOrigin).origin;
+      await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+        'href',
+        `${origin}/${locale}`,
+      );
+      for (const language of ['vi', 'en']) {
+        await expect(
+          page.locator(`link[rel="alternate"][hreflang="${language}"]`),
+        ).toHaveAttribute('href', `${origin}/${language}`);
+      }
+      await expect(
+        page.locator('link[rel="alternate"][hreflang="x-default"]'),
+      ).toHaveAttribute('href', `${origin}/`);
+    } else {
+      await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
+      await expect(page.locator('link[rel="alternate"]')).toHaveCount(0);
+    }
     await expect(page.locator('meta[name="description"]')).toHaveAttribute(
       'content',
       locale === 'vi'

@@ -8,6 +8,8 @@ Repository Astro này là **source of truth** của landing: code, copy VI/EN, b
 | [Landing contract](design/LANDING.md)                                     | Bố cục, nội dung, navigation, demo, responsive và accessibility hiện hành. |
 | [Architecture](architecture.md)                                           | Ownership theo file, hydration, playback, renderer và assets.              |
 | [Verification](verification/README.md)                                    | Ma trận kiểm tra trên Astro, lệnh tái tạo và bằng chứng hiện tại.          |
+| [Cloudflare deployment research](deployment/cloudflare.md)                | Đề xuất hosting, CI, môi trường, domain cutover và giới hạn kiểm chứng.   |
+| [Deploy signapse.cloud](deployment/signapse-cloud.md)                     | Các bước cấu hình GitHub, deploy Workers, nối domain và bật indexing.    |
 | [ADR-0005](adr/0005-static-landing-and-explicit-hosting-configuration.md) | Ranh giới static output, canonical/indexability và hosting.                |
 | [ADR-0010](adr/0010-use-progressive-webgl-for-landing-context-figure.md)  | WebGL progressive enhancement với SVG fallback và lifecycle.               |
 | [ADR-0011](adr/0011-fixed-branded-public-landing-composition.md)          | Palette landing cố định và ownership tokens.                               |

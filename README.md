@@ -39,13 +39,19 @@ Hero “Liên hệ” dẫn tới `#access`; footer giữ mailto `access@signaps
 
 Request-language negotiation và domain redirects cần cấu hình tại hosting. Hosted CI và deployment được kiểm chứng trong quy trình release; production preview chỉ kiểm chứng output static.
 
+## Deploy signapse.cloud
+
+Landing dùng Cloudflare Workers Static Assets với `wrangler.jsonc`. Workflow **Verify** giữ checks cho push/PR và có nút **Run workflow** trên `main` để kiểm tra rồi deploy cùng `dist/`. Lần đầu giữ `indexable=false`, nối Custom Domain, sau đó deploy lại với `indexable=true`. Origins lưu trong GitHub Variables, Cloudflare token/account ID lưu trong GitHub Secrets.
+
+Làm theo [hướng dẫn deploy signapse.cloud](docs/deployment/signapse-cloud.md). [Bản nghiên cứu](docs/deployment/cloudflare.md) giải thích lựa chọn hosting và các giới hạn. Bật indexing không đổi root `/`: root tiếp tục là landing VI noindex.
+
 ## Kiểm tra
 
 | Lệnh                | Mục đích                                                                                          |
 | ------------------- | ------------------------------------------------------------------------------------------------- |
 | `pnpm check`        | Astro / strict TypeScript                                                                         |
 | `pnpm lint`         | Source/config ESLint                                                                              |
-| `pnpm format:check` | Format source/config/test; loại docs và runtime assets                                            |
+| `pnpm format:check` | Format source/config/test; loại docs, runtime assets và local skills                              |
 | `pnpm format`       | Format cùng phạm vi                                                                               |
 | `pnpm build`        | Sinh output static `dist/`                                                                        |
 | `pnpm test:models`  | Invariants timeline Graph/Chart/AI/Telegram                                                       |
@@ -62,7 +68,7 @@ pnpm build
 pnpm test
 ```
 
-Playwright tự mở `pnpm preview` tại 4321 khi chưa có server. Có thể đổi port bằng `PLAYWRIGHT_PORT`; nếu build dùng origin app khác, đặt `PLAYWRIGHT_APP_ORIGIN` khớp env build. Navigation tests intercept đích dashboard/Articles để kiểm URL và locale mà không yêu cầu backend. Trace/report và kết quả JSON nằm trong ignored `test-results/`.
+Playwright tự mở `pnpm preview` tại 4321 khi chưa có server. CLI đọc ignored `.env`, với process env được ưu tiên; metadata assertions nhận chế độ indexability và public origin của build. Có thể đổi port bằng `PLAYWRIGHT_PORT`; nếu build dùng origin app khác, đặt `PLAYWRIGHT_APP_ORIGIN` khớp env build. Navigation tests intercept đích dashboard/Articles để kiểm URL và locale mà không yêu cầu backend. Trace/report và kết quả JSON nằm trong ignored `test-results/`.
 
 CI khai báo install frozen, check/lint/format/build, model tests và browser tests. [Verification](docs/verification/README.md) lưu kết quả và giới hạn của các lần chạy thực tế. Chụp lại ảnh của landing bằng `node docs/verification/capture-preview.mjs http://127.0.0.1:4321` khi production preview đang chạy; script dùng riêng repo này.
 

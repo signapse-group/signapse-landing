@@ -1,5 +1,7 @@
 .git/
+.agents/
 .astro/
+.wrangler/
 dist/
 node_modules/
 docs/
