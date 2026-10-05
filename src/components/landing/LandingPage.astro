@@ -1,0 +1,176 @@
+---
+import type { Locale } from '@/i18n/config';
+import type { Dictionary } from '@/i18n/messages';
+import LandingActionButton from './LandingActionButton.astro';
+import LandingFooter from './LandingFooter.astro';
+import LandingCurrencyBackground from './LandingCurrencyBackground.astro';
+import LandingProviderMarquee from './LandingProviderMarquee.astro';
+import { createLandingAccessModel } from './landing-access';
+import { LandingAudienceSection } from './landing-audience-section';
+import { LandingCapabilityStrip } from './landing-capability-strip';
+import { LandingContextFigure } from './landing-context-figure';
+import { LandingFeatureShowcase } from './landing-feature-showcase';
+import { LandingHeader } from './landing-header';
+import styles from './landing-page.module.css';
+
+interface Props {
+  dictionary: Dictionary;
+  locale: Locale;
+}
+
+const { dictionary, locale } = Astro.props;
+const t = dictionary.landing;
+const access = createLandingAccessModel(locale, t);
+---
+
+<div
+  data-landing-theme="fixed-signapse"
+  class={`${styles.landingRoot} min-h-svh overflow-x-clip bg-background text-foreground`}
+>
+  <a
+    href="#main-content"
+    class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-background focus:px-3 focus:py-2 focus:text-sm focus:font-medium focus:text-foreground focus:ring-2 focus:ring-ring"
+  >
+    {t.accessibility.skipToContent}
+  </a>
+  <LandingHeader
+    dictionary={dictionary}
+    locale={locale}
+    access={access}
+    client:load
+  />
+  <main id="main-content" tabindex="-1">
+    <section
+      id="top"
+      data-landing-section="hero-product-proof"
+      data-landing-surface="dark"
+      aria-labelledby="landing-hero-heading"
+      class={`${styles.darkSurface} ${styles.heroSection} relative flex min-h-svh flex-col overflow-hidden border-b border-border/80 bg-background`}
+    >
+      <LandingCurrencyBackground />
+      <div
+        class={`${styles.heroContent} mx-auto grid w-full max-w-[100rem] flex-1 gap-12 px-4 pt-[calc(var(--landing-header-height)+3.5rem)] pb-14 sm:px-6 sm:pt-[calc(var(--landing-header-height)+5rem)] sm:pb-20 lg:grid-cols-[minmax(0,0.88fr)_minmax(32rem,1.12fr)] lg:items-center lg:gap-16 lg:px-8 lg:pt-[calc(var(--landing-header-height)+2rem)] lg:pb-8`}
+      >
+        <div class={`${styles.heroCopy} flex min-w-0 flex-col gap-7`}>
+          <p class="text-xs font-semibold tracking-[0.18em] text-chart-1 uppercase">
+            {t.hero.eyebrow}
+          </p>
+          <div class="flex max-w-3xl flex-col gap-5">
+            <h1
+              id="landing-hero-heading"
+              class={`${styles.landingDisplayHeading} max-w-3xl text-4xl leading-[1.02] sm:text-6xl lg:text-7xl`}
+            >
+              {t.hero.title}
+            </h1>
+            <p class="max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
+              {t.hero.body}
+            </p>
+          </div>
+          <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <LandingActionButton
+              action={access.heroPrimary}
+              class={`${styles.sectionAction} w-full sm:w-auto`}
+              size="lg"
+            />
+          </div>
+          <dl class="max-w-xl border-l-2 border-chart-2 pl-4">
+            <div class="flex flex-col gap-1">
+              <dt class="text-sm font-semibold">{t.hero.proofOneTitle}</dt>
+              <dd class="text-sm leading-6 text-muted-foreground">
+                {t.hero.proofOneBody}
+              </dd>
+            </div>
+          </dl>
+        </div>
+        <div class={`${styles.heroVisual} flex min-w-0 flex-col gap-6`}>
+          <LandingContextFigure
+            labels={{
+              title: t.hero.contextFigureTitle,
+              description: t.hero.contextFigureDescription,
+              keyboardHint: t.hero.contextFigureKeyboardHint,
+              statusGraph: t.hero.contextFigureStatusGraph,
+              statusPrice: t.hero.contextFigureStatusPrice,
+              ready: t.hero.contextFigureReady,
+              fallback: t.hero.contextFigureFallback,
+            }}
+            client:idle
+          />
+        </div>
+      </div>
+      <LandingCapabilityStrip dictionary={dictionary} client:load />
+    </section>
+
+    <section
+      id="showcase"
+      data-landing-section="showcase"
+      data-landing-surface="light"
+      aria-label={t.showcase.tabListLabel}
+      class={`${styles.lightSurface} border-b border-border/80 bg-background`}
+    >
+      <div class="mx-auto w-full max-w-[100rem] px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+        <LandingFeatureShowcase
+          locale={locale}
+          labels={t.showcase}
+          client:idle
+        />
+      </div>
+    </section>
+
+    <LandingAudienceSection dictionary={dictionary} client:idle />
+
+    <section
+      id="trust"
+      data-landing-section="ai-providers"
+      data-landing-surface="light"
+      aria-labelledby="landing-provider-heading"
+      class={`${styles.lightSurface} border-b border-border/80 bg-background`}
+    >
+      <div class="mx-auto flex w-full max-w-[100rem] flex-col items-center gap-10 px-4 py-16 text-center sm:px-6 sm:py-24 lg:px-8">
+        <div class="flex max-w-3xl flex-col items-center gap-5">
+          <p class="text-xs font-semibold tracking-[0.18em] text-chart-1 uppercase">
+            {t.trust.eyebrow}
+          </p>
+          <h2
+            id="landing-provider-heading"
+            class={`${styles.landingDisplayHeading} text-3xl leading-tight sm:text-4xl`}
+          >
+            {t.trust.heading}
+          </h2>
+          <p class="leading-7 text-muted-foreground">{t.trust.body}</p>
+        </div>
+        <LandingProviderMarquee label={t.trust.providerListLabel} />
+      </div>
+    </section>
+
+    <section
+      id="access"
+      data-landing-section="final-access-cta"
+      data-landing-surface="dark"
+      aria-labelledby="landing-access-heading"
+      class={`${styles.darkSurface} border-b border-border/80 bg-background`}
+    >
+      <div class="mx-auto flex w-full max-w-[100rem] justify-center px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
+        <div class="flex max-w-3xl flex-col items-center gap-6 text-center">
+          <p class="text-xs font-semibold tracking-[0.18em] text-chart-1 uppercase">
+            {t.finalCta.accessLabel}
+          </p>
+          <h2
+            id="landing-access-heading"
+            class={`${styles.landingDisplayHeading} text-3xl leading-tight sm:text-4xl`}
+          >
+            {t.finalCta.heading}
+          </h2>
+          <p class="max-w-2xl leading-7 text-muted-foreground">
+            {t.finalCta.body}
+          </p>
+          <LandingActionButton
+            action={access.finalCta}
+            class={styles.sectionAction}
+            size="lg"
+          />
+        </div>
+      </div>
+    </section>
+  </main>
+  <LandingFooter dictionary={dictionary} locale={locale} access={access} />
+</div>

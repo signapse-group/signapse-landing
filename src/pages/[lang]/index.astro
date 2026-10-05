@@ -1,9 +1,8 @@
 ---
-import { getRelativeLocaleUrl } from 'astro:i18n';
-
-import { LOCALE_LABELS, SUPPORTED_LOCALES, type Locale } from '@/i18n/config';
+import { SUPPORTED_LOCALES, type Locale } from '@/i18n/config';
 import { messages } from '@/i18n/messages';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import LandingPage from '@/components/landing/LandingPage.astro';
 
 export function getStaticPaths() {
   return SUPPORTED_LOCALES.map((locale) => ({
@@ -15,34 +14,10 @@ export function getStaticPaths() {
 interface Props {
   locale: Locale;
 }
-
 const { locale } = Astro.props;
-const copy = messages[locale];
+const dictionary = messages[locale];
 ---
 
-<BaseLayout locale={locale} title={copy.title}>
-  <main class="mx-auto flex min-h-svh max-w-2xl flex-col justify-center gap-6 p-6">
-    <p class="text-sm font-semibold tracking-wide">Signapse</p>
-    <h1 class="text-3xl font-semibold tracking-tight">{copy.heading}</h1>
-    <p class="leading-7 text-slate-600">{copy.description}</p>
-    <nav aria-label={copy.localeNavigation} class="flex flex-wrap gap-3">
-      {SUPPORTED_LOCALES.map((targetLocale) => (
-        <a
-          href={getRelativeLocaleUrl(targetLocale)}
-          lang={targetLocale}
-          hreflang={targetLocale}
-          aria-current={targetLocale === locale ? 'page' : undefined}
-          class="inline-flex min-h-11 items-center rounded-lg border border-slate-300 bg-white px-4 py-2 font-medium hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-slate-900"
-        >
-          {LOCALE_LABELS[targetLocale]}
-        </a>
-      ))}
-    </nav>
-    <a
-      href="/"
-      class="w-fit rounded-sm text-sm underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-slate-900"
-    >
-      {copy.home}
-    </a>
-  </main>
+<BaseLayout locale={locale} {...dictionary.landing.metadata}>
+  <LandingPage dictionary={dictionary} locale={locale} />
 </BaseLayout>

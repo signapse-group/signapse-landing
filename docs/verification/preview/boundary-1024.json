@@ -1,0 +1,92 @@
+[
+  {
+    "locale": "vi",
+    "feature": "knowledge-graph",
+    "position": "sticky",
+    "rootOverflow": false,
+    "width": 608,
+    "height": 560,
+    "panels": []
+  },
+  {
+    "locale": "vi",
+    "feature": "market-chart",
+    "position": "sticky",
+    "rootOverflow": false,
+    "width": 608,
+    "height": 560,
+    "panels": []
+  },
+  {
+    "locale": "vi",
+    "feature": "ai-conversation",
+    "position": "sticky",
+    "rootOverflow": false,
+    "width": 608,
+    "height": 626.9375,
+    "panels": []
+  },
+  {
+    "locale": "vi",
+    "feature": "scheduled-telegram",
+    "position": "sticky",
+    "rootOverflow": false,
+    "width": 608,
+    "height": 562,
+    "panels": [
+      {
+        "scroll": 486,
+        "height": 486
+      },
+      {
+        "scroll": 486,
+        "height": 486
+      }
+    ]
+  },
+  {
+    "locale": "en",
+    "feature": "knowledge-graph",
+    "position": "sticky",
+    "rootOverflow": false,
+    "width": 608,
+    "height": 560,
+    "panels": []
+  },
+  {
+    "locale": "en",
+    "feature": "market-chart",
+    "position": "sticky",
+    "rootOverflow": false,
+    "width": 608,
+    "height": 560,
+    "panels": []
+  },
+  {
+    "locale": "en",
+    "feature": "ai-conversation",
+    "position": "sticky",
+    "rootOverflow": false,
+    "width": 608,
+    "height": 626.9375,
+    "panels": []
+  },
+  {
+    "locale": "en",
+    "feature": "scheduled-telegram",
+    "position": "sticky",
+    "rootOverflow": false,
+    "width": 608,
+    "height": 562,
+    "panels": [
+      {
+        "scroll": 486,
+        "height": 486
+      },
+      {
+        "scroll": 486,
+        "height": 486
+      }
+    ]
+  }
+]

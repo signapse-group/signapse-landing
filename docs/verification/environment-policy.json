@@ -1,0 +1,22 @@
+[
+  {
+    "case": "explicit preview origin and application origin",
+    "result": "passed",
+    "canonical": "https://landing.example.test/{locale}",
+    "dashboard": "https://app.example.test/{locale}/dashboard",
+    "articles": "https://app.example.test/{locale}/articles",
+    "robots": "noindex, follow"
+  },
+  {
+    "case": "indexable deployment without valid HTTPS origin",
+    "result": "passed: build correctly failed"
+  },
+  {
+    "case": "explicit HTTPS indexable origin",
+    "result": "passed: locales indexable with self canonical, root remains noindex; test build only, not deployment"
+  },
+  {
+    "case": "restored standalone default preview",
+    "result": "passed: all three pages noindex, no guessed canonical, analytics disabled, application links localhost:3000"
+  }
+]

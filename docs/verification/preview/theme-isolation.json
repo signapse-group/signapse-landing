@@ -1,0 +1,26 @@
+{
+  "light": [
+    {
+      "background": "rgb(255, 255, 255)",
+      "color": "rgb(23, 33, 43)",
+      "border": "oklch(0.145 0 0 / 0.1)"
+    }
+  ],
+  "osDark": [
+    {
+      "background": "rgb(255, 255, 255)",
+      "color": "rgb(23, 33, 43)",
+      "border": "oklch(0.145 0 0 / 0.1)"
+    }
+  ],
+  "classDark": [
+    {
+      "background": "rgb(255, 255, 255)",
+      "color": "rgb(23, 33, 43)",
+      "border": "oklch(0.145 0 0 / 0.1)"
+    }
+  ],
+  "osPaletteEqual": true,
+  "classPaletteEqual": true,
+  "errors": []
+}

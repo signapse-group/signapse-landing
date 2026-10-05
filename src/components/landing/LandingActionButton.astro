@@ -1,0 +1,20 @@
+---
+import { ArrowRightIcon } from 'lucide-react';
+
+import { buttonVariants } from '@/components/ui/button';
+import type { LandingAccessAction } from './landing-access';
+
+interface Props {
+  action: LandingAccessAction;
+  class?: string;
+  size?: 'default' | 'lg';
+}
+
+const { action, class: className, size = 'default' } = Astro.props;
+const classes = buttonVariants({ variant: 'default', size, className });
+---
+
+<a href={action.href} aria-label={action.ariaLabel} class={classes}>
+  {action.label}
+  <ArrowRightIcon data-icon="inline-end" aria-hidden="true" />
+</a>

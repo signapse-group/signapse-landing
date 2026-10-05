@@ -1,0 +1,39 @@
+.disclosure {
+  position: relative;
+}
+
+.trigger {
+  list-style: none;
+  cursor: pointer;
+}
+
+.trigger::-webkit-details-marker {
+  display: none;
+}
+
+.detail {
+  position: absolute;
+  z-index: 30;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  display: flex;
+  width: 20rem;
+  max-width: calc(100vw - 2rem);
+  transform: translateX(-50%);
+  flex-direction: column;
+  gap: 0.625rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--popover);
+  padding: 0.625rem;
+  color: var(--popover-foreground);
+  font-size: 0.875rem;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 20%);
+}
+
+@media (max-width: 639px) {
+  .detail {
+    left: 0;
+    transform: none;
+  }
+}

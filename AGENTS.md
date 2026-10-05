@@ -1,29 +1,30 @@
 # Signapse Landing
 
-## Context and scope
+## Context and authority
 
-Read this file, [README.md](README.md), and the [documentation index](docs/README.md) before work. Use the [approved scaffold research](docs/research/astro-scaffold-research.md) for foundation changes and the current user request to determine scope.
+Read this file, [README.md](README.md), and the [documentation index](docs/README.md) before work. This Astro repository is the source of truth for the public landing's implementation, design contract, copy, assets, demos and tests. Follow the current user request and the [landing contract](docs/design/LANDING.md); update code and affected documentation together.
 
-This repository owns the public Astro landing. Dashboard/authentication and Articles remain in `signapse-ui`; shared product/domain documents remain in `signapse-planing`. The current implementation is a scaffold with locale placeholders; migrate landing content and demos only when requested.
+The product application owns dashboard, authentication and Articles. Integrate through configured URLs; do not require its checkout, session providers or runtime to develop, build or test the landing. Changes and cleanup stay in this repository unless the user explicitly authorizes another scope.
 
 ## Architecture
 
-- Astro renders static pages; React islands own the interactions introduced during migration.
-- `src/pages/` owns routes, `src/layouts/` owns HTML shells, `src/i18n/` owns locales and copy, and `src/styles/` owns shared CSS. Add components/assets directories when their first files are needed.
-- Use `SUPPORTED_LOCALES` and Astro locale helpers; keep both Vietnamese and English messages in the same typed shape.
-- Source TypeScript uses strict mode and the `@/` alias. Keep route-specific behavior close to its route and add shared helpers only for established reuse.
-- Placeholder pages always emit `noindex`. Root request-language negotiation and production canonical/indexability belong to the later migration/hosting work.
-- CTA into the product will link directly to the configured frontend dashboard without reading a login session.
-- Keep imported documents and capture archives outside `public/`; they are reference material rather than runtime assets.
+- Astro renders static pages and HTML content; React islands own interactions. See [architecture](docs/architecture.md) for component ownership and lifecycle.
+- Routes live in src/pages/, HTML shells in src/layouts/, locales/copy in src/i18n/, shared styling/fonts in src/styles/, landing composition in src/components/landing/, and UI primitives in src/components/ui/.
+- Use SUPPORTED_LOCALES and locale helpers. Both Vietnamese and English copy must have the same typed shape. TypeScript is strict and uses the @/ alias.
+- Header/capability hydrate with client:load; context, Audience and the shared showcase hydrate with client:idle and use internal viewport gates. Keep useful SSR/no-JavaScript/reduced-motion/WebGL fallbacks.
+- The four showcase demos stay in one island. Preserve their fixture/model renderers, natural mobile flow, adaptive sticky desktop stage and playback-driven progress. Dispose observers, listeners, timers, frames and GPU resources.
+- App CTA uses {PUBLIC_APP_ORIGIN}/{locale}/dashboard without reading a login session; Articles uses the same configured origin. Contact anchors and mailto remain available.
+- Preview defaults to noindex. Canonical/indexability require explicit env; root remains a Vietnamese noindex entry. Request-language negotiation and domain redirects are hosting responsibilities.
+- public/ contains runtime brand/provider/font/social assets only. Keep screenshots and verification evidence under docs/verification/, outside runtime assets.
 
 ## Implementation and verification
 
-- Keep changes within the requested scope and preserve existing documents/assets. Use UTF-8 and LF for source/config files; preserve imported document content and image bytes.
-- Use the Node version in `.node-version` and the pnpm version in `packageManager`. Keep `pnpm-lock.yaml` with dependency changes.
-- Run `pnpm check`, `pnpm lint`, `pnpm format:check`, and `pnpm build` for source/config changes. Once checks pass, repeat only when a new change or unresolved concern requires it.
-- Smoke affected routes on the production preview when changing routing, layouts, or build behavior. Add behavioral tests when migrating real interactions; scaffold work does not require a speculative test suite.
-- `pnpm format` excludes imported `docs/`; do not reformat the archive as part of application changes.
-- Keep env values in ignored env files; `.env.example` documents configuration. Do not introduce credentials into source or docs.
-- Report verification results accurately. CI configuration alone does not prove a hosted CI run passed, and local scaffolding does not authorize publication or deployment.
+- Keep edits within the request and preserve unrelated changes. Use UTF-8 and LF for source/config/docs; preserve image/font bytes and license notices.
+- Use Node from .node-version and pnpm from packageManager. Update pnpm-lock.yaml with dependency changes.
+- Run pnpm check, pnpm lint, pnpm format:check and pnpm build for source/config changes. For navigation, layout or demo changes run the affected browser coverage; run pnpm test:models for model changes. Repeat checks only when new changes or unresolved concerns require them.
+- Browser tests run against built Astro output without a backend, login or application checkout. See [verification](docs/verification/README.md). Install Chromium once with pnpm exec playwright install chromium when needed.
+- Formatter excludes docs/ and public/. Format edited documentation deliberately; do not alter media bytes for formatting.
+- Keep real env values in ignored env files; document configuration in .env.example. Do not add credentials to code, docs or artifacts.
+- Report local test evidence accurately. CI configuration is not evidence of a hosted run. Publication, merge and deployment require their own authorized scope.
 
-Use Vietnamese for collaboration and handoff. Keep code identifiers and the existing language of imported documents.
+Use Vietnamese for collaboration and handoff. Keep code identifiers and the existing language of documents.

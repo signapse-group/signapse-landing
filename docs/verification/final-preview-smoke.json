@@ -1,0 +1,26 @@
+{
+  "results": [
+    {
+      "route": "/",
+      "lang": "vi",
+      "robots": "noindex, follow",
+      "canonical": null,
+      "dashboard": "http://localhost:3000/vi/dashboard"
+    },
+    {
+      "route": "/vi",
+      "lang": "vi",
+      "robots": "noindex, follow",
+      "canonical": null,
+      "dashboard": "http://localhost:3000/vi/dashboard"
+    },
+    {
+      "route": "/en",
+      "lang": "en",
+      "robots": "noindex, follow",
+      "canonical": null,
+      "dashboard": "http://localhost:3000/en/dashboard"
+    }
+  ],
+  "errors": []
+}

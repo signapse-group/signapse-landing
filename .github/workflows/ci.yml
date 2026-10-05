@@ -41,3 +41,12 @@ jobs:
 
       - name: Build
         run: pnpm build
+
+      - name: Verify demo timelines
+        run: pnpm test:models
+
+      - name: Install browser
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Verify production preview in browser
+        run: pnpm test:browser
