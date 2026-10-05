@@ -6,6 +6,10 @@ Read this file, [README.md](README.md), and the [documentation index](docs/READM
 
 The product application owns dashboard, authentication and Articles. Integrate through configured URLs; do not require its checkout, session providers or runtime to develop, build or test the landing. Changes and cleanup stay in this repository unless the user explicitly authorizes another scope.
 
+## Design skills
+
+Use the repository-local [frontend-design](.agents/skills/frontend-design/SKILL.md), [design-system-patterns](.agents/skills/design-system-patterns/SKILL.md), and [prototype](.agents/skills/prototype/SKILL.md) for their respective design tasks. Read the [design skill guidance](.agents/skills/README.md) for the landing baseline, artifact locations, Pen requirements, and save verification. Prefer these local adaptations over same-named global skills. Design requests alone do not authorize application implementation or issue publication.
+
 ## Architecture
 
 - Astro renders static pages and HTML content; React islands own interactions. See [architecture](docs/architecture.md) for component ownership and lifecycle.
