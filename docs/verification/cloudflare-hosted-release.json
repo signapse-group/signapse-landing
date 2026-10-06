@@ -1,0 +1,152 @@
+{
+  "checkedAt": "2026-10-05T12:12:06.286Z",
+  "repository": "signapse-group/signapse-landing",
+  "branch": "main",
+  "commit": "0095df9c0d4a17ab50123de1b7f74ddfff08ca2f",
+  "workflow": "https://github.com/signapse-group/signapse-landing/actions/runs/37306184240",
+  "workflowConclusion": "success",
+  "browserTestsPassed": 31,
+  "modelTestsPassed": 14,
+  "worker": "signapse-landing",
+  "workerVersion": "40bfb504-aa38-4826-8f9f-9c35f45b39c3",
+  "publicOrigin": "https://signapse.cloud",
+  "applicationOrigin": "https://dev.signapse.cloud",
+  "indexable": false,
+  "workersDev": true,
+  "previewUrls": false,
+  "endpoints": [
+    {
+      "path": "/",
+      "status": 200,
+      "sha256": "0e3cb2fbdcb67dcd80d7538f4bfb752074e238fdabaa9cfbca6a0a41526802a1",
+      "matchesWorker": true,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/vi",
+      "status": 200,
+      "sha256": "0e3cb2fbdcb67dcd80d7538f4bfb752074e238fdabaa9cfbca6a0a41526802a1",
+      "matchesWorker": true,
+      "robots": "noindex, follow",
+      "canonical": "https://signapse.cloud/vi"
+    },
+    {
+      "path": "/en",
+      "status": 200,
+      "sha256": "6c84cc98ce6128d51be29bfe27fec760d2d08f2a19f088af6333b7bf4edee8b8",
+      "matchesWorker": true,
+      "robots": "noindex, follow",
+      "canonical": "https://signapse.cloud/en"
+    },
+    {
+      "path": "/fr",
+      "status": 404,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matchesWorker": true
+    },
+    {
+      "path": "/missing-signapse-page",
+      "status": 404,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matchesWorker": true
+    },
+    {
+      "path": "/vi/missing-page",
+      "status": 404,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matchesWorker": true
+    }
+  ],
+  "assets": [
+    {
+      "path": "/_astro/LandingPage.BHgS2F-x.css",
+      "status": 200,
+      "contentType": "text/css"
+    },
+    {
+      "path": "/_astro/landing-playback.Dxf3qtd2.css",
+      "status": 200,
+      "contentType": "text/css"
+    },
+    {
+      "path": "/fonts/inter-latin.woff2",
+      "status": 200,
+      "contentType": "font/woff2"
+    },
+    {
+      "path": "/fonts/inter-vietnamese.woff2",
+      "status": 200,
+      "contentType": "font/woff2"
+    },
+    {
+      "path": "/fonts/geist-latin.woff2",
+      "status": 200,
+      "contentType": "font/woff2"
+    },
+    {
+      "path": "/fonts/geist-vietnamese.woff2",
+      "status": 200,
+      "contentType": "font/woff2"
+    }
+  ],
+  "redirects": [
+    {
+      "from": "https://signapse.cloud/vi/",
+      "status": 307,
+      "to": "https://signapse.cloud/vi"
+    },
+    {
+      "from": "https://signapse.cloud/en/",
+      "status": 307,
+      "to": "https://signapse.cloud/en"
+    },
+    {
+      "from": "https://signapse.cloud/vi/?source=slash",
+      "status": 307,
+      "to": "https://signapse.cloud/vi?source=slash"
+    },
+    {
+      "from": "https://www.signapse.cloud/en?source=www&x=%2F",
+      "status": 301,
+      "to": "https://signapse.cloud/en?source=www&x=%2F"
+    },
+    {
+      "from": "http://www.signapse.cloud/vi?source=www",
+      "status": 301,
+      "to": "https://signapse.cloud/vi?source=www"
+    },
+    {
+      "from": "http://signapse.cloud/vi?source=http",
+      "status": 301,
+      "to": "https://signapse.cloud/vi?source=http"
+    }
+  ],
+  "applicationEndpoints": [
+    {
+      "url": "https://dev.signapse.cloud/vi/dashboard",
+      "status": 429,
+      "location": null
+    },
+    {
+      "url": "https://dev.signapse.cloud/en/dashboard",
+      "status": 429,
+      "location": null
+    },
+    {
+      "url": "https://dev.signapse.cloud/vi/articles",
+      "status": 429,
+      "location": null
+    },
+    {
+      "url": "https://dev.signapse.cloud/en/articles",
+      "status": 429,
+      "location": null
+    }
+  ],
+  "applicationBrowserCheck": {
+    "url": "https://dev.signapse.cloud/vi/dashboard",
+    "browser": "Existing signed-in Chrome session",
+    "dashboardRendered": true
+  },
+  "applicationVerificationLimit": "Unauthenticated automated HTTP requests to application routes returned 429. The VI dashboard rendered in the existing signed-in Chrome session. Auth/backend and other application pages were not tested."
+}

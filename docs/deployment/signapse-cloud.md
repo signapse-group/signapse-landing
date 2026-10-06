@@ -4,6 +4,16 @@ Stack: **Astro static → GitHub Actions → Cloudflare Workers Static Assets �
 
 Deploy chạy khi bấm **Run workflow** trên `main`, sau toàn bộ checks và tests. Push/PR vẫn chạy verification với noindex. Workflow dùng chính `dist/` đã kiểm tra để publish.
 
+## Trạng thái triển khai ngày 2026-10-05
+
+Nhánh `main`, commit `0095df9c0d4a17ab50123de1b7f74ddfff08ca2f`, đã deploy thành công qua [GitHub Actions run 37306184240](https://github.com/signapse-group/signapse-landing/actions/runs/37306184240). Source checks, build, 14 model tests và 31 browser tests đều pass trước upload. Worker **signapse-landing** đang phục vụ [signapse.cloud](https://signapse.cloud/vi) qua Custom Domain.
+
+Apex dùng record do Workers quản lý. `www` là CNAME proxied về `signapse.cloud`; redirect `www` → HTTPS apex và HTTP apex → HTTPS đều trả 301, giữ path/query. `/vi/` và `/en/` trả 307 về URL không slash cuối; locale hoặc path không tồn tại trả 404. [Bằng chứng hosted](../verification/cloudflare-hosted-release.json) ghi metadata, assets, redirects và nội dung khớp Workers; [ảnh domain thật](../verification/signapse-cloud-desktop.png).
+
+GitHub đã có hai Secrets `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN` và hai Variables `PUBLIC_APP_ORIGIN=https://dev.signapse.cloud`, `SIGNAPSE_PUBLIC_ORIGIN=https://signapse.cloud`. Release đầu giữ **noindex**, `workers_dev=true`, `preview_urls=false`. Bước 6 là lần chuyển sang origin dashboard, bật indexing và đóng hostname Workers phụ sau khi ứng dụng go-live.
+
+Dashboard VI đã mở được trong phiên Chrome đăng nhập hiện tại. HTTP tự động không có session tới các route app trả 429; kiểm chứng này không xác nhận auth/backend hoặc mọi trang ứng dụng. Mapping Vercel cũ trước cutover được lưu local trong ignored `test-results/cloudflare-before-cutover.json` để rollback.
+
 ## 1. Chốt origin ứng dụng và đưa cấu hình lên main
 
 Landing sẽ sở hữu mọi path trên `signapse.cloud`. Dashboard, authentication và Articles phải có origin ứng dụng thực riêng. Nếu app hiện dùng apex, chuẩn bị origin đó và kế hoạch giữ URL cũ trước bước nối domain. Repo landing không thay đổi ứng dụng sản phẩm.
@@ -18,7 +28,12 @@ Không đặt `PUBLIC_APP_ORIGIN=https://signapse.cloud` hoặc hostname `www.si
 
 Trong Cloudflare, chọn account chứa zone **signapse.cloud** đang active. Copy **Account ID**; đây là account ID, không phải zone ID.
 
-Tạo API token theo template **Edit Cloudflare Workers**, giới hạn account triển khai và zone `signapse.cloud`. Lưu token vào GitHub Secrets. [Cloudflare GitHub Actions authentication](https://developers.cloudflare.com/workers/ci-cd/external-cicd/github-actions/).
+Token hiện dùng tên **signapse-landing-github-deploy**, với phạm vi:
+
+- Account triển khai: **Workers Scripts — Edit**, **Account Settings — Read**.
+- Chỉ zone `signapse.cloud`: **Workers Routes — Edit**, **Zone — Read**.
+
+Lưu token vào GitHub Secrets; không ghi giá trị vào repository. Token này không có quyền sửa DNS hoặc Redirect Rules: cutover DNS và rules được thực hiện trong Cloudflare dashboard. Các lần deploy nội dung tiếp theo dùng GitHub Actions. [Cloudflare GitHub Actions authentication](https://developers.cloudflare.com/workers/ci-cd/external-cicd/github-actions/).
 
 Trong repository GitHub → **Settings → Secrets and variables → Actions**, tạo:
 
@@ -51,7 +66,7 @@ Không cần nối GitHub với Workers Builds để dùng pipeline này; GitHub
 
 Trước cutover, ghi lại DNS record apex, Worker routes và redirect rules hiện có trong Cloudflare. IP công khai của domain proxied là IP Cloudflare, không cho biết origin cũ; xem record trong dashboard.
 
-Cloudflare → **Workers & Pages → signapse-landing → Settings → Domains & Routes → Add → Custom Domain** → nhập **signapse.cloud** → **Add Custom Domain**.
+Cloudflare → **Workers & Pages → signapse-landing → Domains → Add Domain** → chọn **signapse.cloud** → để trống subdomain, chọn **Production** → **Add domain**. Với giao diện cũ, chức năng tương ứng nằm tại **Settings → Domains & Routes → Add → Custom Domain**.
 
 Cloudflare tạo record và certificate cho hostname. Nếu apex có CNAME cũ, xử lý record xung đột tại cutover; giữ lại mapping để có thể khôi phục. Không đổi nameservers nếu zone đã active; không sửa records mail hoặc subdomain ứng dụng. [Custom Domains](https://developers.cloudflare.com/workers/configuration/routing/custom-domains/).
 
@@ -67,7 +82,7 @@ Trong zone `signapse.cloud` → **Rules → Redirect Rules**, tạo redirect **W
 - Target dynamic expression: `concat("https://signapse.cloud", http.request.uri.path)`.
 - Status **301**, bật **Preserve query string**.
 
-Rule này áp dụng cho cả HTTP/HTTPS của `www`. Với HTTP apex, tạo thêm rule wildcard `http://signapse.cloud/*` → `https://signapse.cloud/${1}`, status 301, giữ query. Các rule chỉ match hai hostname landing. [WWW redirect](https://developers.cloudflare.com/rules/url-forwarding/examples/redirect-www-to-root/), [Single Redirects](https://developers.cloudflare.com/rules/url-forwarding/single-redirects/).
+Rule này áp dụng cho cả HTTP/HTTPS của `www`. Rule HTTP apex hiện dùng filter `(http.host eq "signapse.cloud" and not ssl)`, cùng target dynamic expression phía trên, status 301 và giữ query. Các rule chỉ match hai hostname landing. Trường `ssl` xác định kết nối client có mã hoá hay không. [WWW redirect](https://developers.cloudflare.com/rules/url-forwarding/examples/redirect-www-to-root/), [Single Redirects](https://developers.cloudflare.com/rules/url-forwarding/single-redirects/), [ssl field](https://developers.cloudflare.com/ruleset-engine/rules-language/fields/reference/ssl/).
 
 Kiểm `https://www.signapse.cloud/en?source=www` về `https://signapse.cloud/en?source=www`, và `http://signapse.cloud/vi` về HTTPS.
 

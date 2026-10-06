@@ -1,10 +1,10 @@
 # Signapse Landing
 
-Repository Astro này là **source of truth** của landing Signapse: giao diện, nội dung VI/EN, assets và các demo. Bản hiện tại đã được người dùng xác nhận ngày **2026-10-04**. Mọi thay đổi landing được thực hiện và kiểm chứng tại đây.
+Repository Astro này nhận task để **implement landing Signapse**: source, nội dung VI/EN trong code, runtime assets/demo, tests, runbook và bằng chứng thực thi. Requirement/design, copy contract, Pen/prototype, nghiên cứu và ADR thuộc [signapse-planing](../signapse-planing/ui-design/references/landing/README.md) từ **2026-10-06**. Baseline implementation đã được người dùng xác nhận ngày **2026-10-04**.
 
 Astro dựng HTML tĩnh cho `/`, `/vi` và `/en`; root hiển thị tiếng Việt. React islands sở hữu header/capability, Hero WebGL, bốn demo và Audience. Nội dung SSR, SVG fallback và native navigation vẫn hữu ích khi JavaScript hoặc WebGL không khả dụng. Các demo dùng dữ liệu mẫu và timeline trong repo, không gọi backend.
 
-Đọc [mục lục tài liệu](docs/README.md), [contract landing](docs/design/LANDING.md), [kiến trúc](docs/architecture.md) và [kiểm chứng](docs/verification/README.md). Source nằm trong `src/`, runtime assets trong `public/`, model/browser tests trong `tests/`.
+Đọc [mục lục tài liệu](docs/README.md), [contract landing tại planning](../signapse-planing/ui-design/references/landing/LANDING.md), [kiến trúc implementation](docs/architecture.md) và [kiểm chứng](docs/verification/README.md). Task tham chiếu design/AC đã duyệt; thay đổi requirement/design được xử lý tại planning. Source nằm trong `src/`, runtime assets trong `public/`, model/browser tests trong `tests/`.
 
 ## Chạy local và production preview
 
@@ -43,7 +43,7 @@ Request-language negotiation và domain redirects cần cấu hình tại hostin
 
 Landing dùng Cloudflare Workers Static Assets với `wrangler.jsonc`. Workflow **Verify** giữ checks cho push/PR và có nút **Run workflow** trên `main` để kiểm tra rồi deploy cùng `dist/`. Lần đầu giữ `indexable=false`, nối Custom Domain, sau đó deploy lại với `indexable=true`. Origins lưu trong GitHub Variables, Cloudflare token/account ID lưu trong GitHub Secrets.
 
-Làm theo [hướng dẫn deploy signapse.cloud](docs/deployment/signapse-cloud.md). [Bản nghiên cứu](docs/deployment/cloudflare.md) giải thích lựa chọn hosting và các giới hạn. Bật indexing không đổi root `/`: root tiếp tục là landing VI noindex.
+Làm theo [hướng dẫn deploy signapse.cloud](docs/deployment/signapse-cloud.md). [Bản nghiên cứu tại planning](../signapse-planing/docs/research/landing-cloudflare-deployment.md) giải thích lựa chọn hosting và các giới hạn. Bật indexing không đổi root `/`: root tiếp tục là landing VI noindex.
 
 ## Kiểm tra
 

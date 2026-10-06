@@ -1,6 +1,6 @@
 # Kiểm chứng landing Astro
 
-Repo này là nguồn chuẩn của landing đã được người dùng xác nhận ngày **2026-10-04**. Kiểm chứng dựa trên [contract hiện hành](../design/LANDING.md), code và tests trong repo. [README](../../README.md) mô tả cách chạy; [summary.json](summary.json) ghi kết quả local gần nhất.
+Repo này giữ implementation và bằng chứng chạy landing; baseline đã được người dùng xác nhận ngày **2026-10-04**. Kiểm chứng dựa trên task/AC và [contract tại planning](../../../signapse-planing/ui-design/references/landing/LANDING.md), code và tests trong repo. [README](../../README.md) mô tả cách chạy; [summary.json](summary.json) ghi kết quả local gần nhất.
 
 ## Checks và bằng chứng
 
@@ -17,12 +17,15 @@ Repo này là nguồn chuẩn của landing đã được người dùng xác nh
 | Runtime preview   | [Smoke](final-preview-smoke.json): root/VI/EN, robots và metadata                                                 |
 | Cloudflare release | [Local checks](cloudflare-release-local.json): source checks, 14 model tests, 31 browser tests production, 3 metadata tests preview và validation origins |
 | Cloudflare routing | [Wrangler local](cloudflare-local-routing.json): 10 endpoint checks, URL không slash cuối và 404 thật; không phải hosted deployment |
+| Cloudflare hosted | [Release 2026-10-05](cloudflare-hosted-release.json): main deploy qua GitHub Actions, Custom Domain, nội dung khớp Workers, metadata/assets và redirects; [ảnh domain thật](signapse-cloud-desktop.png) |
 | Cleanup           | [Audit](cleanup-audit.json): copy còn dùng giữ nguyên, bytes runtime assets giữ nguyên, liên kết tài liệu hợp lệ  |
 | Native visibility | [Diagnostic](native-visibility.json): giới hạn của automation khi đổi tab/window                                  |
 
 Model và browser tests assert hành vi thay vì dùng screenshot equality làm gate. Build có cảnh báo kích thước dynamic Three chunk; renderer chỉ được tải khi cần.
 
 Lượt chuẩn bị Cloudflare ngày 2026-10-05 dùng Node 24.21.0 / pnpm 10.34.5 / Wrangler 4.143.0, public origin `https://signapse.cloud` và application origin fixture `https://app.example.test`. Browser navigation vẫn intercept app; kết quả không xác nhận dev/dashboard backend. Wrangler config pin compatibility date 2026-10-03 phù hợp runtime local. Hướng dẫn release ở [deploy signapse.cloud](../deployment/signapse-cloud.md).
+
+Hosted release ngày 2026-10-05 dùng commit `0095df9` trên `main`, application origin thực `https://dev.signapse.cloud` và noindex. [Workflow 37306184240](https://github.com/signapse-group/signapse-landing/actions/runs/37306184240) đã pass checks/build, 14 model tests và 31 browser tests trước deploy. Kiểm tra HTTP trên domain thật xác nhận HTTPS, canonical VI/EN, assets, 404, redirect slash/www/HTTP và nội dung khớp Workers. Dashboard VI mở được trong phiên Chrome đăng nhập; HTTP tự động không có session tới app trả 429. Auth/backend và các trang ứng dụng còn lại chưa được kiểm chứng.
 
 ## Ma trận browser
 

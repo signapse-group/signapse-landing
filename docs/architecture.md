@@ -1,5 +1,7 @@
 # Kiến trúc landing Astro
 
+Tài liệu này mô tả implementation trong `signapse-landing`. Requirement/design và quyết định được tham chiếu từ [planning](../../signapse-planing/ui-design/references/landing/README.md); triển khai theo task đã giao.
+
 ## Ownership
 
 | Trách nhiệm                   | Source trong repo                                                                                                                                    |

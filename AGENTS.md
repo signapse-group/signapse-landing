@@ -2,13 +2,15 @@
 
 ## Context and authority
 
-Read this file, [README.md](README.md), and the [documentation index](docs/README.md) before work. This Astro repository is the source of truth for the public landing's implementation, design contract, copy, assets, demos and tests. Follow the current user request and the [landing contract](docs/design/LANDING.md); update code and affected documentation together.
+Read this file, [README.md](README.md), and the [documentation index](docs/README.md) before work. This Astro repository implements assigned landing tasks and owns source, runtime copy/assets/demos, tests, runbooks and execution evidence. Requirement, design/prototype, copy contract, research and ADR ownership belongs to [signapse-planing](../signapse-planing/ui-design/references/landing/README.md) from 2026-10-06. Follow the assigned issue/current user request and its approved [landing contract](../signapse-planing/ui-design/references/landing/LANDING.md); update source and affected implementation documentation/tests together.
 
 The product application owns dashboard, authentication and Articles. Integrate through configured URLs; do not require its checkout, session providers or runtime to develop, build or test the landing. Changes and cleanup stay in this repository unless the user explicitly authorizes another scope.
 
-## Design skills
+## Task and design handoff
 
-Use the repository-local [frontend-design](.agents/skills/frontend-design/SKILL.md), [design-system-patterns](.agents/skills/design-system-patterns/SKILL.md), and [prototype](.agents/skills/prototype/SKILL.md) for their respective design tasks. Read the [design skill guidance](.agents/skills/README.md) for the landing baseline, artifact locations, Pen requirements, and save verification. Prefer these local adaptations over same-named global skills. Design requests alone do not authorize application implementation or issue publication.
+Implement the assigned scope against requirement/AC and approved design references/revision from planning. Jira project `SIGN` is the shared tracker; execution follows the [planning workflow](../signapse-planing/workflow/project-execution-workflow.md) and this repository's verification/delivery policy. Missing or conflicting requirements/design go back to the coordinator; do not redefine the contract from current code or publish new issues without authorization.
+
+Design, Pen prototypes and design-system changes are maintained in planning under [UI design instructions](../signapse-planing/ui-design/AGENTS.override.md), using its shared skills. Read the assigned design through its task references; a planning checkout is not a build/test dependency. Runtime dictionary values and CSS tokens here implement that contract.
 
 ## Architecture
 
