@@ -24,6 +24,8 @@ Repo này giữ implementation và bằng chứng chạy landing; baseline đã 
 
 Model và browser tests assert hành vi thay vì dùng screenshot equality làm gate. Build có cảnh báo kích thước dynamic Three chunk; renderer chỉ được tải khi cần.
 
+Ngày **2026-10-07**, cập nhật placeholder tên/email/lời nhắn VI/EN theo yêu cầu người dùng. Node 24.21.0 / pnpm 10.34.5: check, lint, format:check và build pass; 8 browser tests liên quan pass, không retry, trên built preview với API mock. Phạm vi gồm labels/placeholders và giá trị ban đầu rỗng, validation/focus/axe, payload/201, no-JS email path, responsive 375/768/1024/1440 px và zoom 200%. Chạy lại bằng `pnpm test:browser --grep 'contact form exposes labels|contact form sends the producer|contact form keeps a useful|contact layout fits'`. Hai ảnh contact desktop được cập nhật; ảnh EN được chụp lại trên page mới sau khi đợi paint ổn định vì capture ngay sau vòng zoom chưa paint đủ nền/viền. Lượt này kiểm chứng local UI, không xác nhận backend thật hoặc hosted deployment.
+
 Lượt chuẩn bị Cloudflare ngày 2026-10-05 dùng Node 24.21.0 / pnpm 10.34.5 / Wrangler 4.143.0, public origin `https://signapse.cloud` và application origin fixture `https://app.example.test`. Browser navigation vẫn intercept app; kết quả không xác nhận dev/dashboard backend. Wrangler config pin compatibility date 2026-10-03 phù hợp runtime local. Hướng dẫn release ở [deploy signapse.cloud](../deployment/signapse-cloud.md).
 
 Hosted release ngày 2026-10-05 dùng commit `0095df9` trên `main`, application origin thực `https://dev.signapse.cloud` và noindex. [Workflow 37306184240](https://github.com/signapse-group/signapse-landing/actions/runs/37306184240) đã pass checks/build, 14 model tests và 31 browser tests trước deploy. Kiểm tra HTTP trên domain thật xác nhận HTTPS, canonical VI/EN, assets, 404, redirect slash/www/HTTP và nội dung khớp Workers. Dashboard VI mở được trong phiên Chrome đăng nhập; HTTP tự động không có session tới app trả 429. Auth/backend và các trang ứng dụng còn lại chưa được kiểm chứng.
@@ -42,7 +44,7 @@ Hosted release ngày 2026-10-07 dùng commit `2ea7124`, giữ app origin dev và
 | Locale/URL          | VI↔EN, encoded query, lang/hreflang, supported hashes; hash ngoài contract bị bỏ; không locale cookie                |
 | Capability          | Năm popover, Enter/Space/Escape/focus restore, touch toggle, deep links/footer links, noJS native details            |
 | App/contact         | Dashboard và Articles đúng origin/locale; Hero `#access`, footer mailto                                              |
-| Form liên hệ        | VI/EN validation, JSON body/locale, 201 rỗng, 400/413/415/429/500, network/body failure, duplicate submit, no-JS và responsive; API mock nằm ở consumer boundary |
+| Form liên hệ        | VI/EN labels/placeholders đúng locale và giá trị ban đầu rỗng; validation, JSON body/locale, 201 rỗng, 400/413/415/429/500, network/body failure, duplicate submit, no-JS và responsive; API mock nằm ở consumer boundary |
 | Showcase            | Scroll hai hướng, ArrowUp/Down/Home/End, buttons/focus, progress theo playback                                       |
 | Graph               | Ingestion/relationship phases, final inspector, animated incoming/restart và model order                             |
 | Chart               | Tick 500 ms, annotation trước outcome, final frame, nút đóng event detail                                            |

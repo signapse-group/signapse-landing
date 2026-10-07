@@ -7,6 +7,7 @@ Repository Astro này giữ tài liệu **thực thi landing**: kiến trúc sou
 | [README repository](../README.md)                                         | Cài đặt, chạy, cấu hình môi trường và kiểm tra.                            |
 | [Landing contract](../../signapse-planing/ui-design/references/landing/LANDING.md) | Contract được duy trì tại planning: bố cục, nội dung, navigation, demo, responsive và accessibility. |
 | [Architecture](architecture.md)                                           | Ownership theo file, hydration, playback, renderer và assets.              |
+| [Design rules](design.md)                                                 | Rule triển khai visual, tokens, typography, responsive, interaction và accessibility; tham chiếu contract tại planning. |
 | [Verification](verification/README.md)                                    | Ma trận kiểm tra trên Astro, lệnh tái tạo và bằng chứng hiện tại.          |
 | [Kế hoạch Symphony](symphony-onboarding-plan.md)                          | Khảo sát FE/planning/runtime, skills cần adapt, workflow landing và preflight/canary trên server; chưa activation. |
 | [Symphony consumer](symphony.md)                                        | Lifecycle/policy hiện hành, checker offline và bàn giao inputs cho setup server qua repo Symphony. |

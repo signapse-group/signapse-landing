@@ -38,8 +38,11 @@ const contactCopy = {
   vi: {
     title: 'Gửi lời nhắn',
     name: 'Tên (không bắt buộc)',
+    namePlaceholder: 'Tên của bạn',
     email: 'Email *',
+    emailPlaceholder: 'ban@example.com',
     message: 'Lời nhắn *',
+    messagePlaceholder: 'Chia sẻ nhu cầu hoặc câu hỏi của bạn',
     required: 'Email và lời nhắn là bắt buộc.',
     emptyMessage: 'Vui lòng nhập lời nhắn.',
     invalidEmail: 'Vui lòng nhập địa chỉ email hợp lệ.',
@@ -57,8 +60,11 @@ const contactCopy = {
   en: {
     title: 'Send a message',
     name: 'Name (optional)',
+    namePlaceholder: 'Your name',
     email: 'Email *',
+    emailPlaceholder: 'you@example.com',
     message: 'Message *',
+    messagePlaceholder: 'Share your needs or questions',
     required: 'Email and message are required.',
     emptyMessage: 'Please enter a message.',
     invalidEmail: 'Please enter a valid email address.',
@@ -966,6 +972,7 @@ for (const locale of ['vi', 'en'] as const) {
     await openContactForm(page, locale);
 
     const section = page.locator('#access');
+    const name = page.getByLabel(copy.name, { exact: true });
     const email = page.getByLabel(copy.email, { exact: true });
     const message = page.getByLabel(copy.message, { exact: true });
     const submit = page.getByRole('button', { name: copy.title, exact: true });
@@ -974,15 +981,18 @@ for (const locale of ['vi', 'en'] as const) {
       locale === 'vi' ? 'Liên hệ với Signapse' : 'Contact Signapse',
     );
     await expect(page.getByRole('heading', { name: copy.title })).toBeVisible();
-    await expect(page.getByLabel(copy.name, { exact: true })).toHaveValue('');
+    await expect(name).toHaveValue('');
     await expect(email).toHaveValue('');
     await expect(message).toHaveValue('');
+    await expect(name).toHaveAttribute('placeholder', copy.namePlaceholder);
+    await expect(email).toHaveAttribute('placeholder', copy.emailPlaceholder);
+    await expect(message).toHaveAttribute(
+      'placeholder',
+      copy.messagePlaceholder,
+    );
     await expect(email).toHaveAttribute('maxlength', '254');
     await expect(email).toHaveAttribute('required', '');
-    await expect(page.getByLabel(copy.name, { exact: true })).toHaveAttribute(
-      'maxlength',
-      '100',
-    );
+    await expect(name).toHaveAttribute('maxlength', '100');
     await expect(message).toHaveAttribute('maxlength', '5000');
     await expect(section).toContainText(copy.required);
 

@@ -20,6 +20,7 @@ Use local `implement`, `code-review`, `tdd`, `diagnosing-bugs`, `accessibility` 
 
 ## Architecture
 
+- For visual, layout, interaction or copy work, read [design implementation rules](docs/design.md) alongside the assigned planning contract/design revision. This local summary does not own or replace the planning contract.
 - Astro renders static pages and HTML content; React islands own interactions. See [architecture](docs/architecture.md) for component ownership and lifecycle.
 - Routes live in src/pages/, HTML shells in src/layouts/, locales/copy in src/i18n/, shared styling/fonts in src/styles/, landing composition in src/components/landing/, and UI primitives in src/components/ui/.
 - Use SUPPORTED_LOCALES and locale helpers. Both Vietnamese and English copy must have the same typed shape. TypeScript is strict and uses the @/ alias.

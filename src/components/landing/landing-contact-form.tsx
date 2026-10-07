@@ -201,6 +201,7 @@ export function LandingContactForm({
                 name="name"
                 type="text"
                 autoComplete="name"
+                placeholder={copy.namePlaceholder}
                 maxLength={producerLimits.name}
                 value={name}
                 aria-invalid={Boolean(errors.name)}
@@ -230,6 +231,7 @@ export function LandingContactForm({
                 type="email"
                 autoComplete="email"
                 inputMode="email"
+                placeholder={copy.emailPlaceholder}
                 maxLength={producerLimits.email}
                 required
                 value={email}
@@ -266,6 +268,7 @@ export function LandingContactForm({
               id="contact-message"
               name="message"
               rows={5}
+              placeholder={copy.messagePlaceholder}
               maxLength={producerLimits.message}
               required
               value={message}
