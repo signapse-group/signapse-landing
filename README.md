@@ -6,6 +6,12 @@ Astro dựng HTML tĩnh cho `/`, `/vi` và `/en`; root hiển thị tiếng Vi�
 
 Đọc [mục lục tài liệu](docs/README.md), [contract landing tại planning](../signapse-planing/ui-design/references/landing/LANDING.md), [kiến trúc implementation](docs/architecture.md) và [kiểm chứng](docs/verification/README.md). Task tham chiếu design/AC đã duyệt; thay đổi requirement/design được xử lý tại planning. Source nằm trong `src/`, runtime assets trong `public/`, model/browser tests trong `tests/`.
 
+## Assigned execution và Symphony
+
+Jira `SIGN` giữ contract/lifecycle; [WORKFLOW.md](WORKFLOW.md) nhận native Subtask có `route-landing`. Skills local trong [.agents/skills](.agents/skills/) được adapt từ FE và do landing sở hữu. Worker thực thi/check/review rồi bàn giao tại `In Review`; coordinator giữ `Done` sau applicable gates, merge không tự hoàn tất Jira. Ordinary requests và cấu hình consumer không tự dispatch issue.
+
+[Consumer runbook](docs/symphony.md) mô tả offline checker, host inputs, browser isolation và handoff. Phần setup/activation trên server được người dùng thực hiện riêng qua repo Symphony sau cập nhật consumer; repository config không chứng minh runtime đã chạy.
+
 ## Chạy local và production preview
 
 Dùng Node **24.21.0** và pnpm **10.34.5** theo `.node-version` / `packageManager`.

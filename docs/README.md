@@ -8,6 +8,8 @@ Repository Astro này giữ tài liệu **thực thi landing**: kiến trúc sou
 | [Landing contract](../../signapse-planing/ui-design/references/landing/LANDING.md) | Contract được duy trì tại planning: bố cục, nội dung, navigation, demo, responsive và accessibility. |
 | [Architecture](architecture.md)                                           | Ownership theo file, hydration, playback, renderer và assets.              |
 | [Verification](verification/README.md)                                    | Ma trận kiểm tra trên Astro, lệnh tái tạo và bằng chứng hiện tại.          |
+| [Kế hoạch Symphony](symphony-onboarding-plan.md)                          | Khảo sát FE/planning/runtime, skills cần adapt, workflow landing và preflight/canary trên server; chưa activation. |
+| [Symphony consumer](symphony.md)                                        | Lifecycle/policy hiện hành, checker offline và bàn giao inputs cho setup server qua repo Symphony. |
 | [Cloudflare deployment research](../../signapse-planing/docs/research/landing-cloudflare-deployment.md) | Nghiên cứu tại planning; trạng thái release theo runbook/evidence của landing. |
 | [Deploy signapse.cloud](deployment/signapse-cloud.md)                     | Các bước cấu hình GitHub, deploy Workers, nối domain và bật indexing.    |
 | [ADR-0005](../../signapse-planing/docs/adr/landing/0005-static-landing-and-explicit-hosting-configuration.md) | Quyết định tại planning về static output, canonical/indexability và hosting. |

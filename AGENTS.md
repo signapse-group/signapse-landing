@@ -12,6 +12,12 @@ Implement the assigned scope against requirement/AC and approved design referenc
 
 Design, Pen prototypes and design-system changes are maintained in planning under [UI design instructions](../signapse-planing/ui-design/AGENTS.override.md), using its shared skills. Read the assigned design through its task references; a planning checkout is not a build/test dependency. Runtime dictionary values and CSS tokens here implement that contract.
 
+## Assigned execution
+
+For assigned Jira/Symphony work or an explicitly activated local-contract workflow, read [WORKFLOW.md](WORKFLOW.md) and the repository-owned [agent execution policy](.agents/skills/agent-execution-policy/SKILL.md). The worker receives only native Subtasks with `route-landing`, hands off at `In Review`, and leaves `Done`, merge and deployment to their authorized owners. Ordinary requests and configuration/skill maintenance do not activate tracker lifecycle actions.
+
+Use local `implement`, `code-review`, `tdd`, `diagnosing-bugs`, `accessibility` and `resolving-merge-conflicts` for their matching scope; invoke `setup-workflow` explicitly for consumer configuration. API work follows the conditional [API consumer policy](.agents/skills/agent-execution-policy/references/api-handoff.md). [Consumer runbook](docs/symphony.md) covers offline validation and operator handoff; server provisioning/activation remain separate.
+
 ## Architecture
 
 - Astro renders static pages and HTML content; React islands own interactions. See [architecture](docs/architecture.md) for component ownership and lifecycle.
