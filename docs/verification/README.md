@@ -9,8 +9,8 @@ Repo này giữ implementation và bằng chứng chạy landing; baseline đã 
 | Toolchain         | Node 24.21.0 / pnpm 10.34.5 theo pin repository                                                                   |
 | Source/config     | `pnpm check`, `pnpm lint`, `pnpm format:check`, `pnpm build`                                                      |
 | Models            | `pnpm test:models`: 14 tests, 4 suites cho timeline/stream/tick/cursor và Telegram VI/EN                          |
-| Browser           | `pnpm test:browser`: 31 tests Chromium trên production preview; [kết quả](browser-results.json)                   |
-| Ảnh               | [capture report](preview/results.json), [capture script](capture-preview.mjs); 30 ảnh VI/EN của chính landing này |
+| Browser           | `pnpm test:browser`: browser coverage Chromium trên production preview; [kết quả](browser-results.json)          |
+| Ảnh               | [capture report](preview/results.json), [capture script](capture-preview.mjs); [contact VI](preview/contact-form-vi-desktop.png) và [contact EN](preview/contact-form-en-desktop.png) được chụp từ built output ở 1440 px |
 | Boundary 1024     | [Report](preview/boundary-1024.json), hai locale, bốn sticky stages                                               |
 | Theme             | [OS/class dark isolation](preview/theme-isolation.json)                                                           |
 | Env               | [Policy report](environment-policy.json): canonical/hreflang, indexable validation, app URLs và analytics default |
@@ -42,6 +42,7 @@ Hosted release ngày 2026-10-07 dùng commit `2ea7124`, giữ app origin dev và
 | Locale/URL          | VI↔EN, encoded query, lang/hreflang, supported hashes; hash ngoài contract bị bỏ; không locale cookie                |
 | Capability          | Năm popover, Enter/Space/Escape/focus restore, touch toggle, deep links/footer links, noJS native details            |
 | App/contact         | Dashboard và Articles đúng origin/locale; Hero `#access`, footer mailto                                              |
+| Form liên hệ        | VI/EN validation, JSON body/locale, 201 rỗng, 400/413/415/429/500, network/body failure, duplicate submit, no-JS và responsive; API mock nằm ở consumer boundary |
 | Showcase            | Scroll hai hướng, ArrowUp/Down/Home/End, buttons/focus, progress theo playback                                       |
 | Graph               | Ingestion/relationship phases, final inspector, animated incoming/restart và model order                             |
 | Chart               | Tick 500 ms, annotation trước outcome, final frame, nút đóng event detail                                            |
@@ -76,10 +77,11 @@ Trace/HTML report nằm trong ignored `test-results/`; chạy `pnpm exec playwri
 
 - [VI Hero](preview/vi-desktop-hero.png), [EN Hero](preview/en-desktop-hero.png).
 - [Graph](preview/en-desktop-knowledge-graph.png), [Chart](preview/en-desktop-market-chart.png), [AI](preview/en-desktop-ai-conversation.png), [Telegram](preview/en-desktop-scheduled-telegram.png).
+- [Contact form VI](preview/contact-form-vi-desktop.png), [Contact form EN](preview/contact-form-en-desktop.png) (`#access`, 1440 px).
 - [Mobile](preview/vi-mobile-full.png), [noJS](preview/en-nojs-full.png).
 
 ## Giới hạn kiểm chứng
 
 Pause/resume được assert qua controlled `visibilitychange` trong Chromium. Diagnostic Edge headed vẫn thấy document `visible` khi đổi tab/window, nên không chứng minh native hidden-tab hoặc GPU throttling vật lý. CSS zoom và mobile emulation không đại diện mọi thiết bị.
 
-Navigation tests intercept đích ứng dụng sản phẩm, không kiểm auth/backend/Articles tại đích. Origin trong env policy là fixture. Analytics ingestion, request-language negotiation, domain redirects, hosted CI và deployment cần kiểm trên hosting thực tế.
+Navigation tests intercept đích ứng dụng sản phẩm, không kiểm auth/backend/Articles tại đích. Contact form tests intercept API tại consumer boundary; chúng không thay thế OpenAPI/CORS check hoặc xác nhận record trên producer. `PUBLIC_CONTACT_API_ORIGIN` phải là origin HTTPS riêng với `PUBLIC_APP_ORIGIN`, và landing origin thực phải nằm trong CORS policy của producer. Analytics ingestion, request-language negotiation, domain redirects, hosted CI và deployment cần kiểm trên hosting thực tế.

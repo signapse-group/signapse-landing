@@ -19,6 +19,7 @@ Tài liệu này mô tả implementation trong `signapse-landing`. Requirement/d
 | Playback conditions           | landing-playback.ts; viewport, active, document visibility và reduced motion                                                                         |
 | Audience                      | landing-audience-section.tsx, landing-audience-figure.tsx; four choices, canvas + SVG fallback                                                       |
 | Provider/footer/CTA           | LandingProviderMarquee.astro, LandingFooter.astro, LandingActionButton.astro, landing-access.ts                                                      |
+| Form liên hệ                    | LandingPage.astro giữ copy/email fallback tĩnh ở #access; landing-contact-form.tsx gửi JSON tới public API origin được cấu hình riêng. |
 | External app URLs/locale URLs | src/i18n/routing.ts; appHref/withLocalePath/buildLandingLocaleHref                                                                                   |
 | Copy                          | src/i18n/messages.ts; typed VI/EN, fixture labels và metadata                                                                                        |
 | Tokens/font faces             | src/components/landing/landing-page.module.css, src/styles/global.css, src/styles/fonts.css                                                          |

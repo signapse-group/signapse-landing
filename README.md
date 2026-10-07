@@ -37,11 +37,12 @@ Copy `.env.example` sang ignored `.env`, đặt giá trị rồi **build lại**
 | Biến                         | Hành vi                                                                                                                                                                                              |
 | ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `PUBLIC_APP_ORIGIN`          | Origin HTTP(S) của ứng dụng sản phẩm, không path/query/credentials. Default `http://localhost:3000`. Dashboard CTA dẫn tới `{origin}/{locale}/dashboard`; Articles tới `{origin}/{locale}/articles`. |
+| `PUBLIC_CONTACT_API_ORIGIN`  | Origin HTTPS của API contact, riêng với ứng dụng sản phẩm. `.env.example` dùng `https://dev-api.signapse.cloud`; cấu hình GitHub theo môi trường landing và CORS của API.                            |
 | `SIGNAPSE_PUBLIC_ORIGIN`     | Origin HTTPS explicit của landing. Thiếu/invalid ở preview: bỏ canonical/hreflang, giữ `noindex`.                                                                                                    |
 | `SIGNAPSE_LANDING_INDEXABLE` | Default `false`. Bật `true` yêu cầu public origin HTTPS hợp lệ; thiếu thì build fail. Root luôn `noindex` để tránh duplicate.                                                                        |
 | `SIGNAPSE_VERCEL_ANALYTICS`  | Default `false`. Chỉ bật Analytics/Speed Insights khi hosting có Vercel endpoints.                                                                                                                   |
 
-Hero “Liên hệ” dẫn tới `#access`; footer giữ mailto `access@signapse.cloud`. Dashboard CTA mở trực tiếp ứng dụng sản phẩm; ứng dụng đích xử lý đăng nhập. Locale switch giữ query và các hash trong `SUPPORTED_LANDING_HASHES`.
+Hero “Liên hệ” dẫn tới `#access`; form gửi JSON tới `{PUBLIC_CONTACT_API_ORIGIN}/contact-requests`. Footer giữ mailto `access@signapse.cloud`. Dashboard CTA mở trực tiếp ứng dụng sản phẩm; ứng dụng đích xử lý đăng nhập. Locale switch giữ query và các hash trong `SUPPORTED_LANDING_HASHES`.
 
 Request-language negotiation và domain redirects cần cấu hình tại hosting. Hosted CI và deployment được kiểm chứng trong quy trình release; production preview chỉ kiểm chứng output static.
 
