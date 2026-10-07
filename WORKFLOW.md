@@ -24,10 +24,22 @@ hooks:
   after_create: |
     set -eu
     : "${SYMPHONY_WORKSPACE_ROOT:?Set a separate landing workspace root}"
-    git clone --depth 1 https://github.com/signapse-group/signapse-landing.git .
+    : "${SYMPHONY_GIT_CREDENTIAL_HELPER:?Set the host Git credential helper}"
+    git -c credential.helper="$SYMPHONY_GIT_CREDENTIAL_HELPER" clone --depth 1 https://github.com/signapse-group/signapse-landing.git .
+    git config --local credential.helper "$SYMPHONY_GIT_CREDENTIAL_HELPER"
     test "$(node -p 'process.versions.node')" = "$(cat .node-version)"
     test "$(pnpm --version)" = "$(node -p 'JSON.parse(require("node:fs").readFileSync("package.json", "utf8")).packageManager.split("@")[1]')"
     pnpm install --frozen-lockfile
+  timeout_ms: 900000
+agent:
+  max_concurrent_agents: 1
+  max_turns: 20
+codex:
+  command: codex --config shell_environment_policy.inherit=all --config 'model="gpt-6-luna"' --config model_reasoning_effort=max app-server
+  approval_policy: never
+  thread_sandbox: workspace-write
+  turn_sandbox_policy:
+    type: dangerFullAccess
 ---
 
 You are executing the assigned Jira Subtask `{{ issue.identifier }}` in `signapse-group/signapse-landing`.
@@ -52,11 +64,11 @@ Repository execution context:
 - Preserve static HTML, React islands, typed VI/EN copy, useful no-JavaScript/reduced-motion/WebGL fallbacks, the single showcase island and resource disposal under [architecture](docs/architecture.md). Dashboard, authentication and Articles belong to the product application; build their links from configured origins without reading its session or requiring its checkout/backend for landing checks.
 - For API integration, read the [API consumer policy](.agents/skills/agent-execution-policy/references/api-handoff.md), fetch the producer's published contract for the actual environment and trace affected landing callers. Jira owns accepted requirements; the producer owns the supported API. Fixture tests do not prove producer publication or live integration. Plain app links and fixture demos do not require API lookup.
 - Use Node from `.node-version` and pnpm from `packageManager`. For source/config changes, complete `pnpm check`, `pnpm lint`, `pnpm format:check`, `pnpm build`. Run affected browser coverage for navigation/layout/demo changes and `pnpm test:models` for model changes. Documentation/skill-only work needs relevant YAML, content, link, encoding and formatting checks. Follow [verification](docs/verification/README.md); use built Astro output and fixtures without app authentication/backend.
-- On a shared Symphony host, follow the operator's browser-test isolation setup in [consumer runbook](docs/symphony.md). Use `CI=1` to prevent preview reuse, plus the configured shared lock or isolated port for every browser invocation, including reviewer/focused checks. Do not test against another workspace's preview. If isolation is unavailable, report the missing prerequisite before browser checks; do not claim the gate passed.
+- On a shared Symphony host, read the operator's browser wrapper instructions and [consumer runbook](docs/symphony.md). Run `"$SYMPHONY_LANDING_BROWSER_WRAPPER" "$PWD"` for the browser suite; pass Playwright arguments after the workspace for focused/reviewer checks. The host wrapper builds and tests with `CI=1`, the shared host resource lock and a landing-only browser cache; Playwright starts foreground Astro preview with `--ignore-lock`. If the wrapper/isolation is unavailable, report the missing prerequisite before browser checks; do not claim the gate passed or use another workspace's preview.
 - Preview remains noindex with Analytics off. Keep real env values and credentials outside Git/evidence. Build/test origins must agree; an ignored `test-results/` directory is not durable evidence. Hosting/canonical/indexing, merge and deployment follow their separately authorized scope and the [Cloudflare runbook](docs/deployment/signapse-cloud.md).
 - Have one independent reviewer assess Requirement adherence and Correctness & Standards for the delivered output; resolve blocking findings and reverify affected checks. Repository-file changes under this assigned workflow require one reviewed PR targeting the default branch; read-only reports do not require a PR. Include the current Subtask key/title in the PR title and verify Jira Development-panel linking before claiming it established.
-- For a PR, require the `Verify` workflow's `check` job on the delivered revision, plus any actual required checks verified from GitHub. Push/PR verification is distinct from the manual Cloudflare deployment lane. Follow the local policy's concise PR body and one agent-owned Jira delivery handoff comment; retain revision/evidence history and read the saved comment back.
-- The coordinator owns `Done` after review/checks, merge when required and deployment/evidence when applicable. Record pending human-owned merge/deploy/acceptance actions at `In Review`; a merge alone does not complete Jira. Repository maintainers/reviewers own merge acceptance. Deployment-owned settings and installed-worker readiness remain with the operator; writing this file does not activate a worker or authorize a canary.
+- For a PR, require the `Verify` workflow's `check` job on the delivered revision, plus any actual required checks verified from GitHub. PRs and pushes to other branches verify only; push/merge into `main` automatically verifies and deploys Cloudflare, and manual `workflow_dispatch` on `main` also deploys. Merge and manual dispatch therefore require the corresponding human authorization. Follow the local policy's concise PR body and one agent-owned Jira delivery handoff comment; retain revision/evidence history and read the saved comment back.
+- The coordinator owns `Done` after review/checks, merge when required and deployment/evidence when applicable. Record pending human-owned merge/deploy/acceptance actions at `In Review`; a merge alone does not complete Jira. Repository maintainers/reviewers own merge acceptance. Deployment-owned settings and installed-worker readiness remain with the operator; writing this file does not activate a worker or authorize a canary. Claim a deployed landing worker only with evidence of the effective service/profile and an authorized delivery canary.
 - Relevant sources: `src/pages`, `src/layouts`, `src/components/landing`, `src/components/ui`, `src/i18n`, `src/styles`, `tests/models`, `tests/e2e`, repository instructions, [architecture](docs/architecture.md), [verification](docs/verification/README.md), assigned planning references and conditional producer contracts.
 - Use Vietnamese for status and handoff. Preserve repository language in code/documents and keep both typed dictionary locales for user-facing copy.
 

@@ -18,7 +18,7 @@ export default defineConfig({
     ['json', { outputFile: 'test-results/results.json' }],
   ],
   webServer: {
-    command: `pnpm preview --host 127.0.0.1 --port ${port}`,
+    command: `pnpm preview --host 127.0.0.1 --port ${port} --ignore-lock`,
     url: `${baseURL}/vi`,
     timeout: 60_000,
     reuseExistingServer: !process.env.CI,

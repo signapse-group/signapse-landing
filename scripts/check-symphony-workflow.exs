@@ -32,11 +32,24 @@ assert settings.tracker.dispatch_states == ["Ready", "Progress"]
 assert settings.tracker.active_states == ["Ready", "Progress"]
 assert settings.tracker.review_state == "In Review"
 assert settings.tracker.terminal_states == ["Done"]
+assert settings.hooks.timeout_ms == 900_000
+assert settings.agent.max_concurrent_agents == 1
+assert settings.agent.max_turns == 20
 
-assert "git clone --depth 1 https://github.com/signapse-group/signapse-landing.git ." in String.split(
-         settings.hooks.after_create,
-         "\n"
-       )
+assert settings.codex.command ==
+         ~s(codex --config shell_environment_policy.inherit=all --config 'model="gpt-6-luna"' --config model_reasoning_effort=max app-server)
+
+assert settings.codex.approval_policy == "never"
+assert settings.codex.thread_sandbox == "workspace-write"
+assert settings.codex.turn_sandbox_policy == %{"type" => "dangerFullAccess"}
+
+hook_lines = String.split(settings.hooks.after_create, "\n")
+
+assert ~s(: "${SYMPHONY_GIT_CREDENTIAL_HELPER:?Set the host Git credential helper}") in hook_lines
+
+assert ~s(git -c credential.helper="$SYMPHONY_GIT_CREDENTIAL_HELPER" clone --depth 1 https://github.com/signapse-group/signapse-landing.git .) in hook_lines
+
+assert ~s(git config --local credential.helper "$SYMPHONY_GIT_CREDENTIAL_HELPER") in hook_lines
 
 raw = %{
   "id" => "90001",
@@ -121,4 +134,4 @@ end
 
 assert Process.whereis(SymphonyElixir.Supervisor) == nil
 
-IO.puts("Landing workflow: config, routing, dependency admission and 12 strict Liquid fixtures passed offline.")
+IO.puts("Landing workflow: worker profile, credential-helper clone to workspace root, routing, dependency admission and 12 strict Liquid fixtures passed offline.")

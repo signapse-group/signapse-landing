@@ -94,10 +94,9 @@ Before activation, the operator verifies installed revision, credentials/tools,
 workspace separation and prior-worker drain/reconciliation; the coordinator assigns
 the canary explicitly. Configuration maintenance alone does not perform that cutover.
 
-Follow the [consumer runbook](../../../../docs/symphony.md) for deployment inputs,
-hook timeouts and shared-host browser isolation. This repo has no installed host
-profile to inherit initially, so absent deployment-owned optional fields remain
-omitted. Runtime defaults are not operational readiness: the later operator setup
-must resolve the separate workspace root, Codex/network/permissions and concurrency
-before activation. Do not copy FE-specific helper paths, secrets, auth fixtures,
-quality wrappers or model/sandbox policy.
+Follow the [consumer runbook](../../../../docs/symphony.md) for the explicit worker
+profile established after the 2026-10-07 host survey, hook timeout, host-provided
+Git helper and browser wrapper/cache/lock. Preserve the configured deployment
+fields when refreshing the consumer. The operator still verifies the effective
+landing service/profile and an authorized delivery canary before claiming activation.
+Do not copy FE-specific helper paths, secrets or auth fixtures.
