@@ -47,7 +47,11 @@ Request-language negotiation và domain redirects cần cấu hình tại hostin
 
 ## Deploy signapse.cloud
 
-Landing dùng Cloudflare Workers Static Assets với `wrangler.jsonc`. Workflow **Verify** giữ checks cho push/PR và có nút **Run workflow** trên `main` để kiểm tra rồi deploy cùng `dist/`. Lần đầu giữ `indexable=false`, nối Custom Domain, sau đó deploy lại với `indexable=true`. Origins lưu trong GitHub Variables, Cloudflare token/account ID lưu trong GitHub Secrets.
+Landing dùng Cloudflare Workers Static Assets với `wrangler.jsonc`. Mỗi push/merge vào `main` chạy workflow **Verify**: checks/build/model/browser tests pass rồi tự deploy chính `dist/` đã kiểm tra lên `signapse.cloud`. PR và push ở nhánh khác chạy CI. Nút **Run workflow** trên `main` vẫn có thể dùng để deploy lại. Các run trên `main` dùng chung concurrency group và chạy nối tiếp để tránh publish đồng thời.
+
+GitHub giữ một run đang chạy và một run chờ trong group; push mới có thể thay run đang chờ bằng revision mới nhất.
+
+Origins và `SIGNAPSE_LANDING_INDEXABLE` lưu trong GitHub Variables; Cloudflare token/account ID lưu trong GitHub Secrets. Indexing mặc định tắt và hiện variable là `false`; đổi thành `true` sau khi hoàn tất go-live. Push `main` và deploy thủ công đều dùng cùng cấu hình.
 
 Làm theo [hướng dẫn deploy signapse.cloud](docs/deployment/signapse-cloud.md). [Bản nghiên cứu tại planning](../signapse-planing/docs/research/landing-cloudflare-deployment.md) giải thích lựa chọn hosting và các giới hạn. Bật indexing không đổi root `/`: root tiếp tục là landing VI noindex.
 

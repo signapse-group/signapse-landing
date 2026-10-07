@@ -2,7 +2,15 @@
 
 Stack: **Astro static → GitHub Actions → Cloudflare Workers Static Assets → Custom Domain signapse.cloud**. [Wrangler config](../../wrangler.jsonc), [workflow Verify](../../.github/workflows/ci.yml) và [browser metadata tests](../../tests/e2e/landing.spec.ts) đã được chuẩn bị trong repo.
 
-Deploy chạy khi bấm **Run workflow** trên `main`, sau toàn bộ checks và tests. Push/PR vẫn chạy verification với noindex. Workflow dùng chính `dist/` đã kiểm tra để publish.
+Mỗi push/merge vào `main` tự chạy CI rồi deploy sau khi toàn bộ checks và tests pass. PR và push ở nhánh khác chạy verification với noindex. Nút **Run workflow** trên `main` dùng để deploy lại khi cần. Workflow dùng chính `dist/` đã kiểm tra để publish; các run trên `main` chạy nối tiếp trong cùng concurrency group để tránh publish đồng thời. [GitHub push trigger](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#push), [concurrency](https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/control-workflow-concurrency).
+
+Concurrency mặc định giữ một run đang chạy và một run pending; push mới có thể thay run pending bằng revision mới nhất. Run đang publish trên `main` không bị huỷ bởi push mới.
+
+## Trạng thái triển khai ngày 2026-10-07
+
+Nhánh `main`, commit `2ea7124611b6902596e12232dbd8c696463350ce`, đã deploy thành công qua [GitHub Actions run 37591390406](https://github.com/signapse-group/signapse-landing/actions/runs/37591390406). Checks/build và 14 model tests pass. Browser suite ghi nhận 30 tests pass ngay và 1 test reset Graph/Telegram pass sau retry; workflow kết thúc success. Nguyên nhân lỗi test không ổn định chưa được chẩn đoán trong lượt deploy này.
+
+Worker version `dcfcdc6d-b082-43a2-8744-8d5d1b779b04` đã phục vụ trên `signapse.cloud`. Kiểm tra hosted xác nhận nội dung VI/EN mới, nội dung khớp Workers, canonical/noindex, 12 assets, 404 và các redirect slash/www/HTTP. [Bằng chứng release](../verification/cloudflare-hosted-release-2026-10-07.json). Giữ `PUBLIC_APP_ORIGIN=https://dev.signapse.cloud`, indexing tắt; DNS dùng cấu hình đã nối ngày 2026-10-05.
 
 ## Trạng thái triển khai ngày 2026-10-05
 
@@ -22,7 +30,7 @@ Origin app hiện tại đã được xác nhận là **https://dev.signapse.clo
 
 Không đặt `PUBLIC_APP_ORIGIN=https://signapse.cloud` hoặc hostname `www.signapse.cloud` dẫn về landing.
 
-Đưa các thay đổi deploy của lượt này lên nhánh `main` của [signapse-group/signapse-landing](https://github.com/signapse-group/signapse-landing). Nút **Run workflow** cần file workflow có `workflow_dispatch` trên default branch. [GitHub manual workflows](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow).
+Đưa các thay đổi lên nhánh `main` của [signapse-group/signapse-landing](https://github.com/signapse-group/signapse-landing) để tự chạy CI/deploy. Nút **Run workflow** vẫn có sẵn cho lần deploy thủ công; chỉ chọn `main`. [GitHub manual workflows](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow).
 
 ## 2. Cấu hình Cloudflare credentials và GitHub Variables
 
@@ -43,16 +51,16 @@ Trong repository GitHub → **Settings → Secrets and variables → Actions**, 
 | Secrets | `CLOUDFLARE_ACCOUNT_ID` | Account ID chứa Worker và zone. |
 | Variables | `PUBLIC_APP_ORIGIN` | Lần thử: `https://dev.signapse.cloud`; go-live: `https://dashboard.signapse.cloud` sau khi app đã hoạt động. |
 | Variables | `SIGNAPSE_PUBLIC_ORIGIN` | `https://signapse.cloud` |
+| Variables | `SIGNAPSE_LANDING_INDEXABLE` | `false` hiện tại; chỉ đổi `true` khi sẵn sàng indexing. Thiếu variable cũng giữ noindex. |
 
-Workflow tự đặt `SIGNAPSE_VERCEL_ANALYTICS=false`. Biến `SIGNAPSE_LANDING_INDEXABLE` do checkbox của **Run workflow** quyết định; không cần thêm variable cùng tên. Origins được dùng khi build, không phải Worker runtime variables.
+Workflow tự đặt `SIGNAPSE_VERCEL_ANALYTICS=false`. Push `main` và deploy thủ công đều đọc `SIGNAPSE_LANDING_INDEXABLE` từ GitHub Variables; không còn checkbox indexing trên **Run workflow**. Origins và indexing được dùng khi build, không phải Worker runtime variables.
 
 ## 3. Deploy lần đầu với noindex
 
-GitHub → **Actions → Verify → Run workflow**:
+Đặt GitHub Variable `SIGNAPSE_LANDING_INDEXABLE=false`, rồi push/merge vào `main`. Muốn deploy lại mà không tạo commit: GitHub → **Actions → Verify → Run workflow**:
 
 1. Chọn branch **main**.
-2. Giữ **Allow indexing after signapse.cloud is connected** tắt.
-3. Bấm **Run workflow**.
+2. Bấm **Run workflow**; pipeline dùng GitHub Variables hiện tại.
 
 Workflow cài Node/pnpm đúng pin, install frozen lockfile, kiểm tra origins, types/lint/format/build, model tests và Chromium browser tests, rồi chạy `pnpm exec wrangler deploy`.
 
@@ -92,7 +100,7 @@ Sau khi domain chính hoạt động và app ở `dashboard.signapse.cloud` đã
 
 Sửa `workers_dev` từ `true` thành `false` trong [wrangler.jsonc](../../wrangler.jsonc), đưa thay đổi lên `main`.
 
-GitHub → **Actions → Verify → Run workflow**, chọn **main**, bật **Allow indexing after signapse.cloud is connected**, chạy lại. Lần này VI/EN là `index, follow`, canonical/hreflang dùng `https://signapse.cloud`; root `/` tiếp tục noindex.
+Đổi GitHub Variable `SIGNAPSE_LANDING_INDEXABLE=true` trước khi đưa thay đổi go-live lên `main`; push này tự chạy CI/deploy. Nếu chỉ đổi Variables mà không có code mới, dùng **Run workflow** trên `main` để build/deploy lại. Lần này VI/EN là `index, follow`, canonical/hreflang dùng `https://signapse.cloud`; root `/` tiếp tục noindex.
 
 `preview_urls` đã là `false`. `workers_dev=false` tắt URL production phụ trên workers.dev ở lần deploy này; nó không tự tắt các Preview/Deployment URLs khác nếu account đã tạo chúng riêng. [workers.dev configuration](https://developers.cloudflare.com/workers/configuration/routing/workers-dev/), [Wrangler configuration](https://developers.cloudflare.com/workers/wrangler/configuration/).
 
@@ -108,7 +116,7 @@ curl.exe -I "https://www.signapse.cloud/en?source=www"
 
 Kỳ vọng lần lượt: **200**, **200**, redirect về `/vi`, **404**, **301** về apex và giữ query. Xem page source VI/EN để xác nhận robots, canonical và app links; kiểm mobile, keyboard, reduced motion và các demo.
 
-Những lần sau: đưa thay đổi lên `main`, mở **Run workflow**, bật indexing rồi deploy. Không cần sửa DNS lần nữa. Hosted deployment chỉ được xác nhận khi workflow và kiểm tra domain thật thành công.
+Những lần sau: push/merge vào `main`, theo dõi **Actions → Verify**. CI pass thì pipeline tự deploy. Hiện tại `SIGNAPSE_LANDING_INDEXABLE=false`; chỉ đổi `true` sau bước 6. Đổi GitHub Variables cần một lần build/deploy mới, bằng push `main` hoặc **Run workflow**. Không cần sửa DNS lần nữa. Hosted deployment chỉ được xác nhận khi workflow và kiểm tra domain thật thành công.
 
 Rollback nội dung bằng đưa commit tốt trước đó về `main` rồi chạy workflow với env tương ứng. Nếu lỗi cutover, tháo Custom Domain và khôi phục mapping apex đã lưu. Giữ domain/app env đúng với bản rollback.
 

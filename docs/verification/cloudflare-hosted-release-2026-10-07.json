@@ -1,0 +1,147 @@
+{
+  "checkedAt": "2026-10-07T08:10:03.995Z",
+  "repository": "signapse-group/signapse-landing",
+  "branch": "main",
+  "commit": "2ea7124611b6902596e12232dbd8c696463350ce",
+  "workflow": "https://github.com/signapse-group/signapse-landing/actions/runs/37591390406",
+  "workflowConclusion": "success",
+  "modelTestsPassed": 14,
+  "browserTestsPassedWithoutRetry": 30,
+  "browserTestsFlakyPassedOnRetry": 1,
+  "browserRetryEvidence": "demo selection restarts Graph and Telegram at the first frame failed its incoming-state assertion on the first attempt, then passed the configured retry. The browser step and workflow concluded success; the cause of the intermittent failure was not diagnosed in this deployment.",
+  "workerVersion": "dcfcdc6d-b082-43a2-8744-8d5d1b779b04",
+  "publicOrigin": "https://signapse.cloud",
+  "applicationOrigin": "https://dev.signapse.cloud",
+  "indexable": false,
+  "previousEnglishHtmlSha256": "6c84cc98ce6128d51be29bfe27fec760d2d08f2a19f088af6333b7bf4edee8b8",
+  "endpoints": [
+    {
+      "path": "/",
+      "status": 200,
+      "sha256": "0f67baa504a76bb45d5a5f23bf95aa45302ff71519b99f4a4837312059c1d1ef",
+      "matchesWorker": true,
+      "robots": "noindex, follow",
+      "latestWelcomeCopy": true
+    },
+    {
+      "path": "/vi",
+      "status": 200,
+      "sha256": "0f67baa504a76bb45d5a5f23bf95aa45302ff71519b99f4a4837312059c1d1ef",
+      "matchesWorker": true,
+      "robots": "noindex, follow",
+      "latestWelcomeCopy": true,
+      "canonical": "https://signapse.cloud/vi"
+    },
+    {
+      "path": "/en",
+      "status": 200,
+      "sha256": "2c035e83e2572b17470bd58d15858e713f9244f3dfd3f6a644843909ecf1c20d",
+      "matchesWorker": true,
+      "robots": "noindex, follow",
+      "latestWelcomeCopy": true,
+      "canonical": "https://signapse.cloud/en"
+    },
+    {
+      "path": "/fr",
+      "status": 404,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matchesWorker": true
+    },
+    {
+      "path": "/missing-signapse-page",
+      "status": 404,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matchesWorker": true
+    }
+  ],
+  "assets": [
+    {
+      "path": "/fonts/inter-latin.woff2",
+      "status": 200,
+      "contentType": "font/woff2"
+    },
+    {
+      "path": "/fonts/inter-vietnamese.woff2",
+      "status": 200,
+      "contentType": "font/woff2"
+    },
+    {
+      "path": "/fonts/geist-latin.woff2",
+      "status": 200,
+      "contentType": "font/woff2"
+    },
+    {
+      "path": "/fonts/geist-vietnamese.woff2",
+      "status": 200,
+      "contentType": "font/woff2"
+    },
+    {
+      "path": "/_astro/LandingPage.DEgXyXGk.css",
+      "status": 200,
+      "contentType": "text/css"
+    },
+    {
+      "path": "/_astro/landing-playback.Dxf3qtd2.css",
+      "status": 200,
+      "contentType": "text/css"
+    },
+    {
+      "path": "/_astro/landing-header.xh3M8FYV.js",
+      "status": 200,
+      "contentType": "text/javascript"
+    },
+    {
+      "path": "/_astro/client.Dda4loRL.js",
+      "status": 200,
+      "contentType": "text/javascript"
+    },
+    {
+      "path": "/_astro/landing-context-figure.DTMB8sp8.js",
+      "status": 200,
+      "contentType": "text/javascript"
+    },
+    {
+      "path": "/_astro/landing-capability-strip.BM9pHzjj.js",
+      "status": 200,
+      "contentType": "text/javascript"
+    },
+    {
+      "path": "/_astro/landing-feature-showcase.Dp9zGsq2.js",
+      "status": 200,
+      "contentType": "text/javascript"
+    },
+    {
+      "path": "/_astro/landing-audience-section.BdhrSxXm.js",
+      "status": 200,
+      "contentType": "text/javascript"
+    }
+  ],
+  "redirects": [
+    {
+      "from": "https://signapse.cloud/vi/?source=slash",
+      "status": 307,
+      "to": "https://signapse.cloud/vi?source=slash"
+    },
+    {
+      "from": "https://signapse.cloud/en/",
+      "status": 307,
+      "to": "https://signapse.cloud/en"
+    },
+    {
+      "from": "https://www.signapse.cloud/en?source=www&x=%2F",
+      "status": 301,
+      "to": "https://signapse.cloud/en?source=www&x=%2F"
+    },
+    {
+      "from": "http://www.signapse.cloud/vi?source=www",
+      "status": 301,
+      "to": "https://signapse.cloud/vi?source=www"
+    },
+    {
+      "from": "http://signapse.cloud/vi?source=http",
+      "status": 301,
+      "to": "https://signapse.cloud/vi?source=http"
+    }
+  ],
+  "scope": "Hosted HTTP/output checks after successful CI deployment; application auth/backend was not tested."
+}
