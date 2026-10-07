@@ -412,10 +412,32 @@ export const vi = {
       body: 'Linh hoạt lựa chọn mô hình AI cho từng tác vụ phân tích và phát triển chiến lược.',
       providerListLabel: 'Các nhà cung cấp AI được Signapse tích hợp',
     },
-    finalCta: {
-      heading: 'Bắt đầu từ tín hiệu, chiến lược hay bot?',
-      body: 'Yêu cầu truy cập để xem Signapse có thể phù hợp với quy trình theo dõi, nghiên cứu và tự động hóa của bạn như thế nào.',
-      accessLabel: 'START WITH YOUR MARKET WORKFLOW',
+    contact: {
+      eyebrow: 'KẾT NỐI VỚI SIGNAPSE',
+      heading: 'Liên hệ với Signapse',
+      description:
+        'Bạn muốn trải nghiệm, xem demo hoặc trao đổi hợp tác? Hãy để lại lời nhắn.',
+      alternativeEmail: 'Hoặc liên hệ qua email',
+      formTitle: 'Gửi lời nhắn',
+      submit: 'Gửi lời nhắn',
+      nameLabel: 'Tên (không bắt buộc)',
+      emailLabel: 'Email *',
+      messageLabel: 'Lời nhắn *',
+      requiredFields: 'Email và lời nhắn là bắt buộc.',
+      intent: 'Chúng tôi sẽ liên hệ qua email bạn cung cấp.',
+      submitting: 'Đang gửi…',
+      success:
+        'Lời nhắn của bạn đã được lưu. Cảm ơn bạn đã liên hệ với Signapse.',
+      emailInvalid: 'Vui lòng nhập địa chỉ email hợp lệ.',
+      messageEmpty: 'Vui lòng nhập lời nhắn.',
+      tooLong: 'Nội dung vượt giới hạn độ dài. Vui lòng rút gọn và thử lại.',
+      validationFallback: 'Vui lòng kiểm tra thông tin đã nhập.',
+      requestTooLarge: 'Yêu cầu quá lớn. Vui lòng rút gọn nội dung và thử lại.',
+      rateLimit: 'Bạn đã gửi quá nhiều yêu cầu. Vui lòng thử lại sau.',
+      submissionError:
+        'Chưa xác nhận được yêu cầu của bạn. Thông tin đã nhập được giữ lại để bạn thử lại.',
+      noJavaScript:
+        'Bật JavaScript để gửi form hoặc liên hệ qua email access@signapse.cloud.',
     },
     footer: {
       description:
@@ -860,10 +882,34 @@ export const en: Dictionary = {
       body: 'Choose the right AI model for each analysis and strategy-development task.',
       providerListLabel: 'AI providers integrated with Signapse',
     },
-    finalCta: {
-      heading: 'Start with a signal, a strategy, or a bot?',
-      body: 'Request access to see how Signapse can fit your monitoring, research, and automation workflow.',
-      accessLabel: 'START WITH YOUR MARKET WORKFLOW',
+    contact: {
+      eyebrow: 'CONNECT WITH SIGNAPSE',
+      heading: 'Contact Signapse',
+      description:
+        'Want to try Signapse, see a demo or discuss a partnership? Leave us a message.',
+      alternativeEmail: 'Or contact us by email',
+      formTitle: 'Send a message',
+      submit: 'Send a message',
+      nameLabel: 'Name (optional)',
+      emailLabel: 'Email *',
+      messageLabel: 'Message *',
+      requiredFields: 'Email and message are required.',
+      intent: 'We will contact you at the email you provide.',
+      submitting: 'Sending…',
+      success:
+        'Your message has been saved. Thank you for contacting Signapse.',
+      emailInvalid: 'Please enter a valid email address.',
+      messageEmpty: 'Please enter a message.',
+      tooLong:
+        'Your input exceeds the allowed length. Please shorten it and try again.',
+      validationFallback: 'Please check the information you entered.',
+      requestTooLarge:
+        'Your request is too large. Please shorten it and try again.',
+      rateLimit: 'You have sent too many requests. Please try again later.',
+      submissionError:
+        'We could not confirm your request. Your input has been kept so you can try again.',
+      noJavaScript:
+        'Enable JavaScript to submit the form, or email access@signapse.cloud.',
     },
     footer: {
       description:

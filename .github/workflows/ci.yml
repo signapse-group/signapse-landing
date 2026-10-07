@@ -19,6 +19,8 @@ jobs:
     env:
       DEPLOY_TO_CLOUDFLARE: ${{ github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') }}
       PUBLIC_APP_ORIGIN: ${{ github.ref == 'refs/heads/main' && vars.PUBLIC_APP_ORIGIN || 'http://localhost:3000' }}
+      PUBLIC_CONTACT_API_ORIGIN: ${{ github.ref == 'refs/heads/main' && vars.PUBLIC_CONTACT_API_ORIGIN || 'https://dev-api.signapse.cloud' }}
+      CONTACT_API_ORIGIN_CONFIGURED: ${{ vars.PUBLIC_CONTACT_API_ORIGIN != '' }}
       SIGNAPSE_PUBLIC_ORIGIN: ${{ github.ref == 'refs/heads/main' && vars.SIGNAPSE_PUBLIC_ORIGIN || '' }}
       SIGNAPSE_LANDING_INDEXABLE: ${{ github.ref == 'refs/heads/main' && vars.SIGNAPSE_LANDING_INDEXABLE == 'true' && 'true' || 'false' }}
       SIGNAPSE_VERCEL_ANALYTICS: 'false'
@@ -44,10 +46,15 @@ jobs:
           node --input-type=module -e '
             const app = new URL(process.env.PUBLIC_APP_ORIGIN);
             const landing = new URL(process.env.SIGNAPSE_PUBLIC_ORIGIN);
+            const contactApi = new URL(process.env.PUBLIC_CONTACT_API_ORIGIN);
             if (app.protocol !== "https:" || app.origin === landing.origin || app.hostname === "www.signapse.cloud")
               throw new Error("PUBLIC_APP_ORIGIN must be a separate HTTPS application origin.");
             if (landing.origin !== "https://signapse.cloud")
               throw new Error("Set SIGNAPSE_PUBLIC_ORIGIN to https://signapse.cloud in GitHub Variables.");
+            if (process.env.CONTACT_API_ORIGIN_CONFIGURED !== "true")
+              throw new Error("Set PUBLIC_CONTACT_API_ORIGIN in GitHub Variables before deploying the contact form.");
+            if (contactApi.protocol !== "https:" || contactApi.username || contactApi.password || contactApi.pathname !== "/" || contactApi.search || contactApi.hash)
+              throw new Error("PUBLIC_CONTACT_API_ORIGIN must be an HTTPS origin without credentials, path, query or fragment.");
           '
 
       - name: Check types

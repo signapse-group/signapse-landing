@@ -12,6 +12,8 @@ Nhánh `main`, commit `2ea7124611b6902596e12232dbd8c696463350ce`, đã deploy th
 
 Worker version `dcfcdc6d-b082-43a2-8744-8d5d1b779b04` đã phục vụ trên `signapse.cloud`. Kiểm tra hosted xác nhận nội dung VI/EN mới, nội dung khớp Workers, canonical/noindex, 12 assets, 404 và các redirect slash/www/HTTP. [Bằng chứng release](../verification/cloudflare-hosted-release-2026-10-07.json). Giữ `PUBLIC_APP_ORIGIN=https://dev.signapse.cloud`, indexing tắt; DNS dùng cấu hình đã nối ngày 2026-10-05.
 
+Contact API origin hiện chưa có trong GitHub Variables. Trước deploy phiên bản form, owner thêm `PUBLIC_CONTACT_API_ORIGIN` cho môi trường đích; workflow `Verify` từ chối deploy `main` nếu biến này thiếu hoặc không phải HTTPS origin hợp lệ.
+
 ## Trạng thái triển khai ngày 2026-10-05
 
 Nhánh `main`, commit `0095df9c0d4a17ab50123de1b7f74ddfff08ca2f`, đã deploy thành công qua [GitHub Actions run 37306184240](https://github.com/signapse-group/signapse-landing/actions/runs/37306184240). Source checks, build, 14 model tests và 31 browser tests đều pass trước upload. Worker **signapse-landing** đang phục vụ [signapse.cloud](https://signapse.cloud/vi) qua Custom Domain.
@@ -50,6 +52,7 @@ Trong repository GitHub → **Settings → Secrets and variables → Actions**, 
 | Secrets | `CLOUDFLARE_API_TOKEN` | API token vừa tạo. |
 | Secrets | `CLOUDFLARE_ACCOUNT_ID` | Account ID chứa Worker và zone. |
 | Variables | `PUBLIC_APP_ORIGIN` | Lần thử: `https://dev.signapse.cloud`; go-live: `https://dashboard.signapse.cloud` sau khi app đã hoạt động. |
+| Variables | `PUBLIC_CONTACT_API_ORIGIN` | Origin public API contact cho môi trường landing; hiện dev dùng `https://dev-api.signapse.cloud`. API phải cho phép CORS từ `https://signapse.cloud`. |
 | Variables | `SIGNAPSE_PUBLIC_ORIGIN` | `https://signapse.cloud` |
 | Variables | `SIGNAPSE_LANDING_INDEXABLE` | `false` hiện tại; chỉ đổi `true` khi sẵn sàng indexing. Thiếu variable cũng giữ noindex. |
 
@@ -62,7 +65,7 @@ Workflow tự đặt `SIGNAPSE_VERCEL_ANALYTICS=false`. Push `main` và deploy t
 1. Chọn branch **main**.
 2. Bấm **Run workflow**; pipeline dùng GitHub Variables hiện tại.
 
-Workflow cài Node/pnpm đúng pin, install frozen lockfile, kiểm tra origins, types/lint/format/build, model tests và Chromium browser tests, rồi chạy `pnpm exec wrangler deploy`.
+Workflow cài Node/pnpm đúng pin, install frozen lockfile, kiểm tra application, contact API và landing origins, types/lint/format/build, model tests và Chromium browser tests, rồi chạy `pnpm exec wrangler deploy`.
 
 Khi thành công, Cloudflare có Worker **signapse-landing**. Mở URL `signapse-landing.<account-subdomain>.workers.dev` được in ở deploy log. Kiểm `/`, `/vi`, `/en`, `/fr` (404), `/vi/` (redirect về `/vi`), locale switch, assets và CTA. HTML ở lần deploy này vẫn noindex.
 

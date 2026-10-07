@@ -1078,6 +1078,203 @@ a.megaMenuItem:focus-visible {
   --chart-5: var(--landing-muted);
 }
 
+.contactGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.contactCopy {
+  display: flex;
+  max-width: 34rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.25rem;
+}
+
+.contactAlternative {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.contactEmail {
+  width: fit-content;
+  border-radius: 0.25rem;
+  color: var(--landing-mint);
+  font-family: var(--font-mono), monospace;
+  font-size: 0.875rem;
+}
+
+.contactEmail:hover {
+  color: var(--landing-off-white);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.contactEmail:focus-visible {
+  outline: 2px solid var(--landing-mint);
+  outline-offset: 4px;
+}
+
+.contactNoScript {
+  max-width: 34rem;
+  border-left: 2px solid var(--landing-mint);
+  padding-left: 0.875rem;
+  color: var(--landing-muted);
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+}
+
+.contactFormColumn {
+  min-width: 0;
+  min-height: 29rem;
+}
+
+.contactFormCard {
+  width: 100%;
+  border: 1px solid color-mix(in oklab, var(--landing-boundary) 85%, white);
+  border-radius: var(--landing-card-radius);
+  background: var(--landing-navy-surface);
+  padding: clamp(1.25rem, 3vw, 2rem);
+  box-shadow: 0 1.25rem 3rem color-mix(in oklab, #000 18%, transparent);
+}
+
+.contactFormHeading {
+  margin: 0;
+  color: var(--landing-off-white);
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.contactRequired {
+  margin: 0.35rem 0 1.25rem;
+  color: var(--landing-muted);
+  font-size: 0.8125rem;
+  line-height: 1.4rem;
+}
+
+.contactFieldset {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.contactFieldGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+}
+
+.contactField {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.contactLabel {
+  color: var(--landing-off-white);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.contactInput,
+.contactTextarea {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--landing-boundary);
+  border-radius: var(--landing-control-radius);
+  background: var(--landing-navy);
+  color: var(--landing-off-white);
+  font: inherit;
+  line-height: 1.5;
+}
+
+.contactInput {
+  min-height: var(--landing-control-height);
+  padding: 0.625rem 0.75rem;
+}
+
+.contactTextarea {
+  min-height: 8rem;
+  resize: vertical;
+  padding: 0.75rem;
+}
+
+.contactInput:focus-visible,
+.contactTextarea:focus-visible {
+  outline: 2px solid var(--landing-mint);
+  outline-offset: 2px;
+}
+
+.contactInput[aria-invalid='true'],
+.contactTextarea[aria-invalid='true'] {
+  border-color: #fecaca;
+}
+
+.contactInput:disabled,
+.contactTextarea:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
+.contactFieldError {
+  margin: 0;
+  color: #fecaca;
+  font-size: 0.8125rem;
+  line-height: 1.35rem;
+}
+
+.contactFormNotice {
+  margin: 1rem 0 0;
+  border-left: 2px solid currentColor;
+  padding: 0.5rem 0 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+}
+
+.contactFormNoticeError {
+  color: #fecaca;
+}
+
+.contactFormNoticeSuccess {
+  color: var(--landing-mint);
+}
+
+.contactSubmit {
+  width: 100%;
+  min-height: var(--landing-control-height);
+  margin-top: 1.25rem;
+}
+
+.contactIntent {
+  margin: 0.875rem 0 0;
+  color: var(--landing-muted);
+  font-size: 0.8125rem;
+  line-height: 1.4rem;
+  text-align: center;
+}
+
+@media (min-width: 40rem) {
+  .contactFieldGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 72rem) {
+  .contactGrid {
+    grid-template-columns: minmax(0, 0.84fr) minmax(0, 1.16fr);
+    gap: clamp(3rem, 6vw, 6.5rem);
+  }
+}
+
 .lightSurface {
   color-scheme: light;
   color: var(--foreground);

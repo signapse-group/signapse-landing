@@ -1,5 +1,5 @@
 import AxeBuilder from '@axe-core/playwright';
-import type { Page } from '@playwright/test';
+import type { Page, Route } from '@playwright/test';
 
 import { expect, test } from './fixtures';
 
@@ -29,6 +29,84 @@ const appOrigin = new URL(
 ).origin;
 const indexable = process.env.SIGNAPSE_LANDING_INDEXABLE === 'true';
 const publicOrigin = process.env.SIGNAPSE_PUBLIC_ORIGIN;
+const contactApiOrigin = new URL(
+  process.env.PUBLIC_CONTACT_API_ORIGIN ?? 'https://dev-api.signapse.cloud',
+).origin;
+const contactRequestUrl = new URL('/contact-requests', contactApiOrigin).href;
+
+const contactCopy = {
+  vi: {
+    title: 'Gửi lời nhắn',
+    name: 'Tên (không bắt buộc)',
+    email: 'Email *',
+    message: 'Lời nhắn *',
+    required: 'Email và lời nhắn là bắt buộc.',
+    emptyMessage: 'Vui lòng nhập lời nhắn.',
+    invalidEmail: 'Vui lòng nhập địa chỉ email hợp lệ.',
+    tooLong: 'Nội dung vượt giới hạn độ dài. Vui lòng rút gọn và thử lại.',
+    success:
+      'Lời nhắn của bạn đã được lưu. Cảm ơn bạn đã liên hệ với Signapse.',
+    requestTooLarge: 'Yêu cầu quá lớn. Vui lòng rút gọn nội dung và thử lại.',
+    rateLimit: 'Bạn đã gửi quá nhiều yêu cầu. Vui lòng thử lại sau.',
+    fallback: 'Vui lòng kiểm tra thông tin đã nhập.',
+    submissionError:
+      'Chưa xác nhận được yêu cầu của bạn. Thông tin đã nhập được giữ lại để bạn thử lại.',
+    noJavaScript:
+      'Bật JavaScript để gửi form hoặc liên hệ qua email access@signapse.cloud.',
+  },
+  en: {
+    title: 'Send a message',
+    name: 'Name (optional)',
+    email: 'Email *',
+    message: 'Message *',
+    required: 'Email and message are required.',
+    emptyMessage: 'Please enter a message.',
+    invalidEmail: 'Please enter a valid email address.',
+    tooLong:
+      'Your input exceeds the allowed length. Please shorten it and try again.',
+    success: 'Your message has been saved. Thank you for contacting Signapse.',
+    requestTooLarge:
+      'Your request is too large. Please shorten it and try again.',
+    rateLimit: 'You have sent too many requests. Please try again later.',
+    fallback: 'Please check the information you entered.',
+    submissionError:
+      'We could not confirm your request. Your input has been kept so you can try again.',
+    noJavaScript:
+      'Enable JavaScript to submit the form, or email access@signapse.cloud.',
+  },
+} as const;
+
+async function openContactForm(page: Page, locale: 'vi' | 'en') {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto(`/${locale}#access`);
+  await expect(page.locator('#contact-request-form')).toBeVisible();
+}
+
+async function interceptContactApi(
+  page: Page,
+  handler: (route: Route) => Promise<void>,
+) {
+  await page.route('**/contact-requests', async (route) => {
+    expect(new URL(route.request().url()).href).toBe(contactRequestUrl);
+    await handler(route);
+  });
+}
+
+async function fillContact(
+  page: Page,
+  locale: 'vi' | 'en',
+  fields: { email?: string; message?: string; name?: string } = {},
+) {
+  await page
+    .getByLabel(contactCopy[locale].email)
+    .fill(fields.email ?? 'visitor@example.test');
+  if (fields.name !== undefined) {
+    await page.getByLabel(contactCopy[locale].name).fill(fields.name);
+  }
+  await page
+    .getByLabel(contactCopy[locale].message)
+    .fill(fields.message ?? 'Please contact me about a demo.');
+}
 
 async function ready(page: Page, locale: 'vi' | 'en' = 'vi', suffix = '') {
   await page.goto(`/${locale}${suffix}`);
@@ -117,7 +195,17 @@ for (const locale of ['vi', 'en'] as const) {
     const dashboardHref = `${appOrigin}/${locale}/dashboard`;
     const articlesHref = `${appOrigin}/${locale}/articles`;
     const dashboardLinks = page.locator(`a[href="${dashboardHref}"]`);
-    expect(await dashboardLinks.count()).toBeGreaterThanOrEqual(3);
+    await expect(
+      page
+        .locator('[data-landing-part="header"]')
+        .locator(`a[href="${dashboardHref}"]`),
+    ).toBeVisible();
+    await expect(
+      page
+        .locator('[data-landing-part="footer"]')
+        .locator(`a[href="${dashboardHref}"]`),
+    ).toBeVisible();
+    expect(await dashboardLinks.count()).toBeGreaterThanOrEqual(2);
     expect(
       await page.locator(`a[href="${articlesHref}"]`).count(),
     ).toBeGreaterThan(0);
@@ -862,4 +950,364 @@ test('root is a useful default landing entry with locale links and noindex', asy
     .click();
   await expect(page).toHaveURL(/\/en\?source=root#knowledge-graph$/);
   expect((await request.get('/fr')).status()).toBe(404);
+});
+
+for (const locale of ['vi', 'en'] as const) {
+  const copy = contactCopy[locale];
+
+  test(`${locale} contact form exposes labels, validation, focus and localized copy`, async ({
+    page,
+  }) => {
+    let requestCount = 0;
+    await interceptContactApi(page, async (route) => {
+      requestCount += 1;
+      await route.fulfill({ status: 201, body: '' });
+    });
+    await openContactForm(page, locale);
+
+    const section = page.locator('#access');
+    const email = page.getByLabel(copy.email, { exact: true });
+    const message = page.getByLabel(copy.message, { exact: true });
+    const submit = page.getByRole('button', { name: copy.title, exact: true });
+
+    await expect(section.getByRole('heading', { level: 2 })).toContainText(
+      locale === 'vi' ? 'Liên hệ với Signapse' : 'Contact Signapse',
+    );
+    await expect(page.getByRole('heading', { name: copy.title })).toBeVisible();
+    await expect(page.getByLabel(copy.name, { exact: true })).toHaveValue('');
+    await expect(email).toHaveValue('');
+    await expect(message).toHaveValue('');
+    await expect(email).toHaveAttribute('maxlength', '254');
+    await expect(email).toHaveAttribute('required', '');
+    await expect(page.getByLabel(copy.name, { exact: true })).toHaveAttribute(
+      'maxlength',
+      '100',
+    );
+    await expect(message).toHaveAttribute('maxlength', '5000');
+    await expect(section).toContainText(copy.required);
+
+    const initialAxe = await new AxeBuilder({ page })
+      .include('#access')
+      .analyze();
+    expect(initialAxe.violations).toEqual([]);
+
+    await submit.click();
+    await expect(email).toHaveAttribute('aria-invalid', 'true');
+    await expect(page.locator('#contact-email-error')).toHaveText(
+      copy.required,
+    );
+    await expect(email).toBeFocused();
+
+    await fillContact(page, locale, {
+      email: 'not-an-email',
+      message: 'A message',
+    });
+    await submit.click();
+    await expect(page.locator('#contact-email-error')).toHaveText(
+      copy.invalidEmail,
+    );
+
+    await fillContact(page, locale, { message: ' \n\t ' });
+    await submit.click();
+    await expect(page.locator('#contact-message-error')).toHaveText(
+      copy.emptyMessage,
+    );
+    await expect(message).toHaveAttribute('aria-invalid', 'true');
+    expect(requestCount).toBe(0);
+
+    await email.focus();
+    await email.press('Tab');
+    await expect(message).toBeFocused();
+    await message.press('Tab');
+    await expect(submit).toBeFocused();
+    await expect(
+      page.locator(
+        '[data-landing-section="hero-product-proof"] a[href="#access"]',
+      ),
+    ).toBeVisible();
+    await expect(page.locator('[data-landing-part="footer"]')).toContainText(
+      'access@signapse.cloud',
+    );
+  });
+
+  test(`${locale} contact form sends the producer payload and accepts an empty 201`, async ({
+    page,
+  }) => {
+    let requestCount = 0;
+    let requestHeaders: Record<string, string> = {};
+    let requestBody: unknown;
+    await interceptContactApi(page, async (route) => {
+      requestCount += 1;
+      requestHeaders = await route.request().allHeaders();
+      requestBody = route.request().postDataJSON();
+      await route.fulfill({ status: 201, body: '' });
+    });
+    await openContactForm(page, locale);
+
+    const message = 'Xin chào 🌿\nDòng thứ hai — 合作';
+    await fillContact(page, locale, { message });
+    await page.getByLabel(copy.email, { exact: true }).press('Enter');
+
+    await expect(page.getByRole('status')).toHaveText(copy.success);
+    expect(requestCount).toBe(1);
+    expect(requestBody).toEqual({
+      email: 'visitor@example.test',
+      message,
+    });
+    expect(requestHeaders['content-type']).toContain('application/json');
+    expect(requestHeaders['accept-language']).toBe(locale);
+    expect(requestHeaders.authorization).toBeUndefined();
+    expect(requestHeaders.cookie).toBeUndefined();
+    await expect(page.getByLabel(copy.name, { exact: true })).toHaveValue('');
+    await expect(page.getByLabel(copy.email, { exact: true })).toHaveValue('');
+    await expect(page.getByLabel(copy.message, { exact: true })).toHaveValue(
+      '',
+    );
+    await expect(page).toHaveURL(new RegExp(`#access$`));
+  });
+
+  test(`${locale} contact form submits values at the published producer limits`, async ({
+    page,
+  }) => {
+    let requestBody: unknown;
+    await interceptContactApi(page, async (route) => {
+      requestBody = route.request().postDataJSON();
+      await route.fulfill({ status: 201, body: '' });
+    });
+    await openContactForm(page, locale);
+
+    const maxEmail = `${'a'.repeat(64)}@${'b'.repeat(63)}.${'c'.repeat(63)}.${'d'.repeat(56)}.test`;
+    const maxName = 'N'.repeat(100);
+    const maxMessage = 'M'.repeat(5000);
+    await fillContact(page, locale, {
+      email: maxEmail,
+      name: maxName,
+      message: maxMessage,
+    });
+    await page.getByRole('button', { name: copy.title, exact: true }).click();
+    await expect(page.getByRole('status')).toHaveText(copy.success);
+    expect(requestBody).toEqual({
+      email: maxEmail,
+      name: maxName,
+      message: maxMessage,
+    });
+  });
+
+  test(`${locale} contact form keeps a useful email path when JavaScript is disabled`, async ({
+    page,
+  }) => {
+    let requestCount = 0;
+    const browser = page.context().browser();
+    if (!browser) throw new Error('Expected the Chromium browser fixture.');
+    const noJsContext = await browser.newContext({ javaScriptEnabled: false });
+
+    try {
+      const noJsPage = await noJsContext.newPage();
+      await interceptContactApi(noJsPage, async (route) => {
+        requestCount += 1;
+        await route.fulfill({ status: 201, body: '' });
+      });
+      await noJsPage.goto(`/${locale}#access`);
+
+      const section = noJsPage.locator('#access');
+      await expect(
+        section.getByText(copy.noJavaScript, { exact: true }),
+      ).toBeVisible();
+      await expect(section.locator('a[href^="mailto:"]')).toContainText(
+        'access@signapse.cloud',
+      );
+      await expect(section.locator('#contact-request-form')).toHaveCount(0);
+      await expect(section.getByRole('status')).toHaveCount(0);
+      await expect(section.getByRole('alert')).toHaveCount(0);
+      expect(requestCount).toBe(0);
+    } finally {
+      await noJsContext.close();
+    }
+  });
+
+  test(`${locale} contact layout fits the assigned widths and 200% zoom`, async ({
+    page,
+  }, testInfo) => {
+    await openContactForm(page, locale);
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await expect
+      .poll(() =>
+        page
+          .locator('[data-contact-form-card]')
+          .evaluate((element) => getComputedStyle(element).paddingTop),
+      )
+      .toBe('32px');
+    await expect
+      .poll(() =>
+        page
+          .locator('[data-contact-form-card]')
+          .evaluate((element) => getComputedStyle(element).borderTopWidth),
+      )
+      .toBe('1px');
+    await expect
+      .poll(() =>
+        page
+          .locator('#contact-request-form button[type="submit"]')
+          .evaluate((element) => element.getBoundingClientRect().width),
+      )
+      .toBeGreaterThan(400);
+
+    for (const width of [375, 768, 1024, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      await assertNoOverflow(page);
+      const layout = page.locator('[data-contact-layout]');
+      const form = page.locator('[data-contact-form-card]');
+      const box = await form.boundingBox();
+      expect(box).not.toBeNull();
+      expect(box!.x).toBeGreaterThanOrEqual(0);
+      expect(box!.x + box!.width).toBeLessThanOrEqual(width);
+      const columnCount = await layout.evaluate(
+        (element) =>
+          getComputedStyle(element).gridTemplateColumns.trim().split(/\s+/)
+            .length,
+      );
+      expect(columnCount).toBe(width >= 1152 ? 2 : 1);
+      const nameBox = await page.locator('#contact-name').boundingBox();
+      const emailBox = await page.locator('#contact-email').boundingBox();
+      expect(nameBox).not.toBeNull();
+      expect(emailBox).not.toBeNull();
+      if (width >= 640) expect(emailBox!.y).toBe(nameBox!.y);
+      else expect(emailBox!.y).toBeGreaterThan(nameBox!.y);
+    }
+
+    await page.setViewportSize({ width: 720, height: 900 });
+    await page.evaluate(() => {
+      document.documentElement.style.zoom = '2';
+    });
+    await assertNoOverflow(page);
+    await expect(page.locator('[data-contact-form-card]')).toBeVisible();
+
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.evaluate(() => {
+      document.documentElement.style.zoom = '1';
+      void document.documentElement.offsetHeight;
+    });
+    await page.evaluate(() => document.fonts.ready);
+    const contactSection = page.locator('#access');
+    await contactSection.scrollIntoViewIfNeeded();
+    await expect(contactSection).toBeInViewport();
+    await expect(page.locator('[data-contact-form-card]')).toBeInViewport();
+    await expect
+      .poll(() =>
+        page
+          .locator('[data-contact-form-card]')
+          .evaluate((element) => getComputedStyle(element).paddingTop),
+      )
+      .toBe('32px');
+    await expect
+      .poll(() =>
+        page
+          .locator('#contact-request-form button[type="submit"]')
+          .evaluate((element) => element.getBoundingClientRect().width),
+      )
+      .toBeGreaterThan(400);
+    await testInfo.attach(`contact-form-${locale}-desktop.png`, {
+      body: await contactSection.screenshot({ animations: 'disabled' }),
+      contentType: 'image/png',
+    });
+  });
+}
+
+test('contact API errors, unreadable bodies and network failure never lose input or retry', async ({
+  page,
+}) => {
+  const locale = 'vi';
+  const copy = contactCopy[locale];
+  const responses = [
+    {
+      status: 400,
+      body: JSON.stringify({ message: copy.tooLong }),
+    },
+    { status: 400, body: 'not-json' },
+    { status: 413, body: '' },
+    {
+      status: 415,
+      body: JSON.stringify({ message: 'db host 10.0.0.1 is unavailable' }),
+    },
+    {
+      status: 500,
+      body: JSON.stringify({ message: 'internal database detail' }),
+    },
+    { status: 0, networkFailure: true },
+    { status: 204, body: undefined },
+    {
+      status: 429,
+      body: JSON.stringify({ message: copy.rateLimit }),
+      retryAfter: '60',
+    },
+  ];
+  const expectedMessages = [
+    copy.tooLong,
+    copy.fallback,
+    copy.requestTooLarge,
+    copy.submissionError,
+    copy.submissionError,
+    copy.submissionError,
+    copy.submissionError,
+    copy.rateLimit,
+  ];
+  let requestCount = 0;
+  await interceptContactApi(page, async (route) => {
+    const reply = responses[requestCount];
+    requestCount += 1;
+    if (reply.networkFailure) {
+      await route.abort('failed');
+      return;
+    }
+    await route.fulfill({
+      status: reply.status,
+      contentType: 'application/json',
+      headers: reply.retryAfter ? { 'Retry-After': reply.retryAfter } : {},
+      body: reply.body,
+    });
+  });
+  await openContactForm(page, locale);
+  await fillContact(page, locale);
+
+  for (let index = 0; index < expectedMessages.length; index += 1) {
+    await page.getByRole('button', { name: copy.title, exact: true }).click();
+    await expect(page.getByRole('alert')).toHaveText(expectedMessages[index]);
+    await expect(page.getByLabel(copy.email, { exact: true })).toHaveValue(
+      'visitor@example.test',
+    );
+    await expect(page.getByLabel(copy.message, { exact: true })).toHaveValue(
+      'Please contact me about a demo.',
+    );
+  }
+
+  await expect(page.getByRole('button', { name: copy.title })).toBeEnabled();
+  await page.waitForTimeout(100);
+  expect(requestCount).toBe(responses.length);
+  await expect(page.locator('#access')).not.toContainText('10.0.0.1');
+  await expect(page.locator('#access')).not.toContainText('internal database');
+});
+
+test('contact submission in flight ignores repeated click and Enter submits', async ({
+  page,
+}) => {
+  let requestCount = 0;
+  await interceptContactApi(page, async (route) => {
+    requestCount += 1;
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    await route.fulfill({ status: 201, body: '' });
+  });
+  await openContactForm(page, 'en');
+  await fillContact(page, 'en');
+
+  await page.evaluate(() => {
+    const form = document.querySelector<HTMLFormElement>(
+      '#contact-request-form',
+    );
+    form?.requestSubmit();
+    form?.requestSubmit();
+  });
+
+  await expect(page.getByRole('button', { name: 'Sending…' })).toBeDisabled();
+  await expect(page.getByRole('status')).toHaveText(contactCopy.en.success);
+  expect(requestCount).toBe(1);
 });

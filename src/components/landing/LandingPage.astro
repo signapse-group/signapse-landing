@@ -4,8 +4,12 @@ import type { Dictionary } from '@/i18n/messages';
 import LandingActionButton from './LandingActionButton.astro';
 import LandingFooter from './LandingFooter.astro';
 import LandingCurrencyBackground from './LandingCurrencyBackground.astro';
+import { LandingContactForm } from './landing-contact-form';
 import LandingProviderMarquee from './LandingProviderMarquee.astro';
-import { createLandingAccessModel } from './landing-access';
+import {
+  createLandingAccessModel,
+  REQUEST_ACCESS_HREF,
+} from './landing-access';
 import { LandingAudienceSection } from './landing-audience-section';
 import { LandingCapabilityStrip } from './landing-capability-strip';
 import { LandingContextFigure } from './landing-context-figure';
@@ -149,25 +153,40 @@ const access = createLandingAccessModel(locale, t);
       aria-labelledby="landing-access-heading"
       class={`${styles.darkSurface} border-b border-border/80 bg-background`}
     >
-      <div class="mx-auto flex w-full max-w-[100rem] justify-center px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
-        <div class="flex max-w-3xl flex-col items-center gap-6 text-center">
-          <p class="text-xs font-semibold tracking-[0.18em] text-chart-1 uppercase">
-            {t.finalCta.accessLabel}
-          </p>
-          <h2
-            id="landing-access-heading"
-            class={`${styles.landingDisplayHeading} text-3xl leading-tight sm:text-4xl`}
-          >
-            {t.finalCta.heading}
-          </h2>
-          <p class="max-w-2xl leading-7 text-muted-foreground">
-            {t.finalCta.body}
-          </p>
-          <LandingActionButton
-            action={access.finalCta}
-            class={styles.sectionAction}
-            size="lg"
-          />
+      <div class="mx-auto w-full max-w-[88rem] px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
+        <div class={styles.contactGrid} data-contact-layout>
+          <div class={styles.contactCopy}>
+            <p class="text-xs font-semibold tracking-[0.18em] text-chart-1 uppercase">
+              {t.contact.eyebrow}
+            </p>
+            <h2
+              id="landing-access-heading"
+              class={`${styles.landingDisplayHeading} text-3xl leading-tight sm:text-4xl`}
+            >
+              {t.contact.heading}
+            </h2>
+            <p class="max-w-xl leading-7 text-muted-foreground">
+              {t.contact.description}
+            </p>
+            <div class={styles.contactAlternative}>
+              <p class="text-sm text-muted-foreground">
+                {t.contact.alternativeEmail}
+              </p>
+              <a href={REQUEST_ACCESS_HREF} class={styles.contactEmail}>
+                {t.footer.requestAccessEmail}
+              </a>
+            </div>
+            <noscript>
+              <p class={styles.contactNoScript}>{t.contact.noJavaScript}</p>
+            </noscript>
+          </div>
+          <div class={styles.contactFormColumn}>
+            <LandingContactForm
+              client:only="react"
+              copy={t.contact}
+              locale={locale}
+            />
+          </div>
         </div>
       </div>
     </section>

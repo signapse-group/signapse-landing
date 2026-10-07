@@ -21,6 +21,11 @@ export default defineConfig({
   },
   env: {
     schema: {
+      PUBLIC_CONTACT_API_ORIGIN: envField.string({
+        context: 'client',
+        access: 'public',
+        default: 'https://dev-api.signapse.cloud',
+      }),
       PUBLIC_APP_ORIGIN: envField.string({
         context: 'client',
         access: 'public',
