@@ -156,7 +156,7 @@ async function progressValue(page: Page, feature: (typeof features)[number]) {
 }
 
 for (const locale of ['vi', 'en'] as const) {
-  test(`${locale} public shell, localized metadata, dashboard and Articles links`, async ({
+  test(`${locale} public shell, localized metadata, dashboard and Blog navigation`, async ({
     page,
   }) => {
     await ready(page, locale);
@@ -199,7 +199,7 @@ for (const locale of ['vi', 'en'] as const) {
       new RegExp(`/social/${locale}\\.png$`),
     );
     const dashboardHref = `${appOrigin}/${locale}/dashboard`;
-    const articlesHref = `${appOrigin}/${locale}/articles`;
+    const blogHref = `/${locale}/blogs`;
     const dashboardLinks = page.locator(`a[href="${dashboardHref}"]`);
     await expect(
       page
@@ -213,7 +213,10 @@ for (const locale of ['vi', 'en'] as const) {
     ).toBeVisible();
     expect(await dashboardLinks.count()).toBeGreaterThanOrEqual(2);
     expect(
-      await page.locator(`a[href="${articlesHref}"]`).count(),
+      await page
+        .locator('[data-landing-part="header"]')
+        .locator(`a[href="${blogHref}"]`)
+        .count(),
     ).toBeGreaterThan(0);
     await expect(
       page.locator('[data-landing-part="header"]'),
@@ -242,8 +245,10 @@ for (const locale of ['vi', 'en'] as const) {
       .locator('details[name="landing-desktop-menu"]')
       .nth(2);
     await resources.locator('summary').hover();
-    await resources.locator(`a[href="${articlesHref}"]`).click();
-    await expect(page).toHaveURL(articlesHref);
+    const blogLink = resources.locator(`a[href="${blogHref}"]`);
+    await expect(blogLink).toBeVisible();
+    await blogLink.click();
+    await expect(page).toHaveURL(new URL(blogHref, page.url()).href);
   });
 
   for (const viewport of viewports) {

@@ -1,0 +1,266 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import BlogShell from '@/components/landing/BlogShell.astro';
+import styles from '@/components/landing/public-blog.module.css';
+import { messages } from '@/i18n/messages';
+import { SUPPORTED_LOCALES, type Locale } from '@/i18n/config';
+import { withLocalePath } from '@/i18n/routing';
+import {
+  getPublicBlogPage,
+  PUBLIC_BLOG_PAGE_SIZE,
+  type PublicBlogPage,
+} from '@/lib/public-blog-api';
+import { publicBlogApiOrigin } from '@/lib/public-blog-runtime';
+
+export const prerender = false;
+
+const rawLocale = Astro.params.lang ?? '';
+const supportedLocale = SUPPORTED_LOCALES.includes(rawLocale as Locale);
+const locale: Locale = supportedLocale ? (rawLocale as Locale) : 'vi';
+const dictionary = messages[locale];
+const copy = dictionary.landing.blogPage;
+const routePath = withLocalePath('/blogs', locale);
+const query = Astro.url.searchParams.get('page') ?? '';
+const requestedPage = /^\d+$/.test(query) ? Number(query) : 0;
+const normalizedPage = Number.isSafeInteger(requestedPage) ? requestedPage : 0;
+let page: PublicBlogPage = {
+  content: [],
+  number: 0,
+  totalElements: 0,
+  totalPages: 0,
+};
+let loadError = false;
+
+Astro.response.headers.set(
+  'Cache-Control',
+  'private, no-store, no-cache, max-age=0, must-revalidate',
+);
+Astro.response.headers.set('Surrogate-Control', 'no-store');
+
+if (!supportedLocale) {
+  Astro.response.status = 404;
+} else {
+  try {
+    page = await getPublicBlogPage(publicBlogApiOrigin(), normalizedPage);
+  } catch {
+    loadError = true;
+    Astro.response.status = 502;
+  }
+}
+
+const currentPage = page.number;
+const canonicalFor = (targetLocale: Locale) => {
+  const path = withLocalePath('/blogs', targetLocale);
+  return currentPage > 0 ? `${path}?page=${currentPage}` : path;
+};
+const canonicalPaths = {
+  vi: canonicalFor('vi'),
+  en: canonicalFor('en'),
+};
+const pageTitle = loadError ? copy.errorTitle : copy.listTitle;
+const metadataTitle = `${pageTitle} | Signapse`;
+const metadataDescription = loadError
+  ? copy.errorDescription
+  : copy.listDescription;
+const socialImageAlt = `${pageTitle} — Signapse`;
+const numberLabel = (value: number) =>
+  new Intl.NumberFormat(locale === 'vi' ? 'vi-VN' : 'en-GB').format(value);
+const firstPostNumber =
+  page.totalElements === 0 ? 0 : currentPage * PUBLIC_BLOG_PAGE_SIZE + 1;
+const lastPostNumber = Math.min(
+  (currentPage + 1) * PUBLIC_BLOG_PAGE_SIZE,
+  page.totalElements,
+);
+const formatDate = (value: string) => {
+  const date = new Date(value);
+  return new Intl.DateTimeFormat(locale === 'vi' ? 'vi-VN' : 'en-GB', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(date);
+};
+const posts = page.content;
+const featured = posts[0];
+const sidePosts = posts.slice(1, 3);
+const bottomPosts = posts.slice(3);
+const postHref = (slug: string) =>
+  withLocalePath(`/blogs/${encodeURIComponent(slug)}`, locale);
+const pageHref = (value: number) =>
+  value > 0 ? `${routePath}?page=${value}` : routePath;
+const pageNumbers =
+  page.totalPages <= 7
+    ? Array.from({ length: page.totalPages }, (_, index) => index)
+    : Array.from(
+        new Set([
+          0,
+          Math.max(0, currentPage - 1),
+          currentPage,
+          Math.min(page.totalPages - 1, currentPage + 1),
+          page.totalPages - 1,
+        ]),
+      ).sort((left, right) => left - right);
+---
+
+<BaseLayout
+  locale={locale}
+  title={metadataTitle}
+  description={metadataDescription}
+  socialImageAlt={socialImageAlt}
+  canonicalPaths={loadError || !supportedLocale ? undefined : canonicalPaths}
+  canonicalOverride={loadError || !supportedLocale ? null : undefined}
+  forceNoindex={loadError || !supportedLocale}
+  hideAlternates={loadError || !supportedLocale}
+>
+  <BlogShell
+    dictionary={dictionary}
+    locale={locale}
+    headerSurface="dark"
+    solidHeader
+    currentPath={Astro.url.pathname}
+    currentQuery={Astro.url.search.slice(1)}
+  >
+    <main id="main-content" tabindex="-1" class={styles.main}>
+      <section class={styles.listIntro} aria-labelledby="blog-list-title">
+        <nav class={styles.breadcrumbs} aria-label={copy.breadcrumbLabel}>
+          <a href={withLocalePath('/', locale)}>{copy.breadcrumbHome}</a>
+          <span aria-hidden="true">/</span>
+          <span aria-current="page">{copy.listTitle}</span>
+        </nav>
+        <h1 id="blog-list-title" class={styles.listTitle}>
+          {copy.listTitle}
+        </h1>
+        <p class={styles.listDescription}>{copy.listDescription}</p>
+      </section>
+
+      <section class={styles.listContent} aria-labelledby="latest-posts-title">
+        {loadError || !supportedLocale ? (
+          <div class={styles.errorState} role="status">
+            <h2 id="latest-posts-title">{copy.errorTitle}</h2>
+            <p>{copy.errorDescription}</p>
+            <a
+              class={styles.textLink}
+              href={`${Astro.url.pathname}${Astro.url.search}`}
+            >
+              {copy.retry}
+            </a>
+          </div>
+        ) : posts.length === 0 ? (
+          <div class={styles.emptyState}>
+            <h2 id="latest-posts-title">{copy.emptyTitle}</h2>
+            <p>{copy.emptyDescription}</p>
+          </div>
+        ) : (
+          <>
+            <div class={styles.sectionHeading}>
+              <h2 id="latest-posts-title">{copy.latest}</h2>
+              <span class={styles.postCount}>
+                {copy.showing} {numberLabel(firstPostNumber)}–
+                {numberLabel(lastPostNumber)} {copy.rangeOf}{' '}
+                {numberLabel(page.totalElements)} {copy.count}
+              </span>
+            </div>
+            <div
+              class={`${styles.postGrid} ${sidePosts.length ? '' : styles.postGridSingle}`}
+            >
+              {featured && (
+                <a class={styles.featuredPost} href={postHref(featured.slug)}>
+                  <div class={styles.featuredMeta}>
+                    <span>{copy.published}</span>
+                    <time datetime={featured.publishedAt}>
+                      {formatDate(featured.publishedAt)}
+                    </time>
+                  </div>
+                  <div class={styles.featuredCopy}>
+                    <h3>{featured.title}</h3>
+                    <p>{featured.shortDescription}</p>
+                    <span class={styles.readMore}>
+                      {copy.readMore}
+                      <span aria-hidden="true">→</span>
+                    </span>
+                  </div>
+                </a>
+              )}
+              {sidePosts.length > 0 && (
+                <div class={styles.sidePosts}>
+                  {sidePosts.map((post) => (
+                    <a class={styles.postCard} href={postHref(post.slug)}>
+                      <div class={styles.cardMeta}>
+                        <span>{copy.published}</span>
+                        <time datetime={post.publishedAt}>
+                          {formatDate(post.publishedAt)}
+                        </time>
+                      </div>
+                      <div>
+                        <h3>{post.title}</h3>
+                        <p>{post.shortDescription}</p>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+            {bottomPosts.length > 0 && (
+              <div class={styles.bottomPosts}>
+                {bottomPosts.map((post) => (
+                  <a class={styles.postCard} href={postHref(post.slug)}>
+                    <div class={styles.cardMeta}>
+                      <span>{copy.published}</span>
+                      <time datetime={post.publishedAt}>
+                        {formatDate(post.publishedAt)}
+                      </time>
+                    </div>
+                    <div>
+                      <h3>{post.title}</h3>
+                      <p>{post.shortDescription}</p>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            )}
+            {page.totalPages > 1 && (
+              <div class={styles.paginationRow}>
+                <p class={styles.pageCount}>
+                  {copy.page} {currentPage + 1} {copy.of} {page.totalPages}
+                </p>
+                <nav class={styles.pagination} aria-label={copy.latest}>
+                  {currentPage > 0 ? (
+                    <a href={pageHref(currentPage - 1)} rel="prev">
+                      {copy.previous}
+                    </a>
+                  ) : (
+                    <span aria-disabled="true">{copy.previous}</span>
+                  )}
+                  {pageNumbers.map((pageNumber, index) => (
+                    <>
+                      {index > 0 &&
+                        pageNumber - (pageNumbers[index - 1] ?? 0) > 1 && (
+                          <span aria-hidden="true">…</span>
+                        )}
+                      <a
+                        href={pageHref(pageNumber)}
+                        aria-label={`${copy.page} ${pageNumber + 1} ${copy.of} ${page.totalPages}`}
+                        aria-current={
+                          currentPage === pageNumber ? 'page' : undefined
+                        }
+                      >
+                        {pageNumber + 1}
+                      </a>
+                    </>
+                  ))}
+                  {currentPage + 1 < page.totalPages ? (
+                    <a href={pageHref(currentPage + 1)} rel="next">
+                      {copy.next}
+                    </a>
+                  ) : (
+                    <span aria-disabled="true">{copy.next}</span>
+                  )}
+                </nav>
+              </div>
+            )}
+          </>
+        )}
+      </section>
+    </main>
+  </BlogShell>
+</BaseLayout>

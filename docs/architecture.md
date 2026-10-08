@@ -7,6 +7,7 @@ Tài liệu này mô tả implementation trong `signapse-landing`. Requirement/d
 | Trách nhiệm                   | Source trong repo                                                                                                                                    |
 | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Static routes VI/EN           | src/pages/[lang]/index.astro, SUPPORTED_LOCALES trong src/i18n/config.ts                                                                             |
+| Blog SSR VI/EN                 | src/pages/[lang]/blogs/index.astro, src/pages/[lang]/blogs/[slug].astro; mỗi request đọc public API, `no-store`                                             |
 | Root entry                    | src/pages/index.astro, landing tiếng Việt; noindex để tránh duplicate                                                                                |
 | HTML/head/analytics           | src/layouts/BaseLayout.astro, src/lib/landing-metadata.ts                                                                                            |
 | Bố cục/static copy            | src/components/landing/LandingPage.astro                                                                                                             |
@@ -22,12 +23,13 @@ Tài liệu này mô tả implementation trong `signapse-landing`. Requirement/d
 | Form liên hệ                    | LandingPage.astro giữ copy/email fallback tĩnh ở #access; landing-contact-form.tsx gửi JSON tới public API origin được cấu hình riêng. |
 | External app URLs/locale URLs | src/i18n/routing.ts; appHref/withLocalePath/buildLandingLocaleHref                                                                                   |
 | Copy                          | src/i18n/messages.ts; typed VI/EN, fixture labels và metadata                                                                                        |
+| Blog renderer/API             | blog-content.tsx (structured content v1), src/lib/public-blog-api.ts, src/lib/public-blog-runtime.ts                                                |
 | Tokens/font faces             | src/components/landing/landing-page.module.css, src/styles/global.css, src/styles/fonts.css                                                          |
 | Verification                  | tests/models/, tests/e2e/, playwright.config.ts                                                                                                      |
 
 ## Rendering và hydration
 
-Astro prerender HTML ở build time. Header và capability dùng client:load để navigation/deep link sẵn sàng sớm. Context, Audience và showcase dùng client:idle, giữ SSR hoàn chỉnh; observer bên trong quyết định tải/run khi cần. Không phụ thuộc directive client:visible vì browser thiếu IntersectionObserver vẫn cần fallback không lỗi.
+Astro prerender homepage `/`, `/vi` và `/en` ở build time. Blog list/detail dùng Cloudflare Worker SSR ở mỗi request; server gọi `GET /blogs/public` hoặc `GET /blogs/public/{slug}` với `cache: 'no-store'`, và response HTML không cho browser/CDN cache nội dung. Header và capability dùng client:load để navigation/deep link sẵn sàng sớm. Context, Audience và showcase dùng client:idle, giữ SSR hoàn chỉnh; observer bên trong quyết định tải/run khi cần. Không phụ thuộc directive client:visible vì browser thiếu IntersectionObserver vẫn cần fallback không lỗi.
 
 Header dùng native details/summary nên menu cơ bản dùng được trước hydration. Capability dùng native details ở SSR/noJS và cùng dictionary để dựng Popover sau hydration. Showcase SSR giữ bốn copy/proof trong luồng tự nhiên; khi có observer, desktop từ 1024px dùng một vị trí sticky cho demo active. AI/Telegram runner tải bằng dynamic import bên trong showcase; code preview tồn tại khi đang tải hoặc tải lỗi.
 
@@ -51,3 +53,5 @@ Reduced motion giữ final proof, không autoplay. Không IntersectionObserver g
 public/ chỉ chứa logo, favicon, provider SVG + NOTICE, Telegram icon, WOFF2 + OFL và social PNG. Font được self-host; font-face declarations là nguồn cấu hình, không cần tải font từ app khác. Hai social card 1200×630 theo locale nằm trong public/social/; cập nhật ở đây khi brand/metadata đổi.
 
 PUBLIC_APP_ORIGIN là origin ứng dụng sản phẩm, không phải origin landing. Dashboard và Articles mở trên origin đó; auth nằm ở ứng dụng đích. SIGNAPSE_PUBLIC_ORIGIN và SIGNAPSE_LANDING_INDEXABLE kiểm soát metadata tại build time; env thật nằm ngoài Git. Vercel integrations chỉ bật khi hosting có endpoints tương ứng.
+
+`PUBLIC_BLOG_API_ORIGIN` là Worker runtime variable, không phải client/build variable. `wrangler.jsonc` dùng `https://dev-api.signapse.cloud` làm mặc định local; deploy workflow yêu cầu origin riêng từ GitHub Variables và truyền nó vào Worker. Local `pnpm preview` đọc `.dev.vars` qua `dist/server/.dev.vars`; public GET không dùng credential. Homepage giữ static output trong cùng Worker với blog SSR và binding Static Assets.

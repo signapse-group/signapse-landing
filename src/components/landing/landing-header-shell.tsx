@@ -4,10 +4,11 @@ import { useEffect, useState, type ComponentProps } from 'react';
 
 export function LandingHeaderShell({
   children,
+  initialSurface = 'dark',
   ...props
-}: ComponentProps<'header'>) {
+}: ComponentProps<'header'> & { initialSurface?: 'dark' | 'light' }) {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [surface, setSurface] = useState<'dark' | 'light'>('dark');
+  const [surface, setSurface] = useState<'dark' | 'light'>(initialSurface);
 
   useEffect(() => {
     const sections = Array.from(

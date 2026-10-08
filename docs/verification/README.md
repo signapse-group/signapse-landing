@@ -9,7 +9,8 @@ Repo này giữ implementation và bằng chứng chạy landing; baseline đã 
 | Toolchain         | Node 24.21.0 / pnpm 10.34.5 theo pin repository                                                                   |
 | Source/config     | `pnpm check`, `pnpm lint`, `pnpm format:check`, `pnpm build`                                                      |
 | Models            | `pnpm test:models`: 14 tests, 4 suites cho timeline/stream/tick/cursor và Telegram VI/EN                          |
-| Browser           | `pnpm test:browser`: browser coverage Chromium trên production preview; [kết quả](browser-results.json)          |
+| Browser           | `pnpm test:browser`: browser coverage Chromium trên Cloudflare Worker production preview; [kết quả](browser-results.json) |
+| Blog SIGN-136     | [Handoff/evidence local](public-blog/sign-136/README.md): SSR/API fixture coverage, design captures và giới hạn xác nhận |
 | Ảnh               | [capture report](preview/results.json), [capture script](capture-preview.mjs); [contact VI](preview/contact-form-vi-desktop.png) và [contact EN](preview/contact-form-en-desktop.png) được chụp từ built output ở 1440 px |
 | Boundary 1024     | [Report](preview/boundary-1024.json), hai locale, bốn sticky stages                                               |
 | Theme             | [OS/class dark isolation](preview/theme-isolation.json)                                                           |
@@ -23,6 +24,8 @@ Repo này giữ implementation và bằng chứng chạy landing; baseline đã 
 | Native visibility | [Diagnostic](native-visibility.json): giới hạn của automation khi đổi tab/window                                  |
 
 Model và browser tests assert hành vi thay vì dùng screenshot equality làm gate. Build có cảnh báo kích thước dynamic Three chunk; renderer chỉ được tải khi cần.
+
+Blog SSR coverage dùng fixture API HTTP cục bộ qua chính server-to-API fetch path của Worker preview. Nó kiểm tra status/HTML/metadata, `no-store`, pagination và locale links trong HTML không JavaScript, renderer structured content v1, empty/missing/nonpublic/upstream/schema states, ảnh lỗi, cập nhật trạng thái khi đọc lại, navigation từ menu đến list/page/detail/locale/home, mobile overflow và axe. Browser runner tạm ghi fixture origin vào `dist/server/.dev.vars` rồi khôi phục trạng thái trước test; fixture không xác nhận producer deployment hoặc live content. Handoff cho SIGN-136 lưu thời gian chạy và evidence folder dưới Symphony evidence root khi các gate hoàn tất.
 
 Ngày **2026-10-07**, cập nhật placeholder tên/email/lời nhắn VI/EN theo yêu cầu người dùng. Node 24.21.0 / pnpm 10.34.5: check, lint, format:check và build pass; 8 browser tests liên quan pass, không retry, trên built preview với API mock. Phạm vi gồm labels/placeholders và giá trị ban đầu rỗng, validation/focus/axe, payload/201, no-JS email path, responsive 375/768/1024/1440 px và zoom 200%. Chạy lại bằng `pnpm test:browser --grep 'contact form exposes labels|contact form sends the producer|contact form keeps a useful|contact layout fits'`. Hai ảnh contact desktop được cập nhật; ảnh EN được chụp lại trên page mới sau khi đợi paint ổn định vì capture ngay sau vòng zoom chưa paint đủ nền/viền. Lượt này kiểm chứng local UI, không xác nhận backend thật hoặc hosted deployment.
 
@@ -43,7 +46,7 @@ Hosted release ngày 2026-10-07 dùng commit `2ea7124`, giữ app origin dev và
 | Mobile navigation   | Native details Enter/touch, group/submenu, chọn capability, close và viewport containment                            |
 | Locale/URL          | VI↔EN, encoded query, lang/hreflang, supported hashes; hash ngoài contract bị bỏ; không locale cookie                |
 | Capability          | Năm popover, Enter/Space/Escape/focus restore, touch toggle, deep links/footer links, noJS native details            |
-| App/contact         | Dashboard và Articles đúng origin/locale; Hero `#access`, footer mailto                                              |
+| App/contact         | Dashboard đúng origin/locale; Hero `#access`, footer mailto; public Blog dùng route landing riêng                  |
 | Form liên hệ        | VI/EN labels/placeholders đúng locale và giá trị ban đầu rỗng; validation, JSON body/locale, 201 rỗng, 400/413/415/429/500, network/body failure, duplicate submit, no-JS và responsive; API mock nằm ở consumer boundary |
 | Showcase            | Scroll hai hướng, ArrowUp/Down/Home/End, buttons/focus, progress theo playback                                       |
 | Graph               | Ingestion/relationship phases, final inspector, animated incoming/restart và model order                             |
@@ -66,7 +69,7 @@ pnpm build
 pnpm test
 ```
 
-Playwright tự mở production preview khi chưa có server. Để chụp ảnh, mở preview trong terminal riêng rồi chạy:
+Playwright tự mở production preview khi chưa có server. Các test blog khởi chạy fixture HTTP API tự động; `pnpm preview` dùng Cloudflare Worker SSR. Để chụp ảnh landing, mở preview trong terminal riêng rồi chạy:
 
 ```powershell
 pnpm preview --host 127.0.0.1 --port 4321

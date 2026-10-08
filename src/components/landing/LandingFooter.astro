@@ -10,16 +10,19 @@ interface Props {
   access: LandingAccessModel;
   dictionary: Dictionary;
   locale: Locale;
+  isLandingPage?: boolean;
 }
 
-const { access, dictionary, locale } = Astro.props;
+const { access, dictionary, locale, isLandingPage = true } = Astro.props;
 const t = dictionary.landing;
+const sectionHref = (id: string) =>
+  isLandingPage ? `#${id}` : `${getRelativeLocaleUrl(locale)}#${id}`;
 const productLinks = [
-  ['#knowledge-graph', t.footer.productMarketView],
-  ['#live-charts', t.footer.productImpact],
-  ['#ai-assistant', t.footer.productAi],
-  ['#telegram', t.footer.productTelegram],
-  ['#strategy-coding', t.footer.productStrategy],
+  [sectionHref('knowledge-graph'), t.footer.productMarketView],
+  [sectionHref('live-charts'), t.footer.productImpact],
+  [sectionHref('ai-assistant'), t.footer.productAi],
+  [sectionHref('telegram'), t.footer.productTelegram],
+  [sectionHref('strategy-coding'), t.footer.productStrategy],
 ];
 ---
 
@@ -60,7 +63,10 @@ const productLinks = [
       class="flex flex-col items-start gap-3 text-sm"
     >
       <p class="font-semibold text-foreground">{t.footer.contactHeading}</p>
-      <a href="#access" class="text-muted-foreground hover:text-foreground">
+      <a
+        href={sectionHref('access')}
+        class="text-muted-foreground hover:text-foreground"
+      >
         {t.footer.demo}
       </a>
       <a

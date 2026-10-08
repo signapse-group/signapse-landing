@@ -1,4 +1,5 @@
 import { defineConfig, envField } from 'astro/config';
+import cloudflare from '@astrojs/cloudflare';
 import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
 
@@ -6,6 +7,8 @@ import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from './src/i18n/config.ts';
 
 export default defineConfig({
   output: 'static',
+  adapter: cloudflare({ imageService: 'passthrough' }),
+  session: false,
   trailingSlash: 'never',
   integrations: [react()],
   vite: {

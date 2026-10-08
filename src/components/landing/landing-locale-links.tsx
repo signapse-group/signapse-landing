@@ -10,13 +10,15 @@ export { buildLandingLocaleHref } from '@/i18n/routing';
 
 type Props = {
   currentLocale: Locale;
+  initialPathname?: string;
+  initialQuery?: string;
   labels: { group: string; vi: string; en: string };
 };
 
-function useLocaleLinks() {
+function useLocaleLinks(initialPathname = '/', initialQuery = '') {
   const [location, setLocation] = useState({
-    pathname: '/',
-    query: '',
+    pathname: initialPathname,
+    query: initialQuery,
     hash: '',
   });
   useEffect(() => {
@@ -82,8 +84,13 @@ function LocaleLink({
   );
 }
 
-export function LandingLocaleLinks({ currentLocale, labels }: Props) {
-  const href = useLocaleLinks();
+export function LandingLocaleLinks({
+  currentLocale,
+  initialPathname,
+  initialQuery,
+  labels,
+}: Props) {
+  const href = useLocaleLinks(initialPathname, initialQuery);
   return (
     <nav
       aria-label={labels.group}
@@ -109,8 +116,13 @@ export function LandingLocaleLinks({ currentLocale, labels }: Props) {
   );
 }
 
-export function LandingLocaleMenu({ currentLocale, labels }: Props) {
-  const href = useLocaleLinks();
+export function LandingLocaleMenu({
+  currentLocale,
+  initialPathname,
+  initialQuery,
+  labels,
+}: Props) {
+  const href = useLocaleLinks(initialPathname, initialQuery);
   return (
     <LandingNavigationDisclosure className={styles.localeMenu}>
       <summary

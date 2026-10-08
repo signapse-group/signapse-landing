@@ -2,7 +2,7 @@
 
 Repository Astro này nhận task để **implement landing Signapse**: source, nội dung VI/EN trong code, runtime assets/demo, tests, runbook và bằng chứng thực thi. Requirement/design, copy contract, Pen/prototype, nghiên cứu và ADR thuộc [signapse-planing](../signapse-planing/ui-design/references/landing/README.md) từ **2026-10-06**. Baseline implementation đã được người dùng xác nhận ngày **2026-10-04**.
 
-Astro dựng HTML tĩnh cho `/`, `/vi` và `/en`; root hiển thị tiếng Việt. React islands sở hữu header/capability, Hero WebGL, bốn demo và Audience. Nội dung SSR, SVG fallback và native navigation vẫn hữu ích khi JavaScript hoặc WebGL không khả dụng. Các demo dùng dữ liệu mẫu và timeline trong repo, không gọi backend.
+Astro prerender landing cho `/`, `/vi` và `/en`; root hiển thị tiếng Việt. Các route `/vi/blogs` và `/en/blogs` cùng trang chi tiết được render theo từng request trong Cloudflare Worker, lấy bài từ public API. React islands sở hữu header/capability, Hero WebGL, bốn demo và Audience. Nội dung SSR, SVG fallback và native navigation vẫn hữu ích khi JavaScript hoặc WebGL không khả dụng. Các demo dùng dữ liệu mẫu và timeline trong repo, không gọi backend.
 
 Đọc [mục lục tài liệu](docs/README.md), [contract landing tại planning](../signapse-planing/ui-design/references/landing/LANDING.md), [kiến trúc implementation](docs/architecture.md) và [kiểm chứng](docs/verification/README.md). Task tham chiếu design/AC đã duyệt; thay đổi requirement/design được xử lý tại planning. Source nằm trong `src/`, runtime assets trong `public/`, model/browser tests trong `tests/`.
 
@@ -28,45 +28,55 @@ pnpm build
 pnpm preview --host 127.0.0.1 --port 4321
 ```
 
-Các route: [VI](http://127.0.0.1:4321/vi), [EN](http://127.0.0.1:4321/en). Landing build/run độc lập; ứng dụng sản phẩm là đích liên kết dashboard và Articles.
+Các route: [VI](http://127.0.0.1:4321/vi), [EN](http://127.0.0.1:4321/en). Landing build/run độc lập; public Blog ở landing, còn dashboard và Articles của ứng dụng sản phẩm là các đích liên kết riêng.
+
+Blog SSR cần Worker binding `PUBLIC_BLOG_API_ORIGIN`. Local production preview dùng ignored `.dev.vars`; tạo từ mẫu trước lần chạy đầu:
+
+```powershell
+Copy-Item .dev.vars.example .dev.vars
+pnpm preview --host 127.0.0.1 --port 4321
+```
+
+`pnpm preview` chép `.dev.vars` vào `dist/server/.dev.vars` sau build để Wrangler preview đọc runtime binding. `wrangler.jsonc` đặt mặc định API dev công khai; đặt origin thực tế của môi trường tại Worker variable khi deploy. Public GET không cần credential.
 
 ## Cấu hình
 
 Copy `.env.example` sang ignored `.env`, đặt giá trị rồi **build lại**. Env được áp dụng tại build time.
 
-| Biến                         | Hành vi                                                                                                                                                                                              |
-| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `PUBLIC_APP_ORIGIN`          | Origin HTTP(S) của ứng dụng sản phẩm, không path/query/credentials. Default `http://localhost:3000`. Dashboard CTA dẫn tới `{origin}/{locale}/dashboard`; Articles tới `{origin}/{locale}/articles`. |
-| `PUBLIC_CONTACT_API_ORIGIN`  | Origin HTTPS của API contact, riêng với ứng dụng sản phẩm. `.env.example` dùng `https://dev-api.signapse.cloud`; cấu hình GitHub theo môi trường landing và CORS của API.                            |
-| `SIGNAPSE_PUBLIC_ORIGIN`     | Origin HTTPS explicit của landing. Thiếu/invalid ở preview: bỏ canonical/hreflang, giữ `noindex`.                                                                                                    |
-| `SIGNAPSE_LANDING_INDEXABLE` | Default `false`. Bật `true` yêu cầu public origin HTTPS hợp lệ; thiếu thì build fail. Root luôn `noindex` để tránh duplicate.                                                                        |
-| `SIGNAPSE_VERCEL_ANALYTICS`  | Default `false`. Chỉ bật Analytics/Speed Insights khi hosting có Vercel endpoints.                                                                                                                   |
+| Biến                         | Hành vi                                                                                                                                                                                                                                      |
+| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `PUBLIC_APP_ORIGIN`          | Origin HTTP(S) của ứng dụng sản phẩm, không path/query/credentials. Default `http://localhost:3000`. Dashboard CTA dẫn tới `{origin}/{locale}/dashboard`; Articles tới `{origin}/{locale}/articles`.                                         |
+| `PUBLIC_CONTACT_API_ORIGIN`  | Origin HTTPS của API contact, riêng với ứng dụng sản phẩm. `.env.example` dùng `https://dev-api.signapse.cloud`; cấu hình GitHub theo môi trường landing và CORS của API.                                                                    |
+| `PUBLIC_BLOG_API_ORIGIN`     | Worker runtime variable cho API public blog; cấu hình qua GitHub Variable khi deploy, hoặc `wrangler.jsonc` / `.dev.vars` khi local. Không phải build-time `.env`; mặc định local là `https://dev-api.signapse.cloud`. Không cần credential. |
+| `SIGNAPSE_PUBLIC_ORIGIN`     | Origin HTTPS explicit của landing. Thiếu/invalid ở preview: bỏ canonical/hreflang, giữ `noindex`.                                                                                                                                            |
+| `SIGNAPSE_LANDING_INDEXABLE` | Default `false`. Bật `true` yêu cầu public origin HTTPS hợp lệ; thiếu thì build fail. Root luôn `noindex` để tránh duplicate.                                                                                                                |
+| `SIGNAPSE_VERCEL_ANALYTICS`  | Default `false`. Chỉ bật Analytics/Speed Insights khi hosting có Vercel endpoints.                                                                                                                                                           |
 
 Hero “Liên hệ” dẫn tới `#access`; form gửi JSON tới `{PUBLIC_CONTACT_API_ORIGIN}/contact-requests`. Footer giữ mailto `access@signapse.cloud`. Dashboard CTA mở trực tiếp ứng dụng sản phẩm; ứng dụng đích xử lý đăng nhập. Locale switch giữ query và các hash trong `SUPPORTED_LANDING_HASHES`.
 
-Request-language negotiation và domain redirects cần cấu hình tại hosting. Hosted CI và deployment được kiểm chứng trong quy trình release; production preview chỉ kiểm chứng output static.
+Request-language negotiation và domain redirects cần cấu hình tại hosting. Hosted CI và deployment được kiểm chứng trong quy trình release; production preview chạy cả static homepage lẫn Worker SSR cho blog.
 
 ## Deploy signapse.cloud
 
-Landing dùng Cloudflare Workers Static Assets với `wrangler.jsonc`. Mỗi push/merge vào `main` chạy workflow **Verify**: checks/build/model/browser tests pass rồi tự deploy chính `dist/` đã kiểm tra lên `signapse.cloud`. PR và push ở nhánh khác chạy CI. Nút **Run workflow** trên `main` vẫn có thể dùng để deploy lại. Các run trên `main` dùng chung concurrency group và chạy nối tiếp để tránh publish đồng thời.
+Landing dùng Cloudflare Worker với Static Assets qua `wrangler.jsonc`: homepage được prerender, còn blog list/detail gọi API và SSR theo request với cache tắt. Mỗi push/merge vào `main` chạy workflow **Verify**: checks/build/model/browser tests pass rồi tự deploy output đã kiểm tra lên `signapse.cloud`. PR và push ở nhánh khác chạy CI. Nút **Run workflow** trên `main` vẫn có thể dùng để deploy lại. Các run trên `main` dùng chung concurrency group và chạy nối tiếp để tránh publish đồng thời.
 
 GitHub giữ một run đang chạy và một run chờ trong group; push mới có thể thay run đang chờ bằng revision mới nhất.
 
-Origins và `SIGNAPSE_LANDING_INDEXABLE` lưu trong GitHub Variables; Cloudflare token/account ID lưu trong GitHub Secrets. Indexing mặc định tắt và hiện variable là `false`; đổi thành `true` sau khi hoàn tất go-live. Push `main` và deploy thủ công đều dùng cùng cấu hình.
+Origins, gồm `PUBLIC_BLOG_API_ORIGIN`, và `SIGNAPSE_LANDING_INDEXABLE` lưu trong GitHub Variables; Cloudflare token/account ID lưu trong GitHub Secrets. Blog API origin phải là HTTPS origin public, không kèm path/query/credential; workflow kiểm tra biến trước deploy. Indexing mặc định tắt và hiện variable là `false`; đổi thành `true` sau khi hoàn tất go-live. Push `main` và deploy thủ công đều dùng cùng cấu hình.
 
 Làm theo [hướng dẫn deploy signapse.cloud](docs/deployment/signapse-cloud.md). [Bản nghiên cứu tại planning](../signapse-planing/docs/research/landing-cloudflare-deployment.md) giải thích lựa chọn hosting và các giới hạn. Bật indexing không đổi root `/`: root tiếp tục là landing VI noindex.
 
 ## Kiểm tra
 
-| Lệnh                | Mục đích                                                                                          |
-| ------------------- | ------------------------------------------------------------------------------------------------- |
-| `pnpm check`        | Astro / strict TypeScript                                                                         |
-| `pnpm lint`         | Source/config ESLint                                                                              |
-| `pnpm format:check` | Format source/config/test; loại docs, runtime assets và local skills                              |
-| `pnpm format`       | Format cùng phạm vi                                                                               |
-| `pnpm build`        | Sinh output static `dist/`                                                                        |
-| `pnpm test:models`  | Invariants timeline Graph/Chart/AI/Telegram                                                       |
-| `pnpm test:browser` | Playwright trên production preview: VI/EN, responsive, navigation, demos, accessibility, fallback |
+| Lệnh                | Mục đích                                                                                                                                  |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm check`        | Astro / strict TypeScript                                                                                                                 |
+| `pnpm lint`         | Source/config ESLint                                                                                                                      |
+| `pnpm format:check` | Format source/config/test; loại docs, runtime assets và local skills                                                                      |
+| `pnpm format`       | Format cùng phạm vi                                                                                                                       |
+| `pnpm build`        | Sinh static assets và Worker SSR trong `dist/`                                                                                            |
+| `pnpm test:models`  | Invariants timeline Graph/Chart/AI/Telegram                                                                                               |
+| `pnpm test:browser` | Playwright trên Worker production preview với HTTP fixture API: SSR blog, trạng thái/freshness, navigation, responsive, demos và fallback |
 
 Lần đầu cài browser và chạy các checks:
 
@@ -79,7 +89,7 @@ pnpm build
 pnpm test
 ```
 
-Playwright tự mở `pnpm preview --ignore-lock` foreground tại 4321 khi chưa có server, kể cả trong Codex. Trên shared Symphony host, mọi browser checks đi qua [wrapper của operator](docs/symphony.md#browser-isolation-trên-shared-host) với `CI=1`, shared lock và cache landing riêng. CLI đọc ignored `.env`, với process env được ưu tiên; metadata assertions nhận chế độ indexability và public origin của build. Có thể đổi port bằng `PLAYWRIGHT_PORT`; nếu build dùng origin app khác, đặt `PLAYWRIGHT_APP_ORIGIN` khớp env build. Navigation tests intercept đích dashboard/Articles để kiểm URL và locale mà không yêu cầu backend. Trace/report và kết quả JSON nằm trong ignored `test-results/`.
+Playwright tự mở `pnpm preview --ignore-lock` foreground tại 4321 khi chưa có server, kể cả trong Codex. Browser runner khởi động HTTP fixture API, tạm ghi Worker vars vào `dist/server/.dev.vars`, rồi khôi phục file sau test. Trên shared Symphony host, mọi browser checks đi qua [wrapper của operator](docs/symphony.md#browser-isolation-trên-shared-host) với `CI=1`, shared lock và cache landing riêng. CLI đọc ignored `.env`, với process env được ưu tiên; metadata assertions nhận chế độ indexability và public origin của build. Có thể đổi port bằng `PLAYWRIGHT_PORT`; nếu build dùng origin app khác, đặt `PLAYWRIGHT_APP_ORIGIN` khớp env build. Navigation tests intercept đích dashboard/Articles để kiểm URL và locale mà không yêu cầu backend. Trace/report và kết quả JSON nằm trong ignored `test-results/`.
 
 CI khai báo install frozen, check/lint/format/build, model tests và browser tests. [Verification](docs/verification/README.md) lưu kết quả và giới hạn của các lần chạy thực tế. Chụp lại ảnh của landing bằng `node docs/verification/capture-preview.mjs http://127.0.0.1:4321` khi production preview đang chạy; script dùng riêng repo này.
 
