@@ -122,8 +122,6 @@ export const vi = {
       contextFigureFallback: 'Hình tương tác hiện không khả dụng.',
     },
     cta: {
-      openDashboard: 'Truy cập bảng điều khiển',
-      openDashboardAria: 'Mở bảng điều khiển Signapse',
       contact: 'Liên Hệ',
       contactAria: 'Liên Hệ với Signapse',
     },
@@ -622,8 +620,6 @@ export const en: Dictionary = {
       contextFigureFallback: 'The interactive figure is unavailable.',
     },
     cta: {
-      openDashboard: 'Access dashboard',
-      openDashboardAria: 'Open the Signapse dashboard',
       contact: 'Contact',
       contactAria: 'Contact Signapse',
     },

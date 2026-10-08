@@ -1,5 +1,3 @@
-import { PUBLIC_APP_ORIGIN } from 'astro:env/client';
-
 import { DEFAULT_LOCALE, SUPPORTED_LOCALES, type Locale } from './config';
 
 export const SUPPORTED_LANDING_HASHES = new Set([
@@ -30,10 +28,6 @@ export function replacePathLocale(pathname: string, locale: Locale) {
     segments.length ? `/${segments.join('/')}` : '/',
     locale,
   );
-}
-
-export function appHref(pathname: string, locale: Locale) {
-  return new URL(withLocalePath(pathname, locale), PUBLIC_APP_ORIGIN).href;
 }
 
 export function buildLandingLocaleHref(

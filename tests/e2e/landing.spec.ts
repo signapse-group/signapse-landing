@@ -22,11 +22,6 @@ const viewports = [
   { name: 'mobile', width: 375, height: 800 },
   { name: 'short', width: 1440, height: 620 },
 ];
-const appOrigin = new URL(
-  process.env.PLAYWRIGHT_APP_ORIGIN ??
-    process.env.PUBLIC_APP_ORIGIN ??
-    'http://localhost:3000',
-).origin;
 const indexable = process.env.SIGNAPSE_LANDING_INDEXABLE === 'true';
 const publicOrigin = process.env.SIGNAPSE_PUBLIC_ORIGIN;
 const contactApiOrigin = new URL(
@@ -156,7 +151,7 @@ async function progressValue(page: Page, feature: (typeof features)[number]) {
 }
 
 for (const locale of ['vi', 'en'] as const) {
-  test(`${locale} public shell, localized metadata, dashboard and Blog navigation`, async ({
+  test(`${locale} public shell, localized metadata and Blog navigation`, async ({
     page,
   }) => {
     await ready(page, locale);
@@ -198,20 +193,8 @@ for (const locale of ['vi', 'en'] as const) {
       'content',
       new RegExp(`/social/${locale}\\.png$`),
     );
-    const dashboardHref = `${appOrigin}/${locale}/dashboard`;
     const blogHref = `/${locale}/blogs`;
-    const dashboardLinks = page.locator(`a[href="${dashboardHref}"]`);
-    await expect(
-      page
-        .locator('[data-landing-part="header"]')
-        .locator(`a[href="${dashboardHref}"]`),
-    ).toBeVisible();
-    await expect(
-      page
-        .locator('[data-landing-part="footer"]')
-        .locator(`a[href="${dashboardHref}"]`),
-    ).toBeVisible();
-    expect(await dashboardLinks.count()).toBeGreaterThanOrEqual(2);
+    await expect(page.locator('a[href*="/dashboard"]')).toHaveCount(0);
     expect(
       await page
         .locator('[data-landing-part="header"]')
@@ -230,17 +213,6 @@ for (const locale of ['vi', 'en'] as const) {
     await expect(page.locator('[data-landing-part="footer"]')).toContainText(
       'access@signapse.cloud',
     );
-    // The external destination is intercepted so this proves navigation and
-    // locale/origin construction without depending on backend authentication.
-    await page.route(`${appOrigin}/**`, (route) =>
-      route.fulfill({
-        contentType: 'text/html',
-        body: '<title>Application destination</title>',
-      }),
-    );
-    await dashboardLinks.first().click();
-    await expect(page).toHaveURL(dashboardHref);
-    await ready(page, locale);
     const resources = page
       .locator('details[name="landing-desktop-menu"]')
       .nth(2);
@@ -697,9 +669,7 @@ for (const locale of ['vi', 'en'] as const) {
       await expect(page.locator('[data-telegram-browser]')).toContainText(
         'Market Desk',
       );
-      await expect(
-        page.locator(`header a[href="${appOrigin}/${locale}/dashboard"]`),
-      ).toBeVisible();
+      await expect(page.locator('a[href*="/dashboard"]')).toHaveCount(0);
       await assertNoOverflow(page);
     } finally {
       await context.close();

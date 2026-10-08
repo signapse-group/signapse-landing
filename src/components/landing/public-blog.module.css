@@ -1,15 +1,4 @@
 .blogPage {
-  --landing-header-height: 4.5rem;
-  --landing-navy: #03141d;
-  --landing-navy-surface: #08232e;
-  --landing-mint: #12d6b1;
-  --landing-mint-strong: #006f66;
-  --landing-off-white: #ffffff;
-  --landing-muted: #a6c4bf;
-  --landing-boundary: #3c6a70;
-  --landing-light-muted-surface: #e7e6e0;
-  --landing-light-muted-foreground: #565d60;
-  --landing-dark-muted-surface: #123d43;
   --blog-ink: #171923;
   --blog-muted: #626777;
   --blog-border: #e5e6eb;

@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-08",
+  "sourceBase": "5f6e74b4c7751e62372f67e225beb4d7907d3e7e",
+  "sourceState": "uncommitted contribution",
+  "node": "24.21.0",
+  "pnpm": "10.34.5",
+  "checks": [
+    "pnpm check",
+    "pnpm lint",
+    "pnpm format:check",
+    "pnpm build"
+  ],
+  "checksResult": "pass",
+  "browserCommand": "pnpm test:browser --retries=0",
+  "browserStats": {
+    "startTime": "2026-10-08T09:58:44.627Z",
+    "duration": 354215.34599999996,
+    "expected": 56,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "env": {
+    "CI": "1",
+    "publicOrigin": "https://signapse.cloud",
+    "indexable": false,
+    "blogApi": "local HTTP fixture",
+    "analytics": false
+  },
+  "regressionBefore": {
+    "symptoms": [
+      "dashboard links: expected 0, received 2",
+      "blog nav height: expected 44px, received 38px"
+    ],
+    "failed": 2
+  },
+  "independentReview": "No source findings; final browser evidence supplied separately",
+  "modelTests": "Not rerun: no model changes",
+  "limitations": [
+    "Local verification only",
+    "No commit, push, hosted CI or deployment",
+    "Existing build chunk warning above 500kB"
+  ],
+  "workerVarsRestored": true
+}

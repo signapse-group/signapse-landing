@@ -6,6 +6,8 @@ Boundary dev theo [local handoff policy](../../.agents/skills/agent-execution-po
 
 ## Checks và bằng chứng
 
+Ngày **2026-10-08**, theo yêu cầu người dùng, foundation token landing được áp dụng tại `BaseLayout` cho mọi trang public; Blog bỏ các token chép riêng. Dashboard chưa mở quyền user access nên Header/Footer gỡ toàn bộ dashboard entry, action model và copy VI/EN tương ứng. Quy tắc được ghi trong `AGENTS.md`. Node **24.21.0** / pnpm **10.34.5**: check, lint, format:check và build pass. Chromium trên built Worker preview với public origin `https://signapse.cloud`, noindex và fixture API local: **56/56 pass**, không retry/flaky. Regression trước sửa đã fail đúng hai trường hợp: còn 2 dashboard links và menu Blog cao 38 px thay vì 44 px. Bốn tests mới trong `tests/e2e/public-shell.spec.ts` phủ VI/EN, JS/noJS, viewport 1440/1024/375 px, landing/root, Blog list/detail và 404/502; kiểm geometry, locale popup, mailto, overflow và không có dashboard entry. Review độc lập không có finding source. [Bằng chứng và ảnh sau sửa](header-layout-2026-10-08/verification-after.json). Model không thay đổi nên không chạy lại model tests. Đây là kiểm chứng local, chưa commit/push/deploy hoặc kiểm domain live; build vẫn có cảnh báo chunk trên 500 kB từ trước.
+
 | Nhóm              | Cách kiểm chứng                                                                                                   |
 | ----------------- | ----------------------------------------------------------------------------------------------------------------- |
 | Toolchain         | Node 24.21.0 / pnpm 10.34.5 theo pin repository                                                                   |
@@ -60,7 +62,7 @@ Hosted release ngày 2026-10-07 dùng commit `2ea7124`, giữ app origin dev và
 | Mobile navigation   | Native details Enter/touch, group/submenu, chọn capability, close và viewport containment                            |
 | Locale/URL          | VI↔EN, encoded query, lang/hreflang, supported hashes; hash ngoài contract bị bỏ; không locale cookie                |
 | Capability          | Năm popover, Enter/Space/Escape/focus restore, touch toggle, deep links/footer links, noJS native details            |
-| App/contact         | Dashboard đúng origin/locale; Hero `#access`, footer mailto; public Blog dùng route landing riêng                  |
+| Public shell/contact | Header controls cùng token/geometry trên landing và Blog list/detail/error states, VI/EN, desktop/mobile, có/không JS; không có dashboard entry; Hero `#access`, footer mailto |
 | Form liên hệ        | VI/EN labels/placeholders đúng locale và giá trị ban đầu rỗng; validation, JSON body/locale, 201 rỗng, 400/413/415/429/500, network/body failure, duplicate submit, no-JS và responsive; API mock nằm ở consumer boundary |
 | Showcase            | Scroll hai hướng, ArrowUp/Down/Home/End, buttons/focus, progress theo playback                                       |
 | Graph               | Ingestion/relationship phases, final inspector, animated incoming/restart và model order                             |
@@ -103,4 +105,4 @@ Trace/HTML report nằm trong ignored `test-results/`; chạy `pnpm exec playwri
 
 Pause/resume được assert qua controlled `visibilitychange` trong Chromium. Diagnostic Edge headed vẫn thấy document `visible` khi đổi tab/window, nên không chứng minh native hidden-tab hoặc GPU throttling vật lý. CSS zoom và mobile emulation không đại diện mọi thiết bị.
 
-Navigation tests intercept đích ứng dụng sản phẩm, không kiểm auth/backend/Articles tại đích. Contact form tests intercept API tại consumer boundary; chúng không thay thế OpenAPI/CORS check hoặc xác nhận record trên producer. `PUBLIC_CONTACT_API_ORIGIN` phải là origin HTTPS riêng với `PUBLIC_APP_ORIGIN`, và landing origin thực phải nằm trong CORS policy của producer. Analytics ingestion, request-language negotiation, domain redirects, hosted CI và deployment cần kiểm trên hosting thực tế.
+Navigation tests kiểm Blog/locale/contact và sự vắng mặt của dashboard entry; không kiểm auth/backend/Articles của ứng dụng sản phẩm. Contact form tests intercept API tại consumer boundary; chúng không thay thế OpenAPI/CORS check hoặc xác nhận record trên producer. `PUBLIC_CONTACT_API_ORIGIN` phải là origin HTTPS riêng với `PUBLIC_APP_ORIGIN`, và landing origin thực phải nằm trong CORS policy của producer. Analytics ingestion, request-language negotiation, domain redirects, hosted CI và deployment cần kiểm trên hosting thực tế.

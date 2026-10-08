@@ -3,17 +3,16 @@ import { Logo } from '@/components/logo';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n/messages';
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import { REQUEST_ACCESS_HREF, type LandingAccessModel } from './landing-access';
+import { REQUEST_ACCESS_HREF } from './landing-access';
 import styles from './landing-page.module.css';
 
 interface Props {
-  access: LandingAccessModel;
   dictionary: Dictionary;
   locale: Locale;
   isLandingPage?: boolean;
 }
 
-const { access, dictionary, locale, isLandingPage = true } = Astro.props;
+const { dictionary, locale, isLandingPage = true } = Astro.props;
 const t = dictionary.landing;
 const sectionHref = (id: string) =>
   isLandingPage ? `#${id}` : `${getRelativeLocaleUrl(locale)}#${id}`;
@@ -68,13 +67,6 @@ const productLinks = [
         class="text-muted-foreground hover:text-foreground"
       >
         {t.footer.demo}
-      </a>
-      <a
-        href={access.footerAppEntry.href}
-        aria-label={access.footerAppEntry.ariaLabel}
-        class="text-muted-foreground hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-      >
-        {access.footerAppEntry.label}
       </a>
       <a
         href={REQUEST_ACCESS_HREF}

@@ -82,7 +82,7 @@ Cloudflare → **Workers & Pages → signapse-landing → Domains → Add Domain
 
 Cloudflare tạo record và certificate cho hostname. Nếu apex có CNAME cũ, xử lý record xung đột tại cutover; giữ lại mapping để có thể khôi phục. Không đổi nameservers nếu zone đã active; không sửa records mail hoặc subdomain ứng dụng. [Custom Domains](https://developers.cloudflare.com/workers/configuration/routing/custom-domains/).
 
-Mở [VI](https://signapse.cloud/vi) và [EN](https://signapse.cloud/en); kiểm HTTPS, assets, locale, CTA và 404. Đích dashboard/Articles cần kiểm thực tế riêng: tests trong repo intercept navigation và không kiểm backend/auth.
+Mở [VI](https://signapse.cloud/vi) và [EN](https://signapse.cloud/en); kiểm HTTPS, assets, locale, Contact, Blog và 404. Dashboard chưa mở quyền user access nên không có dashboard CTA/link trên landing; xác nhận Header/Footer không render entry này. Tests trong repo không kiểm backend/auth/Articles của ứng dụng sản phẩm.
 
 ## 5. Cấu hình www và HTTPS
 
@@ -100,7 +100,7 @@ Kiểm `https://www.signapse.cloud/en?source=www` về `https://signapse.cloud/e
 
 ## 6. Bật indexing và đóng hostname phụ
 
-Sau khi domain chính hoạt động và app ở `dashboard.signapse.cloud` đã sẵn sàng, đổi GitHub Variable `PUBLIC_APP_ORIGIN` thành `https://dashboard.signapse.cloud`. Kiểm trực tiếp `/vi/dashboard`, `/en/dashboard`, `/vi/articles`, `/en/articles` trên origin app; ứng dụng đích xử lý đăng nhập.
+Sau khi domain chính hoạt động và app ở `dashboard.signapse.cloud` đã sẵn sàng, đổi GitHub Variable `PUBLIC_APP_ORIGIN` thành `https://dashboard.signapse.cloud`. Kiểm trực tiếp `/vi/dashboard`, `/en/dashboard`, `/vi/articles`, `/en/articles` trên origin app; ứng dụng đích xử lý đăng nhập. Đổi origin không tự khôi phục dashboard CTA/link trên landing; chỉ thêm lại entry sau khi người dùng cho phép rõ ràng.
 
 Sửa `workers_dev` từ `true` thành `false` trong [wrangler.jsonc](../../wrangler.jsonc), đưa thay đổi lên `main`.
 

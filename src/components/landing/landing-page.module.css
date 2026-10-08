@@ -142,11 +142,6 @@
   outline-offset: 3px;
 }
 
-.headerAction {
-  min-height: var(--landing-control-height);
-  border-radius: var(--landing-control-radius);
-}
-
 .headerMenuTrigger {
   display: flex;
   min-height: var(--landing-control-height);

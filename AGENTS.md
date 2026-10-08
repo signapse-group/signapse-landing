@@ -22,11 +22,12 @@ Use local `implement`, `code-review`, `tdd`, `diagnosing-bugs`, `accessibility` 
 
 - For visual, layout, interaction or copy work, read [design implementation rules](docs/design.md) alongside the assigned planning contract/design revision. This local summary does not own or replace the planning contract.
 - Astro renders static pages and HTML content; React islands own interactions. See [architecture](docs/architecture.md) for component ownership and lifecycle.
+- Every public page, including Blog list/detail/error states, inherits the landing foundation tokens from BaseLayout. Keep `.landingRoot` in `src/components/landing/landing-page.module.css` as the single source of `--landing-*` tokens; do not copy or redeclare those tokens in page CSS. Reuse the shared Header/Footer and their token-based geometry across routes.
 - Routes live in src/pages/, HTML shells in src/layouts/, locales/copy in src/i18n/, shared styling/fonts in src/styles/, landing composition in src/components/landing/, and UI primitives in src/components/ui/.
 - Use SUPPORTED_LOCALES and locale helpers. Both Vietnamese and English copy must have the same typed shape. TypeScript is strict and uses the @/ alias.
 - Header/capability hydrate with client:load; context, Audience and the shared showcase hydrate with client:idle and use internal viewport gates. Keep useful SSR/no-JavaScript/reduced-motion/WebGL fallbacks.
 - The four showcase demos stay in one island. Preserve their fixture/model renderers, natural mobile flow, adaptive sticky desktop stage and playback-driven progress. Dispose observers, listeners, timers, frames and GPU resources.
-- App CTA uses {PUBLIC_APP_ORIGIN}/{locale}/dashboard without reading a login session; Articles uses the same configured origin. Contact anchors and mailto remain available.
+- Dashboard access is not open to users. Do not render dashboard-entry buttons or links on any public page; restore them only after explicit user authorization. Contact anchors, the contact form and mailto remain available. The product application continues to own dashboard, authentication and Articles.
 - Preview defaults to noindex. Canonical/indexability require explicit env; root remains a Vietnamese noindex entry. Request-language negotiation and domain redirects are hosting responsibilities.
 - public/ contains runtime brand/provider/font/social assets only. Keep screenshots and verification evidence under docs/verification/, outside runtime assets.
 

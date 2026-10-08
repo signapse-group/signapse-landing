@@ -4,6 +4,7 @@ import { SIGNAPSE_VERCEL_ANALYTICS } from 'astro:env/server';
 import Analytics from '@vercel/analytics/astro';
 import SpeedInsights from '@vercel/speed-insights/astro';
 import { landingMetadata } from '@/lib/landing-metadata';
+import landingStyles from '@/components/landing/landing-page.module.css';
 import '@/styles/global.css';
 
 interface Props {
@@ -79,7 +80,10 @@ const canonical =
     <meta name="twitter:image" content={metadata.socialImage} />
     <meta name="twitter:image:alt" content={socialImageAlt} />
   </head>
-  <body class="min-h-svh font-sans antialiased">
+  <body
+    data-landing-theme="fixed-signapse"
+    class={`${landingStyles.landingRoot} min-h-svh font-sans antialiased`}
+  >
     <slot />
     {SIGNAPSE_VERCEL_ANALYTICS && (
       <>

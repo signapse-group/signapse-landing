@@ -2,7 +2,6 @@
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n/messages';
 import LandingFooter from './LandingFooter.astro';
-import { createLandingAccessModel } from './landing-access';
 import { LandingHeader } from './landing-header';
 import styles from './public-blog.module.css';
 
@@ -23,7 +22,6 @@ const {
   solidHeader = false,
   locale,
 } = Astro.props;
-const access = createLandingAccessModel(locale, dictionary.landing);
 ---
 
 <div
@@ -36,7 +34,6 @@ const access = createLandingAccessModel(locale, dictionary.landing);
   <LandingHeader
     dictionary={dictionary}
     locale={locale}
-    access={access}
     isLandingPage={false}
     currentPath={currentPath}
     currentQuery={currentQuery}
@@ -45,7 +42,6 @@ const access = createLandingAccessModel(locale, dictionary.landing);
   />
   <slot />
   <LandingFooter
-    access={access}
     dictionary={dictionary}
     locale={locale}
     isLandingPage={false}

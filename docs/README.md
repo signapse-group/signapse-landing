@@ -19,6 +19,6 @@ Repository Astro này giữ tài liệu **thực thi landing**: kiến trúc sou
 
 Các nguồn trực tiếp: [routes](../src/pages/), [composition/components](../src/components/landing/), [dictionary VI/EN](../src/i18n/messages.ts), [styles/fonts](../src/styles/), [runtime assets](../public/) và [tests](../tests/).
 
-Dashboard, authentication và Articles của ứng dụng sản phẩm thuộc app; public Blog list/detail thuộc landing và đọc qua API public. Landing chỉ xây app URLs từ PUBLIC_APP_ORIGIN, không đọc session. Code, tài liệu và tests tại đây đủ để phát triển và kiểm chứng landing độc lập.
+Dashboard, authentication và Articles của ứng dụng sản phẩm thuộc app; public Blog list/detail thuộc landing và đọc qua API public. Dashboard chưa mở quyền user access nên landing không render CTA hoặc link dashboard. Mọi trang public kế thừa token landing từ BaseLayout và dùng chung Header/Footer. Code, tài liệu và tests tại đây đủ để phát triển và kiểm chứng landing độc lập, không đọc session.
 
 Khi triển khai task, cập nhật source, tài liệu thực thi và test liên quan trong cùng thay đổi. Thiếu hoặc cần đổi requirement/design thì đưa về coordinator/planning. Ảnh/kết quả chạy ứng dụng thuộc docs/verification/; runtime assets thuộc public/. Design screenshots, exports và backups được duy trì tại planning.

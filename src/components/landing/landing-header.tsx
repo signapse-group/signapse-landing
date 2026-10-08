@@ -1,20 +1,12 @@
-import { ArrowRightIcon, ChevronDownIcon, MenuIcon } from 'lucide-react';
+import { ChevronDownIcon, MenuIcon } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n/messages';
 import { withLocalePath } from '@/i18n/routing';
-import type { LandingAccessAction, LandingAccessModel } from './landing-access';
 import styles from './landing-page.module.css';
 import { LandingHeaderShell } from './landing-header-shell';
 import { LandingLocaleLinks, LandingLocaleMenu } from './landing-locale-links';
 import { LandingNavigationDisclosure } from './landing-navigation-disclosure';
 import { Logo } from '@/components/logo';
-import { buttonVariants } from '@/components/ui/button';
-
-type LandingActionButtonProps = {
-  action: LandingAccessAction;
-  className?: string;
-  size?: 'default' | 'lg';
-};
 
 type HeaderMenuItemModel = {
   description: string;
@@ -153,7 +145,6 @@ function MobileMegaMenu({
 }
 
 export function LandingHeader({
-  access,
   dictionary,
   locale,
   isLandingPage = true,
@@ -161,7 +152,6 @@ export function LandingHeader({
   currentQuery = '',
   initialSurface = 'dark',
 }: {
-  access: LandingAccessModel;
   dictionary: Dictionary;
   locale: Locale;
   isLandingPage?: boolean;
@@ -376,11 +366,6 @@ export function LandingHeader({
         </nav>
 
         <div className="ml-auto flex items-center gap-1 sm:gap-2">
-          <LandingActionButton
-            action={access.headerPrimary}
-            className={styles.headerAction}
-            size="lg"
-          />
           <div className="hidden xl:block">
             <LandingLocaleMenu
               currentLocale={locale}
@@ -448,25 +433,5 @@ export function LandingHeader({
         </div>
       </div>
     </LandingHeaderShell>
-  );
-}
-
-function LandingActionButton({
-  action,
-  className,
-  size = 'default',
-}: LandingActionButtonProps) {
-  const content = (
-    <>
-      {action.label}
-      <ArrowRightIcon data-icon="inline-end" aria-hidden="true" />
-    </>
-  );
-  const classes = buttonVariants({ variant: 'default', size, className });
-
-  return (
-    <a href={action.href} aria-label={action.ariaLabel} className={classes}>
-      {content}
-    </a>
   );
 }

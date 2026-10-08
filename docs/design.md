@@ -27,7 +27,7 @@ Tài liệu tổng hợp rule UI của `signapse-landing`, dùng khi triển kha
 
 ## Palette và semantic surfaces
 
-Nguồn token là `.landingRoot` trong [landing CSS](../src/components/landing/landing-page.module.css).
+Nguồn token là `.landingRoot` trong [landing CSS](../src/components/landing/landing-page.module.css). [BaseLayout](../src/layouts/BaseLayout.astro) áp dụng foundation này cho mọi trang public, gồm Blog list/detail/error states. Không chép hoặc khai báo lại `--landing-*` trong page CSS; shared Header/Footer kế thừa cùng bộ token và geometry.
 
 | Token | Giá trị hiện hành | Vai trò |
 | --- | --- | --- |
@@ -91,16 +91,16 @@ Nguồn composition là [LandingPage.astro](../src/components/landing/LandingPag
 
 | Thứ tự | Surface | Quy tắc |
 | --- | --- | --- |
-| 1 | Header | Logo, ba nhóm navigation, Contact, dashboard CTA và locale; bám trên cùng bằng `position: fixed`, đổi surface theo section. |
+| 1 | Header | Logo, ba nhóm navigation, Contact và locale; bám trên cùng bằng `position: fixed`, đổi surface theo section. |
 | 2 | Hero `#top` | H1/copy/Contact/proof AI, Context Figure và texture decorative; một cột ở màn hẹp, hai cột từ `lg`. |
 | 3 | Capability `#capability-strip` | Năm capability trong cuối Hero; detail/popover không đổi chiều cao Hero. |
 | 4 | Showcase `#showcase` | Knowledge Graph → Market Chart → AI Conversation → Scheduled Telegram; mỗi bước giữ copy và proof bằng code. |
 | 5 | Audience `#audiences` | Bốn lựa chọn trader/analyst/strategy developer/team & fund. Mobile đặt figure ngay sau lựa chọn active; no-JS có đủ nội dung qua fallback. |
 | 6 | Providers `#trust` | Đủ OpenAI, Gemini, Anthropic, DeepSeek, Groq, Z.AI; bản lặp marquee ẩn khỏi accessibility tree. |
 | 7 | Contact `#access` | Nội dung/email bên trái, form thật bên phải khi đủ rộng; reflow một cột trên màn hẹp. |
-| 8 | Footer | Brand/copy, năm capability links, contact, dashboard, email và disclaimer. |
+| 8 | Footer | Brand/copy, năm capability links, contact, email và disclaimer. |
 
-`#access` hiện triển khai contribution form theo [SIGN-113 reference](../../signapse-planing/ui-design/pen/landing/README.md#form-liên-hệ-công-khai). Bảng baseline trong `LANDING.md` còn mô tả vùng này là Final CTA; đọc cùng phần form của contract và AC/revision được giao, không tự khôi phục nút dashboard tại đây. Header/Footer vẫn giữ dashboard CTA.
+`#access` hiện triển khai contribution form theo [SIGN-113 reference](../../signapse-planing/ui-design/pen/landing/README.md#form-liên-hệ-công-khai). Bảng baseline trong `LANDING.md` còn mô tả vùng này là Final CTA; đọc cùng phần form của contract và AC/revision được giao, không tự khôi phục nút dashboard tại đây. Theo yêu cầu người dùng ngày 2026-10-08, Header/Footer cũng đã gỡ dashboard entry vì chưa mở quyền user access; chỉ khôi phục sau khi người dùng cho phép rõ ràng.
 
 Responsive dùng threshold theo từng surface; không coi tất cả là một breakpoint desktop chung.
 
@@ -127,7 +127,7 @@ Responsive dùng threshold theo từng surface; không coi tất cả là một 
 - Desktop disclosure hỗ trợ hover, giữ popup khi pointer đi vào nội dung; keyboard Enter/Space, Escape, focus restore và outside click. Touch dùng toggle, không phụ thuộc hover. Capability chỉ mở một popup tại một thời điểm.
 - Capability anchors giữ nguyên `#knowledge-graph`, `#live-charts`, `#ai-assistant`, `#telegram`, `#strategy-coding`; menu/footer/direct hash cùng mở đúng detail. Roadmap items có nhãn disabled; chỉ bật khi destination đã được chốt.
 - Audience dùng native buttons với `aria-pressed`; direct audience hash chọn đúng option. Selection và scroll không tự cướp focus.
-- Dashboard và các đích Articles thuộc ứng dụng sản phẩm dùng `appHref()` từ [routing.ts](../src/i18n/routing.ts): `{PUBLIC_APP_ORIGIN}/{locale}/dashboard` và `{PUBLIC_APP_ORIGIN}/{locale}/articles`. Public Blog list/detail dùng route landing được localize trong `src/pages/[lang]/blogs/`. Contact dẫn `#access`; email dùng [landing-access.ts](../src/components/landing/landing-access.ts). Auth nằm ở ứng dụng đích.
+- Public Blog list/detail dùng route landing được localize trong `src/pages/[lang]/blogs/`. Contact dẫn `#access` từ landing và `/{locale}#access` từ Blog; email dùng [landing-access.ts](../src/components/landing/landing-access.ts). Dashboard chưa mở quyền user access nên không render dashboard CTA/link. Dashboard, auth và Articles thuộc ứng dụng sản phẩm.
 - `/vi`, `/en` và root entry VI dùng `SUPPORTED_LOCALES`. Locale switch giữ query và chỉ những hash trong `SUPPORTED_LANDING_HASHES`; không mặc định giữ mọi section/audience hash, không ghi cookie locale. Links giữ `lang`, `hreflang`, `aria-current` phù hợp.
 - Text, accessible names, metadata và fixture labels từ [dictionary VI/EN](../src/i18n/messages.ts), cùng typed shape. Copy tiếng Việt đúng dấu và tự nhiên; tên riêng/feature/eyebrow tiếng Anh đã được duyệt không tạo quy tắc English-only cho landing.
 - Không thêm technical implementation copy vào user flow, sửa claim từ screenshot, hoặc prefill dữ liệu mẫu của reference vào form thật.
