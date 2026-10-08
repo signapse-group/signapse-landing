@@ -6,9 +6,33 @@ import styles from './public-blog.module.css';
 import 'katex/dist/katex.min.css';
 
 type Locale = 'vi' | 'en';
+const blogListStyles = [
+  'disc',
+  'circle',
+  'square',
+  'decimal',
+  'lower-alpha',
+  'upper-alpha',
+  'lower-roman',
+  'upper-roman',
+  'todo',
+] as const;
+type BlogListStyle = (typeof blogListStyles)[number];
+
+function isBlogListStyle(value: unknown): value is BlogListStyle {
+  return (
+    typeof value === 'string' &&
+    (blogListStyles as readonly string[]).includes(value)
+  );
+}
 
 function attribute(node: BlogNode, name: string): unknown {
   return node.attrs?.[name] ?? node[name];
+}
+
+function listIndent(node: BlogNode) {
+  const value = Number(attribute(node, 'indent'));
+  return Number.isSafeInteger(value) ? Math.min(Math.max(value, 0), 6) : 0;
 }
 
 function children(node: BlogNode) {
@@ -222,13 +246,50 @@ function renderNode(
   if (type === 'hr') return <hr key={key} className={styles.blogRule} />;
   if (type === 'ul' || type === 'ol') {
     const Tag = type;
+    const style = attribute(node, 'listStyleType');
+    const listStyle = isBlogListStyle(style)
+      ? style
+      : type === 'ol'
+        ? 'decimal'
+        : 'disc';
+    const indent = listIndent(node);
+    const listStart = Number(attribute(node, 'listStart'));
     return (
-      <Tag key={key} className={styles.blogList}>
+      <Tag
+        key={key}
+        className={styles.blogList}
+        start={
+          type === 'ol' && Number.isSafeInteger(listStart)
+            ? listStart
+            : undefined
+        }
+        style={{
+          listStyleType: listStyle === 'todo' ? 'none' : listStyle,
+          marginInlineStart:
+            indent > 1 ? `${(indent - 1) * 1.5}rem` : undefined,
+        }}
+      >
         {kids}
       </Tag>
     );
   }
-  if (type === 'li') return <li key={key}>{kids}</li>;
+  if (type === 'li') {
+    const checked = attribute(node, 'checked');
+    return (
+      <li key={key}>
+        {typeof checked === 'boolean' && (
+          <input
+            className={styles.blogTodoCheckbox}
+            type="checkbox"
+            disabled
+            checked={checked}
+            aria-label={textValue(node).trim() || 'Task'}
+          />
+        )}
+        {kids}
+      </li>
+    );
+  }
   if (type === 'code_block') {
     const lines = children(node);
     const code = lines.length
@@ -400,12 +461,14 @@ function renderBlocks(nodes: BlogNode[], locale: Locale) {
     const node = nodes[index];
     if (!node) continue;
     const style = attribute(node, 'listStyleType');
-    if (node.type === 'p' && typeof style === 'string' && style) {
+    if (node.type === 'p' && isBlogListStyle(style)) {
+      const indent = listIndent(node);
       const group: BlogNode[] = [];
       while (
         index < nodes.length &&
         nodes[index]?.type === 'p' &&
-        attribute(nodes[index]!, 'listStyleType') === style
+        attribute(nodes[index]!, 'listStyleType') === style &&
+        listIndent(nodes[index]!) === indent
       ) {
         group.push(nodes[index]!);
         index += 1;
@@ -419,10 +482,30 @@ function renderBlocks(nodes: BlogNode[], locale: Locale) {
         'upper-roman',
       ].includes(style);
       const Tag = ordered ? 'ol' : 'ul';
+      const listStart = Number(attribute(group[0] ?? node, 'listStart'));
+      const start = Number.isSafeInteger(listStart) ? listStart : undefined;
       rendered.push(
-        <Tag key={`list-${index}`} className={styles.blogList}>
+        <Tag
+          key={`list-${index}`}
+          className={styles.blogList}
+          start={ordered ? start : undefined}
+          style={{
+            listStyleType: style === 'todo' ? 'none' : style,
+            marginInlineStart:
+              indent > 1 ? `${(indent - 1) * 1.5}rem` : undefined,
+          }}
+        >
           {group.map((item, itemIndex) => (
             <li key={item.id?.toString() ?? itemIndex}>
+              {style === 'todo' && (
+                <input
+                  className={styles.blogTodoCheckbox}
+                  type="checkbox"
+                  disabled
+                  checked={attribute(item, 'checked') === true}
+                  aria-label={textValue(item).trim() || 'Task'}
+                />
+              )}
               {children(item).map((child, childIndex) =>
                 renderInline(
                   child,

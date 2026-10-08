@@ -112,6 +112,13 @@ test('list HTML includes pagination and locale destinations when JavaScript is d
     ).toHaveAttribute('href', '/en/blogs');
     await page.getByRole('link', { name: 'Trang 2 trên 3' }).click();
     await expect(page).toHaveURL(/\/vi\/blogs\?page=1$/);
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+      'href',
+      'https://landing.example.test/vi/blogs?page=1',
+    );
+    await expect(
+      page.locator('link[rel="alternate"][hreflang="en"]'),
+    ).toHaveAttribute('href', 'https://landing.example.test/en/blogs?page=1');
     await expect(
       page.getByRole('heading', { name: 'A second page article', level: 3 }),
     ).toBeVisible();
@@ -132,6 +139,30 @@ test('list HTML includes pagination and locale destinations when JavaScript is d
   } finally {
     await context.close();
   }
+});
+
+test('an out-of-range list page redirects to the last available page', async ({
+  page,
+  request,
+}) => {
+  const staleResponse = await request.get('/vi/blogs?page=999', {
+    maxRedirects: 0,
+  });
+
+  expect(staleResponse.status()).toBe(302);
+  expect(staleResponse.headers()['location']).toBe('/vi/blogs?page=2');
+  expect(staleResponse.headers()['cache-control']).toContain('no-store');
+  expect(staleResponse.headers()['surrogate-control']).toBe('no-store');
+
+  const response = await page.goto('/vi/blogs?page=999');
+  expect(response?.status()).toBe(200);
+  await expect(page).toHaveURL(/\/vi\/blogs\?page=2$/);
+  await expect(
+    page.getByText('Hiển thị 13–18 trong 18 bài viết'),
+  ).toBeVisible();
+  await expect(
+    page.getByRole('heading', { name: 'Following a market event', level: 3 }),
+  ).toBeVisible();
 });
 
 test('public blog detail renders structured v1 content, metadata and locale navigation', async ({
@@ -177,6 +208,12 @@ test('public blog detail renders structured v1 content, metadata and locale navi
     'https://landing.example.test/vi/blogs/second-page',
   );
   await expect(
+    page.locator('link[rel="alternate"][hreflang="en"]'),
+  ).toHaveAttribute(
+    'href',
+    'https://landing.example.test/en/blogs/second-page',
+  );
+  await expect(
     page.getByRole('link', { name: 'Tất cả bài viết' }).first(),
   ).toHaveAttribute('href', '/vi/blogs');
   await expect(page.getByRole('link', { name: 'Tất cả bài viết' })).toHaveCount(
@@ -201,6 +238,34 @@ test('public blog detail renders structured v1 content, metadata and locale navi
     '#blog-section-one',
   );
   await expect(page.getByText('First list item')).toBeVisible();
+  const bulletList = page
+    .getByText('First list item')
+    .locator('xpath=ancestor::ul[1]');
+  await expect(bulletList).toHaveCSS('list-style-type', 'disc');
+  const orderedList = page
+    .getByText('First ordered item')
+    .locator('xpath=ancestor::ol[1]');
+  await expect(orderedList).toHaveCSS('list-style-type', 'lower-alpha');
+  await expect(orderedList).toHaveAttribute('start', '4');
+  await expect(orderedList.locator('li')).toHaveCount(2);
+  const indentedList = page
+    .getByText('Indented ordered item')
+    .locator('xpath=ancestor::ol[1]');
+  await expect(indentedList).toHaveCSS('list-style-type', 'lower-alpha');
+  await expect(indentedList).not.toHaveAttribute('start', '4');
+  const indentDifference = await indentedList.evaluate((list) => {
+    return list.getBoundingClientRect().left;
+  });
+  const firstListPosition = await orderedList.evaluate(
+    (list) => list.getBoundingClientRect().left,
+  );
+  expect(indentDifference).toBeGreaterThan(firstListPosition);
+  await expect(
+    page.getByRole('checkbox', { name: 'Completed task' }),
+  ).toBeChecked();
+  await expect(
+    page.getByRole('checkbox', { name: 'Open task' }),
+  ).not.toBeChecked();
   await expect(page.locator('pre code')).toHaveText(
     'const publicReading = true;\nconsole.log(publicReading);',
   );
@@ -294,6 +359,10 @@ test('approved Vietnamese blog detail content matches the desktop design', async
       level: 2,
     }),
   ).toBeVisible();
+  const structuredList = page
+    .getByText(/Thời điểm: biến động xuất hiện/)
+    .locator('xpath=ancestor::ul[1]');
+  await expect(structuredList).toHaveCSS('list-style-type', 'disc');
   await page.evaluate(() => document.fonts.ready);
   await page.screenshot({
     path: testInfo.outputPath('blog-detail-desktop.png'),

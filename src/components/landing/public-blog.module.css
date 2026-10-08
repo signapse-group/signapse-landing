@@ -535,6 +535,10 @@
   padding-inline-start: 0.25rem;
 }
 
+.blogTodoCheckbox {
+  margin-inline-end: 0.5rem;
+}
+
 .blogCodeBlock {
   max-width: 100%;
   overflow-x: auto;

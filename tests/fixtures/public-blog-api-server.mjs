@@ -247,6 +247,44 @@ const content = [
     children: [{ text: 'Second list item' }],
   },
   {
+    id: 'ordered-list-a',
+    type: 'p',
+    indent: 1,
+    listStart: 4,
+    listStyleType: 'lower-alpha',
+    children: [{ text: 'First ordered item' }],
+  },
+  {
+    id: 'ordered-list-b',
+    type: 'p',
+    indent: 1,
+    listStyleType: 'lower-alpha',
+    children: [{ text: 'Second ordered item' }],
+  },
+  {
+    id: 'ordered-list-c',
+    type: 'p',
+    indent: 2,
+    listStyleType: 'lower-alpha',
+    children: [{ text: 'Indented ordered item' }],
+  },
+  {
+    id: 'todo-a',
+    type: 'p',
+    indent: 1,
+    listStyleType: 'todo',
+    checked: true,
+    children: [{ text: 'Completed task' }],
+  },
+  {
+    id: 'todo-b',
+    type: 'p',
+    indent: 1,
+    listStyleType: 'todo',
+    checked: false,
+    children: [{ text: 'Open task' }],
+  },
+  {
     id: 'quote',
     type: 'blockquote',
     children: [{ type: 'p', children: [{ text: 'A quoted observation.' }] }],
@@ -369,8 +407,7 @@ const server = createServer((request, response) => {
       return;
     }
     const visiblePosts = state.published && !state.empty ? posts : [];
-    const content =
-      page === 0 ? visiblePosts.slice(0, 6) : visiblePosts.slice(6, 12);
+    const content = visiblePosts.slice(page * 6, (page + 1) * 6);
     json(response, 200, {
       content,
       number: Math.max(0, page),
