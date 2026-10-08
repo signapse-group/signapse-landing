@@ -91,6 +91,8 @@ pnpm test
 
 Playwright tự mở `pnpm preview --ignore-lock` foreground tại 4321 khi chưa có server, kể cả trong Codex. Browser runner khởi động HTTP fixture API, tạm ghi Worker vars vào `dist/server/.dev.vars`, rồi khôi phục file sau test. Trên shared Symphony host, mọi browser checks đi qua [wrapper của operator](docs/symphony.md#browser-isolation-trên-shared-host) với `CI=1`, shared lock và cache landing riêng. CLI đọc ignored `.env`, với process env được ưu tiên; metadata assertions nhận chế độ indexability và public origin của build. Có thể đổi port bằng `PLAYWRIGHT_PORT`; nếu build dùng origin app khác, đặt `PLAYWRIGHT_APP_ORIGIN` khớp env build. Navigation tests intercept đích dashboard/Articles để kiểm URL và locale mà không yêu cầu backend. Trace/report và kết quả JSON nằm trong ignored `test-results/`.
 
+Browser runner chỉ thay `PUBLIC_BLOG_API_ORIGIN` bằng fixture local; giữ nguyên metadata, indexability và analytics theo env của build. Chạy build và browser tests với cùng `SIGNAPSE_PUBLIC_ORIGIN` / `SIGNAPSE_LANDING_INDEXABLE`; preview không đặt public origin vẫn kiểm tra canonical/hreflang vắng mặt và noindex.
+
 CI khai báo install frozen, check/lint/format/build, model tests và browser tests. [Verification](docs/verification/README.md) lưu kết quả và giới hạn của các lần chạy thực tế. Chụp lại ảnh của landing bằng `node docs/verification/capture-preview.mjs http://127.0.0.1:4321` khi production preview đang chạy; script dùng riêng repo này.
 
 Fonts Geist, Geist Mono và Inter được self-host; giấy phép đi kèm trong `public/fonts/`. Provider assets có NOTICE trong `public/images/providers/`.

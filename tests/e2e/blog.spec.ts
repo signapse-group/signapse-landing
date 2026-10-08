@@ -3,6 +3,10 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from './fixtures';
 
 const fixtureOrigin = process.env.PUBLIC_BLOG_API_ORIGIN;
+const publicOrigin = process.env.SIGNAPSE_PUBLIC_ORIGIN
+  ? new URL(process.env.SIGNAPSE_PUBLIC_ORIGIN).origin
+  : undefined;
+const indexable = process.env.SIGNAPSE_LANDING_INDEXABLE === 'true';
 if (!fixtureOrigin) {
   throw new Error(
     'PUBLIC_BLOG_API_ORIGIN must be set by the browser fixture runner.',
@@ -55,12 +59,17 @@ test('public blog list is rendered by the server with metadata and route links',
   );
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
     'content',
-    'noindex, follow',
+    indexable ? 'index, follow' : 'noindex, follow',
   );
-  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
-    'href',
-    'https://landing.example.test/vi/blogs',
-  );
+  if (publicOrigin) {
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+      'href',
+      `${publicOrigin}/vi/blogs`,
+    );
+  } else {
+    await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
+    await expect(page.locator('link[rel="alternate"]')).toHaveCount(0);
+  }
   await expect(page.locator('[data-locale-link="en"]').first()).toHaveAttribute(
     'href',
     '/en/blogs',
@@ -112,13 +121,18 @@ test('list HTML includes pagination and locale destinations when JavaScript is d
     ).toHaveAttribute('href', '/en/blogs');
     await page.getByRole('link', { name: 'Trang 2 trên 3' }).click();
     await expect(page).toHaveURL(/\/vi\/blogs\?page=1$/);
-    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
-      'href',
-      'https://landing.example.test/vi/blogs?page=1',
-    );
-    await expect(
-      page.locator('link[rel="alternate"][hreflang="en"]'),
-    ).toHaveAttribute('href', 'https://landing.example.test/en/blogs?page=1');
+    if (publicOrigin) {
+      await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+        'href',
+        `${publicOrigin}/vi/blogs?page=1`,
+      );
+      await expect(
+        page.locator('link[rel="alternate"][hreflang="en"]'),
+      ).toHaveAttribute('href', `${publicOrigin}/en/blogs?page=1`);
+    } else {
+      await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
+      await expect(page.locator('link[rel="alternate"]')).toHaveCount(0);
+    }
     await expect(
       page.getByRole('heading', { name: 'A second page article', level: 3 }),
     ).toBeVisible();
@@ -203,16 +217,18 @@ test('public blog detail renders structured v1 content, metadata and locale navi
   await expect(
     page.locator('meta[property="article:published_time"]'),
   ).toHaveAttribute('content', '2026-10-01T08:00:00.000Z');
-  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
-    'href',
-    'https://landing.example.test/vi/blogs/second-page',
-  );
-  await expect(
-    page.locator('link[rel="alternate"][hreflang="en"]'),
-  ).toHaveAttribute(
-    'href',
-    'https://landing.example.test/en/blogs/second-page',
-  );
+  if (publicOrigin) {
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+      'href',
+      `${publicOrigin}/vi/blogs/second-page`,
+    );
+    await expect(
+      page.locator('link[rel="alternate"][hreflang="en"]'),
+    ).toHaveAttribute('href', `${publicOrigin}/en/blogs/second-page`);
+  } else {
+    await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
+    await expect(page.locator('link[rel="alternate"]')).toHaveCount(0);
+  }
   await expect(
     page.getByRole('link', { name: 'Tất cả bài viết' }).first(),
   ).toHaveAttribute('href', '/vi/blogs');

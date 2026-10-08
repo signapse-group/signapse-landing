@@ -87,31 +87,19 @@ try {
   });
   const port = await waitForPort(fixture);
   const existingText = hadVars ? originalVars.toString('utf8') : '';
-  const testVariableNames = new Set([
-    'PUBLIC_BLOG_API_ORIGIN',
-    'SIGNAPSE_PUBLIC_ORIGIN',
-    'SIGNAPSE_LANDING_INDEXABLE',
-    'SIGNAPSE_VERCEL_ANALYTICS',
-  ]);
   const otherVars = existingText.split(/\r?\n/).filter((line) => {
     const name = line.match(/^\s*([A-Z_]+)\s*=/)?.[1];
-    return !name || !testVariableNames.has(name);
+    return name !== 'PUBLIC_BLOG_API_ORIGIN';
   });
   const varsText = [
     ...otherVars.filter((line, index) => line || index < otherVars.length - 1),
     `PUBLIC_BLOG_API_ORIGIN=http://127.0.0.1:${port}`,
-    'SIGNAPSE_PUBLIC_ORIGIN=https://landing.example.test',
-    'SIGNAPSE_LANDING_INDEXABLE=false',
-    'SIGNAPSE_VERCEL_ANALYTICS=false',
     '',
   ].join('\n');
   await writeFile(varsPath, varsText, { mode: 0o600 });
 
   const childEnv = { ...process.env };
   childEnv.PUBLIC_BLOG_API_ORIGIN = `http://127.0.0.1:${port}`;
-  childEnv.SIGNAPSE_PUBLIC_ORIGIN = 'https://landing.example.test';
-  childEnv.SIGNAPSE_LANDING_INDEXABLE = 'false';
-  childEnv.SIGNAPSE_VERCEL_ANALYTICS = 'false';
   runner = spawn(
     process.execPath,
     ['node_modules/@playwright/test/cli.js', 'test', ...process.argv.slice(2)],
