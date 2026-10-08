@@ -85,7 +85,7 @@ export function LandingAudienceSection({
           </p>
           <h2
             id="landing-audiences-heading"
-            className={`${styles.landingDisplayHeading} max-w-4xl text-4xl leading-[1.04] sm:text-5xl lg:text-6xl`}
+            className={`${styles.landingDisplayHeading} max-w-4xl text-3xl leading-tight sm:text-4xl`}
           >
             {t.heading}
           </h2>

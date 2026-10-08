@@ -1,0 +1,188 @@
+{
+  "stats": {
+    "startTime": "2026-10-08T12:50:02.772Z",
+    "duration": 212010.32200000001,
+    "expected": 24,
+    "skipped": 0,
+    "unexpected": 4,
+    "flaky": 0
+  },
+  "results": [
+    {
+      "file": "blog.spec.ts",
+      "title": "public blog detail renders structured v1 content, metadata and locale navigation",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "vi public shell, localized metadata and Blog navigation",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "vi locale switch keeps supported query/hash and clears retired anchors",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "en public shell, localized metadata and Blog navigation",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "en locale switch keeps supported query/hash and clears retired anchors",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "desktop direct navigation reaches landing sections and locale disclosure supports Escape and outside clicks",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "mobile native navigation works by keyboard and capability details work by touch",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "five capability popovers open from keyboard, direct links and repeated footer anchors",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "vi no JavaScript keeps useful Hero and four renderer proofs",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "en no JavaScript keeps useful Hero and four renderer proofs",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "zoom, keyboard skip link and accessibility keep content reachable",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "root is a useful default landing entry with locale links and noindex",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "vi contact form exposes labels, validation, focus and localized copy",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "vi contact form sends the producer payload and accepts an empty 201",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "vi contact form submits values at the published producer limits",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "vi contact form keeps a useful email path when JavaScript is disabled",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "vi contact layout fits the assigned widths and 200% zoom",
+      "passed": false,
+      "errors": [
+        "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"1px\"\nReceived: \"0px\"\n\nCall Log:\n- Timeout 10000ms exceeded while waiting on the predicate\n\n  1155 |       )\n  1156 |       .toBe('32px');\n> 1157 |     await expect\n       |     ^\n  1158 |       .poll(() =>\n  1159 |         page\n  1160 |           .locator('[data-contact-form-card]')\n    at D:\\Github\\signapse-landing\\tests\\e2e\\landing.spec.ts:1157:5"
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "en contact form exposes labels, validation, focus and localized copy",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "en contact form sends the producer payload and accepts an empty 201",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "en contact form submits values at the published producer limits",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "en contact form keeps a useful email path when JavaScript is disabled",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "en contact layout fits the assigned widths and 200% zoom",
+      "passed": false,
+      "errors": [
+        "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"1px\"\nReceived: \"0px\"\n\nCall Log:\n- Timeout 10000ms exceeded while waiting on the predicate\n\n  1155 |       )\n  1156 |       .toBe('32px');\n> 1157 |     await expect\n       |     ^\n  1158 |       .poll(() =>\n  1159 |         page\n  1160 |           .locator('[data-contact-form-card]')\n    at D:\\Github\\signapse-landing\\tests\\e2e\\landing.spec.ts:1157:5"
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "contact API errors, unreadable bodies and network failure never lose input or retry",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "contact submission in flight ignores repeated click and Enter submits",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "file": "public-shell.spec.ts",
+      "title": "vi shared public shell with JavaScript uses landing controls and hides dashboard access",
+      "passed": false,
+      "errors": [
+        "Error: locator.screenshot: Error: strict mode violation: locator('footer') resolved to 2 elements:\n    1) <footer data-typing=\"false\" class=\"_aiComposer_125md_588\">…</footer> aka getByRole('region', { name: 'Tính năng trong quy trình' }).locator('footer')\n    2) <footer data-landing-part=\"footer\" data-landing-surface=\"dark\" class=\"_darkSurface_9wzzm_886 bg-background\">…</footer> aka getByRole('contentinfo')\n\nCall log:\n  - waiting for locator('footer')\n\n\n  143 |                 path: testInfo.outputPath(`contact-${locale}-${width}.png`),\n  144 |               });\n> 145 |               await page.locator('footer').screenshot({\n      |                                            ^\n  146 |                 path: testInfo.outputPath(`footer-${locale}-${width}.png`),\n  147 |               });\n  148 |               const footerLinks = await page\n    at D:\\Github\\signapse-landing\\tests\\e2e\\public-shell.spec.ts:145:44"
+      ]
+    },
+    {
+      "file": "public-shell.spec.ts",
+      "title": "vi shared public shell without JavaScript uses landing controls and hides dashboard access",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "file": "public-shell.spec.ts",
+      "title": "en shared public shell with JavaScript uses landing controls and hides dashboard access",
+      "passed": false,
+      "errors": [
+        "Error: locator.screenshot: Error: strict mode violation: locator('footer') resolved to 2 elements:\n    1) <footer data-typing=\"false\" class=\"_aiComposer_125md_588\">…</footer> aka getByRole('region', { name: 'Features in the Signapse' }).locator('footer')\n    2) <footer data-landing-part=\"footer\" data-landing-surface=\"dark\" class=\"_darkSurface_9wzzm_886 bg-background\">…</footer> aka getByRole('contentinfo')\n\nCall log:\n  - waiting for locator('footer')\n\n\n  143 |                 path: testInfo.outputPath(`contact-${locale}-${width}.png`),\n  144 |               });\n> 145 |               await page.locator('footer').screenshot({\n      |                                            ^\n  146 |                 path: testInfo.outputPath(`footer-${locale}-${width}.png`),\n  147 |               });\n  148 |               const footerLinks = await page\n    at D:\\Github\\signapse-landing\\tests\\e2e\\public-shell.spec.ts:145:44"
+      ]
+    },
+    {
+      "file": "public-shell.spec.ts",
+      "title": "en shared public shell without JavaScript uses landing controls and hides dashboard access",
+      "passed": true,
+      "errors": []
+    }
+  ]
+}

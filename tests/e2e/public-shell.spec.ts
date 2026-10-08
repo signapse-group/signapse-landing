@@ -55,12 +55,16 @@ for (const locale of ['vi', 'en'] as const) {
                 locale === 'vi' ? 'Dành cho ai' : 'Who it’s for',
               ],
               [`/${locale}/blogs`, 'Blog'],
+              [
+                `${landingPath}#access`,
+                locale === 'vi' ? 'Liên hệ' : 'Contact',
+              ],
             ];
             const activeNavigation =
               width >= 1280 ? navigation.first() : navigation.last();
             if (width < 1280)
               await header.locator('[data-mobile-menu] > summary').click();
-            await expect(activeNavigation.getByRole('link')).toHaveCount(4);
+            await expect(activeNavigation.getByRole('link')).toHaveCount(5);
             for (const [href, label] of expectedLinks) {
               await expect(
                 activeNavigation.getByRole('link', {
@@ -82,6 +86,7 @@ for (const locale of ['vi', 'en'] as const) {
               `${landingPath}#access`,
             );
             await expect(contact).toHaveCSS('height', '44px');
+            await expect(contact).not.toHaveClass(/group\/button/);
             if (width < 1280)
               await header.locator('[data-mobile-menu] > summary').click();
             if (width >= 1280) {
@@ -118,6 +123,30 @@ for (const locale of ['vi', 'en'] as const) {
             await expect(
               page.locator('footer a[href="tel:+84933809936"]'),
             ).toHaveText('0933.80.99.36');
+            const footer = page.locator('[data-landing-part="footer"]');
+            const exploreNavigation = footer.getByRole('navigation').first();
+            await expect(exploreNavigation.getByRole('link')).toHaveCount(4);
+            for (const [href, label] of expectedLinks.slice(0, 4)) {
+              await expect(
+                exploreNavigation.getByRole('link', {
+                  name: label,
+                  exact: true,
+                }),
+              ).toHaveAttribute('href', href);
+            }
+            await expect(
+              footer.getByRole('link', {
+                name: locale === 'vi' ? 'Gửi lời nhắn' : 'Send a message',
+                exact: true,
+              }),
+            ).toHaveAttribute('href', `${landingPath}#access`);
+            await expect(
+              footer.getByRole('link', {
+                name:
+                  locale === 'vi' ? 'Signapse — Trang chủ' : 'Signapse — Home',
+                exact: true,
+              }),
+            ).toHaveAttribute('href', `/${locale}`);
             if (!landingPath) {
               await expect(
                 page.locator('#access a[href="tel:+84933809936"]'),
@@ -136,6 +165,27 @@ for (const locale of ['vi', 'en'] as const) {
               await expect(page.locator('#contact-request-form')).toBeVisible();
               await page.locator('#access').screenshot({
                 path: testInfo.outputPath(`contact-${locale}-${width}.png`),
+              });
+              await page.locator('[data-landing-part="footer"]').screenshot({
+                path: testInfo.outputPath(`footer-${locale}-${width}.png`),
+              });
+              const footerLinks = await page
+                .locator('[data-landing-part="footer"] a')
+                .evaluateAll((links) =>
+                  links.map((link) => {
+                    const box = link.getBoundingClientRect();
+                    return {
+                      label: link.textContent?.trim(),
+                      accessibleLabel: link.getAttribute('aria-label'),
+                      href: link.getAttribute('href'),
+                      width: box.width,
+                      height: box.height,
+                    };
+                  }),
+                );
+              await testInfo.attach(`footer-links-${locale}-${width}`, {
+                body: JSON.stringify(footerLinks, null, 2),
+                contentType: 'application/json',
               });
             }
             expect(

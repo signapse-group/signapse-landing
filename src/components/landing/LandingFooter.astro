@@ -20,12 +20,11 @@ const { dictionary, locale, isLandingPage = true } = Astro.props;
 const t = dictionary.landing;
 const sectionHref = (id: string) =>
   isLandingPage ? `#${id}` : `${getRelativeLocaleUrl(locale)}#${id}`;
-const productLinks = [
-  [sectionHref('knowledge-graph'), t.footer.productMarketView],
-  [sectionHref('live-charts'), t.footer.productImpact],
-  [sectionHref('ai-assistant'), t.footer.productAi],
-  [sectionHref('telegram'), t.footer.productTelegram],
-  [sectionHref('strategy-coding'), t.footer.productStrategy],
+const exploreLinks = [
+  [sectionHref('capability-strip'), t.nav.features],
+  [sectionHref('showcase'), t.nav.demos],
+  [sectionHref('audiences'), t.nav.audiences],
+  [`${getRelativeLocaleUrl(locale)}/blogs`, t.nav.blog],
 ];
 ---
 
@@ -39,7 +38,7 @@ const productLinks = [
       <a
         href={getRelativeLocaleUrl(locale)}
         aria-label={t.footer.brandLabel}
-        class="flex w-fit items-center gap-3 rounded-md font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+        class={`${styles.footerLink} w-fit gap-3 font-semibold`}
       >
         <span aria-hidden="true">
           <Logo width={28} height={28} colorScheme="dark" />
@@ -54,9 +53,12 @@ const productLinks = [
       aria-label={t.accessibility.footerNavigation}
       class="flex flex-col items-start gap-3 text-sm"
     >
-      <p class="font-semibold text-foreground">{t.footer.productHeading}</p>
-      {productLinks.map(([href, label]) => (
-        <a href={href} class="text-muted-foreground hover:text-foreground">
+      <p class="font-semibold text-foreground">{t.footer.exploreHeading}</p>
+      {exploreLinks.map(([href, label]) => (
+        <a
+          href={href}
+          class={`${styles.footerLink} text-muted-foreground hover:text-foreground`}
+        >
           {label}
         </a>
       ))}
@@ -68,19 +70,19 @@ const productLinks = [
       <p class="font-semibold text-foreground">{t.footer.contactHeading}</p>
       <a
         href={sectionHref('access')}
-        class="text-muted-foreground hover:text-foreground"
+        class={`${styles.footerLink} text-muted-foreground hover:text-foreground`}
       >
-        {t.footer.demo}
+        {t.footer.sendMessage}
       </a>
       <a
         href={REQUEST_ACCESS_HREF}
-        class="font-mono text-xs text-muted-foreground hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+        class={`${styles.footerLink} font-mono text-xs text-muted-foreground hover:text-foreground`}
       >
         {t.footer.requestAccessEmail}
       </a>
       <a
         href={CONTACT_PHONE_HREF}
-        class="inline-flex min-h-11 items-center font-mono text-xs text-muted-foreground hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+        class={`${styles.footerLink} font-mono text-xs text-muted-foreground hover:text-foreground`}
       >
         {CONTACT_PHONE_NUMBER}
       </a>

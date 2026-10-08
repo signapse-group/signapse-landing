@@ -2,7 +2,6 @@ import { MenuIcon } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n/messages';
 import { withLocalePath } from '@/i18n/routing';
-import { buttonVariants } from '@/components/ui/button';
 import styles from './landing-page.module.css';
 import { LandingHeaderShell } from './landing-header-shell';
 import { LandingLocaleLinks, LandingLocaleMenu } from './landing-locale-links';
@@ -32,6 +31,7 @@ export function LandingHeader({
     { href: sectionHref('showcase'), label: t.nav.demos },
     { href: sectionHref('audiences'), label: t.nav.audiences },
     { href: withLocalePath('/blogs', locale), label: t.nav.blog },
+    { href: sectionHref('access'), label: t.nav.contact },
   ];
 
   return (
@@ -90,12 +90,6 @@ export function LandingHeader({
               }}
             />
           </div>
-          <a
-            href={sectionHref('access')}
-            className={buttonVariants({ className: styles.sectionAction })}
-          >
-            {t.nav.contact}
-          </a>
           <LandingNavigationDisclosure
             className="relative xl:hidden"
             data-mobile-menu

@@ -1,0 +1,32 @@
+{
+  "stats": {
+    "startTime": "2026-10-08T12:54:55.062Z",
+    "duration": 50758.592000000004,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "results": [
+    {
+      "file": "landing.spec.ts",
+      "title": "vi contact layout fits the assigned widths and 200% zoom",
+      "passed": true
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "en contact layout fits the assigned widths and 200% zoom",
+      "passed": true
+    },
+    {
+      "file": "public-shell.spec.ts",
+      "title": "vi shared public shell with JavaScript uses landing controls and hides dashboard access",
+      "passed": true
+    },
+    {
+      "file": "public-shell.spec.ts",
+      "title": "en shared public shell with JavaScript uses landing controls and hides dashboard access",
+      "passed": true
+    }
+  ]
+}

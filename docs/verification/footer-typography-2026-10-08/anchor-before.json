@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "startTime": "2026-10-08T13:23:36.562Z",
+    "duration": 58298.93,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  },
+  "results": [
+    {
+      "file": "landing.spec.ts",
+      "title": "five capability popovers open from keyboard, direct links and repeated anchors",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "failed",
+          "duration": 20748,
+          "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-capability-detail=\"telegram\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-capability-detail=\"telegram\"]')\u001b[22m\n"
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "five capability popovers open from keyboard, direct links and repeated anchors",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "failed",
+          "duration": 21707,
+          "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-capability-detail=\"telegram\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-capability-detail=\"telegram\"]')\u001b[22m\n"
+        }
+      ]
+    }
+  ]
+}

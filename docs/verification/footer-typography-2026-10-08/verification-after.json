@@ -1,0 +1,68 @@
+{
+  "date": "2026-10-08",
+  "sourceBase": "9d4b31fa23a33f4d3c84bcde5a9a2d62aaab8965",
+  "sourceState": "uncommitted contribution, includes previously authorized contact/header changes",
+  "requirementSource": "User-approved footer and typography plan in this conversation",
+  "node": "24.21.0",
+  "pnpm": "10.34.5",
+  "checks": {
+    "check": "pass, 68 files, 0 errors/warnings/hints",
+    "lint": "pass",
+    "format:check": "pass, including final keyboard test correction",
+    "build": "pass, existing chunk-size warning remains"
+  },
+  "footer": {
+    "columns": ["Brand", "Explore", "Contact"],
+    "explore": ["Features", "View demos", "Who it’s for", "Blog"],
+    "contact": ["Send a message", "access@signapse.cloud", "0933.80.99.36"],
+    "sectionNavigation": "Local hashes on landing; locale landing hashes from Blog",
+    "brandAccessibleName": ["Signapse — Trang chủ", "Signapse — Home"],
+    "mobileTargetHeight": "All 8 links >= 44px at 375px viewport",
+    "focus": "All 8 links have visible 2px solid outline",
+    "preserved": ["Brand description", "Copyright", "Disclaimer", "mailto", "tel:+84933809936"]
+  },
+  "typography": {
+    "breakpoints": ["base", "640px", "1024px"],
+    "heroH1": { "fontSizePx": [32, 48, 56], "lineHeight": 1.08 },
+    "audienceH2": { "fontSizePx": [30, 36, 36], "lineHeight": 1.25 },
+    "audienceItemTitles": { "fontSizePx": [18, 20, 22], "lineHeight": 1.25, "fontWeight": 600 },
+    "preserved": ["Providers/contact H2 30/36px", "Showcase titles 18/20px", "Blog typography", "Font families", "Foundation tokens", "Demo renderers"]
+  },
+  "copyComparison": "Dictionary comparison against HEAD excluding previously authorized contact headings/formTitle removal and footer labels passed; settled Hero/capability/showcase/Audience/brand copy unchanged",
+  "browser": {
+    "fullRun": { "expected": 61, "unexpected": 1, "skipped": 0, "flaky": 0, "durationMs": 414806.594, "report": "browser-initial.json" },
+    "anchorReproduction": { "expected": 0, "unexpected": 2, "report": "anchor-before.json" },
+    "diagnosis": "Synthetic link appended to main placed pointer over the first openOnHover capability trigger after hash scrolling. DOM observer recorded Telegram opening then changing to Knowledge Graph. Waiting for the previous dialog to disappear did not fix pointer interference. Native keyboard Enter isolated repeated-anchor behavior and passed.",
+    "testCorrection": "Only synthetic anchor activation changed from click to press Enter; runtime source unchanged",
+    "anchorFinal": { "expected": 2, "unexpected": 0, "skipped": 0, "flaky": 0, "durationMs": 31753.025, "report": "anchor-after.json" },
+    "verifiedDistinctCases": 62,
+    "retries": 0,
+    "scope": "Footer/navigation/sizes VI/EN with and without JS at 375/768/1024/1440px; full existing suite includes short viewport, CSS zoom 200%, axe, sticky showcase, Audience, WebGL/IntersectionObserver/reduced-motion fallbacks, contact and Blog shell",
+    "preview": "Built Astro/Cloudflare Worker preview; no public origin; noindex; fixture Blog HTTP API; contact API mocked at consumer boundary",
+    "temporaryVarsRestored": true
+  },
+  "visual": {
+    "report": "visual-results.json",
+    "locales": ["vi", "en"],
+    "widths": [375, 1440],
+    "capture": "Fresh Chromium contexts against static built HTML; Hero viewport 900px high, Audience/Footer section captures in 1700px viewport to avoid fixed-header stitching artifacts",
+    "pageErrors": 0,
+    "horizontalOverflow": false,
+    "artifacts": "hero/audience/footer-{vi,en}-{375,1440}.png"
+  },
+  "independentReview": {
+    "requirementAdherence": "pass",
+    "correctnessAndStandards": "pass",
+    "blockingFindings": 0,
+    "openFindings": 0,
+    "scope": "Final source/tests/docs, check outputs, browser reports and 8 new visual captures",
+    "handoff": "Ready for local handoff"
+  },
+  "limitations": [
+    "Local verification only; no hosted CI or domain checks",
+    "No actual contact API, email delivery or phone call tested",
+    "Model tests not rerun: models unchanged",
+    "No commit/push/deploy",
+    "Existing build chunk-size warning above 500kB"
+  ]
+}

@@ -56,9 +56,10 @@ Các số đo sau là baseline trong source; px được quy đổi với root f
 
 | Vai trò | Treatment hiện hành |
 | --- | --- |
-| Hero H1 | Inter; 36 → 60 → 72 px tại base/`sm`/`lg`; line-height `1.02`. |
+| Hero H1 | Inter; 32 → 48 → 56 px tại base/`sm`/`lg`; line-height `1.08`. |
 | Display heading | `.landingDisplayHeading`: weight `510`, letter-spacing `-0.022em`; size/line-height theo từng section. |
-| Audience heading | 36 → 48 → 60 px; line-height `1.04`. |
+| Audience heading | 30 → 36 px tại base/`sm`, bằng Providers/contact; line-height `1.25`. |
+| Audience item title | 18 → 20 → 22 px tại base/`sm`/`lg`; weight `600`, line-height `1.25`; giữ labels/body. |
 | Providers/contact heading | 30 → 36 px; `leading-tight`. |
 | Hero/Audience supporting copy | Geist; 16 → 18 px; line-height 28 px. |
 | Page eyebrow | 12 px, semibold, uppercase, tracking `0.18em`. |
@@ -91,14 +92,14 @@ Nguồn composition là [LandingPage.astro](../src/components/landing/LandingPag
 
 | Thứ tự | Surface | Quy tắc |
 | --- | --- | --- |
-| 1 | Header | Logo, bốn link Tính năng/Xem demo/Dành cho ai/Blog, Contact và locale; bám trên cùng bằng `position: fixed`, đổi surface theo section. |
+| 1 | Header | Logo, năm item Tính năng/Xem demo/Dành cho ai/Blog/Liên hệ và locale; bám trên cùng bằng `position: fixed`, đổi surface theo section. |
 | 2 | Hero `#top` | H1/copy/Contact/proof AI, Context Figure và texture decorative; một cột ở màn hẹp, hai cột từ `lg`. |
 | 3 | Capability `#capability-strip` | Năm capability trong cuối Hero; detail/popover không đổi chiều cao Hero. |
 | 4 | Showcase `#showcase` | Knowledge Graph → Market Chart → AI Conversation → Scheduled Telegram; mỗi bước giữ copy và proof bằng code. |
 | 5 | Audience `#audiences` | Bốn lựa chọn trader/analyst/strategy developer/team & fund. Mobile đặt figure ngay sau lựa chọn active; no-JS có đủ nội dung qua fallback. |
 | 6 | Providers `#trust` | Đủ OpenAI, Gemini, Anthropic, DeepSeek, Groq, Z.AI; bản lặp marquee ẩn khỏi accessibility tree. |
 | 7 | Contact `#access` | Nội dung/email bên trái, form thật bên phải khi đủ rộng; reflow một cột trên màn hẹp. |
-| 8 | Footer | Brand/copy, năm capability links, contact, email, điện thoại và disclaimer. |
+| 8 | Footer | Brand/copy, Khám phá gồm Tính năng/Xem demo/Dành cho ai/Blog, Gửi lời nhắn, email, điện thoại và disclaimer. |
 
 `#access` hiện triển khai contribution form theo [SIGN-113 reference](../../signapse-planing/ui-design/pen/landing/README.md#form-liên-hệ-công-khai). Bảng baseline trong `LANDING.md` còn mô tả vùng này là Final CTA; đọc cùng phần form của contract và AC/revision được giao, không tự khôi phục nút dashboard tại đây. Theo yêu cầu người dùng ngày 2026-10-08, Header/Footer cũng đã gỡ dashboard entry vì chưa mở quyền user access; chỉ khôi phục sau khi người dùng cho phép rõ ràng.
 
@@ -111,7 +112,7 @@ Responsive dùng threshold theo từng surface; không coi tất cả là một 
 | 768 px | Capability rail và một số nhóm nội dung demo có layout rộng hơn. |
 | `lg`: 1024 px | Gutter 32 px; Hero/Audience layout desktop; showcase có thể dùng sticky enhancement. |
 | 1152 px (`72rem`) | Contact copy/form thành hai cột với tỷ lệ `0.84fr / 1.16fr`. |
-| `xl`: 1280 px | Header chuyển từ native mobile menu phẳng sang bốn link trực tiếp và locale menu desktop. |
+| `xl`: 1280 px | Header chuyển từ native mobile menu phẳng sang năm item trực tiếp và locale menu desktop. |
 | Telegram container 608 px (`38rem`) | Hai panel Signapse/Telegram nằm cạnh nhau; dưới ngưỡng xếp dọc. Đây là container query, không phải viewport breakpoint. |
 
 - Không page-level horizontal overflow. Dùng `min-width: 0`, wrap và reflow đúng surface; không che nội dung bị tràn bằng clipping để coi là đã sửa.
@@ -125,7 +126,7 @@ Responsive dùng threshold theo từng surface; không coi tất cả là một 
 - Palette và chrome của landing nằm ở CSS module/surface owner. Giữ variants/sizes sẵn có của primitive; không sửa generic Input/Select/Button vì compact treatment của một demo hoặc sao chép wrapper từ FE.
 - Header/capability hydrate `client:load`. Header chỉ dùng `details/summary` cho mobile menu và locale; capability có native details trước hydration/no-JS và Base UI Popover sau hydration.
 - Locale/mobile disclosure hỗ trợ Enter/Space, Escape, focus restore và outside click. Capability giữ hover/pointer vào popup trên desktop và toggle trên touch, chỉ mở một popup tại một thời điểm.
-- Capability anchors giữ nguyên `#knowledge-graph`, `#live-charts`, `#ai-assistant`, `#telegram`, `#strategy-coding`; footer/direct hash cùng mở đúng detail. Header dẫn tới rail `#capability-strip`, demo `#showcase`, Audience `#audiences` và Blog. Theo plan người dùng chốt ngày 2026-10-08, header bỏ mega-menu và các mục roadmap; copy Hero/capability/showcase/Audience/brand footer giữ nguyên.
+- Capability anchors giữ nguyên `#knowledge-graph`, `#live-charts`, `#ai-assistant`, `#telegram`, `#strategy-coding`; direct hash mở đúng detail. Header và nhóm Khám phá trong Footer dẫn tới rail `#capability-strip`, demo `#showcase`, Audience `#audiences` và Blog. Footer Contact action là “Gửi lời nhắn / Send a message”, logo có accessible name “Signapse — Trang chủ / Signapse — Home”; mobile links tối thiểu 44 px, focus outline thống nhất. Theo plan người dùng chốt ngày 2026-10-08, header bỏ mega-menu/roadmap, Footer thay capability shortcuts bằng navigation tới section; copy Hero/capability/showcase/Audience/brand footer giữ nguyên. Typography chỉ giảm các headline đã chỉ định, không áp font-size toàn cục lên mọi H2 hoặc chữ trong demo/Blog.
 - Audience dùng native buttons với `aria-pressed`; direct audience hash chọn đúng option. Selection và scroll không tự cướp focus.
 - Public Blog list/detail dùng route landing được localize trong `src/pages/[lang]/blogs/`. Contact dẫn `#access` từ landing và `/{locale}#access` từ Blog; email và điện thoại `0933.80.99.36` (`tel:+84933809936`) dùng [landing-access.ts](../src/components/landing/landing-access.ts). Điện thoại hiện trong phần liên hệ và Footer cả khi không có JavaScript. Dashboard chưa mở quyền user access nên không render dashboard CTA/link. Dashboard, auth và Articles thuộc ứng dụng sản phẩm.
 - `/vi`, `/en` và root entry VI dùng `SUPPORTED_LOCALES`. Locale switch giữ query và chỉ những hash trong `SUPPORTED_LANDING_HASHES`; không mặc định giữ mọi section/audience hash, không ghi cookie locale. Links giữ `lang`, `hreflang`, `aria-current` phù hợp.
@@ -138,7 +139,7 @@ Nguồn: [contact form](../src/components/landing/landing-contact-form.tsx), nh�
 
 Rule placeholder được bổ sung theo yêu cầu người dùng ngày **2026-10-07**, áp dụng cho các field có thể chỉnh sửa trong landing.
 
-- Giữ ba field: tên tùy chọn, email bắt buộc, lời nhắn bắt buộc; một thao tác gửi. Visible labels và required guidance tồn tại trước submit; input type/autocomplete hỗ trợ mobile và autofill.
+- Giữ ba field: tên tùy chọn, email bắt buộc, lời nhắn bắt buộc; một thao tác gửi. Visible labels giữ dấu `*` và native `required`; input type/autocomplete hỗ trợ mobile và autofill. Theo yêu cầu người dùng ngày 2026-10-08, bỏ heading/dòng required guidance ở đầu form và viền card ngoài; form lấy accessible name từ heading section. Nội dung EN là “Start Your Journey / Contact Us”, VI là “Bắt đầu hành trình của bạn / Liên hệ với chúng tôi”; giữ nguyên background/padding, viền field và mọi validation/error states.
 - Mọi field nhập text hoặc số có thể chỉnh sửa, gồm `input` và `textarea`, phải có placeholder phù hợp ngữ cảnh. Ngoại lệ: field readonly, input kỹ thuật ẩn và native control không hỗ trợ placeholder như date/time/file; demo inert không phải field nhập liệu thật.
 - Placeholder cung cấp ví dụ hoặc gợi ý ngắn, lấy từ dictionary VI/EN và không thay visible label. Hướng dẫn quan trọng vẫn nằm trong helper text riêng; kiểm placeholder khi field rỗng hoặc sau khi người dùng xóa giá trị.
 - Form bắt đầu rỗng. Giá trị mẫu trong Pen/PNG chỉ minh họa, đưa vào placeholder nếu phù hợp thay vì tự điền `value`/`defaultValue`. Form liên hệ dùng `namePlaceholder`, `emailPlaceholder` và `messagePlaceholder` trong `landing.contact`.

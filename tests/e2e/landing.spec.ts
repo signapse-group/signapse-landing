@@ -375,6 +375,9 @@ test('desktop direct navigation reaches landing sections and locale disclosure s
         .evaluate((section) => section.getBoundingClientRect().top),
     ).toBeGreaterThanOrEqual(72);
   }
+  await navigation.locator('a[href="#access"]').press('Enter');
+  await expect(page).toHaveURL(/#access$/);
+  await expect(page.locator('#landing-access-heading')).toBeInViewport();
 });
 
 test('mobile native navigation works by keyboard and capability details work by touch', async ({
@@ -413,13 +416,20 @@ test('mobile native navigation works by keyboard and capability details work by 
     expect(box.x + box.width).toBeLessThanOrEqual(375);
     await page.locator('#ai-assistant').tap();
     await expect(page.getByRole('dialog')).toHaveCount(0);
+    await summary.tap();
+    await page.locator('[data-mobile-menu] a[href="#access"]').tap();
+    await expect(page).toHaveURL(/#access$/);
+    await expect(page.locator('[data-mobile-menu]')).not.toHaveAttribute(
+      'open',
+    );
+    await expect(page.locator('#landing-access-heading')).toBeInViewport();
     await assertNoOverflow(page);
   } finally {
     await context.close();
   }
 });
 
-test('five capability popovers open from keyboard, direct links and repeated footer anchors', async ({
+test('five capability popovers open from keyboard, direct links and repeated anchors', async ({
   page,
 }) => {
   await ready(page);
@@ -445,8 +455,16 @@ test('five capability popovers open from keyboard, direct links and repeated foo
     ).toBeVisible();
     await page.keyboard.press('Escape');
   }
+  await page.evaluate(() => {
+    const link = document.createElement('a');
+    link.href = '#telegram';
+    link.textContent = 'Open Telegram details';
+    document.querySelector('main')!.append(link);
+  });
   for (let repeat = 0; repeat < 2; repeat += 1) {
-    await page.locator('footer a[href="#telegram"]').click();
+    await page
+      .getByRole('link', { name: 'Open Telegram details', exact: true })
+      .press('Enter');
     await expect(
       page.locator('[data-capability-detail="telegram"]'),
     ).toBeVisible();
@@ -955,9 +973,27 @@ for (const locale of ['vi', 'en'] as const) {
     const submit = page.getByRole('button', { name: copy.title, exact: true });
 
     await expect(section.getByRole('heading', { level: 2 })).toContainText(
-      locale === 'vi' ? 'Liên hệ với Signapse' : 'Contact Signapse',
+      locale === 'vi' ? 'Liên hệ với chúng tôi' : 'Contact Us',
     );
-    await expect(page.getByRole('heading', { name: copy.title })).toBeVisible();
+    await expect(
+      section.getByText(
+        locale === 'vi' ? 'Bắt đầu hành trình của bạn' : 'Start Your Journey',
+        { exact: true },
+      ),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('form', {
+        name: locale === 'vi' ? 'Liên hệ với chúng tôi' : 'Contact Us',
+        exact: true,
+      }),
+    ).toBeVisible();
+    await expect(page.getByRole('heading', { name: copy.title })).toHaveCount(
+      0,
+    );
+    await expect(page.locator('[data-contact-form-card]')).toHaveCSS(
+      'border-top-width',
+      '0px',
+    );
     await expect(name).toHaveValue('');
     await expect(email).toHaveValue('');
     await expect(message).toHaveValue('');
@@ -971,7 +1007,9 @@ for (const locale of ['vi', 'en'] as const) {
     await expect(email).toHaveAttribute('required', '');
     await expect(name).toHaveAttribute('maxlength', '100');
     await expect(message).toHaveAttribute('maxlength', '5000');
-    await expect(section).toContainText(copy.required);
+    await expect(section.getByText(copy.required, { exact: true })).toHaveCount(
+      0,
+    );
 
     const initialAxe = await new AxeBuilder({ page })
       .include('#access')
@@ -1130,7 +1168,7 @@ for (const locale of ['vi', 'en'] as const) {
           .locator('[data-contact-form-card]')
           .evaluate((element) => getComputedStyle(element).borderTopWidth),
       )
-      .toBe('1px');
+      .toBe('0px');
     await expect
       .poll(() =>
         page

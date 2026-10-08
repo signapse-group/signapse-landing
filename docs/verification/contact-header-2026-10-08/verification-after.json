@@ -1,0 +1,77 @@
+{
+  "date": "2026-10-08",
+  "sourceBase": "9d4b31fa23a33f4d3c84bcde5a9a2d62aaab8965",
+  "sourceState": "uncommitted contribution",
+  "node": "24.21.0",
+  "pnpm": "10.34.5",
+  "checks": {
+    "check": "pass",
+    "lint": "pass",
+    "format:check": "pass",
+    "build": "pass"
+  },
+  "copy": {
+    "en": [
+      "Start Your Journey",
+      "Contact Us"
+    ],
+    "vi": [
+      "Bắt đầu hành trình của bạn",
+      "Liên hệ với chúng tôi"
+    ],
+    "otherCopy": "Unchanged; comparison against HEAD excluding only requested headings and removed unused formTitle passed"
+  },
+  "form": {
+    "visibleHeadingRemoved": true,
+    "initialRequiredGuidanceRemoved": true,
+    "outerBorder": "0px",
+    "fieldBorders": "1px",
+    "accessibleName": "landing-access-heading",
+    "validation": "preserved"
+  },
+  "header": "Contact is fifth nav item, no separate CTA",
+  "footer": {
+    "sourceUnchanged": true,
+    "report": "footer-review.md",
+    "validLinks": 9,
+    "focusEvidence": "visual-focus.json"
+  },
+  "browser": {
+    "initialStats": {
+      "startTime": "2026-10-08T12:50:02.772Z",
+      "duration": 212010.32200000001,
+      "expected": 24,
+      "skipped": 0,
+      "unexpected": 4,
+      "flaky": 0
+    },
+    "initialFailures": "Two stale border expectations and two ambiguous footer screenshot selectors",
+    "correction": "Only tests updated; source unchanged",
+    "rerunStats": {
+      "startTime": "2026-10-08T12:54:55.062Z",
+      "duration": 50758.592000000004,
+      "expected": 4,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "finalVerifiedCases": 28,
+    "retries": 0,
+    "scope": "Affected contact/header, localized Blog navigation and public shell; not full suite",
+    "metadata": "No public origin, noindex",
+    "api": "Local fixture Blog API; contact API mocked at boundary"
+  },
+  "independentReview": {
+    "requirementAdherence": "pass",
+    "correctnessAndStandards": "pass",
+    "blockingFindings": 0,
+    "footerRecommendations": "Two label mismatches; optional larger touch targets"
+  },
+  "limitations": [
+    "Local verification only",
+    "No call/email delivery or actual backend tested",
+    "Model tests not rerun: models unchanged",
+    "No commit/push/deploy",
+    "Existing build chunk warning above 500 kB"
+  ]
+}

@@ -54,9 +54,11 @@ Copy `.env.example` sang ignored `.env`, đặt giá trị rồi **build lại**
 
 Mọi trang public kế thừa token landing từ `BaseLayout`; `.landingRoot` trong `landing-page.module.css` là nguồn duy nhất của `--landing-*`, không chép lại trong CSS từng trang. Header/Footer dùng chung trên landing và Blog, kể cả trạng thái lỗi.
 
-Header có bốn link trực tiếp: Tính năng, Xem demo, Dành cho ai và Blog; mobile dùng menu phẳng với cùng thứ tự. Nút Liên hệ dẫn tới `#access`, hoặc `/{locale}#access` từ Blog. Hero “Liên hệ” dẫn tới `#access`; form gửi JSON tới `{PUBLIC_CONTACT_API_ORIGIN}/contact-requests`. Phần liên hệ và Footer có số `0933.80.99.36` với link `tel:+84933809936`; email `access@signapse.cloud` tiếp tục dùng mailto. Dashboard chưa mở quyền user access, nên Header/Footer không có nút hoặc link vào dashboard; chỉ khôi phục khi người dùng cho phép rõ ràng. Locale switch giữ query và các hash trong `SUPPORTED_LANDING_HASHES`.
+Header có năm item trực tiếp: Tính năng, Xem demo, Dành cho ai, Blog và Liên hệ; mobile dùng menu phẳng với cùng thứ tự. Item Liên hệ dẫn tới `#access`, hoặc `/{locale}#access` từ Blog. Hero “Liên hệ” dẫn tới `#access`; form gửi JSON tới `{PUBLIC_CONTACT_API_ORIGIN}/contact-requests`. Phần liên hệ dùng “Start Your Journey / Contact Us” ở EN và “Bắt đầu hành trình của bạn / Liên hệ với chúng tôi” ở VI; form không có tiêu đề/dòng hướng dẫn đầu card hoặc viền ngoài, vẫn giữ labels và validation. Phần liên hệ và Footer có số `0933.80.99.36` với link `tel:+84933809936`; email `access@signapse.cloud` tiếp tục dùng mailto. Dashboard chưa mở quyền user access, nên Header/Footer không có nút hoặc link vào dashboard; chỉ khôi phục khi người dùng cho phép rõ ràng. Locale switch giữ query và các hash trong `SUPPORTED_LANDING_HASHES`.
 
 Request-language negotiation và domain redirects cần cấu hình tại hosting. Hosted CI và deployment được kiểm chứng trong quy trình release; production preview chạy cả static homepage lẫn Worker SSR cho blog.
+
+Footer gồm brand, Khám phá (Tính năng/Xem demo/Dành cho ai/Blog) và Liên hệ (Gửi lời nhắn/email/điện thoại); labels phản ánh đúng đích, mobile links tối thiểu 44 px. Typography landing giữ copy: Hero 32/48/56 px, Audience H2 30/36 px như Providers/contact, Audience item titles 18/20/22 px. Các ngưỡng là base/640/1024 px; showcase và Blog không đổi kích thước chữ.
 
 ## Deploy signapse.cloud
 

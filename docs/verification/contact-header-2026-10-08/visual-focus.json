@@ -1,0 +1,462 @@
+[
+  {
+    "locale": "vi",
+    "width": 1440,
+    "cardBackground": "rgb(8, 35, 46)",
+    "focus": [
+      {
+        "label": "Signapse",
+        "href": "/vi",
+        "outlineStyle": "solid",
+        "outlineWidth": "2px",
+        "outlineColor": "rgb(18, 214, 177)",
+        "focusedVisible": true,
+        "x": 112,
+        "y": 614.78125,
+        "width": 111.5,
+        "height": 28
+      },
+      {
+        "label": "Toàn cảnh thị trường",
+        "href": "#knowledge-graph",
+        "outlineStyle": "auto",
+        "outlineWidth": "1px",
+        "outlineColor": "oklab(0.782535 -0.146032 0.0153456 / 0.5)",
+        "focusedVisible": true,
+        "x": 698.953125,
+        "y": 646.78125,
+        "width": 132.609375,
+        "height": 20
+      },
+      {
+        "label": "Sự kiện & biến động",
+        "href": "#live-charts",
+        "outlineStyle": "auto",
+        "outlineWidth": "1px",
+        "outlineColor": "oklab(0.782535 -0.146032 0.0153456 / 0.5)",
+        "focusedVisible": true,
+        "x": 698.953125,
+        "y": 678.78125,
+        "width": 126.953125,
+        "height": 20
+      },
+      {
+        "label": "AI hỏi đáp",
+        "href": "#ai-assistant",
+        "outlineStyle": "auto",
+        "outlineWidth": "1px",
+        "outlineColor": "oklab(0.782535 -0.146032 0.0153456 / 0.5)",
+        "focusedVisible": true,
+        "x": 698.953125,
+        "y": 710.78125,
+        "width": 63.75,
+        "height": 20
+      },
+      {
+        "label": "Cảnh báo Telegram",
+        "href": "#telegram",
+        "outlineStyle": "auto",
+        "outlineWidth": "1px",
+        "outlineColor": "oklab(0.782535 -0.146032 0.0153456 / 0.5)",
+        "focusedVisible": true,
+        "x": 698.953125,
+        "y": 742.78125,
+        "width": 123.546875,
+        "height": 20
+      },
+      {
+        "label": "Xây dựng chiến lược",
+        "href": "#strategy-coding",
+        "outlineStyle": "auto",
+        "outlineWidth": "1px",
+        "outlineColor": "oklab(0.782535 -0.146032 0.0153456 / 0.5)",
+        "focusedVisible": true,
+        "x": 698.953125,
+        "y": 774.78125,
+        "width": 128.9375,
+        "height": 20
+      },
+      {
+        "label": "Đặt lịch demo",
+        "href": "#access",
+        "outlineStyle": "auto",
+        "outlineWidth": "1px",
+        "outlineColor": "oklab(0.782535 -0.146032 0.0153456 / 0.5)",
+        "focusedVisible": true,
+        "x": 1033.46875,
+        "y": 646.78125,
+        "width": 88.75,
+        "height": 20
+      },
+      {
+        "label": "access@signapse.cloud",
+        "href": "mailto:access@signapse.cloud?subject=Signapse%20access%20request",
+        "outlineStyle": "solid",
+        "outlineWidth": "2px",
+        "outlineColor": "rgb(18, 214, 177)",
+        "focusedVisible": true,
+        "x": 1033.46875,
+        "y": 678.78125,
+        "width": 151.203125,
+        "height": 16
+      },
+      {
+        "label": "0933.80.99.36",
+        "href": "tel:+84933809936",
+        "outlineStyle": "solid",
+        "outlineWidth": "2px",
+        "outlineColor": "rgb(18, 214, 177)",
+        "focusedVisible": true,
+        "x": 1033.46875,
+        "y": 706.78125,
+        "width": 93.609375,
+        "height": 44
+      }
+    ]
+  },
+  {
+    "locale": "vi",
+    "width": 375,
+    "cardBackground": "rgb(8, 35, 46)",
+    "focus": [
+      {
+        "label": "Signapse",
+        "href": "/vi",
+        "outlineStyle": "solid",
+        "outlineWidth": "2px",
+        "outlineColor": "rgb(18, 214, 177)",
+        "focusedVisible": true,
+        "x": 16,
+        "y": 258.6875,
+        "width": 111.5,
+        "height": 28
+      },
+      {
+        "label": "Toàn cảnh thị trường",
+        "href": "#knowledge-graph",
+        "outlineStyle": "auto",
+        "outlineWidth": "1px",
+        "outlineColor": "oklab(0.782535 -0.146032 0.0153456 / 0.5)",
+        "focusedVisible": true,
+        "x": 16,
+        "y": 446.6875,
+        "width": 132.609375,
+        "height": 20
+      },
+      {
+        "label": "Sự kiện & biến động",
+        "href": "#live-charts",
+        "outlineStyle": "auto",
+        "outlineWidth": "1px",
+        "outlineColor": "oklab(0.782535 -0.146032 0.0153456 / 0.5)",
+        "focusedVisible": true,
+        "x": 16,
+        "y": 478.6875,
+        "width": 126.953125,
+        "height": 20
+      },
+      {
+        "label": "AI hỏi đáp",
+        "href": "#ai-assistant",
+        "outlineStyle": "auto",
+        "outlineWidth": "1px",
+        "outlineColor": "oklab(0.782535 -0.146032 0.0153456 / 0.5)",
+        "focusedVisible": true,
+        "x": 16,
+        "y": 510.6875,
+        "width": 63.75,
+        "height": 20
+      },
+      {
+        "label": "Cảnh báo Telegram",
+        "href": "#telegram",
+        "outlineStyle": "auto",
+        "outlineWidth": "1px",
+        "outlineColor": "oklab(0.782535 -0.146032 0.0153456 / 0.5)",
+        "focusedVisible": true,
+        "x": 16,
+        "y": 542.6875,
+        "width": 123.546875,
+        "height": 20
+      },
+      {
+        "label": "Xây dựng chiến lược",
+        "href": "#strategy-coding",
+        "outlineStyle": "auto",
+        "outlineWidth": "1px",
+        "outlineColor": "oklab(0.782535 -0.146032 0.0153456 / 0.5)",
+        "focusedVisible": true,
+        "x": 16,
+        "y": 574.6875,
+        "width": 128.9375,
+        "height": 20
+      },
+      {
+        "label": "Đặt lịch demo",
+        "href": "#access",
+        "outlineStyle": "auto",
+        "outlineWidth": "1px",
+        "outlineColor": "oklab(0.782535 -0.146032 0.0153456 / 0.5)",
+        "focusedVisible": true,
+        "x": 16,
+        "y": 666.6875,
+        "width": 88.75,
+        "height": 20
+      },
+      {
+        "label": "access@signapse.cloud",
+        "href": "mailto:access@signapse.cloud?subject=Signapse%20access%20request",
+        "outlineStyle": "solid",
+        "outlineWidth": "2px",
+        "outlineColor": "rgb(18, 214, 177)",
+        "focusedVisible": true,
+        "x": 16,
+        "y": 698.6875,
+        "width": 151.203125,
+        "height": 16
+      },
+      {
+        "label": "0933.80.99.36",
+        "href": "tel:+84933809936",
+        "outlineStyle": "solid",
+        "outlineWidth": "2px",
+        "outlineColor": "rgb(18, 214, 177)",
+        "focusedVisible": true,
+        "x": 16,
+        "y": 726.6875,
+        "width": 93.609375,
+        "height": 44
+      }
+    ]
+  },
+  {
+    "locale": "en",
+    "width": 1440,
+    "cardBackground": "rgb(8, 35, 46)",
+    "focus": [
+      {
+        "label": "Signapse",
+        "href": "/en",
+        "outlineStyle": "solid",
+        "outlineWidth": "2px",
+        "outlineColor": "rgb(18, 214, 177)",
+        "focusedVisible": true,
+        "x": 112,
+        "y": 614.78125,
+        "width": 111.5,
+        "height": 28
+      },
+      {
+        "label": "Complete market view",
+        "href": "#knowledge-graph",
+        "outlineStyle": "auto",
+        "outlineWidth": "1px",
+        "outlineColor": "oklab(0.782535 -0.146032 0.0153456 / 0.5)",
+        "focusedVisible": true,
+        "x": 698.953125,
+        "y": 646.78125,
+        "width": 143.859375,
+        "height": 20
+      },
+      {
+        "label": "Events & market moves",
+        "href": "#live-charts",
+        "outlineStyle": "auto",
+        "outlineWidth": "1px",
+        "outlineColor": "oklab(0.782535 -0.146032 0.0153456 / 0.5)",
+        "focusedVisible": true,
+        "x": 698.953125,
+        "y": 678.78125,
+        "width": 149.40625,
+        "height": 20
+      },
+      {
+        "label": "AI Q&A",
+        "href": "#ai-assistant",
+        "outlineStyle": "auto",
+        "outlineWidth": "1px",
+        "outlineColor": "oklab(0.782535 -0.146032 0.0153456 / 0.5)",
+        "focusedVisible": true,
+        "x": 698.953125,
+        "y": 710.78125,
+        "width": 44.65625,
+        "height": 20
+      },
+      {
+        "label": "Telegram alerts",
+        "href": "#telegram",
+        "outlineStyle": "auto",
+        "outlineWidth": "1px",
+        "outlineColor": "oklab(0.782535 -0.146032 0.0153456 / 0.5)",
+        "focusedVisible": true,
+        "x": 698.953125,
+        "y": 742.78125,
+        "width": 98.359375,
+        "height": 20
+      },
+      {
+        "label": "Strategy building",
+        "href": "#strategy-coding",
+        "outlineStyle": "auto",
+        "outlineWidth": "1px",
+        "outlineColor": "oklab(0.782535 -0.146032 0.0153456 / 0.5)",
+        "focusedVisible": true,
+        "x": 698.953125,
+        "y": 774.78125,
+        "width": 108.78125,
+        "height": 20
+      },
+      {
+        "label": "Book a demo",
+        "href": "#access",
+        "outlineStyle": "auto",
+        "outlineWidth": "1px",
+        "outlineColor": "oklab(0.782535 -0.146032 0.0153456 / 0.5)",
+        "focusedVisible": true,
+        "x": 1033.46875,
+        "y": 646.78125,
+        "width": 84.28125,
+        "height": 20
+      },
+      {
+        "label": "access@signapse.cloud",
+        "href": "mailto:access@signapse.cloud?subject=Signapse%20access%20request",
+        "outlineStyle": "solid",
+        "outlineWidth": "2px",
+        "outlineColor": "rgb(18, 214, 177)",
+        "focusedVisible": true,
+        "x": 1033.46875,
+        "y": 678.78125,
+        "width": 151.203125,
+        "height": 16
+      },
+      {
+        "label": "0933.80.99.36",
+        "href": "tel:+84933809936",
+        "outlineStyle": "solid",
+        "outlineWidth": "2px",
+        "outlineColor": "rgb(18, 214, 177)",
+        "focusedVisible": true,
+        "x": 1033.46875,
+        "y": 706.78125,
+        "width": 93.609375,
+        "height": 44
+      }
+    ]
+  },
+  {
+    "locale": "en",
+    "width": 375,
+    "cardBackground": "rgb(8, 35, 46)",
+    "focus": [
+      {
+        "label": "Signapse",
+        "href": "/en",
+        "outlineStyle": "solid",
+        "outlineWidth": "2px",
+        "outlineColor": "rgb(18, 214, 177)",
+        "focusedVisible": true,
+        "x": 16,
+        "y": 259.109375,
+        "width": 111.5,
+        "height": 28
+      },
+      {
+        "label": "Complete market view",
+        "href": "#knowledge-graph",
+        "outlineStyle": "auto",
+        "outlineWidth": "1px",
+        "outlineColor": "oklab(0.782535 -0.146032 0.0153456 / 0.5)",
+        "focusedVisible": true,
+        "x": 16,
+        "y": 447.109375,
+        "width": 143.859375,
+        "height": 20
+      },
+      {
+        "label": "Events & market moves",
+        "href": "#live-charts",
+        "outlineStyle": "auto",
+        "outlineWidth": "1px",
+        "outlineColor": "oklab(0.782535 -0.146032 0.0153456 / 0.5)",
+        "focusedVisible": true,
+        "x": 16,
+        "y": 479.109375,
+        "width": 149.40625,
+        "height": 20
+      },
+      {
+        "label": "AI Q&A",
+        "href": "#ai-assistant",
+        "outlineStyle": "auto",
+        "outlineWidth": "1px",
+        "outlineColor": "oklab(0.782535 -0.146032 0.0153456 / 0.5)",
+        "focusedVisible": true,
+        "x": 16,
+        "y": 511.109375,
+        "width": 44.65625,
+        "height": 20
+      },
+      {
+        "label": "Telegram alerts",
+        "href": "#telegram",
+        "outlineStyle": "auto",
+        "outlineWidth": "1px",
+        "outlineColor": "oklab(0.782535 -0.146032 0.0153456 / 0.5)",
+        "focusedVisible": true,
+        "x": 16,
+        "y": 543.109375,
+        "width": 98.359375,
+        "height": 20
+      },
+      {
+        "label": "Strategy building",
+        "href": "#strategy-coding",
+        "outlineStyle": "auto",
+        "outlineWidth": "1px",
+        "outlineColor": "oklab(0.782535 -0.146032 0.0153456 / 0.5)",
+        "focusedVisible": true,
+        "x": 16,
+        "y": 575.109375,
+        "width": 108.78125,
+        "height": 20
+      },
+      {
+        "label": "Book a demo",
+        "href": "#access",
+        "outlineStyle": "auto",
+        "outlineWidth": "1px",
+        "outlineColor": "oklab(0.782535 -0.146032 0.0153456 / 0.5)",
+        "focusedVisible": true,
+        "x": 16,
+        "y": 667.109375,
+        "width": 84.28125,
+        "height": 20
+      },
+      {
+        "label": "access@signapse.cloud",
+        "href": "mailto:access@signapse.cloud?subject=Signapse%20access%20request",
+        "outlineStyle": "solid",
+        "outlineWidth": "2px",
+        "outlineColor": "rgb(18, 214, 177)",
+        "focusedVisible": true,
+        "x": 16,
+        "y": 699.109375,
+        "width": 151.203125,
+        "height": 16
+      },
+      {
+        "label": "0933.80.99.36",
+        "href": "tel:+84933809936",
+        "outlineStyle": "solid",
+        "outlineWidth": "2px",
+        "outlineColor": "rgb(18, 214, 177)",
+        "focusedVisible": true,
+        "x": 16,
+        "y": 727.109375,
+        "width": 93.609375,
+        "height": 44
+      }
+    ]
+  }
+]

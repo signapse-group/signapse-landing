@@ -178,18 +178,14 @@ export function LandingContactForm({
 
   return (
     <div className={styles.contactFormCard} data-contact-form-card>
-      <h3 id="contact-form-heading" className={styles.contactFormHeading}>
-        {copy.formTitle}
-      </h3>
-      <p className={styles.contactRequired}>{copy.requiredFields}</p>
       <form
         id="contact-request-form"
-        aria-labelledby="contact-form-heading"
+        aria-labelledby="landing-access-heading"
         noValidate
         onSubmit={handleSubmit}
       >
         <fieldset disabled={isSubmitting} className={styles.contactFieldset}>
-          <legend className="sr-only">{copy.formTitle}</legend>
+          <legend className="sr-only">{copy.heading}</legend>
           <div className={styles.contactFieldGrid}>
             <div className={styles.contactField}>
               <label htmlFor="contact-name" className={styles.contactLabel}>

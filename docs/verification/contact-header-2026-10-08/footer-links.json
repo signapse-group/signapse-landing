@@ -1,0 +1,274 @@
+[
+  {
+    "name": "footer-links-vi-1440",
+    "links": [
+      {
+        "label": "Signapse",
+        "accessibleLabel": "Về Signapse",
+        "href": "/vi",
+        "width": 111.5,
+        "height": 28
+      },
+      {
+        "label": "Toàn cảnh thị trường",
+        "accessibleLabel": null,
+        "href": "#knowledge-graph",
+        "width": 132.609375,
+        "height": 20
+      },
+      {
+        "label": "Sự kiện & biến động",
+        "accessibleLabel": null,
+        "href": "#live-charts",
+        "width": 126.953125,
+        "height": 20
+      },
+      {
+        "label": "AI hỏi đáp",
+        "accessibleLabel": null,
+        "href": "#ai-assistant",
+        "width": 63.75,
+        "height": 20
+      },
+      {
+        "label": "Cảnh báo Telegram",
+        "accessibleLabel": null,
+        "href": "#telegram",
+        "width": 123.546875,
+        "height": 20
+      },
+      {
+        "label": "Xây dựng chiến lược",
+        "accessibleLabel": null,
+        "href": "#strategy-coding",
+        "width": 128.9375,
+        "height": 20
+      },
+      {
+        "label": "Đặt lịch demo",
+        "accessibleLabel": null,
+        "href": "#access",
+        "width": 88.75,
+        "height": 20
+      },
+      {
+        "label": "access@signapse.cloud",
+        "accessibleLabel": null,
+        "href": "mailto:access@signapse.cloud?subject=Signapse%20access%20request",
+        "width": 151.203125,
+        "height": 16
+      },
+      {
+        "label": "0933.80.99.36",
+        "accessibleLabel": null,
+        "href": "tel:+84933809936",
+        "width": 93.609375,
+        "height": 44
+      }
+    ]
+  },
+  {
+    "name": "footer-links-vi-375",
+    "links": [
+      {
+        "label": "Signapse",
+        "accessibleLabel": "Về Signapse",
+        "href": "/vi",
+        "width": 111.5,
+        "height": 28
+      },
+      {
+        "label": "Toàn cảnh thị trường",
+        "accessibleLabel": null,
+        "href": "#knowledge-graph",
+        "width": 132.609375,
+        "height": 20
+      },
+      {
+        "label": "Sự kiện & biến động",
+        "accessibleLabel": null,
+        "href": "#live-charts",
+        "width": 126.953125,
+        "height": 20
+      },
+      {
+        "label": "AI hỏi đáp",
+        "accessibleLabel": null,
+        "href": "#ai-assistant",
+        "width": 63.75,
+        "height": 20
+      },
+      {
+        "label": "Cảnh báo Telegram",
+        "accessibleLabel": null,
+        "href": "#telegram",
+        "width": 123.546875,
+        "height": 20
+      },
+      {
+        "label": "Xây dựng chiến lược",
+        "accessibleLabel": null,
+        "href": "#strategy-coding",
+        "width": 128.9375,
+        "height": 20
+      },
+      {
+        "label": "Đặt lịch demo",
+        "accessibleLabel": null,
+        "href": "#access",
+        "width": 88.75,
+        "height": 20
+      },
+      {
+        "label": "access@signapse.cloud",
+        "accessibleLabel": null,
+        "href": "mailto:access@signapse.cloud?subject=Signapse%20access%20request",
+        "width": 151.203125,
+        "height": 16
+      },
+      {
+        "label": "0933.80.99.36",
+        "accessibleLabel": null,
+        "href": "tel:+84933809936",
+        "width": 93.609375,
+        "height": 44
+      }
+    ]
+  },
+  {
+    "name": "footer-links-en-1440",
+    "links": [
+      {
+        "label": "Signapse",
+        "accessibleLabel": "About Signapse",
+        "href": "/en",
+        "width": 111.5,
+        "height": 28
+      },
+      {
+        "label": "Complete market view",
+        "accessibleLabel": null,
+        "href": "#knowledge-graph",
+        "width": 143.859375,
+        "height": 20
+      },
+      {
+        "label": "Events & market moves",
+        "accessibleLabel": null,
+        "href": "#live-charts",
+        "width": 149.40625,
+        "height": 20
+      },
+      {
+        "label": "AI Q&A",
+        "accessibleLabel": null,
+        "href": "#ai-assistant",
+        "width": 44.65625,
+        "height": 20
+      },
+      {
+        "label": "Telegram alerts",
+        "accessibleLabel": null,
+        "href": "#telegram",
+        "width": 98.359375,
+        "height": 20
+      },
+      {
+        "label": "Strategy building",
+        "accessibleLabel": null,
+        "href": "#strategy-coding",
+        "width": 108.78125,
+        "height": 20
+      },
+      {
+        "label": "Book a demo",
+        "accessibleLabel": null,
+        "href": "#access",
+        "width": 84.28125,
+        "height": 20
+      },
+      {
+        "label": "access@signapse.cloud",
+        "accessibleLabel": null,
+        "href": "mailto:access@signapse.cloud?subject=Signapse%20access%20request",
+        "width": 151.203125,
+        "height": 16
+      },
+      {
+        "label": "0933.80.99.36",
+        "accessibleLabel": null,
+        "href": "tel:+84933809936",
+        "width": 93.609375,
+        "height": 44
+      }
+    ]
+  },
+  {
+    "name": "footer-links-en-375",
+    "links": [
+      {
+        "label": "Signapse",
+        "accessibleLabel": "About Signapse",
+        "href": "/en",
+        "width": 111.5,
+        "height": 28
+      },
+      {
+        "label": "Complete market view",
+        "accessibleLabel": null,
+        "href": "#knowledge-graph",
+        "width": 143.859375,
+        "height": 20
+      },
+      {
+        "label": "Events & market moves",
+        "accessibleLabel": null,
+        "href": "#live-charts",
+        "width": 149.40625,
+        "height": 20
+      },
+      {
+        "label": "AI Q&A",
+        "accessibleLabel": null,
+        "href": "#ai-assistant",
+        "width": 44.65625,
+        "height": 20
+      },
+      {
+        "label": "Telegram alerts",
+        "accessibleLabel": null,
+        "href": "#telegram",
+        "width": 98.359375,
+        "height": 20
+      },
+      {
+        "label": "Strategy building",
+        "accessibleLabel": null,
+        "href": "#strategy-coding",
+        "width": 108.78125,
+        "height": 20
+      },
+      {
+        "label": "Book a demo",
+        "accessibleLabel": null,
+        "href": "#access",
+        "width": 84.28125,
+        "height": 20
+      },
+      {
+        "label": "access@signapse.cloud",
+        "accessibleLabel": null,
+        "href": "mailto:access@signapse.cloud?subject=Signapse%20access%20request",
+        "width": 151.203125,
+        "height": 16
+      },
+      {
+        "label": "0933.80.99.36",
+        "accessibleLabel": null,
+        "href": "tel:+84933809936",
+        "width": 93.609375,
+        "height": 44
+      }
+    ]
+  }
+]

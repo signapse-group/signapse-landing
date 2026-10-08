@@ -741,10 +741,40 @@
 
 .audienceItemTitle {
   max-width: 34rem;
-  font-size: clamp(1.3rem, 2.2vw, 2rem);
+  font-size: 1.125rem;
   font-weight: 600;
   letter-spacing: -0.03em;
-  line-height: 1.08;
+  line-height: 1.25;
+}
+
+@media (min-width: 40rem) {
+  .audienceItemTitle {
+    font-size: 1.25rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  .audienceItemTitle {
+    font-size: 1.375rem;
+  }
+}
+
+.footerLink {
+  display: inline-flex;
+  min-height: var(--landing-control-height);
+  align-items: center;
+  border-radius: var(--landing-control-radius);
+}
+
+.footerLink:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+@media (min-width: 40rem) {
+  .footerLink {
+    min-height: 0;
+  }
 }
 
 .audienceItemBody {
@@ -966,26 +996,10 @@
 
 .contactFormCard {
   width: 100%;
-  border: 1px solid color-mix(in oklab, var(--landing-boundary) 85%, white);
   border-radius: var(--landing-card-radius);
   background: var(--landing-navy-surface);
   padding: clamp(1.25rem, 3vw, 2rem);
   box-shadow: 0 1.25rem 3rem color-mix(in oklab, #000 18%, transparent);
-}
-
-.contactFormHeading {
-  margin: 0;
-  color: var(--landing-off-white);
-  font-size: 1.125rem;
-  font-weight: 600;
-  line-height: 1.6;
-}
-
-.contactRequired {
-  margin: 0.35rem 0 1.25rem;
-  color: var(--landing-muted);
-  font-size: 0.8125rem;
-  line-height: 1.4rem;
 }
 
 .contactFieldset {

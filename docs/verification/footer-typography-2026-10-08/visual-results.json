@@ -1,0 +1,26 @@
+[
+  {
+    "locale": "vi",
+    "width": 1440,
+    "pageErrors": [],
+    "horizontalOverflow": false
+  },
+  {
+    "locale": "vi",
+    "width": 375,
+    "pageErrors": [],
+    "horizontalOverflow": false
+  },
+  {
+    "locale": "en",
+    "width": 1440,
+    "pageErrors": [],
+    "horizontalOverflow": false
+  },
+  {
+    "locale": "en",
+    "width": 375,
+    "pageErrors": [],
+    "horizontalOverflow": false
+  }
+]
