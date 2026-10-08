@@ -6,7 +6,7 @@ for (const locale of ['vi', 'en'] as const) {
       browser,
       request,
       baseURL,
-    }) => {
+    }, testInfo) => {
       const publishResponse = await request.get(
         `${process.env.PUBLIC_BLOG_API_ORIGIN}/__fixture/publish?value=true`,
       );
@@ -33,10 +33,59 @@ for (const locale of ['vi', 'en'] as const) {
             expect(response?.status()).toBe(route.status);
             const header = page.locator('[data-landing-part="header"]');
             await expect(header).toHaveCSS('height', '72px');
+            const landingPath =
+              route.path === '/' || route.path === `/${locale}`
+                ? ''
+                : `/${locale}`;
+            const navigation = header.getByRole('navigation', {
+              name:
+                locale === 'vi' ? 'Điều hướng landing' : 'Landing navigation',
+            });
+            const expectedLinks = [
+              [
+                `${landingPath}#capability-strip`,
+                locale === 'vi' ? 'Tính năng' : 'Features',
+              ],
+              [
+                `${landingPath}#showcase`,
+                locale === 'vi' ? 'Xem demo' : 'View demos',
+              ],
+              [
+                `${landingPath}#audiences`,
+                locale === 'vi' ? 'Dành cho ai' : 'Who it’s for',
+              ],
+              [`/${locale}/blogs`, 'Blog'],
+            ];
+            const activeNavigation =
+              width >= 1280 ? navigation.first() : navigation.last();
+            if (width < 1280)
+              await header.locator('[data-mobile-menu] > summary').click();
+            await expect(activeNavigation.getByRole('link')).toHaveCount(4);
+            for (const [href, label] of expectedLinks) {
+              await expect(
+                activeNavigation.getByRole('link', {
+                  name: label,
+                  exact: true,
+                }),
+              ).toHaveAttribute('href', href);
+            }
+            await expect(header.locator('[aria-disabled="true"]')).toHaveCount(
+              0,
+            );
+            const contact = header.getByRole('link', {
+              name: locale === 'vi' ? 'Liên hệ' : 'Contact',
+              exact: true,
+            });
+            await expect(contact).toBeVisible();
+            await expect(contact).toHaveAttribute(
+              'href',
+              `${landingPath}#access`,
+            );
+            await expect(contact).toHaveCSS('height', '44px');
+            if (width < 1280)
+              await header.locator('[data-mobile-menu] > summary').click();
             if (width >= 1280) {
-              const menuTrigger = header
-                .locator('details[name="landing-desktop-menu"] > summary')
-                .first();
+              const menuTrigger = header.locator('nav a').first();
               await expect(menuTrigger).toHaveCSS('height', '44px');
               await expect(menuTrigger).toHaveCSS('border-radius', '8px');
               const localeTrigger = header.locator(
@@ -66,6 +115,29 @@ for (const locale of ['vi', 'en'] as const) {
             await expect(
               page.locator('footer a[href^="mailto:access@signapse.cloud"]'),
             ).toHaveCount(1);
+            await expect(
+              page.locator('footer a[href="tel:+84933809936"]'),
+            ).toHaveText('0933.80.99.36');
+            if (!landingPath) {
+              await expect(
+                page.locator('#access a[href="tel:+84933809936"]'),
+              ).toHaveText('0933.80.99.36');
+            }
+            if (
+              javaScriptEnabled &&
+              route.path === `/${locale}` &&
+              (width === 1440 || width === 375)
+            ) {
+              await page.evaluate(() => document.fonts.ready);
+              await page.screenshot({
+                path: testInfo.outputPath(`header-${locale}-${width}.png`),
+                clip: { x: 0, y: 0, width, height: 72 },
+              });
+              await expect(page.locator('#contact-request-form')).toBeVisible();
+              await page.locator('#access').screenshot({
+                path: testInfo.outputPath(`contact-${locale}-${width}.png`),
+              });
+            }
             expect(
               await page.evaluate(
                 () => document.documentElement.scrollWidth <= innerWidth,

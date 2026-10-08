@@ -6,7 +6,12 @@ import LandingFooter from './LandingFooter.astro';
 import LandingCurrencyBackground from './LandingCurrencyBackground.astro';
 import { LandingContactForm } from './landing-contact-form';
 import LandingProviderMarquee from './LandingProviderMarquee.astro';
-import { ACCESS_SECTION_HREF, REQUEST_ACCESS_HREF } from './landing-access';
+import {
+  ACCESS_SECTION_HREF,
+  REQUEST_ACCESS_HREF,
+  CONTACT_PHONE_NUMBER,
+  CONTACT_PHONE_HREF,
+} from './landing-access';
 import { LandingAudienceSection } from './landing-audience-section';
 import { LandingCapabilityStrip } from './landing-capability-strip';
 import { LandingContextFigure } from './landing-context-figure';
@@ -166,6 +171,12 @@ const t = dictionary.landing;
               </p>
               <a href={REQUEST_ACCESS_HREF} class={styles.contactEmail}>
                 {t.footer.requestAccessEmail}
+              </a>
+              <p class="mt-3 text-sm text-muted-foreground">
+                {t.contact.phoneLabel}
+              </p>
+              <a href={CONTACT_PHONE_HREF} class={styles.contactEmail}>
+                {CONTACT_PHONE_NUMBER}
               </a>
             </div>
             <noscript>

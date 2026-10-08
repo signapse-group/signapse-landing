@@ -6,6 +6,10 @@ Boundary dev theo [local handoff policy](../../.agents/skills/agent-execution-po
 
 ## Checks và bằng chứng
 
+Review độc lập của contribution header/navigation/điện thoại ngày **2026-10-08**: requirement adherence và correctness/standards đạt; không còn finding source/docs/visual sau khi kiểm tám ảnh. [Tổng hợp kiểm chứng](header-navigation-2026-10-08/verification-after.json) ghi rõ hai lượt browser và giới hạn local.
+
+Ngày **2026-10-08**, thực hiện plan người dùng chốt: header có bốn link trực tiếp và Contact CTA, mobile menu phẳng, không còn roadmap placeholder; thêm `0933.80.99.36` (`tel:+84933809936`) ở contact/Footer và sửa repeated Audience anchor. Copy ngoài navigation và nhãn điện thoại được đối chiếu với Git HEAD và giữ nguyên. Node **24.21.0** / pnpm **10.34.5**: check, lint, format:check và build pass. Built Worker preview dùng fixture API local, không public origin và noindex. Suite đầy đủ có **56 pass**, hai regression Audience fail do link mẫu bị giữ lại giữa hai viewport; sửa cleanup của test rồi chạy riêng hai regression: **2/2 pass**, mỗi test phủ 1440/375 px, VI/EN. Source không đổi giữa các lượt browser; không retry. Navigation/phone được kiểm trên landing/root và Blog list/detail/404/502, JS/noJS, 1440/1024/375 px; đích header có scroll margin. [Regression trước sửa](header-navigation-2026-10-08/regression-before.json), [suite đầy đủ](header-navigation-2026-10-08/browser-full.json), [regression sau sửa](header-navigation-2026-10-08/audience-after.json), [header VI](header-navigation-2026-10-08/header-vi-1440.png) và [contact VI](header-navigation-2026-10-08/contact-vi-1440.png). Model không thay đổi nên không chạy lại model tests. Kiểm chứng local, chưa commit/push/deploy hoặc kiểm backend thật; cảnh báo chunk lớn từ trước vẫn còn.
+
 Ngày **2026-10-08**, theo yêu cầu người dùng, foundation token landing được áp dụng tại `BaseLayout` cho mọi trang public; Blog bỏ các token chép riêng. Dashboard chưa mở quyền user access nên Header/Footer gỡ toàn bộ dashboard entry, action model và copy VI/EN tương ứng. Quy tắc được ghi trong `AGENTS.md`. Node **24.21.0** / pnpm **10.34.5**: check, lint, format:check và build pass. Chromium trên built Worker preview với public origin `https://signapse.cloud`, noindex và fixture API local: **56/56 pass**, không retry/flaky. Regression trước sửa đã fail đúng hai trường hợp: còn 2 dashboard links và menu Blog cao 38 px thay vì 44 px. Bốn tests mới trong `tests/e2e/public-shell.spec.ts` phủ VI/EN, JS/noJS, viewport 1440/1024/375 px, landing/root, Blog list/detail và 404/502; kiểm geometry, locale popup, mailto, overflow và không có dashboard entry. Review độc lập không có finding source. [Bằng chứng và ảnh sau sửa](header-layout-2026-10-08/verification-after.json). Model không thay đổi nên không chạy lại model tests. Đây là kiểm chứng local, chưa commit/push/deploy hoặc kiểm domain live; build vẫn có cảnh báo chunk trên 500 kB từ trước.
 
 | Nhóm              | Cách kiểm chứng                                                                                                   |
@@ -58,11 +62,11 @@ Hosted release ngày 2026-10-07 dùng commit `2ea7124`, giữ app origin dev và
 | VI/EN responsive    | 1440×900, 768×1024, 375×800, 1440×620; bốn demo đọc được, không horizontal overflow                                  |
 | Boundary desktop    | 1024×768, hai locale; sticky stages và hai Telegram panels                                                           |
 | Root/routing        | Landing VI, noindex; locale switch giữ query/hash; unsupported `/fr` 404                                             |
-| Desktop navigation  | Hover submenu, keyboard Enter/Escape, focus restore, outside click, anchor selection                                 |
-| Mobile navigation   | Native details Enter/touch, group/submenu, chọn capability, close và viewport containment                            |
+| Desktop navigation  | Bốn link trực tiếp, keyboard Enter và đích không bị header che; locale disclosure Escape/focus restore/outside click |
+| Mobile navigation   | Native details Enter/touch, menu phẳng, chọn anchor/close và viewport containment                                    |
 | Locale/URL          | VI↔EN, encoded query, lang/hreflang, supported hashes; hash ngoài contract bị bỏ; không locale cookie                |
 | Capability          | Năm popover, Enter/Space/Escape/focus restore, touch toggle, deep links/footer links, noJS native details            |
-| Public shell/contact | Header controls cùng token/geometry trên landing và Blog list/detail/error states, VI/EN, desktop/mobile, có/không JS; không có dashboard entry; Hero `#access`, footer mailto |
+| Public shell/contact | Header controls cùng token/geometry trên landing và Blog list/detail/error states, VI/EN, desktop/mobile, có/không JS; không có dashboard entry; Hero `#access`, mailto và phone link ở contact/footer |
 | Form liên hệ        | VI/EN labels/placeholders đúng locale và giá trị ban đầu rỗng; validation, JSON body/locale, 201 rỗng, 400/413/415/429/500, network/body failure, duplicate submit, no-JS và responsive; API mock nằm ở consumer boundary |
 | Showcase            | Scroll hai hướng, ArrowUp/Down/Home/End, buttons/focus, progress theo playback                                       |
 | Graph               | Ingestion/relationship phases, final inspector, animated incoming/restart và model order                             |
@@ -70,7 +74,7 @@ Hosted release ngày 2026-10-07 dùng commit `2ea7124`, giữ app origin dev và
 | AI                  | Typing/submission/thinking/streaming, follow-up/scenario/complete, composer và static transcript                     |
 | Telegram            | Asset/time/language/menu/cursor/analysis/sending/delivered; restart, VI/EN output độc lập locale trang, mobile/short |
 | Lifecycle           | Pause khi inactive/offscreen/tab hidden; re-entry/reset policies; controlled visibilitychange pause/resume           |
-| Hero/Audience       | Keyboard/pointer interaction, bốn Audience choices, SVG/WebGL ready/fallback, reduced idle                           |
+| Hero/Audience       | Keyboard/pointer interaction, bốn Audience choices, repeated anchor khôi phục selection, SVG/WebGL ready/fallback, reduced idle |
 | Fallback            | JavaScript tắt, WebGL blocked, thiếu IntersectionObserver: HTML/proofs/navigation và natural flow                    |
 | Accessibility/theme | Axe VI/EN và bốn demo, reduced motion, skip link, CSS zoom 200%, OS/class dark palette                               |
 | Runtime errors      | Không pageerror, console error, hydration mismatch, font/asset HTTP failure trong các browser journeys               |

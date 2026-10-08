@@ -1,0 +1,1002 @@
+{
+  "stats": {
+    "startTime": "2026-10-08T12:09:57.858Z",
+    "duration": 310319.282,
+    "expected": 56,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  },
+  "results": [
+    {
+      "file": "audience-navigation.spec.ts",
+      "title": "vi repeated audience anchors restore the selected content",
+      "passed": false,
+      "tests": [
+        {
+          "status": "unexpected",
+          "results": [
+            {
+              "status": "failed",
+              "retry": 0,
+              "errors": [
+                "Error: locator.click: Error: strict mode violation: getByRole('link', { name: 'Return to trader' }) resolved to 2 elements:\n    1) <a href=\"#audience-trader\">Return to trader</a> aka getByRole('link', { name: 'Return to trader' }).first()\n    2) <a href=\"#audience-trader\">Return to trader</a> aka getByRole('link', { name: 'Return to trader' }).nth(1)\n\nCall log:\n  - waiting for getByRole('link', { name: 'Return to trader' })\n\n\n  27 |         document.querySelector('main')!.append(link);\n  28 |       });\n> 29 |       await page.getByRole('link', { name: 'Return to trader' }).click();\n     |                                                                  ^\n  30 |       await expect(page.locator('#audience-trader')).toHaveAttribute(\n  31 |         'aria-pressed',\n  32 |         'true',\n    at D:\\Github\\signapse-landing\\tests\\e2e\\audience-navigation.spec.ts:29:66"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "audience-navigation.spec.ts",
+      "title": "en repeated audience anchors restore the selected content",
+      "passed": false,
+      "tests": [
+        {
+          "status": "unexpected",
+          "results": [
+            {
+              "status": "failed",
+              "retry": 0,
+              "errors": [
+                "Error: locator.click: Error: strict mode violation: getByRole('link', { name: 'Return to trader' }) resolved to 2 elements:\n    1) <a href=\"#audience-trader\">Return to trader</a> aka getByRole('link', { name: 'Return to trader' }).first()\n    2) <a href=\"#audience-trader\">Return to trader</a> aka getByRole('link', { name: 'Return to trader' }).nth(1)\n\nCall log:\n  - waiting for getByRole('link', { name: 'Return to trader' })\n\n\n  27 |         document.querySelector('main')!.append(link);\n  28 |       });\n> 29 |       await page.getByRole('link', { name: 'Return to trader' }).click();\n     |                                                                  ^\n  30 |       await expect(page.locator('#audience-trader')).toHaveAttribute(\n  31 |         'aria-pressed',\n  32 |         'true',\n    at D:\\Github\\signapse-landing\\tests\\e2e\\audience-navigation.spec.ts:29:66"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "blog.spec.ts",
+      "title": "public blog list is rendered by the server with metadata and route links",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "blog.spec.ts",
+      "title": "list HTML includes pagination and locale destinations when JavaScript is disabled",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "blog.spec.ts",
+      "title": "an out-of-range list page redirects to the last available page",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "blog.spec.ts",
+      "title": "public blog detail renders structured v1 content, metadata and locale navigation",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "blog.spec.ts",
+      "title": "approved Vietnamese blog detail content matches the desktop design",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "blog.spec.ts",
+      "title": "public blog maps missing, private and failed API reads to safe HTTP states",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "blog.spec.ts",
+      "title": "public blog list renders its empty state from a successful empty API response",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "blog.spec.ts",
+      "title": "each new blog read reflects publish state from the server API",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "blog.spec.ts",
+      "title": "blog layouts fit mobile, remain keyboard reachable and keep content ordered",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "vi public shell, localized metadata and Blog navigation",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "vi desktop keeps all four demos in readable responsive layout",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "vi tablet keeps all four demos in readable responsive layout",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "vi mobile keeps all four demos in readable responsive layout",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "vi short keeps all four demos in readable responsive layout",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "vi locale switch keeps supported query/hash and clears retired anchors",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "en public shell, localized metadata and Blog navigation",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "en desktop keeps all four demos in readable responsive layout",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "en tablet keeps all four demos in readable responsive layout",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "en mobile keeps all four demos in readable responsive layout",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "en short keeps all four demos in readable responsive layout",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "en locale switch keeps supported query/hash and clears retired anchors",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "desktop direct navigation reaches landing sections and locale disclosure supports Escape and outside clicks",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "mobile native navigation works by keyboard and capability details work by touch",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "five capability popovers open from keyboard, direct links and repeated footer anchors",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "story scroll and keyboard controls select all four steps without stealing focus",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "all demo progress follows playback and pauses for hidden pages and offscreen stages",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "demo selection restarts Graph and Telegram at the first frame",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "AI playback keeps both question rounds, streaming responses and looped composer visible",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "vi no JavaScript keeps useful Hero and four renderer proofs",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "en no JavaScript keeps useful Hero and four renderer proofs",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "reduced motion renders stable final proofs and static provider logos",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "WebGL unavailable preserves visible fallback and navigation",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "Hero WebGL interaction uses keyboard and pointer semantics when available",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "zoom, keyboard skip link and accessibility keep content reachable",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "fixed landing palette preserves stored dashboard theme preferences",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "without IntersectionObserver all previews stay in the natural document flow",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "Market Chart retains annotation, outcomes and its close-detail control",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "vi audience choices and every demo pass accessibility in both wide and mobile layouts",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "en audience choices and every demo pass accessibility in both wide and mobile layouts",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "root is a useful default landing entry with locale links and noindex",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "vi contact form exposes labels, validation, focus and localized copy",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "vi contact form sends the producer payload and accepts an empty 201",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "vi contact form submits values at the published producer limits",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "vi contact form keeps a useful email path when JavaScript is disabled",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "vi contact layout fits the assigned widths and 200% zoom",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "en contact form exposes labels, validation, focus and localized copy",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "en contact form sends the producer payload and accepts an empty 201",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "en contact form submits values at the published producer limits",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "en contact form keeps a useful email path when JavaScript is disabled",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "en contact layout fits the assigned widths and 200% zoom",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "contact API errors, unreadable bodies and network failure never lose input or retry",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "landing.spec.ts",
+      "title": "contact submission in flight ignores repeated click and Enter submits",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "public-shell.spec.ts",
+      "title": "vi shared public shell with JavaScript uses landing controls and hides dashboard access",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "public-shell.spec.ts",
+      "title": "vi shared public shell without JavaScript uses landing controls and hides dashboard access",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "public-shell.spec.ts",
+      "title": "en shared public shell with JavaScript uses landing controls and hides dashboard access",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "public-shell.spec.ts",
+      "title": "en shared public shell without JavaScript uses landing controls and hides dashboard access",
+      "passed": true,
+      "tests": [
+        {
+          "status": "expected",
+          "results": [
+            {
+              "status": "passed",
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -48,16 +48,26 @@ export function LandingAudienceSection({
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    function selectHashAudience() {
+    function selectHashAudience(hash: string) {
       const index = AUDIENCE_IDS.findIndex(
-        (audienceId) => `#${audienceId}` === window.location.hash,
+        (audienceId) => `#${audienceId}` === hash,
       );
       if (index >= 0) setActiveIndex(index);
     }
 
-    selectHashAudience();
-    window.addEventListener('hashchange', selectHashAudience);
-    return () => window.removeEventListener('hashchange', selectHashAudience);
+    const onHashChange = () => selectHashAudience(window.location.hash);
+    const onAnchorClick = (event: MouseEvent) => {
+      if (!(event.target instanceof Element)) return;
+      const anchor = event.target.closest<HTMLAnchorElement>('a[href^="#"]');
+      if (anchor) selectHashAudience(anchor.hash);
+    };
+    onHashChange();
+    window.addEventListener('hashchange', onHashChange);
+    document.addEventListener('click', onAnchorClick);
+    return () => {
+      window.removeEventListener('hashchange', onHashChange);
+      document.removeEventListener('click', onAnchorClick);
+    };
   }, []);
 
   return (

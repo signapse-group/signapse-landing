@@ -213,11 +213,10 @@ for (const locale of ['vi', 'en'] as const) {
     await expect(page.locator('[data-landing-part="footer"]')).toContainText(
       'access@signapse.cloud',
     );
-    const resources = page
-      .locator('details[name="landing-desktop-menu"]')
-      .nth(2);
-    await resources.locator('summary').hover();
-    const blogLink = resources.locator(`a[href="${blogHref}"]`);
+    const blogLink = page
+      .locator('[data-landing-part="header"] nav')
+      .first()
+      .locator(`a[href="${blogHref}"]`);
     await expect(blogLink).toBeVisible();
     await blogLink.click();
     await expect(page).toHaveURL(new URL(blogHref, page.url()).href);
@@ -348,15 +347,14 @@ for (const locale of ['vi', 'en'] as const) {
   });
 }
 
-test('desktop disclosures support hover, Escape, outside clicks and anchor selection', async ({
+test('desktop direct navigation reaches landing sections and locale disclosure supports Escape and outside clicks', async ({
   page,
 }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
   await ready(page, 'en');
-  const menu = page.locator('details[name="landing-desktop-menu"]').first();
+  const menu = page.locator('[data-locale-menu-trigger]').locator('..');
   const summary = menu.locator('summary');
-  await summary.hover();
-  await expect(menu).toHaveAttribute('open', '');
-  await menu.getByRole('link').first().hover();
+  await summary.press('Enter');
   await expect(menu).toHaveAttribute('open', '');
   await menu.getByRole('link').first().focus();
   await page.keyboard.press('Escape');
@@ -366,10 +364,17 @@ test('desktop disclosures support hover, Escape, outside clicks and anchor selec
   await expect(menu).toHaveAttribute('open', '');
   await page.mouse.click(12, 890);
   await expect(menu).not.toHaveAttribute('open');
-  await summary.press('Enter');
-  await menu.locator('a[href="#knowledge-graph"]').click();
-  await expect(menu).not.toHaveAttribute('open');
-  await expect(page.getByRole('dialog')).toBeVisible();
+  const navigation = page.locator('[data-landing-part="header"] nav').first();
+  for (const id of ['capability-strip', 'showcase', 'audiences']) {
+    await navigation.locator(`a[href="#${id}"]`).press('Enter');
+    await expect(page).toHaveURL(new RegExp(`#${id}$`));
+    await expect(page.locator(`#${id}`)).toBeInViewport();
+    expect(
+      await page
+        .locator(`#${id}`)
+        .evaluate((section) => section.getBoundingClientRect().top),
+    ).toBeGreaterThanOrEqual(72);
+  }
 });
 
 test('mobile native navigation works by keyboard and capability details work by touch', async ({
@@ -393,16 +398,13 @@ test('mobile native navigation works by keyboard and capability details work by 
       'open',
       '',
     );
-    const group = page
-      .locator('details[name="landing-mobile-menu-group"]')
-      .first();
-    await group.locator('summary').press('Enter');
-    await expect(group).toHaveAttribute('open', '');
-    await group.locator('a[href="#telegram"]').tap();
-    await expect(page.getByRole('dialog')).toBeVisible();
+    await page.locator('[data-mobile-menu] a[href="#capability-strip"]').tap();
+    await expect(page).toHaveURL(/#capability-strip$/);
     await expect(page.locator('[data-mobile-menu]')).not.toHaveAttribute(
       'open',
     );
+    await page.locator('#telegram').tap();
+    await expect(page.getByRole('dialog')).toBeVisible();
     await page.keyboard.press('Escape');
     await page.locator('#ai-assistant').tap();
     await expect(page.getByRole('dialog')).toBeVisible();

@@ -189,7 +189,6 @@ test('public blog detail renders structured v1 content, metadata and locale navi
       '[data-landing-part="header"] nav[aria-label="Điều hướng landing"]',
     )
     .first();
-  await vietnameseNavigation.getByText('Tài nguyên', { exact: true }).hover();
   const blogLink = vietnameseNavigation.locator('a[href="/vi/blogs"]');
   await expect(blogLink).toBeVisible();
   await blogLink.click();
@@ -331,17 +330,16 @@ test('public blog detail renders structured v1 content, metadata and locale navi
       '[data-landing-part="header"] nav[aria-label="Landing navigation"]',
     )
     .first();
-  const knowledgeGraphLink = page
-    .locator('[data-landing-part="header"] a[href="/en#knowledge-graph"]')
+  const featuresLink = page
+    .locator('[data-landing-part="header"] a[href="/en#capability-strip"]')
     .first();
-  await expect(knowledgeGraphLink).toHaveAttribute(
-    'href',
-    '/en#knowledge-graph',
-  );
-  await productNavigation.getByText('Product', { exact: true }).hover();
-  await expect(knowledgeGraphLink).toBeVisible();
-  await knowledgeGraphLink.click();
-  await expect(page).toHaveURL(/\/en#knowledge-graph$/);
+  await expect(featuresLink).toHaveAttribute('href', '/en#capability-strip');
+  await expect(
+    productNavigation.getByRole('link', { name: 'Features', exact: true }),
+  ).toBeVisible();
+  await expect(featuresLink).toBeVisible();
+  await featuresLink.click();
+  await expect(page).toHaveURL(/\/en#capability-strip$/);
 });
 
 test('approved Vietnamese blog detail content matches the desktop design', async ({

@@ -3,7 +3,11 @@ import { Logo } from '@/components/logo';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n/messages';
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import { REQUEST_ACCESS_HREF } from './landing-access';
+import {
+  REQUEST_ACCESS_HREF,
+  CONTACT_PHONE_NUMBER,
+  CONTACT_PHONE_HREF,
+} from './landing-access';
 import styles from './landing-page.module.css';
 
 interface Props {
@@ -73,6 +77,12 @@ const productLinks = [
         class="font-mono text-xs text-muted-foreground hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
       >
         {t.footer.requestAccessEmail}
+      </a>
+      <a
+        href={CONTACT_PHONE_HREF}
+        class="inline-flex min-h-11 items-center font-mono text-xs text-muted-foreground hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+      >
+        {CONTACT_PHONE_NUMBER}
       </a>
     </nav>
   </div>

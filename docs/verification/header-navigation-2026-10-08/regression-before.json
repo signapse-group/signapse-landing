@@ -1,0 +1,37 @@
+{
+  "node": "v24.21.0",
+  "stats": {
+    "startTime": "2026-10-08T10:51:01.746Z",
+    "duration": 52513.524999999994,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 3,
+    "flaky": 0
+  },
+  "results": [
+    {
+      "file": "audience-navigation.spec.ts",
+      "title": "vi repeated audience anchors restore the selected content",
+      "passed": false,
+      "errors": [
+        "Error: expect(locator).toHaveAttribute(expected) failed\n\nLocator:  locator('#audience-trader')\nExpected: \"true\"\nReceived: \"false\"\nTimeout:  10000ms\n\nCall log:\n  - Expect \"toHaveAttribute\" with timeout 10000ms\n  - waiting for locator('#audience-trader')\n    13 × locator resolved to <button type=\"button\" id=\"audience-trader\" aria-pressed=\"false\" data-audience-option=\"1\" class=\"_audienceItem_1ofs3_838 \">…</button>\n       - unexpected value \"false\"\n\n\n  16 |     });\n  17 |     await page.getByRole('link', { name: 'Return to trader' }).click();\n> 18 |     await expect(page.locator('#audience-trader'"
+      ]
+    },
+    {
+      "file": "audience-navigation.spec.ts",
+      "title": "en repeated audience anchors restore the selected content",
+      "passed": false,
+      "errors": [
+        "Error: expect(locator).toHaveAttribute(expected) failed\n\nLocator:  locator('#audience-trader')\nExpected: \"true\"\nReceived: \"false\"\nTimeout:  10000ms\n\nCall log:\n  - Expect \"toHaveAttribute\" with timeout 10000ms\n  - waiting for locator('#audience-trader')\n    14 × locator resolved to <button type=\"button\" id=\"audience-trader\" aria-pressed=\"false\" data-audience-option=\"1\" class=\"_audienceItem_1ofs3_838 \">…</button>\n       - unexpected value \"false\"\n\n\n  16 |     });\n  17 |     await page.getByRole('link', { name: 'Return to trader' }).click();\n> 18 |     await expect(page.locator('#audience-trader'"
+      ]
+    },
+    {
+      "file": "public-shell.spec.ts",
+      "title": "vi shared public shell without JavaScript uses landing controls and hides dashboard access",
+      "passed": false,
+      "errors": [
+        "Error: expect(locator).toHaveCount(expected) failed\n\nLocator:  locator('[data-landing-part=\"header\"]').getByRole('navigation', { name: 'Điều hướng landing' }).first().getByRole('link')\nExpected: 4\nReceived: 1\nTimeout:  10000ms\n\nCall log:\n  - Expect \"toHaveCount\" with timeout 10000ms\n  - waiting for locator('[data-landing-part=\"header\"]').getByRole('navigation', { name: 'Điều hướng landing' }).first().getByRole('link')\n    14 × locator resolved to 1 element\n       - unexpected value \"1\"\n\n\n  46 |             const activeNavigation = width >= 1280 ? navigation.first() : navigation.last();\n  47 | "
+      ]
+    }
+  ]
+}

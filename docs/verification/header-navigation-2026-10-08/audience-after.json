@@ -1,0 +1,22 @@
+{
+  "stats": {
+    "startTime": "2026-10-08T12:16:10.642Z",
+    "duration": 16204.691,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "results": [
+    {
+      "file": "audience-navigation.spec.ts",
+      "title": "vi repeated audience anchors restore the selected content",
+      "passed": true
+    },
+    {
+      "file": "audience-navigation.spec.ts",
+      "title": "en repeated audience anchors restore the selected content",
+      "passed": true
+    }
+  ]
+}
