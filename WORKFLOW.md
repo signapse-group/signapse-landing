@@ -57,6 +57,8 @@ relevant accepted comments, dependencies and approved references at start, resum
 and handoff. The Subtask defines this contribution; its parent owns the accepted
 outcome and requirements.
 
+The [local handoff policy](.agents/skills/agent-execution-policy/references/execution-policy.md#local-handoff-and-live-acceptance) defines the dev boundary and classification of pending QA/owner acceptance, baseline gaps and metadata. Apply it to this contribution's operation and phase without waiving required checks, review, CI or producer dependencies.
+
 Repository execution context:
 
 - This repository implements the public landing. Verify project `SIGN`, native Subtask type and parent, exactly one recognized routing label `route-landing`, and Deliverable ownership in `signapse-group/signapse-landing`. Planning owns hierarchy, routing and acceptance in its [project execution workflow](https://github.com/signapse-group/signapse-planing/blob/main/workflow/project-execution-workflow.md). Symphony owns structural selection, dependency admission, scheduling and recovery; GitHub hosts source, PRs and CI.

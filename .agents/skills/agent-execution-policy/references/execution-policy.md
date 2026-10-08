@@ -20,6 +20,16 @@ For API work, follow the [API consumer policy](api-handoff.md) for producer look
 published-contract readiness and discrepancy handling. Native blocker completion
 does not replace required live contract and producer delivery evidence.
 
+## Local handoff and live acceptance
+
+The default agent handoff covers the assigned implementation, applicable local checks, independent review, required PR/CI and saved evidence. Live feature execution is a gate only when the assignment or applicable policy identifies the operation, scope, expected result and required inputs. Public forms, app links, SSR or hosting technology do not alone add live acceptance. Fixture checks verify their observed boundary; they do not prove producer delivery, hosted behavior or external effects. Local SSR, metadata, accessibility and approved-design checks required by the contribution remain mandatory.
+
+If the revision/output exists and is reviewable with mandatory gates satisfied, the coordinator may own PR metadata or Development-panel link verification that the agent cannot update. Report that action as pending without claiming it succeeded. Hosted delivery, indexing, domain checks and worker activation follow their separately assigned release/acceptance operation.
+
+QA case preparation/approval/runs, merge/deployment of this contribution and owner acceptance are separate gates; record their owner and next action as pending. Parent acceptance or an unfinished QA ticket does not by itself block an authorized dev contribution. An unresolved choice solely about who performs QA goes to the coordinator without stopping independent implementation; a choice changing expected behavior or required dev verification blocks the affected work. This does not waive planning's requirement-completion gate before ticket publication or native dependency admission.
+
+Required behavior, local checks, independent review and required CI remain handoff gates. Fix contribution failures in Progress; use Blocked only for necessary external input/access when no meaningful independent work remains. Record the affected output/AC/check and resume condition. Baseline failures outside the selected scope remain visible; a failed required full check or CI is never converted into a scoped pass. Missing mandatory output, publication access, saved handoff or status-write access remains a gap; metadata pending does not establish a successful transition.
+
 ## Execution and review
 
 1. Read the contract, references, this policy and applicable repository instructions.

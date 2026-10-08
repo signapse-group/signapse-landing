@@ -30,6 +30,10 @@ Use local `implement`, `code-review`, `tdd`, `diagnosing-bugs`, `accessibility` 
 - Preview defaults to noindex. Canonical/indexability require explicit env; root remains a Vietnamese noindex entry. Request-language negotiation and domain redirects are hosting responsibilities.
 - public/ contains runtime brand/provider/font/social assets only. Keep screenshots and verification evidence under docs/verification/, outside runtime assets.
 
+## Dev handoff boundary
+
+For direct work, complete the requested output with applicable verification; tracker/review/PR/CI workflow steps activate only when assigned. For an activated workflow, apply the repository's [local handoff and live acceptance policy](.agents/skills/agent-execution-policy/references/execution-policy.md#local-handoff-and-live-acceptance). Pending QA, merge/deploy of this contribution or owner acceptance does not itself stop dev work. Missing behavior, required checks or necessary producer/input access remains a contribution gap; keep doing meaningful independent work.
+
 ## Implementation and verification
 
 - Keep edits within the request and preserve unrelated changes. Use UTF-8 and LF for source/config/docs; preserve image/font bytes and license notices.
