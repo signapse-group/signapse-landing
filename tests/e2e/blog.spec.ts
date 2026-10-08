@@ -335,6 +335,7 @@ test('approved Vietnamese blog detail content matches the desktop design', async
   const response = await page.goto('/vi/blogs/fixture-post');
 
   expect(response?.status()).toBe(200);
+  await expect(page.locator('main h1')).toHaveCSS('font-size', '60px');
   await expect(page).toHaveTitle(
     'Đọc thị trường qua mối liên hệ giữa sự kiện và giá | Signapse',
   );
