@@ -27,7 +27,11 @@ function parseOrigin(value: string | undefined, allowLocal = false) {
   }
 }
 
-export function landingMetadata(locale: Locale, root = false) {
+export function landingMetadata(
+  locale: Locale,
+  root = false,
+  canonicalPaths?: Partial<Record<Locale, string>>,
+) {
   if (!parseOrigin(PUBLIC_APP_ORIGIN, true)) {
     throw new Error(
       'PUBLIC_APP_ORIGIN must be an absolute HTTP(S) origin without path, query or credentials.',
@@ -43,13 +47,17 @@ export function landingMetadata(locale: Locale, root = false) {
     robots:
       SIGNAPSE_LANDING_INDEXABLE && !root ? 'index, follow' : 'noindex, follow',
     canonical: origin
-      ? new URL(withLocalePath('/', locale), origin).href
+      ? new URL(canonicalPaths?.[locale] ?? withLocalePath('/', locale), origin)
+          .href
       : undefined,
     alternates: origin
       ? [
           ...SUPPORTED_LOCALES.map((language) => ({
             language,
-            href: new URL(withLocalePath('/', language), origin).href,
+            href: new URL(
+              canonicalPaths?.[language] ?? withLocalePath('/', language),
+              origin,
+            ).href,
           })),
           { language: 'x-default', href: `${origin}/` },
         ]

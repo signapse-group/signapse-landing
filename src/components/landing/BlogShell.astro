@@ -1,0 +1,53 @@
+---
+import type { Locale } from '@/i18n/config';
+import type { Dictionary } from '@/i18n/messages';
+import LandingFooter from './LandingFooter.astro';
+import { createLandingAccessModel } from './landing-access';
+import { LandingHeader } from './landing-header';
+import styles from './public-blog.module.css';
+
+interface Props {
+  currentPath: string;
+  currentQuery: string;
+  dictionary: Dictionary;
+  headerSurface: 'dark' | 'light';
+  solidHeader?: boolean;
+  locale: Locale;
+}
+
+const {
+  currentPath,
+  currentQuery,
+  dictionary,
+  headerSurface,
+  solidHeader = false,
+  locale,
+} = Astro.props;
+const access = createLandingAccessModel(locale, dictionary.landing);
+---
+
+<div
+  class={styles.blogPage}
+  data-solid-header={solidHeader ? 'true' : undefined}
+>
+  <a href="#main-content" class={styles.skipLink}>
+    {dictionary.landing.accessibility.skipToContent}
+  </a>
+  <LandingHeader
+    dictionary={dictionary}
+    locale={locale}
+    access={access}
+    isLandingPage={false}
+    currentPath={currentPath}
+    currentQuery={currentQuery}
+    initialSurface={headerSurface}
+    client:load
+  />
+  <slot />
+  <LandingFooter
+    access={access}
+    dictionary={dictionary}
+    locale={locale}
+    isLandingPage={false}
+  />
+</div>

@@ -21,7 +21,9 @@ jobs:
       PUBLIC_APP_ORIGIN: ${{ github.ref == 'refs/heads/main' && vars.PUBLIC_APP_ORIGIN || 'http://localhost:3000' }}
       PUBLIC_CONTACT_API_ORIGIN: ${{ github.ref == 'refs/heads/main' && vars.PUBLIC_CONTACT_API_ORIGIN || 'https://dev-api.signapse.cloud' }}
       CONTACT_API_ORIGIN_CONFIGURED: ${{ vars.PUBLIC_CONTACT_API_ORIGIN != '' }}
-      SIGNAPSE_PUBLIC_ORIGIN: ${{ github.ref == 'refs/heads/main' && vars.SIGNAPSE_PUBLIC_ORIGIN || '' }}
+      PUBLIC_BLOG_API_ORIGIN: ${{ github.ref == 'refs/heads/main' && vars.PUBLIC_BLOG_API_ORIGIN || 'https://dev-api.signapse.cloud' }}
+      BLOG_API_ORIGIN_CONFIGURED: ${{ vars.PUBLIC_BLOG_API_ORIGIN != '' }}
+      SIGNAPSE_PUBLIC_ORIGIN: ${{ github.ref == 'refs/heads/main' && vars.SIGNAPSE_PUBLIC_ORIGIN || 'https://landing.example.test' }}
       SIGNAPSE_LANDING_INDEXABLE: ${{ github.ref == 'refs/heads/main' && vars.SIGNAPSE_LANDING_INDEXABLE == 'true' && 'true' || 'false' }}
       SIGNAPSE_VERCEL_ANALYTICS: 'false'
     steps:
@@ -47,6 +49,7 @@ jobs:
             const app = new URL(process.env.PUBLIC_APP_ORIGIN);
             const landing = new URL(process.env.SIGNAPSE_PUBLIC_ORIGIN);
             const contactApi = new URL(process.env.PUBLIC_CONTACT_API_ORIGIN);
+            const blogApi = new URL(process.env.PUBLIC_BLOG_API_ORIGIN);
             if (app.protocol !== "https:" || app.origin === landing.origin || app.hostname === "www.signapse.cloud")
               throw new Error("PUBLIC_APP_ORIGIN must be a separate HTTPS application origin.");
             if (landing.origin !== "https://signapse.cloud")
@@ -55,6 +58,10 @@ jobs:
               throw new Error("Set PUBLIC_CONTACT_API_ORIGIN in GitHub Variables before deploying the contact form.");
             if (contactApi.protocol !== "https:" || contactApi.username || contactApi.password || contactApi.pathname !== "/" || contactApi.search || contactApi.hash)
               throw new Error("PUBLIC_CONTACT_API_ORIGIN must be an HTTPS origin without credentials, path, query or fragment.");
+            if (process.env.BLOG_API_ORIGIN_CONFIGURED !== "true")
+              throw new Error("Set PUBLIC_BLOG_API_ORIGIN in GitHub Variables before deploying the public blog.");
+            if (blogApi.protocol !== "https:" || blogApi.username || blogApi.password || blogApi.pathname !== "/" || blogApi.search || blogApi.hash)
+              throw new Error("PUBLIC_BLOG_API_ORIGIN must be an HTTPS origin without credentials, path, query or fragment.");
           '
 
       - name: Check types
@@ -78,9 +85,9 @@ jobs:
       - name: Verify production preview in browser
         run: pnpm test:browser
 
-      - name: Deploy verified static output to Cloudflare
+      - name: Deploy verified Worker and static assets to Cloudflare
         if: env.DEPLOY_TO_CLOUDFLARE == 'true'
-        run: pnpm exec wrangler deploy
+        run: pnpm exec wrangler deploy --var "PUBLIC_BLOG_API_ORIGIN:${PUBLIC_BLOG_API_ORIGIN}"
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

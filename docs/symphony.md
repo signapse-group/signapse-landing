@@ -68,7 +68,7 @@ Wrapper giữ `CI=1` cho build/test để không reuse preview, lấy shared res
 
 Khảo sát Ubuntu **26.04** với Playwright **1.58.2** cần `PLAYWRIGHT_HOST_PLATFORM_OVERRIDE=ubuntu24.04-x64`, Linux libraries qua `LD_LIBRARY_PATH` và font config qua `FONTCONFIG_FILE`. Operator kiểm lại trên host đích và cấp cùng env cho install lẫn test; không dùng cache FE hoặc chạy GC lên cache worker khác. `PLAYWRIGHT_SKIP_BROWSER_GC=1` được dùng trong lượt khảo sát. Sau sửa repo, wrapper không cần bỏ `CODEX_THREAD_ID` để né auto-background nữa. Nếu wrapper/cache/isolation chưa được cấp, báo prerequisite thiếu trước browser checks.
 
-Baseline operator chạy trên fresh workspace: frozen install → `pnpm check` → `pnpm lint` → `pnpm format:check` → `pnpm build` → `pnpm test:models` → `pnpm test:browser`, qua wrapper khi cần. Fixtures/app links được intercept; không cần backend, login, dashboard checkout hoặc GPU thật để chứng minh WebGL fallback.
+Baseline operator chạy trên fresh workspace: frozen install → `pnpm check` → `pnpm lint` → `pnpm format:check` → `pnpm build` → `pnpm test:models` → `pnpm test:browser`, qua wrapper khi cần. Browser runner blog khởi động fixture HTTP API riêng và kiểm tra Worker server-side fetch; fixture/app links không cần backend thật, login, dashboard checkout hoặc GPU thật để chứng minh WebGL fallback.
 
 ## Kiểm tra consumer offline
 

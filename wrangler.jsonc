@@ -1,11 +1,17 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "signapse-landing",
+  "main": "@astrojs/cloudflare/entrypoints/server",
   "compatibility_date": "2026-10-03",
+  "compatibility_flags": ["nodejs_compat"],
   "workers_dev": true,
   "preview_urls": false,
+  "vars": {
+    "PUBLIC_BLOG_API_ORIGIN": "https://dev-api.signapse.cloud",
+  },
   "assets": {
     "directory": "./dist",
+    "binding": "ASSETS",
     "html_handling": "drop-trailing-slash",
     "not_found_handling": "none",
   },

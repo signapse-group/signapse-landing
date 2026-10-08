@@ -1,7 +1,7 @@
 import { ArrowRightIcon, ChevronDownIcon, MenuIcon } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n/messages';
-import { withLocalePath, appHref } from '@/i18n/routing';
+import { withLocalePath } from '@/i18n/routing';
 import type { LandingAccessAction, LandingAccessModel } from './landing-access';
 import styles from './landing-page.module.css';
 import { LandingHeaderShell } from './landing-header-shell';
@@ -156,24 +156,34 @@ export function LandingHeader({
   access,
   dictionary,
   locale,
+  isLandingPage = true,
+  currentPath,
+  currentQuery = '',
+  initialSurface = 'dark',
 }: {
   access: LandingAccessModel;
   dictionary: Dictionary;
   locale: Locale;
+  isLandingPage?: boolean;
+  currentPath?: string;
+  currentQuery?: string;
+  initialSurface?: 'dark' | 'light';
 }) {
   const t = dictionary.landing;
+  const sectionHref = (id: string) =>
+    isLandingPage ? `#${id}` : `${withLocalePath('/', locale)}#${id}`;
   const productGroups: HeaderMenuGroupModel[] = [
     {
       id: 'analysis',
       label: t.nav.analysisGroup,
       items: [
         {
-          href: '#knowledge-graph',
+          href: sectionHref('knowledge-graph'),
           label: t.nav.knowledgeGraph,
           description: t.nav.knowledgeGraphDescription,
         },
         {
-          href: '#live-charts',
+          href: sectionHref('live-charts'),
           label: t.nav.liveCharts,
           description: t.nav.liveChartsDescription,
         },
@@ -184,12 +194,12 @@ export function LandingHeader({
       label: t.nav.assistantGroup,
       items: [
         {
-          href: '#ai-assistant',
+          href: sectionHref('ai-assistant'),
           label: t.nav.aiAssistant,
           description: t.nav.aiAssistantDescription,
         },
         {
-          href: '#strategy-coding',
+          href: sectionHref('strategy-coding'),
           label: t.nav.strategyBuilder,
           description: t.nav.strategyBuilderDescription,
         },
@@ -200,7 +210,7 @@ export function LandingHeader({
       label: t.nav.automationGroup,
       items: [
         {
-          href: '#telegram',
+          href: sectionHref('telegram'),
           label: t.nav.telegram,
           description: t.nav.telegramDescription,
         },
@@ -213,12 +223,12 @@ export function LandingHeader({
       label: t.nav.solutions,
       items: [
         {
-          href: '#audience-trader',
+          href: sectionHref('audience-trader'),
           label: t.nav.trader,
           description: t.nav.traderDescription,
         },
         {
-          href: '#audience-analyst',
+          href: sectionHref('audience-analyst'),
           label: t.nav.analyst,
           description: t.nav.analystDescription,
         },
@@ -229,12 +239,12 @@ export function LandingHeader({
       label: t.nav.solutions,
       items: [
         {
-          href: '#audience-strategy-developer',
+          href: sectionHref('audience-strategy-developer'),
           label: t.nav.strategyDeveloper,
           description: t.nav.strategyDeveloperDescription,
         },
         {
-          href: '#audience-team-fund',
+          href: sectionHref('audience-team-fund'),
           label: t.nav.teamsAndFunds,
           description: t.nav.teamsAndFundsDescription,
         },
@@ -245,12 +255,12 @@ export function LandingHeader({
       label: t.nav.exploreGroup,
       items: [
         {
-          href: '#showcase',
+          href: sectionHref('showcase'),
           label: t.nav.exploreDemo,
           description: t.nav.exploreDemoDescription,
         },
         {
-          href: '#access',
+          href: sectionHref('access'),
           label: t.nav.discussNeeds,
           description: t.nav.discussNeedsDescription,
         },
@@ -284,14 +294,9 @@ export function LandingHeader({
       label: t.nav.exploreGroup,
       items: [
         {
-          href: appHref('/articles', locale),
-          label: t.nav.articles,
-          description: t.nav.articlesDescription,
-        },
-        {
-          label: t.nav.blogInsights,
-          description: t.nav.blogInsightsDescription,
-          placeholder: true,
+          href: withLocalePath('/blogs', locale),
+          label: t.nav.blog,
+          description: t.nav.blogDescription,
         },
         {
           label: t.nav.productUpdates,
@@ -322,6 +327,7 @@ export function LandingHeader({
     <LandingHeaderShell
       data-landing-part="header"
       data-landing-surface="dark"
+      initialSurface={initialSurface}
       className={`${styles.darkSurface} ${styles.header}`}
     >
       <div
@@ -364,7 +370,7 @@ export function LandingHeader({
             groups={resourceGroups}
             comingSoonLabel={t.nav.comingSoon}
           />
-          <a href="#access" className={styles.headerNavItem}>
+          <a href={sectionHref('access')} className={styles.headerNavItem}>
             {t.nav.contact}
           </a>
         </nav>
@@ -378,6 +384,8 @@ export function LandingHeader({
           <div className="hidden xl:block">
             <LandingLocaleMenu
               currentLocale={locale}
+              initialPathname={currentPath}
+              initialQuery={currentQuery}
               labels={{
                 group: t.localeControl.label,
                 vi: t.localeControl.vietnamese,
@@ -400,6 +408,8 @@ export function LandingHeader({
               <div className="border-b border-border pb-3">
                 <LandingLocaleLinks
                   currentLocale={locale}
+                  initialPathname={currentPath}
+                  initialQuery={currentQuery}
                   labels={{
                     group: t.localeControl.label,
                     vi: t.localeControl.vietnamese,
@@ -426,7 +436,10 @@ export function LandingHeader({
                   groups={resourceGroups}
                   comingSoonLabel={t.nav.comingSoon}
                 />
-                <a href="#access" className={styles.headerMenuItem}>
+                <a
+                  href={sectionHref('access')}
+                  className={styles.headerMenuItem}
+                >
                   {t.nav.contact}
                 </a>
               </nav>

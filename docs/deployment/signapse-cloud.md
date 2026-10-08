@@ -1,6 +1,6 @@
 # Deploy landing lên signapse.cloud
 
-Stack: **Astro static → GitHub Actions → Cloudflare Workers Static Assets → Custom Domain signapse.cloud**. [Wrangler config](../../wrangler.jsonc), [workflow Verify](../../.github/workflows/ci.yml) và [browser metadata tests](../../tests/e2e/landing.spec.ts) đã được chuẩn bị trong repo.
+Stack: **Astro prerendered homepage + Cloudflare Worker SSR blog → GitHub Actions → Worker Static Assets → Custom Domain signapse.cloud**. Homepage `/`, `/vi` và `/en` vẫn static; blog list/detail gọi public API theo từng request và trả `no-store`. [Wrangler config](../../wrangler.jsonc), [workflow Verify](../../.github/workflows/ci.yml) và browser tests đã được chuẩn bị trong repo.
 
 Mỗi push/merge vào `main` tự chạy CI rồi deploy sau khi toàn bộ checks và tests pass. PR và push ở nhánh khác chạy verification với noindex. Nút **Run workflow** trên `main` dùng để deploy lại khi cần. Workflow dùng chính `dist/` đã kiểm tra để publish; các run trên `main` chạy nối tiếp trong cùng concurrency group để tránh publish đồng thời. [GitHub push trigger](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#push), [concurrency](https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/control-workflow-concurrency).
 
@@ -12,7 +12,7 @@ Nhánh `main`, commit `2ea7124611b6902596e12232dbd8c696463350ce`, đã deploy th
 
 Worker version `dcfcdc6d-b082-43a2-8744-8d5d1b779b04` đã phục vụ trên `signapse.cloud`. Kiểm tra hosted xác nhận nội dung VI/EN mới, nội dung khớp Workers, canonical/noindex, 12 assets, 404 và các redirect slash/www/HTTP. [Bằng chứng release](../verification/cloudflare-hosted-release-2026-10-07.json). Giữ `PUBLIC_APP_ORIGIN=https://dev.signapse.cloud`, indexing tắt; DNS dùng cấu hình đã nối ngày 2026-10-05.
 
-Contact API origin hiện chưa có trong GitHub Variables. Trước deploy phiên bản form, owner thêm `PUBLIC_CONTACT_API_ORIGIN` cho môi trường đích; workflow `Verify` từ chối deploy `main` nếu biến này thiếu hoặc không phải HTTPS origin hợp lệ.
+Contact API origin hiện chưa có trong GitHub Variables. Trước deploy phiên bản form, owner thêm `PUBLIC_CONTACT_API_ORIGIN` cho môi trường đích; workflow `Verify` từ chối deploy `main` nếu biến này thiếu hoặc không phải HTTPS origin hợp lệ. Blog SSR cũng cần `PUBLIC_BLOG_API_ORIGIN` trỏ tới API public của cùng môi trường; workflow xác thực HTTPS origin này và inject vào Worker lúc deploy.
 
 ## Trạng thái triển khai ngày 2026-10-05
 
@@ -53,10 +53,11 @@ Trong repository GitHub → **Settings → Secrets and variables → Actions**, 
 | Secrets | `CLOUDFLARE_ACCOUNT_ID` | Account ID chứa Worker và zone. |
 | Variables | `PUBLIC_APP_ORIGIN` | Lần thử: `https://dev.signapse.cloud`; go-live: `https://dashboard.signapse.cloud` sau khi app đã hoạt động. |
 | Variables | `PUBLIC_CONTACT_API_ORIGIN` | Origin public API contact cho môi trường landing; hiện dev dùng `https://dev-api.signapse.cloud`. API phải cho phép CORS từ `https://signapse.cloud`. |
+| Variables | `PUBLIC_BLOG_API_ORIGIN` | HTTPS origin của API có `GET /blogs/public` và `GET /blogs/public/{slug}` cho môi trường landing. Không thêm path/query/credential; public reading không cần token. |
 | Variables | `SIGNAPSE_PUBLIC_ORIGIN` | `https://signapse.cloud` |
 | Variables | `SIGNAPSE_LANDING_INDEXABLE` | `false` hiện tại; chỉ đổi `true` khi sẵn sàng indexing. Thiếu variable cũng giữ noindex. |
 
-Workflow tự đặt `SIGNAPSE_VERCEL_ANALYTICS=false`. Push `main` và deploy thủ công đều đọc `SIGNAPSE_LANDING_INDEXABLE` từ GitHub Variables; không còn checkbox indexing trên **Run workflow**. Origins và indexing được dùng khi build, không phải Worker runtime variables.
+Workflow tự đặt `SIGNAPSE_VERCEL_ANALYTICS=false`. Push `main` và deploy thủ công đều đọc `SIGNAPSE_LANDING_INDEXABLE` từ GitHub Variables; không còn checkbox indexing trên **Run workflow**. App/contact/landing metadata được dùng lúc build; `PUBLIC_BLOG_API_ORIGIN` được kiểm tra và truyền bằng Wrangler `--var` thành Worker runtime binding, không được bundle vào browser.
 
 ## 3. Deploy lần đầu với noindex
 
@@ -65,7 +66,7 @@ Workflow tự đặt `SIGNAPSE_VERCEL_ANALYTICS=false`. Push `main` và deploy t
 1. Chọn branch **main**.
 2. Bấm **Run workflow**; pipeline dùng GitHub Variables hiện tại.
 
-Workflow cài Node/pnpm đúng pin, install frozen lockfile, kiểm tra application, contact API và landing origins, types/lint/format/build, model tests và Chromium browser tests, rồi chạy `pnpm exec wrangler deploy`.
+Workflow cài Node/pnpm đúng pin, install frozen lockfile, kiểm tra application, contact API, blog API và landing origins, types/lint/format/build, model tests và Chromium browser tests, rồi chạy `pnpm exec wrangler deploy` với `PUBLIC_BLOG_API_ORIGIN` từ GitHub Variables. Deploy yêu cầu biến blog API được cấu hình và phải là HTTPS origin hợp lệ.
 
 Khi thành công, Cloudflare có Worker **signapse-landing**. Mở URL `signapse-landing.<account-subdomain>.workers.dev` được in ở deploy log. Kiểm `/`, `/vi`, `/en`, `/fr` (404), `/vi/` (redirect về `/vi`), locale switch, assets và CTA. HTML ở lần deploy này vẫn noindex.
 
@@ -123,9 +124,15 @@ Những lần sau: push/merge vào `main`, theo dõi **Actions → Verify**. CI 
 
 Rollback nội dung bằng đưa commit tốt trước đó về `main` rồi chạy workflow với env tương ứng. Nếu lỗi cutover, tháo Custom Domain và khôi phục mapping apex đã lưu. Giữ domain/app env đúng với bản rollback.
 
+## Blog API runtime
+
+`wrangler.jsonc` đặt API dev công khai làm giá trị mặc định cho local preview. Để dùng API origin khác, ghi `PUBLIC_BLOG_API_ORIGIN` vào ignored `.dev.vars` trước khi chạy `pnpm preview`; `scripts/preview.mjs` chuyển biến vào Worker output sau build. Production deploy lấy giá trị riêng từ GitHub Variable và không phụ thuộc `.dev.vars`. Không đặt credential vào biến này: hai GET public không cần xác thực.
+
+Browser suite khởi động HTTP fixture API local và ghi fixture origin tạm thời vào `dist/server/.dev.vars`. Fixture kiểm tra fetch server-side, trạng thái lỗi và freshness; nó không xác nhận deployment hoặc dữ liệu sống của producer. Coordinator xác nhận public origin và API environment trên môi trường nghiệm thu sau khi deploy được authorize.
+
 ## Chạy kiểm tra local nếu cần
 
-Dùng Node **24.21.0**, pnpm **10.34.5**. Copy `.env.example` sang ignored `.env`, điền origins HTTPS và indexability đúng chế độ muốn kiểm, sau đó:
+Dùng Node **24.21.0**, pnpm **10.34.5**. Copy `.env.example` sang ignored `.env` cho build-time settings. Với Worker preview, copy `.dev.vars.example` sang ignored `.dev.vars` và đặt `PUBLIC_BLOG_API_ORIGIN` nếu cần override API dev. Sau đó:
 
 ```powershell
 pnpm install --frozen-lockfile

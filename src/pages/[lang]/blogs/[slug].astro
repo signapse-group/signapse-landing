@@ -1,0 +1,179 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import BlogShell from '@/components/landing/BlogShell.astro';
+import { BlogContent } from '@/components/landing/blog-content';
+import styles from '@/components/landing/public-blog.module.css';
+import { messages } from '@/i18n/messages';
+import { SUPPORTED_LOCALES, type Locale } from '@/i18n/config';
+import { withLocalePath } from '@/i18n/routing';
+import {
+  getPublicBlogPost,
+  PublicBlogNotFoundError,
+  type PublicBlogPost,
+} from '@/lib/public-blog-api';
+import { publicBlogApiOrigin } from '@/lib/public-blog-runtime';
+
+export const prerender = false;
+
+const rawLocale = Astro.params.lang ?? '';
+const supportedLocale = SUPPORTED_LOCALES.includes(rawLocale as Locale);
+const locale: Locale = supportedLocale ? (rawLocale as Locale) : 'vi';
+const dictionary = messages[locale];
+const copy = dictionary.landing.blogPage;
+const slug = Astro.params.slug ?? '';
+let post: PublicBlogPost | undefined;
+let loadError = false;
+
+Astro.response.headers.set(
+  'Cache-Control',
+  'private, no-store, no-cache, max-age=0, must-revalidate',
+);
+Astro.response.headers.set('Surrogate-Control', 'no-store');
+
+if (!supportedLocale || !slug) {
+  Astro.response.status = 404;
+} else {
+  try {
+    post = await getPublicBlogPost(publicBlogApiOrigin(), slug);
+  } catch (error) {
+    if (error instanceof PublicBlogNotFoundError) {
+      Astro.response.status = 404;
+    } else {
+      loadError = true;
+      Astro.response.status = 502;
+    }
+  }
+}
+
+const listHref = withLocalePath('/blogs', locale);
+const detailPath = post
+  ? `/blogs/${encodeURIComponent(post.slug)}`
+  : `/blogs/${encodeURIComponent(slug)}`;
+const canonicalPaths = post
+  ? {
+      vi: withLocalePath(detailPath, 'vi'),
+      en: withLocalePath(detailPath, 'en'),
+    }
+  : undefined;
+const pageTitle = post
+  ? `${post.title} | Signapse`
+  : `${loadError ? copy.errorTitle : copy.notFoundTitle} | Signapse`;
+const pageDescription = post
+  ? post.shortDescription
+  : loadError
+    ? copy.errorDescription
+    : copy.notFoundDescription;
+const formatDate = (value?: string) => {
+  if (!value) return undefined;
+  const date = new Date(value);
+  if (Number.isNaN(date.valueOf())) return undefined;
+  return new Intl.DateTimeFormat(locale === 'vi' ? 'vi-VN' : 'en-GB', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(date);
+};
+const publishedLabel = post ? formatDate(post.publishedAt) : undefined;
+const updatedLabel = post ? formatDate(post.lastModifiedDate) : undefined;
+---
+
+<BaseLayout
+  locale={locale}
+  title={pageTitle}
+  description={pageDescription}
+  socialImageAlt={post ? `${post.title} — Signapse` : 'Signapse'}
+  canonicalPaths={post ? canonicalPaths : undefined}
+  canonicalOverride={post ? undefined : null}
+  openGraphType={post ? 'article' : 'website'}
+  publishedTime={post?.publishedAt}
+  modifiedTime={post?.lastModifiedDate}
+  forceNoindex={!post}
+  hideAlternates={!post}
+>
+  <BlogShell
+    dictionary={dictionary}
+    locale={locale}
+    headerSurface={post ? 'dark' : 'light'}
+    currentPath={Astro.url.pathname}
+    currentQuery={Astro.url.search.slice(1)}
+  >
+    <main id="main-content" tabindex="-1" class={styles.main}>
+      {post ? (
+        <>
+          <header class={styles.detailHero} data-landing-surface="dark">
+            <div class={styles.detailHeroInner}>
+              <nav class={styles.breadcrumbs} aria-label={copy.breadcrumbLabel}>
+                <a href={withLocalePath('/', locale)}>{copy.breadcrumbHome}</a>
+                <span aria-hidden="true">/</span>
+                <a href={listHref}>{copy.breadcrumbBlog}</a>
+                <span aria-hidden="true">/</span>
+                <span aria-current="page">{post.title}</span>
+              </nav>
+              <h1 class={styles.detailTitle}>{post.title}</h1>
+              <p class={styles.detailSummary}>{post.shortDescription}</p>
+            </div>
+          </header>
+          <article class={styles.detailContent} data-landing-surface="light">
+            <aside class={styles.metaRail}>
+              <a class={styles.backLink} href={listHref}>
+                <span aria-hidden="true">←</span>
+                {copy.allArticles}
+              </a>
+              <dl>
+                {publishedLabel && (
+                  <div>
+                    <dt>{copy.published}</dt>
+                    <dd>
+                      <time datetime={post.publishedAt}>{publishedLabel}</time>
+                    </dd>
+                  </div>
+                )}
+                {updatedLabel && post.lastModifiedDate && (
+                  <div>
+                    <dt>{copy.updated}</dt>
+                    <dd>
+                      <time datetime={post.lastModifiedDate}>
+                        {updatedLabel}
+                      </time>
+                    </dd>
+                  </div>
+                )}
+              </dl>
+            </aside>
+            <BlogContent post={post} locale={locale} />
+            <div class={styles.detailEnd}>
+              <a class={styles.detailEndLink} href={listHref}>
+                {copy.allArticles}
+                <span aria-hidden="true">←</span>
+              </a>
+            </div>
+          </article>
+        </>
+      ) : (
+        <section
+          class={loadError ? styles.errorState : styles.notFoundState}
+          data-landing-surface="light"
+          role={loadError ? 'status' : undefined}
+          aria-labelledby="blog-fallback-title"
+        >
+          <h1 id="blog-fallback-title">
+            {loadError ? copy.errorTitle : copy.notFoundTitle}
+          </h1>
+          <p>{loadError ? copy.errorDescription : copy.notFoundDescription}</p>
+          {loadError && (
+            <a
+              class={styles.textLink}
+              href={`${Astro.url.pathname}${Astro.url.search}`}
+            >
+              {copy.retry}
+            </a>
+          )}
+          <a class={styles.textLink} href={listHref}>
+            {copy.backToList}
+          </a>
+        </section>
+      )}
+    </main>
+  </BlogShell>
+</BaseLayout>
