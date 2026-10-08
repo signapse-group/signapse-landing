@@ -1,0 +1,115 @@
+---
+import BlogShell from '@/components/landing/BlogShell.astro';
+import styles from '@/components/landing/privacy-policy.module.css';
+import { SUPPORTED_LOCALES, type Locale } from '@/i18n/config';
+import { withLocalePath } from '@/i18n/routing';
+import { messages } from '@/i18n/messages';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+export function getStaticPaths() {
+  return SUPPORTED_LOCALES.map((locale) => ({
+    params: { lang: locale },
+    props: { locale },
+  }));
+}
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const dictionary = messages[locale];
+const copy = dictionary.landing.privacyPolicy;
+const canonicalPaths = {
+  vi: withLocalePath('/privacy-policy', 'vi'),
+  en: withLocalePath('/privacy-policy', 'en'),
+};
+---
+
+<BaseLayout
+  locale={locale}
+  title={copy.metadata.title}
+  description={copy.metadata.description}
+  socialImageAlt={copy.metadata.socialImageAlt}
+  canonicalPaths={canonicalPaths}
+>
+  <BlogShell
+    dictionary={dictionary}
+    locale={locale}
+    headerSurface="dark"
+    solidHeader
+    currentPath={Astro.url.pathname}
+    currentQuery={Astro.url.search.slice(1)}
+  >
+    <main id="main-content" tabindex="-1" class={styles.main}>
+      <header class={styles.hero} data-landing-surface="dark">
+        <div class={styles.heroInner}>
+          <a class={styles.homeLink} href={withLocalePath('/', locale)}>
+            {copy.homeLink}
+          </a>
+          <h1 class={styles.title}>{copy.title}</h1>
+          <p class={styles.introduction}>{copy.introduction}</p>
+        </div>
+      </header>
+      <div
+        class={styles.content}
+        data-landing-surface="light"
+        data-privacy-content
+      >
+        <nav
+          class={styles.contents}
+          aria-label={copy.contentsHeading}
+          data-privacy-contents
+        >
+          <h2>{copy.contentsHeading}</h2>
+          <ul>
+            {copy.sections.map((section) => (
+              <li>
+                <a href={`#${section.id}`}>{section.tocLabel}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <article class={styles.article} data-privacy-article>
+          {copy.sections.map((section) => (
+            <section
+              id={section.id}
+              aria-labelledby={`${section.id}-heading`}
+              class={styles.section}
+              data-privacy-section
+            >
+              <h2 id={`${section.id}-heading`}>{section.title}</h2>
+              {section.items.length > 0 && (
+                <ul>
+                  {section.items.map((item) => (
+                    <li>
+                      <strong>{item.label}</strong> {item.text}
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {section.paragraphs.map((paragraph) => (
+                <p>{paragraph}</p>
+              ))}
+              {section.id === 'privacy-contact' && (
+                <address class={styles.contactDetails}>
+                  <strong>{copy.privacyContact.name}</strong>
+                  <span>
+                    {copy.privacyContact.emailLabel}{' '}
+                    <a href={`mailto:${copy.privacyContact.email}`}>
+                      {copy.privacyContact.email}
+                    </a>
+                  </span>
+                  <span>
+                    {copy.privacyContact.phoneLabel}{' '}
+                    <a href="tel:+84967743713">{copy.privacyContact.phone}</a>
+                  </span>
+                </address>
+              )}
+            </section>
+          ))}
+        </article>
+      </div>
+    </main>
+  </BlogShell>
+</BaseLayout>

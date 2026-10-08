@@ -1,0 +1,21 @@
+
+> signapse-landing@0.0.1 check /opt/apps/symphony/workspaces-landing-jira/SIGN-150
+> astro check
+
+18:00:47 [types] Generated 73ms
+18:00:47 [check] Getting diagnostics for Astro files in /opt/apps/symphony/workspaces-landing-jira/SIGN-150...
+Result (70 files): 
+- 0 errors
+- 0 warnings
+- 0 hints
+
+
+> signapse-landing@0.0.1 lint /opt/apps/symphony/workspaces-landing-jira/SIGN-150
+> eslint src astro.config.mjs eslint.config.mjs .prettierrc.mjs
+
+
+> signapse-landing@0.0.1 format:check /opt/apps/symphony/workspaces-landing-jira/SIGN-150
+> prettier --check .
+
+Checking formatting...
+All matched files use Prettier code style!

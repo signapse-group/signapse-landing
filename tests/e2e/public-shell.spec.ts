@@ -125,7 +125,7 @@ for (const locale of ['vi', 'en'] as const) {
             ).toHaveText('0933.80.99.36');
             const footer = page.locator('[data-landing-part="footer"]');
             const exploreNavigation = footer.getByRole('navigation').first();
-            await expect(exploreNavigation.getByRole('link')).toHaveCount(4);
+            await expect(exploreNavigation.getByRole('link')).toHaveCount(5);
             for (const [href, label] of expectedLinks.slice(0, 4)) {
               await expect(
                 exploreNavigation.getByRole('link', {
@@ -134,6 +134,15 @@ for (const locale of ['vi', 'en'] as const) {
                 }),
               ).toHaveAttribute('href', href);
             }
+            await expect(
+              exploreNavigation.getByRole('link', {
+                name:
+                  locale === 'vi'
+                    ? 'Chính sách quyền riêng tư'
+                    : 'Privacy Policy',
+                exact: true,
+              }),
+            ).toHaveAttribute('href', `/${locale}/privacy-policy`);
             await expect(
               footer.getByRole('link', {
                 name: locale === 'vi' ? 'Gửi lời nhắn' : 'Send a message',

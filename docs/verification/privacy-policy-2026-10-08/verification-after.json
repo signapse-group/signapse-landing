@@ -1,0 +1,84 @@
+{
+  "task": "SIGN-150",
+  "date": "2026-10-08",
+  "branch": "SIGN-150-privacy-policy",
+  "toolchain": {
+    "node": "24.21.0",
+    "pnpm": "10.34.5"
+  },
+  "checks": [
+    {
+      "command": "pnpm check",
+      "result": "pass",
+      "details": "Astro checked 70 files with 0 errors, warnings, or hints."
+    },
+    {
+      "command": "pnpm lint",
+      "result": "pass"
+    },
+    {
+      "command": "pnpm format:check",
+      "result": "pass"
+    },
+    {
+      "command": "pnpm build",
+      "result": "pass",
+      "details": "Run by the shared host browser wrapper; prerendered both localized policy routes."
+    },
+    {
+      "command": "SYMPHONY_LANDING_BROWSER_WRAPPER $PWD --grep 'Privacy Policy|shared public shell|footer and headline' --retries=0",
+      "result": "12 passed, 0 retries",
+      "details": "Chromium on built Astro preview."
+    }
+  ],
+  "browserCoverage": [
+    "Vietnamese and English, with and without JavaScript.",
+    "Footer navigation from homepage and Blog, plus public shell footer checks on Blog list/detail/error routes.",
+    "Locale switch keyboard flow, all seven table-of-contents anchors, visible keyboard focus, and anchor scroll position below the shared header.",
+    "Privacy mailto/tel destinations remain distinct from the shared landing contact links.",
+    "Title, description, social image alt, robots, canonical and hreflang behavior.",
+    "Viewport widths 375, 768, 1024, and 1440 px; no horizontal overflow; 200% zoom."
+  ],
+  "preview": {
+    "command": "pnpm preview --host 127.0.0.1 --port 4321",
+    "localUrls": [
+      "http://127.0.0.1:4321/vi/privacy-policy",
+      "http://127.0.0.1:4321/en/privacy-policy"
+    ],
+    "routes": [
+      "/vi/privacy-policy",
+      "/en/privacy-policy"
+    ],
+    "robots": "noindex, follow",
+    "analytics": "off",
+    "canonicalAndHreflang": "Not emitted because no public origin is configured in this local build; tests assert they remain absent in that configuration.",
+    "fixtures": "Blog shell checks use the repository's local fixture API."
+  },
+  "screenshots": [
+    {
+      "path": "privacy-policy-vi-1440.png",
+      "sha256": "dbcf3b1ba028be1d6593b2e42083e39bd8b441b007ffeb24d5ccc453e126d88f"
+    },
+    {
+      "path": "privacy-policy-en-1440.png",
+      "sha256": "9002e6cf24eb685706f7f27faa800500ff8ede414e616bd0a4a8b78f057272da"
+    }
+  ],
+  "review": {
+    "requirementAdherence": "pass",
+    "correctnessAndStandards": "pass",
+    "openFindings": 0,
+    "resolvedFinding": "Data labels now render on separate lines, matching the approved reference."
+  },
+  "logs": [
+    "source-checks.log",
+    "build.log",
+    "browser.log",
+    "browser-results.json"
+  ],
+  "knownRisk": "Build reports the existing Vite warning for a chunk larger than 500 kB.",
+  "limits": [
+    "Local build and fixture-backed browser tests do not establish hosted CI, production behavior, live content, or owner acceptance.",
+    "The provided English design export is a draft; the implemented copy and labels follow the approved parent issue reference."
+  ]
+}

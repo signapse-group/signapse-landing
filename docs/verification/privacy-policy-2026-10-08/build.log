@@ -1,0 +1,34 @@
+
+> signapse-landing@0.0.1 build /opt/apps/symphony/workspaces-landing-jira/SIGN-150
+> astro build
+
+17:58:52 [types] Generated 54ms
+17:58:52 [build] output: "static"
+17:58:52 [build] mode: "server"
+17:58:52 [build] directory: /opt/apps/symphony/workspaces-landing-jira/SIGN-150/dist/
+17:58:52 [build] adapter: @astrojs/cloudflare
+17:58:52 [build] Collecting build info...
+17:58:52 [build] ✓ Completed in 127ms.
+17:58:52 [build] Building server entrypoints...
+17:58:54 [vite] ✓ built in 1.99s
+17:58:55 [vite] ✓ built in 912ms
+17:58:56 [WARN] [vite] [plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+17:58:56 [vite] ✓ built in 1.23s
+
+ prerendering static routes 
+17:58:57   ├─ /vi/privacy-policy/index.html (+38ms) 
+17:58:57   ├─ /en/privacy-policy/index.html (+15ms) 
+17:58:57   ├─ /vi/index.html (+63ms) 
+17:58:57   ├─ /en/index.html (+33ms) 
+17:58:57   ├─ /index.html (+31ms) 
+17:58:57 ✓ Completed in 935ms.
+
+17:58:57 [build] Rearranging server assets...
+17:58:57 [build] ✓ Completed in 5.14s.
+17:58:57 [@astrojs/cloudflare] Injected immutable Cache-Control for /_astro/* into _headers.
+17:58:57 [build] Server built in 5.27s
+17:58:57 [build] Complete!
