@@ -1,6 +1,6 @@
 # SIGN-136 — kiểm chứng local blog public
 
-Subtask `SIGN-136`, parent `SIGN-135`. Lượt chạy đầy đủ ngày **2026-10-08** dùng Node 24.21.0, pnpm 10.34.5 và Cloudflare Worker preview qua browser wrapper của Symphony. Source commit sẽ được ghi sau khi tạo commit implementation.
+Subtask `SIGN-136`, parent `SIGN-135`. Implementation revision `6e53ebc928144d6d3fad8e012637a8aabbf415b8`. Lượt chạy đầy đủ ngày **2026-10-08** dùng Node 24.21.0, pnpm 10.34.5 và Cloudflare Worker preview qua browser wrapper của Symphony.
 
 ## Kết quả
 
@@ -35,5 +35,7 @@ Evidence run ngoài repository: `/opt/apps/symphony/logs-landing/evidence/SIGN-1
 OpenAPI hiện hành được đọc lại ngày **2026-10-08 04:20 UTC** tại `https://dev-api.signapse.cloud/v3/api-docs`, producer revision `5379145d86da2cab3af902d8c733e905d8dab80e` (OpenAPI 3.1; SHA-256 của response body `93e0c935a2b405e8dc615966fcd742ed782c13fa0280e4786f6cf09ac2866e40`). `GET /blogs/public` và `GET /blogs/public/{slug}` hiện được gọi anonymous: cả hai trả HTTP 200; detail có `contentSchemaVersion: 1`. Fixture checks kiểm chứng server-to-API HTTP boundary, nhưng không xác nhận producer deployment, hosted landing deployment hay dữ liệu sống sau lần đọc này.
 
 Desktop captures được so sánh với các export đã duyệt: [list 2×](https://github.com/signapse-group/signapse-planing/blob/5d0fb679c3b7500d518a6652873772f9b7b35a8e/ui-design/pen/landing/exports/public-blog/list-desktop.png) và [detail 2×](https://github.com/signapse-group/signapse-planing/blob/5d0fb679c3b7500d518a6652873772f9b7b35a8e/ui-design/pen/landing/exports/public-blog/detail-desktop.png). Implementation references [approved prototype and responsive contract](https://github.com/signapse-group/signapse-planing/blob/5d0fb679c3b7500d518a6652873772f9b7b35a8e/ui-design/pen/landing/public-blog-prototype.md).
+
+Prototype ghi rõ copy trong export chỉ minh họa bố cục, chưa phải copy marketing được duyệt; vì vậy mô tả list giữ locale copy hiện có. Detail có breadcrumb bổ sung để chỉ đường dẫn trang.
 
 Canonical VI/EN remains subject to parent `SIGN-135` OD-1, which was still open at the latest Jira reread. No hosted acceptance, merge or deployment is claimed here.
