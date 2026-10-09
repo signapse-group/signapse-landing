@@ -3,6 +3,7 @@ import { Logo } from '@/components/logo';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n/messages';
 import { getRelativeLocaleUrl } from 'astro:i18n';
+import { withLocalePath } from '@/i18n/routing';
 import {
   REQUEST_ACCESS_HREF,
   CONTACT_PHONE_NUMBER,
@@ -25,6 +26,7 @@ const exploreLinks = [
   [sectionHref('showcase'), t.nav.demos],
   [sectionHref('audiences'), t.nav.audiences],
   [`${getRelativeLocaleUrl(locale)}/blogs`, t.nav.blog],
+  [withLocalePath('/privacy-policy', locale), t.privacyPolicy.footerLabel],
 ];
 ---
 

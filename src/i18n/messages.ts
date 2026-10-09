@@ -42,6 +42,115 @@ export const vi = {
       breadcrumbLabel: 'Đường dẫn',
       retryHint: 'Thử tải lại trang.',
     },
+    privacyPolicy: {
+      footerLabel: 'Chính sách quyền riêng tư',
+      metadata: {
+        title: 'Chính sách quyền riêng tư — Signapse',
+        description:
+          'Tìm hiểu cách Signapse xử lý dữ liệu khi bạn truy cập website hoặc sử dụng ứng dụng, cùng quyền riêng tư và thông tin liên hệ.',
+        socialImageAlt: 'Chính sách quyền riêng tư — Signapse',
+      },
+      title: 'Chính sách quyền riêng tư',
+      introduction:
+        'Tài liệu này giải thích việc xử lý dữ liệu khi bạn truy cập website Signapse, liên hệ với chúng tôi hoặc sử dụng ứng dụng Signapse. Bạn có thể liên hệ bộ phận Customer Service nếu muốn tìm hiểu hoặc thực hiện quyền đối với dữ liệu của mình.',
+      homeLink: 'Về trang chủ Signapse',
+      contentsHeading: 'Trên trang này',
+      sections: [
+        {
+          id: 'data-we-process',
+          tocLabel: 'Dữ liệu được xử lý',
+          title: 'Dữ liệu liên quan đến việc sử dụng Signapse',
+          items: [
+            {
+              label: 'Liên hệ và hỗ trợ:',
+              text: 'email, tên nếu bạn cung cấp, nội dung lời nhắn và thông tin bạn gửi khi cần hỗ trợ.',
+            },
+            {
+              label: 'Tài khoản và hồ sơ:',
+              text: 'thông tin đăng nhập, email, thông tin hồ sơ và tùy chọn bạn cung cấp hoặc sử dụng trong ứng dụng.',
+            },
+            {
+              label: 'Nội dung của bạn:',
+              text: 'workspace, danh sách tài sản theo dõi, ghi chú, câu hỏi và lịch sử hội thoại AI.',
+            },
+            {
+              label: 'Tính năng bạn sử dụng:',
+              text: 'thông tin kết nối Telegram, phản hồi và tệp hoặc ảnh chụp màn hình bạn gửi, tùy tính năng được bật.',
+            },
+            {
+              label: 'Thông tin kỹ thuật:',
+              text: 'dữ liệu cần để vận hành website/ứng dụng, đo hiệu năng và bảo vệ dịch vụ, có thể gồm địa chỉ IP, thông tin trình duyệt và lượt truy cập.',
+            },
+          ],
+          paragraphs: [
+            'Trường bắt buộc hoặc tùy chọn được thể hiện tại nơi bạn nhập dữ liệu. Bạn nên tránh gửi thông tin nhạy cảm không cần thiết trong lời nhắn, ghi chú, câu hỏi AI hoặc ảnh chụp màn hình.',
+          ],
+        },
+        {
+          id: 'why-we-use-data',
+          tocLabel: 'Mục đích sử dụng',
+          title: 'Mục đích sử dụng',
+          items: [],
+          paragraphs: [
+            'Signapse sử dụng dữ liệu để cung cấp dịch vụ, hỗ trợ người dùng và bảo mật: xác thực tài khoản, duy trì nội dung cá nhân, trả lời yêu cầu, cung cấp các tính năng được sử dụng, phát hiện lỗi và hạn chế lạm dụng.',
+            'Signapse không sử dụng dữ liệu người dùng cho email marketing, bán dữ liệu hoặc huấn luyện mô hình AI của Signapse. Việc xử lý bởi nhà cung cấp bên ngoài cần được phân biệt với mục đích sử dụng của Signapse.',
+          ],
+        },
+        {
+          id: 'ai-and-external-services',
+          tocLabel: 'AI và các dịch vụ bên ngoài',
+          title: 'AI và các dịch vụ bên ngoài',
+          items: [],
+          paragraphs: [
+            'Signapse sử dụng dịch vụ AI của Groq, OpenAI, Google (Gemini), Anthropic và DeepSeek. Khi bạn dùng tính năng hội thoại AI, câu hỏi và phần lịch sử liên quan có thể được gửi đến nhà cung cấp đang phục vụ yêu cầu để tạo câu trả lời. Việc nhà cung cấp lưu và sử dụng nội dung phụ thuộc điều khoản dịch vụ và cấu hình tài khoản áp dụng.',
+            'Các dịch vụ xác thực, hosting, lưu trữ, đo hiệu năng và tích hợp khác cũng có thể xử lý dữ liệu cần thiết cho tính năng bạn sử dụng. Nếu bạn dùng Telegram, thông tin được gửi tới đích Telegram được cấu hình có thể được người có quyền truy cập đích đó xem. Việc xử lý của các bên này có thể diễn ra tại quốc gia khác nơi bạn sinh sống.',
+          ],
+        },
+        {
+          id: 'data-retention',
+          tocLabel: 'Thời gian lưu dữ liệu',
+          title: 'Thời gian lưu dữ liệu',
+          items: [],
+          paragraphs: [
+            'Lịch sử hội thoại và ghi chú được lưu để bạn xem lại trong thời gian sử dụng tài khoản. Sau khi tài khoản được đóng, Signapse không tiếp tục giữ lịch sử này để cung cấp dịch vụ cho tài khoản đó.',
+            'Thông tin liên hệ, hỗ trợ và bản ghi kỹ thuật có mục đích lưu riêng. Thời gian lưu cần căn cứ vào việc giải quyết yêu cầu, vận hành/bảo mật và nghĩa vụ pháp luật áp dụng. Việc lưu trong hệ thống đang hoạt động, bản sao lưu và hệ thống của nhà cung cấp cần được phân biệt; không mặc định mọi bản sao được xóa ngay khi đóng tài khoản.',
+          ],
+        },
+        {
+          id: 'your-rights-and-requests',
+          tocLabel: 'Quyền và yêu cầu của bạn',
+          title: 'Quyền và yêu cầu của bạn',
+          items: [],
+          paragraphs: [
+            'Tùy pháp luật áp dụng, bạn có thể yêu cầu xem hoặc cung cấp dữ liệu, chỉnh sửa, xóa, hạn chế hoặc phản đối xử lý; rút lại sự đồng ý khi việc xử lý dựa trên sự đồng ý; và khiếu nại tới cơ quan có thẩm quyền.',
+            'Bạn có thể gửi yêu cầu qua email hoặc gọi điện cho Customer Service. Việc cung cấp hoặc xóa dữ liệu cần bảo đảm yêu cầu đến từ đúng người; các trường hợp phải giữ dữ liệu theo luật và giới hạn hợp pháp của quyền được xem xét theo từng yêu cầu.',
+          ],
+        },
+        {
+          id: 'privacy-contact',
+          tocLabel: 'Liên hệ về quyền riêng tư',
+          title: 'Liên hệ về quyền riêng tư',
+          items: [],
+          paragraphs: [],
+        },
+        {
+          id: 'policy-updates',
+          tocLabel: 'Cập nhật chính sách',
+          title: 'Cập nhật chính sách',
+          items: [],
+          paragraphs: [
+            'Các thay đổi được thể hiện trong phiên bản policy và ngày cập nhật khi công bố. Thông tin về mục đích mới hoặc quyền/lựa chọn bị ảnh hưởng cần được cung cấp phù hợp với pháp luật áp dụng; một thay đổi trên trang không tự thay thế sự đồng ý khi sự đồng ý là bắt buộc.',
+          ],
+        },
+      ],
+      privacyContact: {
+        name: 'Customer Service — Signapse',
+        emailLabel: 'Email:',
+        email: 'Afinance.verify@gmail.com',
+        phoneLabel: 'Điện thoại:',
+        phone: '0967743713',
+      },
+    },
     localeControl: {
       label: 'Chuyển ngôn ngữ landing',
       vietnamese: 'Tiếng Việt',
@@ -484,6 +593,115 @@ export const en: Dictionary = {
       breadcrumbBlog: 'Blog',
       breadcrumbLabel: 'Breadcrumb',
       retryHint: 'Please reload the page and try again.',
+    },
+    privacyPolicy: {
+      footerLabel: 'Privacy Policy',
+      metadata: {
+        title: 'Privacy Policy — Signapse',
+        description:
+          'Learn how Signapse processes data when you visit our website or use the application, including privacy rights and contact information.',
+        socialImageAlt: 'Privacy Policy — Signapse',
+      },
+      title: 'Privacy Policy',
+      introduction:
+        'This notice explains data processing when you visit the Signapse website, contact us or use the Signapse application. Contact Customer Service to learn more about your data or exercise your privacy rights.',
+      homeLink: 'Back to Signapse',
+      contentsHeading: 'On this page',
+      sections: [
+        {
+          id: 'data-we-process',
+          tocLabel: 'Data we process',
+          title: 'Data related to your use of Signapse',
+          items: [
+            {
+              label: 'Contact and support:',
+              text: 'your email, name if provided, message and information you send when requesting support.',
+            },
+            {
+              label: 'Account and profile:',
+              text: 'sign-in information, email, profile information and preferences you provide or use in the application.',
+            },
+            {
+              label: 'Your content:',
+              text: 'workspaces, asset watchlists, notes, questions and AI conversation history.',
+            },
+            {
+              label: 'Features you use:',
+              text: 'Telegram connection information, feedback and files or screenshots you submit, depending on enabled features.',
+            },
+            {
+              label: 'Technical information:',
+              text: 'data needed to operate the website/application, measure performance and protect the service, which may include your IP address, browser information and page visits.',
+            },
+          ],
+          paragraphs: [
+            'Required and optional fields are identified where you enter data. Avoid submitting unnecessary sensitive information in messages, notes, AI questions or screenshots.',
+          ],
+        },
+        {
+          id: 'why-we-use-data',
+          tocLabel: 'Why we use data',
+          title: 'Why we use data',
+          items: [],
+          paragraphs: [
+            'Signapse uses data to provide the service, support users and protect security: authenticate accounts, maintain personal content, respond to requests, deliver the features you use, diagnose problems and limit abuse.',
+            "Signapse does not use user data for marketing emails, sell user data or use it to train Signapse AI models. Processing by external providers must be distinguished from Signapse's own purposes.",
+          ],
+        },
+        {
+          id: 'ai-and-external-services',
+          tocLabel: 'AI and external services',
+          title: 'AI and external services',
+          items: [],
+          paragraphs: [
+            "Signapse uses AI services from Groq, OpenAI, Google (Gemini), Anthropic and DeepSeek. When you use AI conversation features, your question and relevant conversation history may be sent to the provider serving your request to generate a response. The provider's retention and use of content depend on the applicable service terms and account settings.",
+            'Authentication, hosting, storage, performance measurement and other integrations may also process data needed for the features you use. If you use Telegram, information sent to a configured Telegram destination may be visible to people with access to that destination. These services may process data in countries other than the one where you live.',
+          ],
+        },
+        {
+          id: 'data-retention',
+          tocLabel: 'How long data is kept',
+          title: 'How long data is kept',
+          items: [],
+          paragraphs: [
+            'Conversation history and notes are kept so you can refer back to them while using your account. After the account is closed, Signapse does not continue to retain this history to provide the service for that account.',
+            'Contact, support and technical records have separate retention purposes. Their retention must relate to resolving requests, operation/security and applicable legal obligations. Retention in active systems, backups and provider systems must be distinguished; account closure does not mean that every copy is immediately erased.',
+          ],
+        },
+        {
+          id: 'your-rights-and-requests',
+          tocLabel: 'Your rights and requests',
+          title: 'Your rights and requests',
+          items: [],
+          paragraphs: [
+            'Depending on applicable law, you may request access to or a copy of your data, correction, deletion, restriction or objection to processing; withdraw consent where processing relies on consent; and complain to a competent authority.',
+            'Email or call Customer Service to make a request. Providing or deleting data requires ensuring that the request comes from the right person. Legal retention requirements and lawful limits to rights are considered for each request.',
+          ],
+        },
+        {
+          id: 'privacy-contact',
+          tocLabel: 'Privacy contact',
+          title: 'Privacy contact',
+          items: [],
+          paragraphs: [],
+        },
+        {
+          id: 'policy-updates',
+          tocLabel: 'Policy updates',
+          title: 'Policy updates',
+          items: [],
+          paragraphs: [
+            'Changes are reflected in the policy version and update date when published. Information about new purposes or affected rights/choices must be provided as required by applicable law; updating this page does not replace consent where consent is required.',
+          ],
+        },
+      ],
+      privacyContact: {
+        name: 'Customer Service — Signapse',
+        emailLabel: 'Email:',
+        email: 'Afinance.verify@gmail.com',
+        phoneLabel: 'Phone:',
+        phone: '+84 967 743 713',
+      },
     },
     localeControl: {
       label: 'Switch landing language',
