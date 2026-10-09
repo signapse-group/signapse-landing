@@ -64,7 +64,7 @@ for (const locale of ['vi', 'en'] as const) {
             );
           }
           const footer = page.locator('[data-landing-part="footer"]');
-          await expect(footer.getByRole('link')).toHaveCount(8);
+          await expect(footer.getByRole('link')).toHaveCount(9);
           await expect(
             footer.getByRole('link', {
               name:

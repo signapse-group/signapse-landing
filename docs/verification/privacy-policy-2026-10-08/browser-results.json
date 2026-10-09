@@ -1,0 +1,608 @@
+{
+  "config": {
+    "configFile": "/opt/apps/symphony/workspaces-landing-jira/SIGN-150/playwright.config.ts",
+    "rootDir": "/opt/apps/symphony/workspaces-landing-jira/SIGN-150/tests/e2e",
+    "forbidOnly": true,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/opt/apps/symphony/workspaces-landing-jira/SIGN-150/test-results/browser",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/opt/apps/symphony/workspaces-landing-jira/SIGN-150/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "test-results/report",
+          "open": "never"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "runAgents": "none",
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.58.2",
+    "workers": 1,
+    "webServer": {
+      "command": "pnpm preview --host 127.0.0.1 --port 4321 --ignore-lock",
+      "url": "http://127.0.0.1:4321/vi",
+      "timeout": 60000,
+      "reuseExistingServer": false
+    }
+  },
+  "suites": [
+    {
+      "title": "footer-typography.spec.ts",
+      "file": "footer-typography.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "vi footer and headline sizes follow the approved scale with JavaScript",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11774,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T17:59:03.193Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "runtime-evidence.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJwYWdlRXJyb3JzIjogW10sCiAgImNvbnNvbGVFcnJvcnMiOiBbXSwKICAiZmFpbGVkUmVzcG9uc2VzIjogW10sCiAgImZhaWxlZFJlcXVlc3RzIjogW10KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "eaa963426d91463e49f4-f965182130f6abe877bc",
+          "file": "footer-typography.spec.ts",
+          "line": 5,
+          "column": 5
+        },
+        {
+          "title": "vi footer and headline sizes follow the approved scale without JavaScript",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7030,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T17:59:15.051Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "runtime-evidence.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJwYWdlRXJyb3JzIjogW10sCiAgImNvbnNvbGVFcnJvcnMiOiBbXSwKICAiZmFpbGVkUmVzcG9uc2VzIjogW10sCiAgImZhaWxlZFJlcXVlc3RzIjogW10KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "eaa963426d91463e49f4-9e4313b87290b9d11dc9",
+          "file": "footer-typography.spec.ts",
+          "line": 5,
+          "column": 5
+        },
+        {
+          "title": "en footer and headline sizes follow the approved scale with JavaScript",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11148,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T17:59:22.092Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "runtime-evidence.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJwYWdlRXJyb3JzIjogW10sCiAgImNvbnNvbGVFcnJvcnMiOiBbXSwKICAiZmFpbGVkUmVzcG9uc2VzIjogW10sCiAgImZhaWxlZFJlcXVlc3RzIjogW10KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "eaa963426d91463e49f4-aaa039932007fbe89ed6",
+          "file": "footer-typography.spec.ts",
+          "line": 5,
+          "column": 5
+        },
+        {
+          "title": "en footer and headline sizes follow the approved scale without JavaScript",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6945,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T17:59:33.252Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "runtime-evidence.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJwYWdlRXJyb3JzIjogW10sCiAgImNvbnNvbGVFcnJvcnMiOiBbXSwKICAiZmFpbGVkUmVzcG9uc2VzIjogW10sCiAgImZhaWxlZFJlcXVlc3RzIjogW10KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "eaa963426d91463e49f4-0898b603f999e94ba7cd",
+          "file": "footer-typography.spec.ts",
+          "line": 5,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "privacy-policy.spec.ts",
+      "file": "privacy-policy.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "vi Privacy Policy renders, navigates and reflows with JavaScript",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3224,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T17:59:40.223Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "runtime-evidence.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJwYWdlRXJyb3JzIjogW10sCiAgImNvbnNvbGVFcnJvcnMiOiBbXSwKICAiZmFpbGVkUmVzcG9uc2VzIjogW10sCiAgImZhaWxlZFJlcXVlc3RzIjogW10KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "dc566187105446b158ed-f993dfb38ca184340d86",
+          "file": "privacy-policy.spec.ts",
+          "line": 55,
+          "column": 5
+        },
+        {
+          "title": "vi Privacy Policy renders, navigates and reflows without JavaScript",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2705,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T17:59:43.462Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "runtime-evidence.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJwYWdlRXJyb3JzIjogW10sCiAgImNvbnNvbGVFcnJvcnMiOiBbXSwKICAiZmFpbGVkUmVzcG9uc2VzIjogW10sCiAgImZhaWxlZFJlcXVlc3RzIjogW10KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "dc566187105446b158ed-7d54bd5ec2c900dd1834",
+          "file": "privacy-policy.spec.ts",
+          "line": 55,
+          "column": 5
+        },
+        {
+          "title": "en Privacy Policy renders, navigates and reflows with JavaScript",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3140,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T17:59:46.180Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "runtime-evidence.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJwYWdlRXJyb3JzIjogW10sCiAgImNvbnNvbGVFcnJvcnMiOiBbXSwKICAiZmFpbGVkUmVzcG9uc2VzIjogW10sCiAgImZhaWxlZFJlcXVlc3RzIjogW10KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "dc566187105446b158ed-f040ef1beb68c5136fe5",
+          "file": "privacy-policy.spec.ts",
+          "line": 55,
+          "column": 5
+        },
+        {
+          "title": "en Privacy Policy renders, navigates and reflows without JavaScript",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2605,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T17:59:49.331Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "runtime-evidence.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJwYWdlRXJyb3JzIjogW10sCiAgImNvbnNvbGVFcnJvcnMiOiBbXSwKICAiZmFpbGVkUmVzcG9uc2VzIjogW10sCiAgImZhaWxlZFJlcXVlc3RzIjogW10KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "dc566187105446b158ed-f87c5a7e3ccce6334c89",
+          "file": "privacy-policy.spec.ts",
+          "line": 55,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "public-shell.spec.ts",
+      "file": "public-shell.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "vi shared public shell with JavaScript uses landing controls and hides dashboard access",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12323,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T17:59:51.955Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "footer-links-vi-1440",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJsYWJlbCI6ICJTaWduYXBzZSIsCiAgICAiYWNjZXNzaWJsZUxhYmVsIjogIlNpZ25hcHNlIOKAlCBUcmFuZyBjaOG7pyIsCiAgICAiaHJlZiI6ICIvdmkiLAogICAgIndpZHRoIjogMTEzLAogICAgImhlaWdodCI6IDI4CiAgfSwKICB7CiAgICAibGFiZWwiOiAiVMOtbmggbsSDbmciLAogICAgImFjY2Vzc2libGVMYWJlbCI6IG51bGwsCiAgICAiaHJlZiI6ICIjY2FwYWJpbGl0eS1zdHJpcCIsCiAgICAid2lkdGgiOiA2NCwKICAgICJoZWlnaHQiOiAyMAogIH0sCiAgewogICAgImxhYmVsIjogIlhlbSBkZW1vIiwKICAgICJhY2Nlc3NpYmxlTGFiZWwiOiBudWxsLAogICAgImhyZWYiOiAiI3Nob3djYXNlIiwKICAgICJ3aWR0aCI6IDY2LAogICAgImhlaWdodCI6IDIwCiAgfSwKICB7CiAgICAibGFiZWwiOiAiRMOgbmggY2hvIGFpIiwKICAgICJhY2Nlc3NpYmxlTGFiZWwiOiBudWxsLAogICAgImhyZWYiOiAiI2F1ZGllbmNlcyIsCiAgICAid2lkdGgiOiA3OCwKICAgICJoZWlnaHQiOiAyMAogIH0sCiAgewogICAgImxhYmVsIjogIkJsb2ciLAogICAgImFjY2Vzc2libGVMYWJlbCI6IG51bGwsCiAgICAiaHJlZiI6ICIvdmkvYmxvZ3MiLAogICAgIndpZHRoIjogMjksCiAgICAiaGVpZ2h0IjogMjAKICB9LAogIHsKICAgICJsYWJlbCI6ICJDaMOtbmggc8OhY2ggcXV54buBbiByacOqbmcgdMawIiwKICAgICJhY2Nlc3NpYmxlTGFiZWwiOiBudWxsLAogICAgImhyZWYiOiAiL3ZpL3ByaXZhY3ktcG9saWN5IiwKICAgICJ3aWR0aCI6IDE3MCwKICAgICJoZWlnaHQiOiAyMAogIH0sCiAgewogICAgImxhYmVsIjogIkfhu61pIGzhu51pIG5o4bqvbiIsCiAgICAiYWNjZXNzaWJsZUxhYmVsIjogbnVsbCwKICAgICJocmVmIjogIiNhY2Nlc3MiLAogICAgIndpZHRoIjogNzUsCiAgICAiaGVpZ2h0IjogMjAKICB9LAogIHsKICAgICJsYWJlbCI6ICJhY2Nlc3NAc2lnbmFwc2UuY2xvdWQiLAogICAgImFjY2Vzc2libGVMYWJlbCI6IG51bGwsCiAgICAiaHJlZiI6ICJtYWlsdG86YWNjZXNzQHNpZ25hcHNlLmNsb3VkP3N1YmplY3Q9U2lnbmFwc2UlMjBhY2Nlc3MlMjByZXF1ZXN0IiwKICAgICJ3aWR0aCI6IDE0NywKICAgICJoZWlnaHQiOiAxNgogIH0sCiAgewogICAgImxhYmVsIjogIjA5MzMuODAuOTkuMzYiLAogICAgImFjY2Vzc2libGVMYWJlbCI6IG51bGwsCiAgICAiaHJlZiI6ICJ0ZWw6Kzg0OTMzODA5OTM2IiwKICAgICJ3aWR0aCI6IDkxLAogICAgImhlaWdodCI6IDE2CiAgfQpd"
+                    },
+                    {
+                      "name": "footer-links-vi-375",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJsYWJlbCI6ICJTaWduYXBzZSIsCiAgICAiYWNjZXNzaWJsZUxhYmVsIjogIlNpZ25hcHNlIOKAlCBUcmFuZyBjaOG7pyIsCiAgICAiaHJlZiI6ICIvdmkiLAogICAgIndpZHRoIjogMTEzLAogICAgImhlaWdodCI6IDQ0CiAgfSwKICB7CiAgICAibGFiZWwiOiAiVMOtbmggbsSDbmciLAogICAgImFjY2Vzc2libGVMYWJlbCI6IG51bGwsCiAgICAiaHJlZiI6ICIjY2FwYWJpbGl0eS1zdHJpcCIsCiAgICAid2lkdGgiOiA2NCwKICAgICJoZWlnaHQiOiA0NAogIH0sCiAgewogICAgImxhYmVsIjogIlhlbSBkZW1vIiwKICAgICJhY2Nlc3NpYmxlTGFiZWwiOiBudWxsLAogICAgImhyZWYiOiAiI3Nob3djYXNlIiwKICAgICJ3aWR0aCI6IDY2LAogICAgImhlaWdodCI6IDQ0CiAgfSwKICB7CiAgICAibGFiZWwiOiAiRMOgbmggY2hvIGFpIiwKICAgICJhY2Nlc3NpYmxlTGFiZWwiOiBudWxsLAogICAgImhyZWYiOiAiI2F1ZGllbmNlcyIsCiAgICAid2lkdGgiOiA3OCwKICAgICJoZWlnaHQiOiA0NAogIH0sCiAgewogICAgImxhYmVsIjogIkJsb2ciLAogICAgImFjY2Vzc2libGVMYWJlbCI6IG51bGwsCiAgICAiaHJlZiI6ICIvdmkvYmxvZ3MiLAogICAgIndpZHRoIjogMjksCiAgICAiaGVpZ2h0IjogNDQKICB9LAogIHsKICAgICJsYWJlbCI6ICJDaMOtbmggc8OhY2ggcXV54buBbiByacOqbmcgdMawIiwKICAgICJhY2Nlc3NpYmxlTGFiZWwiOiBudWxsLAogICAgImhyZWYiOiAiL3ZpL3ByaXZhY3ktcG9saWN5IiwKICAgICJ3aWR0aCI6IDE3MCwKICAgICJoZWlnaHQiOiA0NAogIH0sCiAgewogICAgImxhYmVsIjogIkfhu61pIGzhu51pIG5o4bqvbiIsCiAgICAiYWNjZXNzaWJsZUxhYmVsIjogbnVsbCwKICAgICJocmVmIjogIiNhY2Nlc3MiLAogICAgIndpZHRoIjogNzUsCiAgICAiaGVpZ2h0IjogNDQKICB9LAogIHsKICAgICJsYWJlbCI6ICJhY2Nlc3NAc2lnbmFwc2UuY2xvdWQiLAogICAgImFjY2Vzc2libGVMYWJlbCI6IG51bGwsCiAgICAiaHJlZiI6ICJtYWlsdG86YWNjZXNzQHNpZ25hcHNlLmNsb3VkP3N1YmplY3Q9U2lnbmFwc2UlMjBhY2Nlc3MlMjByZXF1ZXN0IiwKICAgICJ3aWR0aCI6IDE0NywKICAgICJoZWlnaHQiOiA0NAogIH0sCiAgewogICAgImxhYmVsIjogIjA5MzMuODAuOTkuMzYiLAogICAgImFjY2Vzc2libGVMYWJlbCI6IG51bGwsCiAgICAiaHJlZiI6ICJ0ZWw6Kzg0OTMzODA5OTM2IiwKICAgICJ3aWR0aCI6IDkxLAogICAgImhlaWdodCI6IDQ0CiAgfQpd"
+                    },
+                    {
+                      "name": "runtime-evidence.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJwYWdlRXJyb3JzIjogW10sCiAgImNvbnNvbGVFcnJvcnMiOiBbXSwKICAiZmFpbGVkUmVzcG9uc2VzIjogW10sCiAgImZhaWxlZFJlcXVlc3RzIjogW10KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f0cfd2fbd848c3ea2025-8f6c0e739b85d2cb36a5",
+          "file": "public-shell.spec.ts",
+          "line": 5,
+          "column": 5
+        },
+        {
+          "title": "vi shared public shell without JavaScript uses landing controls and hides dashboard access",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8120,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T18:00:04.291Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "runtime-evidence.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJwYWdlRXJyb3JzIjogW10sCiAgImNvbnNvbGVFcnJvcnMiOiBbXSwKICAiZmFpbGVkUmVzcG9uc2VzIjogW10sCiAgImZhaWxlZFJlcXVlc3RzIjogW10KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f0cfd2fbd848c3ea2025-2efd1a73bc56c05879c5",
+          "file": "public-shell.spec.ts",
+          "line": 5,
+          "column": 5
+        },
+        {
+          "title": "en shared public shell with JavaScript uses landing controls and hides dashboard access",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8263,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T18:00:12.423Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "footer-links-en-1440",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJsYWJlbCI6ICJTaWduYXBzZSIsCiAgICAiYWNjZXNzaWJsZUxhYmVsIjogIlNpZ25hcHNlIOKAlCBIb21lIiwKICAgICJocmVmIjogIi9lbiIsCiAgICAid2lkdGgiOiAxMTMsCiAgICAiaGVpZ2h0IjogMjgKICB9LAogIHsKICAgICJsYWJlbCI6ICJGZWF0dXJlcyIsCiAgICAiYWNjZXNzaWJsZUxhYmVsIjogbnVsbCwKICAgICJocmVmIjogIiNjYXBhYmlsaXR5LXN0cmlwIiwKICAgICJ3aWR0aCI6IDU2LAogICAgImhlaWdodCI6IDIwCiAgfSwKICB7CiAgICAibGFiZWwiOiAiVmlldyBkZW1vcyIsCiAgICAiYWNjZXNzaWJsZUxhYmVsIjogbnVsbCwKICAgICJocmVmIjogIiNzaG93Y2FzZSIsCiAgICAid2lkdGgiOiA3OSwKICAgICJoZWlnaHQiOiAyMAogIH0sCiAgewogICAgImxhYmVsIjogIldobyBpdOKAmXMgZm9yIiwKICAgICJhY2Nlc3NpYmxlTGFiZWwiOiBudWxsLAogICAgImhyZWYiOiAiI2F1ZGllbmNlcyIsCiAgICAid2lkdGgiOiA3NCwKICAgICJoZWlnaHQiOiAyMAogIH0sCiAgewogICAgImxhYmVsIjogIkJsb2ciLAogICAgImFjY2Vzc2libGVMYWJlbCI6IG51bGwsCiAgICAiaHJlZiI6ICIvZW4vYmxvZ3MiLAogICAgIndpZHRoIjogMjksCiAgICAiaGVpZ2h0IjogMjAKICB9LAogIHsKICAgICJsYWJlbCI6ICJQcml2YWN5IFBvbGljeSIsCiAgICAiYWNjZXNzaWJsZUxhYmVsIjogbnVsbCwKICAgICJocmVmIjogIi9lbi9wcml2YWN5LXBvbGljeSIsCiAgICAid2lkdGgiOiA5MywKICAgICJoZWlnaHQiOiAyMAogIH0sCiAgewogICAgImxhYmVsIjogIlNlbmQgYSBtZXNzYWdlIiwKICAgICJhY2Nlc3NpYmxlTGFiZWwiOiBudWxsLAogICAgImhyZWYiOiAiI2FjY2VzcyIsCiAgICAid2lkdGgiOiAxMDgsCiAgICAiaGVpZ2h0IjogMjAKICB9LAogIHsKICAgICJsYWJlbCI6ICJhY2Nlc3NAc2lnbmFwc2UuY2xvdWQiLAogICAgImFjY2Vzc2libGVMYWJlbCI6IG51bGwsCiAgICAiaHJlZiI6ICJtYWlsdG86YWNjZXNzQHNpZ25hcHNlLmNsb3VkP3N1YmplY3Q9U2lnbmFwc2UlMjBhY2Nlc3MlMjByZXF1ZXN0IiwKICAgICJ3aWR0aCI6IDE0NywKICAgICJoZWlnaHQiOiAxNgogIH0sCiAgewogICAgImxhYmVsIjogIjA5MzMuODAuOTkuMzYiLAogICAgImFjY2Vzc2libGVMYWJlbCI6IG51bGwsCiAgICAiaHJlZiI6ICJ0ZWw6Kzg0OTMzODA5OTM2IiwKICAgICJ3aWR0aCI6IDkxLAogICAgImhlaWdodCI6IDE2CiAgfQpd"
+                    },
+                    {
+                      "name": "footer-links-en-375",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJsYWJlbCI6ICJTaWduYXBzZSIsCiAgICAiYWNjZXNzaWJsZUxhYmVsIjogIlNpZ25hcHNlIOKAlCBIb21lIiwKICAgICJocmVmIjogIi9lbiIsCiAgICAid2lkdGgiOiAxMTMsCiAgICAiaGVpZ2h0IjogNDQKICB9LAogIHsKICAgICJsYWJlbCI6ICJGZWF0dXJlcyIsCiAgICAiYWNjZXNzaWJsZUxhYmVsIjogbnVsbCwKICAgICJocmVmIjogIiNjYXBhYmlsaXR5LXN0cmlwIiwKICAgICJ3aWR0aCI6IDU2LAogICAgImhlaWdodCI6IDQ0CiAgfSwKICB7CiAgICAibGFiZWwiOiAiVmlldyBkZW1vcyIsCiAgICAiYWNjZXNzaWJsZUxhYmVsIjogbnVsbCwKICAgICJocmVmIjogIiNzaG93Y2FzZSIsCiAgICAid2lkdGgiOiA3OSwKICAgICJoZWlnaHQiOiA0NAogIH0sCiAgewogICAgImxhYmVsIjogIldobyBpdOKAmXMgZm9yIiwKICAgICJhY2Nlc3NpYmxlTGFiZWwiOiBudWxsLAogICAgImhyZWYiOiAiI2F1ZGllbmNlcyIsCiAgICAid2lkdGgiOiA3NCwKICAgICJoZWlnaHQiOiA0NAogIH0sCiAgewogICAgImxhYmVsIjogIkJsb2ciLAogICAgImFjY2Vzc2libGVMYWJlbCI6IG51bGwsCiAgICAiaHJlZiI6ICIvZW4vYmxvZ3MiLAogICAgIndpZHRoIjogMjksCiAgICAiaGVpZ2h0IjogNDQKICB9LAogIHsKICAgICJsYWJlbCI6ICJQcml2YWN5IFBvbGljeSIsCiAgICAiYWNjZXNzaWJsZUxhYmVsIjogbnVsbCwKICAgICJocmVmIjogIi9lbi9wcml2YWN5LXBvbGljeSIsCiAgICAid2lkdGgiOiA5MywKICAgICJoZWlnaHQiOiA0NAogIH0sCiAgewogICAgImxhYmVsIjogIlNlbmQgYSBtZXNzYWdlIiwKICAgICJhY2Nlc3NpYmxlTGFiZWwiOiBudWxsLAogICAgImhyZWYiOiAiI2FjY2VzcyIsCiAgICAid2lkdGgiOiAxMDgsCiAgICAiaGVpZ2h0IjogNDQKICB9LAogIHsKICAgICJsYWJlbCI6ICJhY2Nlc3NAc2lnbmFwc2UuY2xvdWQiLAogICAgImFjY2Vzc2libGVMYWJlbCI6IG51bGwsCiAgICAiaHJlZiI6ICJtYWlsdG86YWNjZXNzQHNpZ25hcHNlLmNsb3VkP3N1YmplY3Q9U2lnbmFwc2UlMjBhY2Nlc3MlMjByZXF1ZXN0IiwKICAgICJ3aWR0aCI6IDE0NywKICAgICJoZWlnaHQiOiA0NAogIH0sCiAgewogICAgImxhYmVsIjogIjA5MzMuODAuOTkuMzYiLAogICAgImFjY2Vzc2libGVMYWJlbCI6IG51bGwsCiAgICAiaHJlZiI6ICJ0ZWw6Kzg0OTMzODA5OTM2IiwKICAgICJ3aWR0aCI6IDkxLAogICAgImhlaWdodCI6IDQ0CiAgfQpd"
+                    },
+                    {
+                      "name": "runtime-evidence.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJwYWdlRXJyb3JzIjogW10sCiAgImNvbnNvbGVFcnJvcnMiOiBbXSwKICAiZmFpbGVkUmVzcG9uc2VzIjogW10sCiAgImZhaWxlZFJlcXVlc3RzIjogW10KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f0cfd2fbd848c3ea2025-acedcf0548fcd658c015",
+          "file": "public-shell.spec.ts",
+          "line": 5,
+          "column": 5
+        },
+        {
+          "title": "en shared public shell without JavaScript uses landing controls and hides dashboard access",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5787,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T18:00:20.698Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "runtime-evidence.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJwYWdlRXJyb3JzIjogW10sCiAgImNvbnNvbGVFcnJvcnMiOiBbXSwKICAiZmFpbGVkUmVzcG9uc2VzIjogW10sCiAgImZhaWxlZFJlcXVlc3RzIjogW10KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f0cfd2fbd848c3ea2025-a80dea67d2318e504083",
+          "file": "public-shell.spec.ts",
+          "line": 5,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-08T17:58:58.939Z",
+    "duration": 87675.66799999999,
+    "expected": 12,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

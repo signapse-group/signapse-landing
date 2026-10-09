@@ -1,0 +1,30 @@
+
+> signapse-landing@0.0.1 test:browser /opt/apps/symphony/workspaces-landing-jira/SIGN-150
+> node --env-file-if-exists=.env scripts/test-browser.mjs --grep 'Privacy Policy|shared public shell|footer and headline' --retries=0
+
+.env not found. Continuing without it.
+[WebServer] (node:3666990) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:3667013) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 12 tests using 1 worker
+
+(node:3667072) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3667072) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [chromium] › tests/e2e/footer-typography.spec.ts:5:5 › vi footer and headline sizes follow the approved scale with JavaScript (11.8s)
+  ✓   2 [chromium] › tests/e2e/footer-typography.spec.ts:5:5 › vi footer and headline sizes follow the approved scale without JavaScript (7.0s)
+  ✓   3 [chromium] › tests/e2e/footer-typography.spec.ts:5:5 › en footer and headline sizes follow the approved scale with JavaScript (11.1s)
+  ✓   4 [chromium] › tests/e2e/footer-typography.spec.ts:5:5 › en footer and headline sizes follow the approved scale without JavaScript (6.9s)
+  ✓   5 [chromium] › tests/e2e/privacy-policy.spec.ts:55:5 › vi Privacy Policy renders, navigates and reflows with JavaScript (3.2s)
+  ✓   6 [chromium] › tests/e2e/privacy-policy.spec.ts:55:5 › vi Privacy Policy renders, navigates and reflows without JavaScript (2.7s)
+  ✓   7 [chromium] › tests/e2e/privacy-policy.spec.ts:55:5 › en Privacy Policy renders, navigates and reflows with JavaScript (3.1s)
+  ✓   8 [chromium] › tests/e2e/privacy-policy.spec.ts:55:5 › en Privacy Policy renders, navigates and reflows without JavaScript (2.6s)
+  ✓   9 [chromium] › tests/e2e/public-shell.spec.ts:5:5 › vi shared public shell with JavaScript uses landing controls and hides dashboard access (12.3s)
+  ✓  10 [chromium] › tests/e2e/public-shell.spec.ts:5:5 › vi shared public shell without JavaScript uses landing controls and hides dashboard access (8.1s)
+  ✓  11 [chromium] › tests/e2e/public-shell.spec.ts:5:5 › en shared public shell with JavaScript uses landing controls and hides dashboard access (8.3s)
+  ✓  12 [chromium] › tests/e2e/public-shell.spec.ts:5:5 › en shared public shell without JavaScript uses landing controls and hides dashboard access (5.8s)
+
+  12 passed (1.5m)
