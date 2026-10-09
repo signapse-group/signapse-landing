@@ -30,6 +30,14 @@ QA case preparation/approval/runs, merge/deployment of this contribution and own
 
 Required behavior, local checks, independent review and required CI remain handoff gates. Fix contribution failures in Progress; use Blocked only for necessary external input/access when no meaningful independent work remains. Record the affected output/AC/check and resume condition. Baseline failures outside the selected scope remain visible; a failed required full check or CI is never converted into a scoped pass. Missing mandatory output, publication access, saved handoff or status-write access remains a gap; metadata pending does not establish a successful transition.
 
+## Bug fixes and QA retest
+
+For an assigned fix Subtask under a Bug, reread the accepted expected/basis and latest relevant QA handoff with its report/evidence at start, resume and handoff. Identify case/version, actual, tested build/environment and assigned impacted regression. Apply [QA Retest outcomes](https://github.com/signapse-group/signapse-planing/blob/main/workflow/project-execution-workflow.md#qa-retest-outcomes); a FAIL summary can include Blocked/Not Run checks or a different regression deviation. Implement the assigned fix scope without treating every report failure as the same Bug.
+
+Link the Bug and QA run/report addressed in the fix handoff, with corrected coverage, delivered source revision, local checks/regression and pending merge/deploy owner/action. After deployment, the delivery owner supplies evidence connecting that fix to the tested build/environment for QA; local fixture/SSR checks or a build SHA alone do not establish hosted delivery. Pending deployment does not delay a dev In Review handoff whose local gates passed.
+
+The coordinator owns Bug Resolved/Closed/Reopened, QA completion and follow-up assignment. Dev checks do not close the Bug or overwrite QA results/approval. Done is terminal; a later fix/run requires a new coordinator-assigned Subtask. Do not revive a completed contribution or mutate its parent from a QA FAIL summary.
+
 ## Execution and review
 
 1. Read the contract, references, this policy and applicable repository instructions.
