@@ -1,14 +1,14 @@
 # Signapse Landing
 
-Repository Astro này nhận task để **implement landing Signapse**: source, nội dung VI/EN trong code, runtime assets/demo, tests, runbook và bằng chứng thực thi. Requirement/design, copy contract, Pen/prototype, nghiên cứu và ADR thuộc [signapse-planing](../signapse-planing/ui-design/references/landing/README.md) từ **2026-10-06**. Baseline implementation đã được người dùng xác nhận ngày **2026-10-04**.
+Repository Astro này nhận task để **implement landing Signapse**: source, nội dung VI/EN trong code, runtime assets/demo, tests, runbook và bằng chứng thực thi. Requirement/design, copy contract, Pen/prototype, nghiên cứu và ADR thuộc [signapse-planing](https://github.com/signapse-group/signapse-planing/blob/main/ui-design/references/landing/README.md) từ **2026-10-06**. Baseline implementation đã được người dùng xác nhận ngày **2026-10-04**.
 
 Astro prerender landing cho `/`, `/vi`, `/en` và Privacy Policy tại `/vi/privacy-policy`, `/en/privacy-policy`; root hiển thị tiếng Việt. Các route `/vi/blogs` và `/en/blogs` cùng trang chi tiết được render theo từng request trong Cloudflare Worker, lấy bài từ public API. React islands sở hữu header/capability, Hero WebGL, bốn demo và Audience. Nội dung SSR, SVG fallback và native navigation vẫn hữu ích khi JavaScript hoặc WebGL không khả dụng. Các demo dùng dữ liệu mẫu và timeline trong repo, không gọi backend.
 
-Đọc [mục lục tài liệu](docs/README.md), [contract landing tại planning](../signapse-planing/ui-design/references/landing/LANDING.md), [kiến trúc implementation](docs/architecture.md) và [kiểm chứng](docs/verification/README.md). Task tham chiếu design/AC đã duyệt; thay đổi requirement/design được xử lý tại planning. Source nằm trong `src/`, runtime assets trong `public/`, model/browser tests trong `tests/`.
+Đọc [mục lục tài liệu](docs/README.md), [contract landing tại planning](https://github.com/signapse-group/signapse-planing/blob/main/ui-design/references/landing/LANDING.md), [kiến trúc implementation](docs/architecture.md) và [kiểm chứng](docs/verification/README.md). Task tham chiếu design/AC đã duyệt; thay đổi requirement/design được xử lý tại planning. Source nằm trong `src/`, runtime assets trong `public/`, model/browser tests trong `tests/`.
 
 ## Assigned execution và Symphony
 
-Jira `SIGN` giữ contract/lifecycle; [WORKFLOW.md](WORKFLOW.md) nhận native Subtask có `route-landing`. Skills local trong [.agents/skills](.agents/skills/) được adapt từ FE và do landing sở hữu. Worker thực thi/check/review rồi bàn giao tại `In Review`; coordinator giữ `Done` sau applicable gates, merge không tự hoàn tất Jira. Ordinary requests và cấu hình consumer không tự dispatch issue.
+Jira `SIGN` giữ contract/lifecycle; [WORKFLOW.md](WORKFLOW.md) nhận native Subtask có `route-landing`. Skills local trong [.agents/skills](.agents/skills/) được adapt từ FE và do landing sở hữu. Profile dev có PR dùng ba session: Ready khảo sát, Progress implement, In Review review độc lập/merge/delivery; reviewer chuyển Done sau [delivery gates](docs/delivery.md). Coordinator giữ initial dispatch, Blocked resume và parent acceptance; merge không tự hoàn tất Jira. Ordinary requests và cấu hình consumer không tự dispatch issue.
 
 [Consumer runbook](docs/symphony.md) mô tả offline checker, host inputs, browser isolation và handoff. Phần setup/activation trên server được người dùng thực hiện riêng qua repo Symphony sau cập nhật consumer; repository config không chứng minh runtime đã chạy.
 
@@ -68,7 +68,7 @@ GitHub giữ một run đang chạy và một run chờ trong group; push mới 
 
 Origins, gồm `PUBLIC_BLOG_API_ORIGIN`, và `SIGNAPSE_LANDING_INDEXABLE` lưu trong GitHub Variables; Cloudflare token/account ID lưu trong GitHub Secrets. Blog API origin phải là HTTPS origin public, không kèm path/query/credential; workflow kiểm tra biến trước deploy. Indexing mặc định tắt và hiện variable là `false`; đổi thành `true` sau khi hoàn tất go-live. Push `main` và deploy thủ công đều dùng cùng cấu hình.
 
-Làm theo [hướng dẫn deploy signapse.cloud](docs/deployment/signapse-cloud.md). [Bản nghiên cứu tại planning](../signapse-planing/docs/research/landing-cloudflare-deployment.md) giải thích lựa chọn hosting và các giới hạn. Bật indexing không đổi root `/`: root tiếp tục là landing VI noindex.
+Làm theo [hướng dẫn deploy signapse.cloud](docs/deployment/signapse-cloud.md). [Bản nghiên cứu tại planning](https://github.com/signapse-group/signapse-planing/blob/main/docs/research/landing-cloudflare-deployment.md) giải thích lựa chọn hosting và các giới hạn. Bật indexing không đổi root `/`: root tiếp tục là landing VI noindex.
 
 ## Kiểm tra
 

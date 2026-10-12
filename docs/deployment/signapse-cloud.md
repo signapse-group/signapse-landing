@@ -6,6 +6,10 @@ Mỗi push/merge vào `main` tự chạy CI rồi deploy sau khi toàn bộ chec
 
 Concurrency mặc định giữ một run đang chạy và một run pending; push mới có thể thay run pending bằng revision mới nhất. Run đang publish trên `main` không bị huỷ bởi push mới.
 
+## Assigned autonomous delivery
+
+For the delegated dev-with-PR profile, apply [review/delivery](../delivery.md) before merge/publication/Done. CI embeds the checked SHA in `/build-revision.json`; null preview identity is not hosted evidence. The historical release records below remain dated observations, not verification of a new release or current account variables. Cutover/bootstrap settings remain release-owner work.
+
 ## Trạng thái triển khai ngày 2026-10-07
 
 Nhánh `main`, commit `2ea7124611b6902596e12232dbd8c696463350ce`, đã deploy thành công qua [GitHub Actions run 37591390406](https://github.com/signapse-group/signapse-landing/actions/runs/37591390406). Checks/build và 14 model tests pass. Browser suite ghi nhận 30 tests pass ngay và 1 test reset Graph/Telegram pass sau retry; workflow kết thúc success. Nguyên nhân lỗi test không ổn định chưa được chẩn đoán trong lượt deploy này.

@@ -24,6 +24,11 @@ export default defineConfig({
   },
   env: {
     schema: {
+      SIGNAPSE_BUILD_REVISION: envField.string({
+        context: 'server',
+        access: 'public',
+        optional: true,
+      }),
       PUBLIC_CONTACT_API_ORIGIN: envField.string({
         context: 'client',
         access: 'public',

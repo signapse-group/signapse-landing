@@ -16,7 +16,9 @@ jobs:
   check:
     if: github.event_name != 'workflow_dispatch' || github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     env:
+      SIGNAPSE_BUILD_REVISION: ${{ github.sha }}
       DEPLOY_TO_CLOUDFLARE: ${{ github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') }}
       PUBLIC_APP_ORIGIN: ${{ github.ref == 'refs/heads/main' && vars.PUBLIC_APP_ORIGIN || 'http://localhost:3000' }}
       PUBLIC_CONTACT_API_ORIGIN: ${{ github.ref == 'refs/heads/main' && vars.PUBLIC_CONTACT_API_ORIGIN || 'https://dev-api.signapse.cloud' }}
@@ -85,8 +87,22 @@ jobs:
       - name: Verify production preview in browser
         run: pnpm test:browser
 
-      - name: Deploy verified Worker and static assets to Cloudflare
+      - name: Check main before publishing
         if: env.DEPLOY_TO_CLOUDFLARE == 'true'
+        id: release_head
+        shell: bash
+        run: |
+          current_main=$(git ls-remote origin refs/heads/main | cut -f1)
+          [[ "$current_main" =~ ^[a-f0-9]{40}$ ]]
+          if [[ "$current_main" == "$GITHUB_SHA" ]]; then
+            echo "current=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "current=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Main advanced; use the checked descendant release."
+          fi
+
+      - name: Deploy verified Worker and static assets to Cloudflare
+        if: env.DEPLOY_TO_CLOUDFLARE == 'true' && steps.release_head.outputs.current == 'true'
         run: pnpm exec wrangler deploy --var "PUBLIC_BLOG_API_ORIGIN:${PUBLIC_BLOG_API_ORIGIN}"
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

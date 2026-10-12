@@ -6,22 +6,9 @@ Người dùng chấp nhận triển khai consumer ngày **2026-10-07** theo [pl
 
 ## Contract và lifecycle
 
-Tracker Jira `SIGN`; chỉ nhận native Subtask có parent hợp lệ và đúng một recognized route là `route-landing`. Full routing set giữ BE/FE/QA/MDG/LANDING để loại issue thiếu/sai/nhiều route. Prefix `LANDING:` giúp đọc title; route và Deliverable quyết định repo, assignee/parent Ready không thay quyền dispatch.
+Apply the repository-owned [phase procedure](../.agents/skills/agent-execution-policy/references/execution-policy.md#execution-and-review) and [planning profile](https://github.com/signapse-group/signapse-planing/blob/main/workflow/project-execution-workflow.md#profile-fe-và-landing): native SIGN dev Subtask, valid parent, single route-landing, PR into main; Ready Survey → Progress Implement → In Review independent Review/delivery → Done. No-PR/direct requests retain their assigned boundary. [Delivery runbook](delivery.md) owns technical PR/CI/merge/Cloudflare/revision/wait/recovery gates; coordinator retains initial dispatch, Blocked resume, parent/QA lifecycle and acceptance.
 
-| Trạng thái | Worker và owner |
-| --- | --- |
-| Open | Ngoài dispatch; coordinator define/approve contribution. |
-| Ready | Coordinator chủ động giao việc; agent recheck contract/dependencies rồi chuyển Progress. |
-| Progress | Execute/resume cùng workspace, branch và PR; review feedback trở lại đây. |
-| In Review | Non-terminal human handoff; worker dừng. |
-| Blocked | Worker dừng sau saved blocker comment; coordinator giải quyết và resume đúng pre-Blocked status. |
-| Done | Terminal; coordinator hoàn tất gate áp dụng. Merge không tự hoàn tất Jira. |
-
-Ready/Progress là dispatch và active states. Native Blocks được kiểm trước initial/retry admission; blocker category `done` mới đủ, `Resolved`/`In Review` chưa đủ. Parent không tự là dependency. Agent đọc live Subtask/parent/comments/references khi start, resume và handoff; planning sở hữu requirement/design/copy contract.
-
-Trong assigned workflow, thay đổi files của repo dùng một reviewed PR vào default branch, title `[<Jira-key>] <current Subtask title>`. Một reviewer độc lập kiểm **Requirement adherence** và **Correctness & Standards**. CI cần `Verify`/job `check` của revision giao và required checks thực tế. Push/merge vào `main` tự chạy CI/deploy Cloudflare; manual `workflow_dispatch` trên `main` cũng deploy, nên không dùng nó để theo dõi PR quality nếu chưa được giao deployment. Worker áp dụng [local handoff policy](../.agents/skills/agent-execution-policy/references/execution-policy.md#local-handoff-and-live-acceptance) và giữ boundary tại In Review; QA, hosted acceptance và metadata pending được phân loại theo operation/phase, không thay checks/review/CI hoặc dependency gate; chủ thể được cấp quyền merge phải biết merge vào `main` sẽ kích hoạt deployment. GitHub for Atlassian/Development-panel linking phải kiểm riêng trước khi tuyên bố đã liên kết.
-
-Theo [handoff policy local](../.agents/skills/agent-execution-policy/references/execution-policy.md#pr-and-delivery-handoff), comment giữ outcome hiện tại, output/revision, tóm tắt checks/review, owner/bước tiếp theo, gap có ý nghĩa và links; hướng tới 4–6 dòng, thêm dòng khi cần quyết định. PR/evidence giữ chi tiết verification và lịch sử có version. Blocker/resolution ghi riêng và đánh dấu phần đã hết; bỏ mục không áp dụng. Xác định ownership, đọc lại trước ghi và read-back sau ghi; không sửa nội dung người khác hoặc duplicate sau ambiguous writes. Coordinator giữ Done/parent acceptance, maintainer giữ merge; deploy chỉ trong scope được giao. Ordinary requests và consumer maintenance không tự bật tracker lifecycle/PR workflow.
+WORKFLOW dispatch/active include all three phases, review state In Review and session_boundary_states [Ready]. Moving phase ends the old session for a full new prompt in the same workspace, preserving output and claim until exit. Native dependency admission is checked on dispatch/retry; source support does not prove installed support. Jira comments/feedback/readback follow the phase procedure; public publishing does not authorize infra/secrets/DNS/indexing or live feature effects.
 
 ## Repo profile và deployment profile
 
@@ -42,7 +29,7 @@ Schema Symphony nhận model qua `codex.command`, không có field `codex.model`
 
 | Input operator cần kiểm | Điều kiện trước activation |
 | --- | --- |
-| Symphony binary/revision | Có routed Jira support đã kiểm theo source `2a58b987a1eb5b7bc02659fd5a49df8164807a4c` hoặc bản tương thích; source HEAD không chứng minh binary đã cập nhật. |
+| Symphony binary/revision | Có routed Jira support đã kiểm theo source `88c1bd1c1455cce6ef02ce3d43c76535123506bc` có phase boundaries hoặc bản tương thích; source HEAD không chứng minh binary đã cập nhật. |
 | Host env và workspace | `JIRA_BASE_URL`, `JIRA_EMAIL`, `JIRA_API_TOKEN`, `SYMPHONY_WORKSPACE_ROOT`; root landing riêng, không source checkout và không overlap worker route khác. |
 | Code-host/agent tools | `SYMPHONY_GIT_CREDENTIAL_HELPER` trỏ đến helper của host cho clone/push, GitHub PR/CI tooling, Codex login/model và independent reviewer; `jira_rest` không cấp GitHub auth. |
 | Jira worker account | Đọc Subtask/parent/comments/links, ghi comment/authorized transitions; kiểm native transitions/resume và landing Development-panel linking bằng đúng account. |
@@ -78,7 +65,7 @@ Baseline operator chạy trên fresh workspace: frozen install → `pnpm check` 
 MIX_ENV=test mix run --no-start /path/to/signapse-landing/scripts/check-symphony-workflow.exs /path/to/signapse-landing/WORKFLOW.md
 ```
 
-Checker xác minh supervisor chưa chạy; không gọi hooks, polling, clone hoặc Jira writes. Nó kiểm concurrency/timeout/Codex/sandbox đã chốt, executable clone line đúng repo và destination `.` cùng helper cho clone/push, native parent/type, zero/wrong/two routes, wrong project, Ready/Progress dependency categories và 12 fixtures Liquid gồm nullable context/description và retry attempt. Khi đổi clone line, phải kiểm lại mutations sai repo, clone vào subdir, URL chỉ nằm trong comment và mất helper persistence. Scheduler restart/cleanup coverage thuộc tests Symphony hiện có; consumer không dựng runtime kiểm giả.
+Checker xác minh supervisor chưa chạy; không gọi hooks, polling, clone hoặc Jira writes. Nó kiểm concurrency/timeout/Codex/sandbox đã chốt, executable clone line đúng repo và destination `.` cùng helper cho clone/push, native parent/type, zero/wrong/two routes, wrong project, Ready/Progress/In Review dependency categories và 108 fixtures Liquid cho ba phase/unsupported states, nullable/empty context/description, retry và permission guards. Khi đổi clone line, phải kiểm lại mutations sai repo, clone vào subdir, URL chỉ nằm trong comment và mất helper persistence. Scheduler restart/cleanup coverage thuộc tests Symphony hiện có; consumer không dựng runtime kiểm giả.
 
 Sau sửa root workflow hoặc checker, chạy offline check cùng check/lint/format/build theo repo policy. Skills cần validate frontmatter/metadata, local links, UTF-8/LF và invocation policies; formatter repo loại `.agents/`/docs nên kiểm nội dung riêng. Thay đổi navigation/layout/demo/model vẫn chạy coverage theo [verification](verification/README.md).
 
@@ -86,9 +73,9 @@ Sau sửa root workflow hoặc checker, chạy offline check cùng check/lint/fo
 
 Giao revision consumer chứa workflow, toàn bộ skills, checker và docs. Operator qua repo Symphony kiểm installed profile và permissions, toolchain/browser isolation, workspace/process inventory; drain chỉ landing instance cũ nếu có, không dừng FE/BE để onboard landing.
 
-Coordinator giao canary scope hẹp sau preflight. Kiểm clone/skills, Ready → Progress, reviewed PR và CI, saved delivery comment, Progress → In Review và worker dừng; scenario restart/review/Blocked resume reuse output được kiểm trong scope canary đã giao. Coordinator quyết định Done và mở queue. Việc `SIGN-113` được normalize hoặc producer Done không tự queue issue đó.
+Hoàn tất consumer/CI/delivery source và deploy compatible Symphony trước. **Canary do người dùng giao sau**, không tự queue issue để chứng minh config. Operator drain/reconcile route cần cutover, giữ branch/PR/output/status và refresh instructions trong workspace/session mới; không reset Progress/In Review về Ready. Scope/checker hoàn tất có thể bàn giao trước canary, nhưng chỉ claim adopted worker sau effective-profile và authorized canary evidence.
 
-Chỉ đổi trạng thái thành **landing worker đã triển khai** sau khi lưu evidence activation (revision/binary, service/process và effective profile/env đã sanitize) cùng delivery canary (issue/PR/review/CI, Development-panel linking, saved handoff và worker dừng tại In Review). Baseline tests hoặc file workflow trên đĩa chưa đủ. Push/merge vào `main` tự deploy Cloudflare sau Verify; manual dispatch trên `main` cũng deploy. Release evidence của website và activation evidence của Symphony worker là hai gate riêng.
+Canary đi hết Ready → Progress → In Review independent review → merge → Cloudflare/live revision/basic loading → saved delivery → Done. Người dùng nghiệm thu trước mở queue rộng; QA sản phẩm tách riêng, không tạo QA Subtask riêng cho cơ chế. Restart/feedback/Blocked resume/quiet wait/recovery dùng tests/diagnostics khi thích hợp, không cố gây lỗi public. Website release và Symphony activation là hai evidence khác nhau; configuration reload không thay context/session/checkout cũ.
 
 Nếu lỗi, dừng landing instance, giữ workspace/branch/PR/Jira history và reconcile trước chạy lại. Config reload lỗi có thể giữ last-known-good profile; phải đọc logs/effective state, không coi file mới là config đang dùng. Không rollback bằng xóa output hoặc reset hàng loạt issue về Ready.
 

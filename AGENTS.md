@@ -2,19 +2,19 @@
 
 ## Context and authority
 
-Read this file, [README.md](README.md), and the [documentation index](docs/README.md) before work. This Astro repository implements assigned landing tasks and owns source, runtime copy/assets/demos, tests, runbooks and execution evidence. Requirement, design/prototype, copy contract, research and ADR ownership belongs to [signapse-planing](../signapse-planing/ui-design/references/landing/README.md) from 2026-10-06. Follow the assigned issue/current user request and its approved [landing contract](../signapse-planing/ui-design/references/landing/LANDING.md); update source and affected implementation documentation/tests together.
+Read this file, [README.md](README.md), and the [documentation index](docs/README.md) before work. This Astro repository implements assigned landing tasks and owns source, runtime copy/assets/demos, tests, runbooks and execution evidence. Requirement, design/prototype, copy contract, research and ADR ownership belongs to [signapse-planing](https://github.com/signapse-group/signapse-planing/blob/main/ui-design/references/landing/README.md) from 2026-10-06. Follow the assigned issue/current user request and its approved [landing contract](https://github.com/signapse-group/signapse-planing/blob/main/ui-design/references/landing/LANDING.md); update source and affected implementation documentation/tests together.
 
 The product application owns dashboard, authentication and Articles. Integrate through configured URLs; do not require its checkout, session providers or runtime to develop, build or test the landing. Changes and cleanup stay in this repository unless the user explicitly authorizes another scope.
 
 ## Task and design handoff
 
-Implement the assigned scope against requirement/AC and approved design references/revision from planning. Jira project `SIGN` is the shared tracker; execution follows the [planning workflow](../signapse-planing/workflow/project-execution-workflow.md) and this repository's verification/delivery policy. Missing or conflicting requirements/design go back to the coordinator; do not redefine the contract from current code or publish new issues without authorization.
+Implement the assigned scope against requirement/AC and approved design references/revision from planning. Jira project `SIGN` is the shared tracker; execution follows the [planning workflow](https://github.com/signapse-group/signapse-planing/blob/main/workflow/project-execution-workflow.md) and this repository's verification/delivery policy. Missing or conflicting requirements/design go back to the coordinator; do not redefine the contract from current code or publish new issues without authorization.
 
-Design, Pen prototypes and design-system changes are maintained in planning under [UI design instructions](../signapse-planing/ui-design/AGENTS.override.md), using its shared skills. Read the assigned design through its task references; a planning checkout is not a build/test dependency. Runtime dictionary values and CSS tokens here implement that contract.
+Design, Pen prototypes and design-system changes are maintained in planning under [UI design instructions](https://github.com/signapse-group/signapse-planing/blob/main/ui-design/AGENTS.override.md), using its shared skills. Read the assigned design through its task references; a planning checkout is not a build/test dependency. Runtime dictionary values and CSS tokens here implement that contract.
 
 ## Assigned execution
 
-For assigned Jira/Symphony work or an explicitly activated local-contract workflow, read [WORKFLOW.md](WORKFLOW.md) and the repository-owned [agent execution policy](.agents/skills/agent-execution-policy/SKILL.md). The worker receives only native Subtasks with `route-landing`, hands off at `In Review`, and leaves `Done`, merge and deployment to their authorized owners. Ordinary requests and configuration/skill maintenance do not activate tracker lifecycle actions.
+For assigned Jira/Symphony work or an explicitly activated local-contract workflow, read [WORKFLOW.md](WORKFLOW.md) and the repository-owned [agent execution policy](.agents/skills/agent-execution-policy/SKILL.md). The worker receives only native dev Subtasks with `route-landing` and a PR into main; Ready surveys, Progress implements and a fresh In Review session independently reviews/merges/verifies delivery to signapse.cloud/completes Done under the delegated profile. Ordinary requests and configuration/skill maintenance do not activate tracker lifecycle actions.
 
 Use local `implement`, `code-review`, `tdd`, `diagnosing-bugs`, `accessibility` and `resolving-merge-conflicts` for their matching scope; invoke `setup-workflow` explicitly for consumer configuration. API work follows the conditional [API consumer policy](.agents/skills/agent-execution-policy/references/api-handoff.md). [Consumer runbook](docs/symphony.md) covers offline validation and operator handoff; server provisioning/activation remain separate.
 
@@ -33,7 +33,7 @@ Use local `implement`, `code-review`, `tdd`, `diagnosing-bugs`, `accessibility` 
 
 ## Dev handoff boundary
 
-For direct work, complete the requested output with applicable verification; tracker/review/PR/CI workflow steps activate only when assigned. For an activated workflow, apply the repository's [local handoff and live acceptance policy](.agents/skills/agent-execution-policy/references/execution-policy.md#local-handoff-and-live-acceptance). Pending QA, merge/deploy of this contribution or owner acceptance does not itself stop dev work. Missing behavior, required checks or necessary producer/input access remains a contribution gap; keep doing meaningful independent work.
+For direct work, complete the requested output with applicable verification; tracker/review/PR/CI workflow steps activate only when assigned. For an activated workflow, apply the repository's [local handoff and live acceptance policy](.agents/skills/agent-execution-policy/references/execution-policy.md#local-handoff-and-live-acceptance). Apply its phase-specific handoff and the [delivery runbook](docs/delivery.md): Implement hands off before its deployment; the assigned Review session completes merge/delivery/Done only after the gates. Pending QA/parent acceptance alone does not stop an otherwise complete contribution. Missing behavior, required checks or necessary producer/input access remains a contribution gap; keep doing meaningful independent work.
 
 ## Implementation and verification
 

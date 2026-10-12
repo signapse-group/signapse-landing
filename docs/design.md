@@ -8,14 +8,14 @@ Tài liệu tổng hợp rule UI của `signapse-landing`, dùng khi triển kha
 
 | Nguồn | Vai trò |
 | --- | --- |
-| [Landing contract](../../signapse-planing/ui-design/references/landing/LANDING.md) | Quy tắc được duy trì tại planning về composition, navigation, demo, responsive và accessibility. |
-| [Design handoff](../../signapse-planing/ui-design/references/landing/README.md) và [Pen handoff](../../signapse-planing/ui-design/pen/landing/README.md) | Design/revision, Foundation, shared compositions, interaction states và reference của task. |
-| [ADR-0011](../../signapse-planing/docs/adr/landing/0011-fixed-branded-public-landing-composition.md) và [ADR-0010](../../signapse-planing/docs/adr/landing/0010-use-progressive-webgl-for-landing-context-figure.md) | Palette cố định và progressive WebGL. |
+| [Landing contract](https://github.com/signapse-group/signapse-planing/blob/main/ui-design/references/landing/LANDING.md) | Quy tắc được duy trì tại planning về composition, navigation, demo, responsive và accessibility. |
+| [Design handoff](https://github.com/signapse-group/signapse-planing/blob/main/ui-design/references/landing/README.md) và [Pen handoff](https://github.com/signapse-group/signapse-planing/blob/main/ui-design/pen/landing/README.md) | Design/revision, Foundation, shared compositions, interaction states và reference của task. |
+| [ADR-0011](https://github.com/signapse-group/signapse-planing/blob/main/docs/adr/landing/0011-fixed-branded-public-landing-composition.md) và [ADR-0010](https://github.com/signapse-group/signapse-planing/blob/main/docs/adr/landing/0010-use-progressive-webgl-for-landing-context-figure.md) | Palette cố định và progressive WebGL. |
 | [Landing composition](../src/components/landing/LandingPage.astro), [landing CSS](../src/components/landing/landing-page.module.css), [showcase CSS](../src/components/landing/landing-feature-showcase.module.css) | Bố cục, token và treatment đang triển khai. |
 | [Global styles](../src/styles/global.css), [font faces](../src/styles/fonts.css), [dictionary](../src/i18n/messages.ts) | Font roles, copy VI/EN, fixture labels, accessible text và metadata. |
-| [FE design](../../signapse-ui/docs/design/DESIGN.md) | Tham khảo hierarchy, semantic tokens, trạng thái và accessibility; không áp dụng nguyên bộ dashboard rules cho landing. |
+| [FE design](https://github.com/signapse-group/signapse-ui/blob/main/docs/design/DESIGN.md) | Tham khảo hierarchy, semantic tokens, trạng thái và accessibility; không áp dụng nguyên bộ dashboard rules cho landing. |
 
-Áp dụng requirement/AC và design revision được giao cùng contract tại planning. Nếu chúng xung đột với tài liệu này hoặc code, ghi rõ điểm lệch và đưa về coordinator/planning; không suy ra requirement từ giao diện đang chạy. [Design-system review](../../signapse-planing/ui-design/pen/landing/design-system-review.md) giữ lịch sử finding trước sửa; dùng handoff hiện hành để xác định trạng thái mới.
+Áp dụng requirement/AC và design revision được giao cùng contract tại planning. Nếu chúng xung đột với tài liệu này hoặc code, ghi rõ điểm lệch và đưa về coordinator/planning; không suy ra requirement từ giao diện đang chạy. [Design-system review](https://github.com/signapse-group/signapse-planing/blob/main/ui-design/pen/landing/design-system-review.md) giữ lịch sử finding trước sửa; dùng handoff hiện hành để xác định trạng thái mới.
 
 ## Ngôn ngữ visual
 
@@ -101,7 +101,7 @@ Nguồn composition là [LandingPage.astro](../src/components/landing/LandingPag
 | 7 | Contact `#access` | Nội dung/email bên trái, form thật bên phải khi đủ rộng; reflow một cột trên màn hẹp. |
 | 8 | Footer | Brand/copy, Khám phá gồm Tính năng/Xem demo/Dành cho ai/Blog, Gửi lời nhắn, email, điện thoại và disclaimer. |
 
-`#access` hiện triển khai contribution form theo [SIGN-113 reference](../../signapse-planing/ui-design/pen/landing/README.md#form-liên-hệ-công-khai). Bảng baseline trong `LANDING.md` còn mô tả vùng này là Final CTA; đọc cùng phần form của contract và AC/revision được giao, không tự khôi phục nút dashboard tại đây. Theo yêu cầu người dùng ngày 2026-10-08, Header/Footer cũng đã gỡ dashboard entry vì chưa mở quyền user access; chỉ khôi phục sau khi người dùng cho phép rõ ràng.
+`#access` hiện triển khai contribution form theo [SIGN-113 reference](https://github.com/signapse-group/signapse-planing/blob/main/ui-design/pen/landing/README.md#form-liên-hệ-công-khai). Bảng baseline trong `LANDING.md` còn mô tả vùng này là Final CTA; đọc cùng phần form của contract và AC/revision được giao, không tự khôi phục nút dashboard tại đây. Theo yêu cầu người dùng ngày 2026-10-08, Header/Footer cũng đã gỡ dashboard entry vì chưa mở quyền user access; chỉ khôi phục sau khi người dùng cho phép rõ ràng.
 
 Responsive dùng threshold theo từng surface; không coi tất cả là một breakpoint desktop chung.
 
@@ -135,7 +135,7 @@ Responsive dùng threshold theo từng surface; không coi tất cả là một 
 
 ## Form liên hệ và feedback
 
-Nguồn: [contact form](../src/components/landing/landing-contact-form.tsx), nhóm `landing.contact` trong dictionary và [reference frame `RNiDl`](../../signapse-planing/ui-design/pen/landing/validation/contact-requests/landing-desktop.png). Schema/limits theo producer OpenAPI và task, không do tài liệu design này định nghĩa.
+Nguồn: [contact form](../src/components/landing/landing-contact-form.tsx), nhóm `landing.contact` trong dictionary và [reference frame `RNiDl`](https://github.com/signapse-group/signapse-planing/blob/main/ui-design/pen/landing/validation/contact-requests/landing-desktop.png). Schema/limits theo producer OpenAPI và task, không do tài liệu design này định nghĩa.
 
 Rule placeholder được bổ sung theo yêu cầu người dùng ngày **2026-10-07**, áp dụng cho các field có thể chỉnh sửa trong landing.
 
@@ -163,7 +163,7 @@ Rule placeholder được bổ sung theo yêu cầu người dùng ngày **2026-
 
 ## Accessibility và assets
 
-Contract yêu cầu keyboard/touch, visible focus, semantics và fallback hữu ích. Các chỉ tiêu contrast/target sau tham khảo [FE accessibility rules](../../signapse-ui/docs/design/DESIGN.md#accessibility-and-responsive-behavior) để review, không phải tuyên bố landing đã được chứng nhận WCAG.
+Contract yêu cầu keyboard/touch, visible focus, semantics và fallback hữu ích. Các chỉ tiêu contrast/target sau tham khảo [FE accessibility rules](https://github.com/signapse-group/signapse-ui/blob/main/docs/design/DESIGN.md#accessibility-and-responsive-behavior) để review, không phải tuyên bố landing đã được chứng nhận WCAG.
 
 - Review theo WCAG 2.2 AA: normal text tối thiểu `4.5:1`; large text và non-text indicators/boundaries cần thiết tối thiểu `3:1`. Kiểm trên surface thực, bao gồm hover, selected, focus và error.
 - Interactive targets đạt ít nhất `24×24` CSS px theo điều kiện WCAG; ưu tiên `44×44` cho mobile/coarse pointer. Chữ/control compact của demo inert không làm giảm kích thước control tương tác thật.
