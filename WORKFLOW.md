@@ -19,6 +19,14 @@ tracker:
   review_state: In Review
   session_boundary_states: [Ready]
   terminal_states: [Done]
+runtime_control:
+  enabled: true
+  path: /opt/apps/symphony/runtime/state/runtime-control.sqlite3
+  id: landing
+  members: [be, fe, landing]
+  quota_check_timeout_ms: 15000
+  heartbeat_interval_ms: 1000
+  heartbeat_timeout_ms: 10000
 workspace:
   root: $SYMPHONY_WORKSPACE_ROOT
 hooks:
