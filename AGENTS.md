@@ -14,9 +14,9 @@ Design, Pen prototypes and design-system changes are maintained in planning unde
 
 ## Assigned execution
 
-For assigned Jira/Symphony work or an explicitly activated local-contract workflow, read [WORKFLOW.md](WORKFLOW.md) and the repository-owned [agent execution policy](.agents/skills/agent-execution-policy/SKILL.md). The worker receives only native dev Subtasks with `route-landing` and a PR into main; Ready surveys, Progress implements and a fresh In Review session independently reviews/merges/verifies delivery to signapse.cloud/completes Done under the delegated profile. Ordinary requests and configuration/skill maintenance do not activate tracker lifecycle actions.
+For assigned Symphony work, follow the phase selected by [WORKFLOW.md](WORKFLOW.md). Ordinary requests, configuration/skill maintenance and direct local contracts do not activate tracker lifecycle actions; complete their requested output and delivery boundary.
 
-Use local `implement`, `code-review`, `tdd`, `diagnosing-bugs`, `accessibility` and `resolving-merge-conflicts` for their matching scope; invoke `setup-workflow` explicitly for consumer configuration. API work follows the conditional [API consumer policy](.agents/skills/agent-execution-policy/references/api-handoff.md). [Consumer runbook](docs/symphony.md) covers offline validation and operator handoff; server provisioning/activation remain separate.
+Choose local technical skills when useful; they do not own Symphony lifecycle or grant actions. Keep the explicit invocation policy for `implement`. API work applies [API consumer standards](docs/api-consumer.md). [Consumer guide](docs/symphony.md) covers offline validation and operator handoff; server provisioning/activation remain separate.
 
 ## Architecture
 
@@ -33,16 +33,10 @@ Use local `implement`, `code-review`, `tdd`, `diagnosing-bugs`, `accessibility` 
 
 ## Dev handoff boundary
 
-For direct work, complete the requested output with applicable verification; tracker/review/PR/CI workflow steps activate only when assigned. For an activated workflow, apply the repository's [local handoff and live acceptance policy](.agents/skills/agent-execution-policy/references/execution-policy.md#local-handoff-and-live-acceptance). Apply its phase-specific handoff and the [delivery runbook](docs/delivery.md): Implement hands off before its deployment; the assigned Review session completes merge/delivery/Done only after the gates. Pending QA/parent acceptance alone does not stop an otherwise complete contribution. Missing behavior, required checks or necessary producer/input access remains a contribution gap; keep doing meaningful independent work.
+For direct work, complete the requested output with applicable [standards and verification](CONTRIBUTING.md). Assigned workflow handoff and completion follow [WORKFLOW.md](WORKFLOW.md); local checks do not prove hosted delivery or worker activation.
 
 ## Implementation and verification
 
-- Keep edits within the request and preserve unrelated changes. Use UTF-8 and LF for source/config/docs; preserve image/font bytes and license notices.
-- Use Node from .node-version and pnpm from packageManager. Update pnpm-lock.yaml with dependency changes.
-- Run pnpm check, pnpm lint, pnpm format:check and pnpm build for source/config changes. For navigation, layout or demo changes run the affected browser coverage; run pnpm test:models for model changes. Repeat checks only when new changes or unresolved concerns require them.
-- Browser tests run against built Astro output without a backend, login or application checkout. See [verification](docs/verification/README.md). Install Chromium once with pnpm exec playwright install chromium when needed.
-- Formatter excludes docs/ and public/. Format edited documentation deliberately; do not alter media bytes for formatting.
-- Keep real env values in ignored env files; document configuration in .env.example. Do not add credentials to code, docs or artifacts.
-- Report local test evidence accurately. CI configuration is not evidence of a hosted run. Publication, merge and deployment require their own authorized scope.
+Read and apply [CONTRIBUTING.md](CONTRIBUTING.md) for shared conventions, verification selection, decisions and evidence. [Verification](docs/verification/README.md) owns coverage and recorded results.
 
 Use Vietnamese for collaboration and handoff. Keep code identifiers and the existing language of documents.

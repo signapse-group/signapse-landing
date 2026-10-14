@@ -127,37 +127,45 @@ fixtures =
     rendered = PromptBuilder.build_prompt(candidate, attempt: attempt)
     assert String.contains?(rendered, issue.identifier)
     assert String.contains?(rendered, issue.id)
+    assert String.contains?(rendered, issue.title)
+    assert String.contains?(rendered, issue.url)
+    assert String.contains?(rendered, "route-landing")
     if native_ref && native_ref.parent, do: assert(String.contains?(rendered, "SIGN-90000"))
     if description && description != "", do: assert(String.contains?(rendered, description))
     if attempt, do: assert(String.contains?(rendered, "Follow-up attempt #2"))
 
     phase = %{"Ready" => "Survey", "Progress" => "Implement", "In Review" => "Review"}[state] || "Stop"
     assert String.contains?(rendered, "## Phase: #{phase}")
+
     for other <- ["Survey", "Implement", "Review", "Stop"] -- [phase] do
       refute String.contains?(rendered, "## Phase: #{other}")
     end
 
-    case state do
-      "Ready" ->
-        assert String.contains?(rendered, "No versioned source/test/config edits")
-        assert String.contains?(rendered, "do not use $implement")
-        refute String.contains?(rendered, "Grant: scoped edits")
-        refute String.contains?(rendered, "Grant: own feedback/handoff, merge")
-      "Progress" ->
-        assert String.contains?(rendered, "Grant: scoped edits")
-        assert String.contains?(rendered, "Review/merge/Done belong")
-        refute String.contains?(rendered, "Grant: own feedback/handoff, merge")
-      "In Review" ->
-        assert String.contains?(rendered, "do not spawn a replacement")
-        assert String.contains?(rendered, "Grant: own feedback/handoff, merge")
-        assert String.contains?(rendered, "In Review → Progress/Blocked/Done")
-      _ ->
-        refute String.contains?(rendered, "Grant:")
+    runbook =
+      %{
+        "Ready" => "docs/runbooks/survey.md",
+        "Progress" => "docs/runbooks/implement.md",
+        "In Review" => "docs/runbooks/review-and-delivery.md"
+      }[state]
+
+    selected = Regex.scan(~r/\]\((docs\/runbooks\/[^)]+)\)/, rendered, capture: :all_but_first)
+    assert selected == if(runbook, do: [[runbook]], else: [])
+
+    if runbook do
+      path = Path.join(Path.dirname(Path.expand(workflow_path)), runbook)
+      assert File.regular?(path)
+      refute String.contains?(File.read!(path), "Draft for content acceptance")
+    else
+      assert String.contains?(rendered, "Stop autonomous work")
     end
-    assert String.contains?(rendered, "changed route/ownership stops work")
+
+    for forbidden <- ["$implement", "$code-review", "$agent-execution-policy", "Grant:", "execution-policy.md", "docs/delivery.md", "gh run watch"] do
+      refute String.contains?(rendered, forbidden)
+    end
+
     phase
   end
 
 assert length(fixtures) == 108
 assert Process.whereis(SymphonyElixir.Supervisor) == nil
-IO.puts("Consumer workflow: config/routing/dependency admission and 108 strict phase/permission fixtures passed offline.")
+IO.puts("Consumer workflow: config/routing/dependency admission and 108 exclusive runbook/context fixtures passed offline.")

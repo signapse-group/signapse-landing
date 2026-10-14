@@ -5,7 +5,7 @@ description: Diagnosis loop for hard bugs and performance regressions. Use when 
 
 # Diagnosing Bugs
 
-A discipline for hard bugs. Follow [agent-execution-policy](../agent-execution-policy/SKILL.md) when diagnosis is part of an explicitly assigned workflow run; a standalone diagnosis does not activate the issue lifecycle. Apply phases proportionally to the actual uncertainty; a simple, established cause does not need an artificial multi-hypothesis exercise. A diagnosis-only request ends with findings. When a fix is assigned under the workflow, return implementation and handoff ownership to [implement](../implement/SKILL.md).
+A discipline for hard bugs. Apply [CONTRIBUTING.md](../../../CONTRIBUTING.md) and the assigned scope; diagnosis adds no tracker lifecycle or handoff gates. Apply phases proportionally to actual uncertainty; a simple established cause does not need an artificial multi-hypothesis exercise. A diagnosis-only request ends with findings; implementation and handoff follow the assignment when a fix is requested.
 
 Read the [landing architecture](../../../docs/architecture.md), affected model/browser tests and assigned planning references. Requirement/design/ADRs are planning-owned; use task links rather than assuming a local `CONTEXT.md` or design directory. A planning checkout is not a build/test dependency. Reproduce hydration, navigation, playback/fallback or metadata defects at their real public seam.
 

@@ -1,4 +1,4 @@
-# API consumer policy
+# API consumer standards
 
 Apply this reference to assigned landing API integration, design, review and delivery. Plain dashboard/Articles links and fixture demos do not require API lookup or application login. It does not
 activate Jira lifecycle actions for ordinary requests. Use the assigned Subtask,
@@ -46,7 +46,7 @@ Fixture/browser success does not prove producer delivery or live integration.
 
 When accepted requirements, OpenAPI and implementation conflict, record the exact
 operation/rule, expected basis, observation and owner. Investigate discoverable facts,
-then use the [decision gate](decision-gate.md) for unresolved material decisions.
+then use the [decision standards](../CONTRIBUTING.md#decisions-and-evidence) for unresolved material decisions.
 Pause only dependent work while continuing meaningful independent work. The producer
 owns its contract and updates it with implementation; landing does not rewrite producer
 rules or expected results to hide a gap. Missing fields/errors/permissions/revision
@@ -60,7 +60,7 @@ landing or parent acceptance.
 
 ## Contract lookup and feature acceptance
 
-Reading the producer's published contract and verifying a new/changed API dependency remain requirements of consumer integration. They are distinct from executing a feature against live services. Verify the consumer implementation locally at the actual HTTP boundary in its runtime; for SSR, browser interception alone does not verify server-side fetching. Require live feature/hosted acceptance only for the operation and phase assigned under the [local handoff policy](execution-policy.md#local-handoff-and-live-acceptance). Missing in-scope producer schemas, permissions or required publication evidence is still an integration gap.
+Reading the producer's published contract and verifying a new/changed API dependency remain requirements of consumer integration. They are distinct from executing a feature against live services. Verify the consumer implementation locally at the actual HTTP boundary in its runtime; for SSR, browser interception alone does not verify server-side fetching. Require live feature/hosted acceptance only for the assigned operation and phase selected by `WORKFLOW.md`. Missing in-scope producer schemas, permissions or required publication evidence is still an integration gap.
 
 ## Verification and evidence
 
@@ -73,7 +73,7 @@ authorization when required, and actual integration need their applicable review
 and deployed evidence. Never send a live public form request just to run baseline
 quality; external effects require the assigned integration scope and data/cleanup.
 
-Use the [delivery handoff format](execution-policy.md#pr-and-delivery-handoff) for
+Use the handoff required by the phase selected in `WORKFLOW.md` for
 assigned execution, or the requested PR/artifact/session for ordinary work. Identify
 landing output separately from producer contract revision/environment and the local/live phase.
 Keep the live fetch result/time, revision matching and detailed coverage in linked evidence;

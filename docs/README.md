@@ -6,12 +6,14 @@ Repository Astro này giữ tài liệu **thực thi landing**: kiến trúc sou
 | ------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
 | [README repository](../README.md)                                         | Cài đặt, chạy, cấu hình môi trường và kiểm tra.                            |
 | [Landing contract](https://github.com/signapse-group/signapse-planing/blob/main/ui-design/references/landing/LANDING.md) | Contract được duy trì tại planning: bố cục, nội dung, navigation, demo, responsive và accessibility. |
+| [Assigned execution](../WORKFLOW.md) | Điểm vào phase procedure của worker Symphony. |
+| [Shared standards](../CONTRIBUTING.md) | Coding conventions, verification selection, decisions và evidence. |
+| [API consumer standards](api-consumer.md) | Lookup producer contract, discrepancies và HTTP-boundary verification khi task phụ thuộc API. |
 | [Architecture](architecture.md)                                           | Ownership theo file, hydration, playback, renderer và assets.              |
 | [Design rules](design.md)                                                 | Rule triển khai visual, tokens, typography, responsive, interaction và accessibility; tham chiếu contract tại planning. |
 | [Verification](verification/README.md)                                    | Ma trận kiểm tra trên Astro, lệnh tái tạo và bằng chứng hiện tại.          |
-| [Kế hoạch Symphony](symphony-onboarding-plan.md)                          | Khảo sát FE/planning/runtime, skills cần adapt, workflow landing và preflight/canary trên server; chưa activation. |
-| [Review/delivery](delivery.md) | Technical PR/CI/merge, Cloudflare/live revision, bounded wait/recovery and Done gates. |
-| [Symphony consumer](symphony.md)                                        | Lifecycle/policy hiện hành, checker offline và bàn giao inputs cho setup server qua repo Symphony. |
+| [Historical consumer evidence](verification/symphony-consumer-2026-10-07.md) | Kết quả consumer local ngày 2026-10-07; không phải procedure hiện hành. |
+| [Symphony consumer](symphony.md) | Host inputs, browser isolation, checker offline và operator handoff; activation riêng. |
 | [Cloudflare deployment research](https://github.com/signapse-group/signapse-planing/blob/main/docs/research/landing-cloudflare-deployment.md) | Nghiên cứu tại planning; trạng thái release theo runbook/evidence của landing. |
 | [Deploy signapse.cloud](deployment/signapse-cloud.md)                     | Các bước cấu hình GitHub, deploy Workers, nối domain và bật indexing.    |
 | [ADR-0005](https://github.com/signapse-group/signapse-planing/blob/main/docs/adr/landing/0005-static-landing-and-explicit-hosting-configuration.md) | Quyết định tại planning về static output, canonical/indexability và hosting. |

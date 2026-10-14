@@ -8,7 +8,7 @@ Astro prerender landing cho `/`, `/vi`, `/en` và Privacy Policy tại `/vi/priv
 
 ## Assigned execution và Symphony
 
-Jira `SIGN` giữ contract/lifecycle; [WORKFLOW.md](WORKFLOW.md) nhận native Subtask có `route-landing`. Skills local trong [.agents/skills](.agents/skills/) được adapt từ FE và do landing sở hữu. Profile dev có PR dùng ba session: Ready khảo sát, Progress implement, In Review review độc lập/merge/delivery; reviewer chuyển Done sau [delivery gates](docs/delivery.md). Coordinator giữ initial dispatch, Blocked resume và parent acceptance; merge không tự hoàn tất Jira. Ordinary requests và cấu hình consumer không tự dispatch issue.
+Jira `SIGN` giữ contract/lifecycle; [WORKFLOW.md](WORKFLOW.md) là điểm vào thực thi assigned Symphony work. [CONTRIBUTING.md](CONTRIBUTING.md) sở hữu standards và cách chọn verification; skills local hỗ trợ kỹ thuật theo nhu cầu. Ordinary requests và cấu hình consumer giữ boundary đã giao.
 
 [Consumer runbook](docs/symphony.md) mô tả offline checker, host inputs, browser isolation và handoff. Phần setup/activation trên server được người dùng thực hiện riêng qua repo Symphony sau cập nhật consumer; repository config không chứng minh runtime đã chạy.
 

@@ -1,14 +1,12 @@
 # Symphony consumer cho Signapse Landing
 
-[WORKFLOW.md](../WORKFLOW.md) và 8 skills trong [.agents/skills](../.agents/skills/) là consumer do landing sở hữu, được adapt từ FE revision `34c24e695bb0fe1cf634ac7b5c737565bfd67a94`. Symphony chỉ cung cấp runtime; không cài package skills chung, không cần checkout FE/planning/app để build/test landing.
+[WORKFLOW.md](../WORKFLOW.md) là điểm vào assigned execution do landing sở hữu. Phase procedures và standards được clone cùng repository; skills hỗ trợ kỹ thuật, không cần Symphony skill-package hay checkout FE/planning/app để build/test landing.
 
-Người dùng chấp nhận triển khai consumer ngày **2026-10-07** theo [plan](symphony-onboarding-plan.md), rồi yêu cầu cập nhật profile/browser sau khảo sát revision `ec4a2b8`. Cài đặt, cấu hình và activation trên server được thực hiện riêng qua repo Symphony. Trạng thái hiện tại là consumer đã được cập nhật; chưa có evidence activation/canary để xác nhận landing worker đã triển khai.
+Người dùng chấp nhận triển khai consumer ngày **2026-10-07** theo [historical record](verification/symphony-consumer-2026-10-07.md), rồi yêu cầu cập nhật profile/browser sau khảo sát revision `ec4a2b8`. Cài đặt, cấu hình và activation trên server được thực hiện riêng qua repo Symphony. Trạng thái hiện tại là consumer đã được cập nhật; chưa có evidence activation/canary để xác nhận landing worker đã triển khai.
 
-## Contract và lifecycle
+## Execution entrypoint
 
-Apply the repository-owned [phase procedure](../.agents/skills/agent-execution-policy/references/execution-policy.md#execution-and-review) and [planning profile](https://github.com/signapse-group/signapse-planing/blob/main/workflow/project-execution-workflow.md#profile-fe-và-landing): native SIGN dev Subtask, valid parent, single route-landing, PR into main; Ready Survey → Progress Implement → In Review independent Review/delivery → Done. No-PR/direct requests retain their assigned boundary. [Delivery runbook](delivery.md) owns technical PR/CI/merge/Cloudflare/revision/wait/recovery gates; coordinator retains initial dispatch, Blocked resume, parent/QA lifecycle and acceptance.
-
-WORKFLOW dispatch/active include all three phases, review state In Review and session_boundary_states [Ready]. Moving phase ends the old session for a full new prompt in the same workspace, preserving output and claim until exit. Native dependency admission is checked on dispatch/retry; source support does not prove installed support. Jira comments/feedback/readback follow the phase procedure; public publishing does not authorize infra/secrets/DNS/indexing or live feature effects.
+Assigned worker thực hiện phase do [WORKFLOW.md](../WORKFLOW.md) chọn; direct/no-PR work giữ boundary riêng. [CONTRIBUTING.md](../CONTRIBUTING.md) sở hữu standards và verification selection. Guide này sở hữu host inputs, browser isolation, offline validation và operator handoff, không sở hữu phase procedure.
 
 ## Repo profile và deployment profile
 
@@ -65,18 +63,20 @@ Baseline operator chạy trên fresh workspace: frozen install → `pnpm check` 
 MIX_ENV=test mix run --no-start /path/to/signapse-landing/scripts/check-symphony-workflow.exs /path/to/signapse-landing/WORKFLOW.md
 ```
 
-Checker xác minh supervisor chưa chạy; không gọi hooks, polling, clone hoặc Jira writes. Nó kiểm concurrency/timeout/Codex/sandbox đã chốt, executable clone line đúng repo và destination `.` cùng helper cho clone/push, native parent/type, zero/wrong/two routes, wrong project, Ready/Progress/In Review dependency categories và 108 fixtures Liquid cho ba phase/unsupported states, nullable/empty context/description, retry và permission guards. Khi đổi clone line, phải kiểm lại mutations sai repo, clone vào subdir, URL chỉ nằm trong comment và mất helper persistence. Scheduler restart/cleanup coverage thuộc tests Symphony hiện có; consumer không dựng runtime kiểm giả.
+Checker xác minh supervisor chưa chạy; không gọi hooks, polling, clone hoặc Jira writes. Nó kiểm concurrency/timeout/Codex/sandbox đã chốt, executable clone line đúng repo và destination `.` cùng helper cho clone/push, native parent/type, zero/wrong/two routes, wrong project, Ready/Progress/In Review dependency categories và 108 fixtures Liquid cho exclusive phase-runbook selection/unsupported states, nullable/empty context/description và retry. Khi đổi clone line, phải kiểm lại mutations sai repo, clone vào subdir, URL chỉ nằm trong comment và mất helper persistence. Scheduler restart/cleanup coverage thuộc tests Symphony hiện có; consumer không dựng runtime kiểm giả.
 
-Sau sửa root workflow hoặc checker, chạy offline check cùng check/lint/format/build theo repo policy. Skills cần validate frontmatter/metadata, local links, UTF-8/LF và invocation policies; formatter repo loại `.agents/`/docs nên kiểm nội dung riêng. Thay đổi navigation/layout/demo/model vẫn chạy coverage theo [verification](verification/README.md).
+Chọn checks theo [verification selection](../CONTRIBUTING.md#verification-selection): prompt-only thay đổi cần real-runtime offline render và YAML comparison; checker cần formatter/adversarial fixtures; skills cần frontmatter/metadata, links, UTF-8/LF và invocation policies. Actual source/runtime behavior vẫn cần checks tại seam bị ảnh hưởng.
 
 ## Handoff sang setup server
 
-Giao revision consumer chứa workflow, toàn bộ skills, checker và docs. Operator qua repo Symphony kiểm installed profile và permissions, toolchain/browser isolation, workspace/process inventory; drain chỉ landing instance cũ nếu có, không dừng FE/BE để onboard landing.
+Giao revision consumer chứa workflow, standards, phase procedures, technical skills, checker và docs. Operator qua repo Symphony kiểm installed profile và permissions, toolchain/browser isolation, workspace/process inventory; drain chỉ landing instance cũ nếu có, không dừng FE/BE để onboard landing.
 
 Hoàn tất consumer/CI/delivery source và deploy compatible Symphony trước. **Canary do người dùng giao sau**, không tự queue issue để chứng minh config. Operator drain/reconcile route cần cutover, giữ branch/PR/output/status và refresh instructions trong workspace/session mới; không reset Progress/In Review về Ready. Scope/checker hoàn tất có thể bàn giao trước canary, nhưng chỉ claim adopted worker sau effective-profile và authorized canary evidence.
 
-Canary đi hết Ready → Progress → In Review independent review → merge → Cloudflare/live revision/basic loading → saved delivery → Done. Người dùng nghiệm thu trước mở queue rộng; QA sản phẩm tách riêng, không tạo QA Subtask riêng cho cơ chế. Restart/feedback/Blocked resume/quiet wait/recovery dùng tests/diagnostics khi thích hợp, không cố gây lỗi public. Website release và Symphony activation là hai evidence khác nhau; configuration reload không thay context/session/checkout cũ.
+Canary thực hiện profile theo [WORKFLOW.md](../WORKFLOW.md); người dùng nghiệm thu trước mở queue rộng. Restart/feedback/Blocked resume/quiet wait/recovery dùng tests/diagnostics khi thích hợp, không cố gây lỗi public. Website release và Symphony activation là hai evidence khác nhau; reload không thay context/session/checkout cũ.
 
 Nếu lỗi, dừng landing instance, giữ workspace/branch/PR/Jira history và reconcile trước chạy lại. Config reload lỗi có thể giữ last-known-good profile; phải đọc logs/effective state, không coi file mới là config đang dùng. Không rollback bằng xóa output hoặc reset hàng loạt issue về Ready.
 
-Kết quả consumer ban đầu được ghi ở [implementation record](symphony-onboarding-plan.md#6-kết-quả-consumer-implementation); record đó mô tả cấu hình trước lượt cập nhật profile/browser này. Kiểm lại checker và affected checks trên revision giao. Server/canary và hosted delivery có evidence riêng khi thực hiện.
+Kết quả consumer ban đầu được ghi ở [historical implementation record](verification/symphony-consumer-2026-10-07.md); record đó mô tả cấu hình lịch sử, không phải procedure hiện hành. Kiểm lại checker và affected checks trên revision giao. Server/canary và hosted delivery có evidence riêng khi thực hiện.
+
+[Local organization verification ngày 2026-10-14](verification/symphony-runbooks-2026-10-14.md) ghi real-runtime fixtures, config preservation, skill/link checks và giới hạn adoption.

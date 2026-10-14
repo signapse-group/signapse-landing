@@ -2,7 +2,7 @@
 
 Repo này giữ implementation và bằng chứng chạy landing; baseline đã được người dùng xác nhận ngày **2026-10-04**. Kiểm chứng dựa trên task/AC và [contract tại planning](https://github.com/signapse-group/signapse-planing/blob/main/ui-design/references/landing/LANDING.md), code và tests trong repo. [README](../../README.md) mô tả cách chạy; [summary.json](summary.json) ghi kết quả local gần nhất.
 
-Boundary dev theo [local handoff policy](../../.agents/skills/agent-execution-policy/references/execution-policy.md#local-handoff-and-live-acceptance): local checks phù hợp cùng review/CI áp dụng kiểm chứng contribution. QA run, hosted delivery/indexing và owner acceptance có gate riêng; fixture/runtime-local evidence không chứng minh live acceptance. Giữ các required SSR/HTTP, metadata, visual và accessibility checks trong scope.
+Chọn required checks theo [CONTRIBUTING](../../CONTRIBUTING.md#verification-selection). Với assigned Symphony work, áp dụng phase được [WORKFLOW](../../WORKFLOW.md) chọn. Local fixture/runtime evidence chỉ chứng minh boundary đã kiểm, không thay hosted delivery, producer publication hay QA/owner acceptance.
 
 ## Checks và bằng chứng
 
