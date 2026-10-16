@@ -19,7 +19,7 @@ jobs:
     timeout-minutes: 30
     env:
       SIGNAPSE_BUILD_REVISION: ${{ github.sha }}
-      CLOUDFLARE_ENV: ${{ (github.ref == 'refs/heads/dev' || github.base_ref == 'dev') && 'dev' || '' }}
+      LANDING_ENVIRONMENT: ${{ (github.ref == 'refs/heads/dev' || github.base_ref == 'dev') && 'dev' || '' }}
       DEPLOY_TO_CLOUDFLARE: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev') && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') }}
       PUBLIC_APP_ORIGIN: ${{ github.ref == 'refs/heads/dev' && vars.DEV_PUBLIC_APP_ORIGIN || github.ref == 'refs/heads/main' && vars.PUBLIC_APP_ORIGIN || 'http://localhost:3000' }}
       PUBLIC_CONTACT_API_ORIGIN: ${{ github.ref == 'refs/heads/dev' && vars.DEV_PUBLIC_CONTACT_API_ORIGIN || github.ref == 'refs/heads/main' && vars.PUBLIC_CONTACT_API_ORIGIN || 'https://dev-api.signapse.cloud' }}
@@ -55,7 +55,7 @@ jobs:
             const blogApi = new URL(process.env.PUBLIC_BLOG_API_ORIGIN);
             if (app.protocol !== "https:" || app.origin === landing.origin || app.hostname === "www.signapse.cloud")
               throw new Error("PUBLIC_APP_ORIGIN must be a separate HTTPS application origin.");
-            const expected = process.env.CLOUDFLARE_ENV === "dev" ? "https://dev.signapse.cloud" : "https://signapse.cloud";
+            const expected = process.env.LANDING_ENVIRONMENT === "dev" ? "https://dev.signapse.cloud" : "https://signapse.cloud";
             if (landing.origin !== expected)
               throw new Error(`Landing origin must be ${expected} for this branch.`);
             if (process.env.CONTACT_API_ORIGIN_CONFIGURED !== "true")
@@ -79,6 +79,8 @@ jobs:
 
       - name: Build
         run: pnpm build
+        env:
+          CLOUDFLARE_ENV: ${{ env.LANDING_ENVIRONMENT }}
 
       - name: Verify built deployment target
         run: node scripts/verify-deployment-target.mjs

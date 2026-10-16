@@ -30,6 +30,6 @@ if (import.meta.url === pathToFileURL(process.argv[1]).href) {
   const config = JSON.parse(
     await readFile('dist/server/wrangler.json', 'utf8'),
   );
-  verifyDeploymentTarget(config, process.env.CLOUDFLARE_ENV || '');
+  verifyDeploymentTarget(config, process.env.LANDING_ENVIRONMENT || '');
   console.log(`Verified deployment target: ${config.name}`);
 }
