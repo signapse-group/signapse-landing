@@ -30,7 +30,7 @@ Dashboard VI đã mở được trong phiên Chrome đăng nhập hiện tại. 
 
 ## 1. Chốt origin ứng dụng và đưa cấu hình lên main
 
-Cập nhật ngày 2026-10-16: dev FE dùng `https://dev-dashboard.signapse.cloud`; `https://dev.signapse.cloud` tiếp tục hoạt động song song. BE giữ `https://dev-api.signapse.cloud`. Các snapshot release bên trên giữ nguyên URL lịch sử.
+Cập nhật ngày 2026-10-16: dev FE dùng `https://dev-dashboard.signapse.cloud`; `https://dev.signapse.cloud` được thu hồi khỏi dashboard để chuẩn bị triển khai dev của landing; bước thu hồi chưa triển khai landing lên hostname này. BE giữ `https://dev-api.signapse.cloud`. Các snapshot release bên trên giữ nguyên URL lịch sử.
 
 Landing sẽ sở hữu mọi path trên `signapse.cloud`. Dashboard, authentication và Articles phải có origin ứng dụng thực riêng. Nếu app hiện dùng apex, chuẩn bị origin đó và kế hoạch giữ URL cũ trước bước nối domain. Repo landing không thay đổi ứng dụng sản phẩm.
 
