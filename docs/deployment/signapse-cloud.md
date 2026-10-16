@@ -30,9 +30,11 @@ Dashboard VI đã mở được trong phiên Chrome đăng nhập hiện tại. 
 
 ## 1. Chốt origin ứng dụng và đưa cấu hình lên main
 
+Cập nhật ngày 2026-10-16: dev FE dùng `https://dev-dashboard.signapse.cloud`; `https://dev.signapse.cloud` tiếp tục hoạt động song song. BE giữ `https://dev-api.signapse.cloud`. Các snapshot release bên trên giữ nguyên URL lịch sử.
+
 Landing sẽ sở hữu mọi path trên `signapse.cloud`. Dashboard, authentication và Articles phải có origin ứng dụng thực riêng. Nếu app hiện dùng apex, chuẩn bị origin đó và kế hoạch giữ URL cũ trước bước nối domain. Repo landing không thay đổi ứng dụng sản phẩm.
 
-Origin app hiện tại đã được xác nhận là **https://dev.signapse.cloud**; origin dự kiến khi go-live là **https://dashboard.signapse.cloud**. Dùng dev cho lần thử; chuẩn bị app/DNS/certificate ở dashboard trước khi đổi production origin. Tra DNS công khai ngày 2026-10-05 hiện chưa có record cho `dashboard.signapse.cloud`.
+Origin app hiện tại đã được xác nhận là **https://dev-dashboard.signapse.cloud**; origin dự kiến khi go-live là **https://dashboard.signapse.cloud**. Dùng dev cho lần thử; chuẩn bị app/DNS/certificate ở dashboard trước khi đổi production origin. Tra DNS công khai ngày 2026-10-05 hiện chưa có record cho `dashboard.signapse.cloud`.
 
 Không đặt `PUBLIC_APP_ORIGIN=https://signapse.cloud` hoặc hostname `www.signapse.cloud` dẫn về landing.
 
@@ -55,7 +57,7 @@ Trong repository GitHub → **Settings → Secrets and variables → Actions**, 
 | --- | --- | --- |
 | Secrets | `CLOUDFLARE_API_TOKEN` | API token vừa tạo. |
 | Secrets | `CLOUDFLARE_ACCOUNT_ID` | Account ID chứa Worker và zone. |
-| Variables | `PUBLIC_APP_ORIGIN` | Lần thử: `https://dev.signapse.cloud`; go-live: `https://dashboard.signapse.cloud` sau khi app đã hoạt động. |
+| Variables | `PUBLIC_APP_ORIGIN` | Lần thử: `https://dev-dashboard.signapse.cloud`; go-live: `https://dashboard.signapse.cloud` sau khi app đã hoạt động. |
 | Variables | `PUBLIC_CONTACT_API_ORIGIN` | Origin public API contact cho môi trường landing; hiện dev dùng `https://dev-api.signapse.cloud`. API phải cho phép CORS từ `https://signapse.cloud`. |
 | Variables | `PUBLIC_BLOG_API_ORIGIN` | HTTPS origin của API có `GET /blogs/public` và `GET /blogs/public/{slug}` cho môi trường landing. Không thêm path/query/credential; public reading không cần token. |
 | Variables | `SIGNAPSE_PUBLIC_ORIGIN` | `https://signapse.cloud` |
