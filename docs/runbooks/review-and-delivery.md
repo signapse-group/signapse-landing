@@ -4,11 +4,13 @@ This runbook owns Review and delivery procedure and is loaded only when `WORKFLO
 
 ## Profile and authority
 
-Applies to native Jira `SIGN` dev Subtasks with parent Story/Task/Bug, exactly one recognized routing label `route-landing`, output owned by `signapse-group/signapse-landing`, PR into `main` and delivery to public `https://signapse.cloud`. There is no added staging environment. Stop/report an out-of-profile assignment; direct/no-PR operations retain their assigned output and boundary.
+Applies to native Jira `SIGN` dev Subtasks with parent Story/Task/Bug, exactly one recognized routing label `route-landing`, output owned by `signapse-group/signapse-landing`, PR into `dev` and delivery to dev `https://dev.signapse.cloud`. Public release is a separate coordinator-approved PR from `dev` into `main`. Stop/report an out-of-profile assignment; direct/no-PR operations retain their assigned output and boundary.
 
 The fresh In Review session directly performs independent assessment, owns feedback/handoff, may merge this contribution's PR and perform bounded delivery recovery, and may transition its Subtask to `Progress`, `Blocked` or `Done` under this runbook. Do not delegate a replacement reviewer, edit implementation or resolve conflicts. Technical skills are optional aids and grant no permissions/gates.
 
 Coordinator retains priority/scope, new tickets, initial dispatch, Blocked resume, Bug/QA/parent lifecycle and acceptance. Requirement/design/API decisions remain owner-controlled. No rollback of code/data, infra/secrets/domain/DNS/indexing/analytics changes, dashboard entry restoration or other-ticket fixes are authorized. Live feature effects need explicit assigned operation/inputs; public publishing alone does not authorize them.
+
+Public promotion `dev` → `main` requires a separately approved coordinator release; this phase cannot merge or dispatch it.
 
 ## Receive and resume
 
@@ -26,7 +28,7 @@ Directly inspect final code, affected callers/tests/config, committed and releva
 
 Return separate verdicts for **Requirement adherence** and **Correctness & Standards**. Map AC/expected behavior to final behavior and coverage; inspect omissions, scope creep, regression, security/correctness and applicable landing standards. Distinguish required blocking findings/check gaps from optional advice. Missing significant mandatory evidence is not Pass. Keep local design/SSR/accessibility/metadata/fixture checks applicable to the candidate. Use valid existing evidence or run missing safe checks under [verification selection](../../CONTRIBUTING.md#verification-selection), including shared-host browser isolation.
 
-Require successful current-head PR CI under [verification standards](../../CONTRIBUTING.md#verification-selection). Main advancing alone does not force branch update, all checks rerun or new review; head/contract changes or specific base impact require reassessment. No merge lock or invariant base-SHA gate is introduced. Post-merge checked build must pass before publish even if main was temporarily red.
+Require successful current-head PR CI under [verification standards](../../CONTRIBUTING.md#verification-selection). Dev advancing alone does not force branch update, all checks rerun or new review; head/contract changes or specific base impact require reassessment. No merge lock or invariant base-SHA gate is introduced. Post-merge checked build must pass before publish even if dev was temporarily red.
 
 For blocking findings, conflicts or in-scope required check gaps, save/read back actionable PR feedback tied to assessed candidate: location/check → problem/impact → required outcome. Do not duplicate findings into Jira unless access/linkage/candidate is uncertain or an owner action needs coordination. A concise fallback when required:
 
@@ -39,26 +41,26 @@ Resolve live native transition, return/read back `Progress` and end Review. Impl
 
 ## Merge and reconcile
 
-Reread live Jira/PR/evidence and verify exact repo/main/contribution/reviewed head, non-draft open PR, mergeability, independent review and PR CI. Unknown mergeability remains pending: at most three reads with 5/10-second backoff, then investigate. With verified inputs:
+Reread live Jira/PR/evidence and verify exact repo/dev/contribution/reviewed head, non-draft open PR, mergeability, independent review and PR CI. Unknown mergeability remains pending: at most three reads with 5/10-second backoff, then investigate. With verified inputs:
 
 ```sh
 gh pr merge "$PR" --repo signapse-group/signapse-landing --merge --match-head-commit "$HEAD_SHA"
 gh pr view "$PR" --repo signapse-group/signapse-landing --json state,url,headRefOid,mergeCommit
 ```
 
-Do not use `--admin`/`--auto` to bypass gates. Read back ambiguous commands before retry; only MERGED and actual merge SHA confirm success. Post-merge in-scope defects return Progress for a follow-up branch/PR from current main under the unfinished Subtask; keep prior output/evidence.
+Do not use `--admin`/`--auto` to bypass gates. Read back ambiguous commands before retry; only MERGED and actual merge SHA confirm success. Post-merge in-scope defects return Progress for a follow-up branch/PR from current dev under the unfinished Subtask; keep prior output/evidence.
 
 ## Pipeline and release inputs
 
-[Verify](../../.github/workflows/ci.yml) checks PRs/branches. Main push/merge or main-only manual dispatch checks/types/lint/format/build/model/browser, then publishes the same built Worker/assets. Main releases are serialized without cancelling the running release. Read actual run/steps: success with skipped deploy is not delivery.
+[Verify](../../.github/workflows/ci.yml) checks PRs/branches. Dev push/merge or dev-only manual dispatch checks/types/lint/format/build/model/browser, then publishes the same built Worker/assets. Dev releases are serialized without cancelling the running release. Read actual run/steps: success with skipped deploy is not delivery.
 
-Immediately before publish, CI reads main and skips Cloudflare deploy when the run is obsolete; unavailable/invalid main read fails the gate. Serialization plus this guard prevents obsolete queued reruns overwriting a newer release. Reconcile a checked descendant release containing the contribution; preserve phase/output without adding a rebase/review/base-SHA gate. Newer-main failures can delay delivery until the owner resolves them.
+Immediately before publish, CI reads dev and skips Cloudflare deploy when the run is obsolete; unavailable/invalid dev read fails the gate. Serialization plus this guard prevents obsolete queued reruns overwriting a newer release. Reconcile a checked descendant release containing the contribution; preserve phase/output without adding a rebase/review/base-SHA gate. Newer-dev failures can delay delivery until the owner resolves them.
 
 Release owner prepares existing secrets/origin variables under [hosting setup](../deployment/signapse-cloud.md#2-cấu-hình-cloudflare-credentials-và-github-variables). Worker needs GitHub PR/check/merge/Actions-retry and Jira own-body/comment/transition access. Cloudflare secrets stay in Actions, not baseline browser env. Required missing publication/access is a gap, not a waived gate.
 
 ## Wait in the same turn
 
-Select the main `ci.yml` run containing this merge. Before watching, save run ID/build/start/deadline (30 minutes), run-attempt/retry counter in the existing durable owned record. Restart/reconnect/rerun retain the original budget. Use short initial exec yield and empty `write_stdin` every 30–60 seconds below the installed watchdog, including quiet output. Continue watching in the same turn while budget remains:
+Select the dev `ci.yml` run containing this merge. Before watching, save run ID/build/start/deadline (30 minutes), run-attempt/retry counter in the existing durable owned record. Restart/reconnect/rerun retain the original budget. Use short initial exec yield and empty `write_stdin` every 30–60 seconds below the installed watchdog, including quiet output. Continue watching in the same turn while budget remains:
 
 ```sh
 set -eu
@@ -78,7 +80,7 @@ Require completed/success, a non-skipped successful Cloudflare deploy step and i
 
 ## Live revision and basic loading
 
-CI embeds checked `github.sha` as `SIGNAPSE_BUILD_REVISION`; prerendered GET `https://signapse.cloud/build-revision.json` reports it without backend/auth and `_headers` applies no-store. Preview without identity returns null and is not delivery evidence. This build-bound identity is independent of runtime env overrides and must match the successfully published run SHA.
+CI embeds checked `github.sha` as `SIGNAPSE_BUILD_REVISION`; prerendered GET `https://dev.signapse.cloud/build-revision.json` reports it without backend/auth and `_headers` applies no-store. Preview without identity returns null and is not delivery evidence. This build-bound identity is independent of runtime env overrides and must match the successfully published run SHA.
 
 Fetch domain identity fresh; verify `gh api repos/signapse-group/signapse-landing/compare/<merge>...<build>` is identical/ahead. Retain source/merge/run/build/Worker-version/domain/fetch-time relation in evidence. In a fresh browser context check `/vi` and `/en` SSR HTML and referenced same-origin assets, JS boot and basic navigation. HTTP 200, merge, CI success or health alone do not prove served identity/basic loading or complete delivery.
 
@@ -88,9 +90,9 @@ When successful build is not yet live, retain a propagation deadline 30 minutes 
 
 ## Recovery and Blocked
 
-Transient read failures retry at most three times with 5/10-second backoff. Read back remote state after ambiguous mutations before retry. Before rerun reconcile newer-main runs and served identity: Actions reruns retain SHA/ref. Reuse suitable checked/running descendants containing the contribution, never obsolete ancestors over a newer served build. Skipped obsolete publish requires descendant deployment evidence.
+Transient read failures retry at most three times with 5/10-second backoff. Read back remote state after ambiguous mutations before retry. Before rerun reconcile newer-dev runs and served identity: Actions reruns retain SHA/ref. Reuse suitable checked/running descendants containing the contribution, never obsolete ancestors over a newer served build. Skipped obsolete publish requires descendant deployment evidence.
 
-Transient pipeline infrastructure failure permits at most two reruns for that failure/run. Save counter/attempt/reason before `gh run rerun`, read back and retain original wait budget across restart. Do not dispatch duplicate runs. Code/build/CI defects within assigned scope return Progress with saved/read-back feedback. External input/access/decision/dependency or exhausted recovery goes Blocked only when no independent work remains; pending delivery within valid budget is not a blocker. Main/site can remain faulty while fixing/waiting; do not waive checks or claim Done.
+Transient pipeline infrastructure failure permits at most two reruns for that failure/run. Save counter/attempt/reason before `gh run rerun`, read back and retain original wait budget across restart. Do not dispatch duplicate runs. Code/build/CI defects within assigned scope return Progress with saved/read-back feedback. External input/access/decision/dependency or exhausted recovery goes Blocked only when no independent work remains; pending delivery within valid budget is not a blocker. Dev/site can remain faulty while fixing/waiting; do not waive checks or claim Done.
 
 Before Blocked save/read back a separate owned record, resolve native destination and read back status:
 
