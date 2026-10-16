@@ -34,7 +34,7 @@ hooks:
     set -eu
     : "${SYMPHONY_WORKSPACE_ROOT:?Set a separate landing workspace root}"
     : "${SYMPHONY_GIT_CREDENTIAL_HELPER:?Set the host Git credential helper}"
-    git -c credential.helper="$SYMPHONY_GIT_CREDENTIAL_HELPER" clone --depth 1 https://github.com/signapse-group/signapse-landing.git .
+    git -c credential.helper="$SYMPHONY_GIT_CREDENTIAL_HELPER" clone --depth 1 --branch dev https://github.com/signapse-group/signapse-landing.git .
     git config --local credential.helper "$SYMPHONY_GIT_CREDENTIAL_HELPER"
     test "$(node -p 'process.versions.node')" = "$(cat .node-version)"
     test "$(pnpm --version)" = "$(node -p 'JSON.parse(require("node:fs").readFileSync("package.json", "utf8")).packageManager.split("@")[1]')"

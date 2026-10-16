@@ -8,9 +8,11 @@ Người dùng chấp nhận triển khai consumer ngày **2026-10-07** theo [hi
 
 Assigned worker thực hiện phase do [WORKFLOW.md](../WORKFLOW.md) chọn; direct/no-PR work giữ boundary riêng. [CONTRIBUTING.md](../CONTRIBUTING.md) sở hữu standards và verification selection. Guide này sở hữu host inputs, browser isolation, offline validation và operator handoff, không sở hữu phase procedure.
 
+Checkout điều khiển trên server giữ nhánh `main` để tương thích nút Update workflow. Issue workspace mới clone từ `dev`; feature PR và delivery nhắm `dev` / `https://dev.signapse.cloud`. Public release dùng PR riêng `dev` → `main`, do coordinator duyệt. Khi cutover, giữ output workspace cũ và đối soát base/PR trước resume; không reset hàng loạt.
+
 ## Repo profile và deployment profile
 
-Consumer giữ tracker map, `$SYMPHONY_WORKSPACE_ROOT`, clone cố định landing vào `.` và frozen install. Hook yêu cầu `$SYMPHONY_GIT_CREDENTIAL_HELPER` do host cấp, dùng helper khi clone và lưu cấu hình helper trong Git local để các lượt fetch/push tiếp theo dùng cùng helper. Hook kiểm Node `.node-version` và pnpm `packageManager` trước install: **24.21.0 / 10.34.5**. Host cấp helper executable và secrets; workflow chỉ giữ tên env, không chứa token hoặc copy credentials vào app `.env`.
+Consumer giữ tracker map, `$SYMPHONY_WORKSPACE_ROOT`, clone cố định nhánh `dev` của landing vào `.` và frozen install. Hook yêu cầu `$SYMPHONY_GIT_CREDENTIAL_HELPER` do host cấp, dùng helper khi clone và lưu cấu hình helper trong Git local để các lượt fetch/push tiếp theo dùng cùng helper. Hook kiểm Node `.node-version` và pnpm `packageManager` trước install: **24.21.0 / 10.34.5**. Host cấp helper executable và secrets; workflow chỉ giữ tên env, không chứa token hoặc copy credentials vào app `.env`.
 
 Profile dưới đây được chốt sau khảo sát host ngày **2026-10-07**. Codex/model/approval/turn policy và hook timeout kế thừa cấu hình BE/FE đã khảo sát; concurrency landing khởi đầu ở **1**. Đây là cấu hình đã ghi trong repo, chưa phải evidence effective profile của landing service.
 
@@ -63,7 +65,7 @@ Baseline operator chạy trên fresh workspace: frozen install → `pnpm check` 
 MIX_ENV=test mix run --no-start /path/to/signapse-landing/scripts/check-symphony-workflow.exs /path/to/signapse-landing/WORKFLOW.md
 ```
 
-Checker xác minh supervisor chưa chạy; không gọi hooks, polling, clone hoặc Jira writes. Nó kiểm concurrency/timeout/Codex/sandbox đã chốt, executable clone line đúng repo và destination `.` cùng helper cho clone/push, native parent/type, zero/wrong/two routes, wrong project, Ready/Progress/In Review dependency categories và 108 fixtures Liquid cho exclusive phase-runbook selection/unsupported states, nullable/empty context/description và retry. Khi đổi clone line, phải kiểm lại mutations sai repo, clone vào subdir, URL chỉ nằm trong comment và mất helper persistence. Scheduler restart/cleanup coverage thuộc tests Symphony hiện có; consumer không dựng runtime kiểm giả.
+Checker xác minh supervisor chưa chạy; không gọi hooks, polling, clone hoặc Jira writes. Nó kiểm concurrency/timeout/Codex/sandbox đã chốt, executable clone line đúng repo, nhánh `dev` và destination `.` cùng helper cho clone/push, native parent/type, zero/wrong/two routes, wrong project, Ready/Progress/In Review dependency categories và 108 fixtures Liquid cho exclusive phase-runbook selection/unsupported states, nullable/empty context/description và retry. Khi đổi clone line, phải kiểm lại mutations sai repo, clone vào subdir, URL chỉ nằm trong comment, nhánh sai và mất helper persistence. Scheduler restart/cleanup coverage thuộc tests Symphony hiện có; consumer không dựng runtime kiểm giả.
 
 Chọn checks theo [verification selection](../CONTRIBUTING.md#verification-selection): prompt-only thay đổi cần real-runtime offline render và YAML comparison; checker cần formatter/adversarial fixtures; skills cần frontmatter/metadata, links, UTF-8/LF và invocation policies. Actual source/runtime behavior vẫn cần checks tại seam bị ảnh hưởng.
 

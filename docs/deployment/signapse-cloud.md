@@ -1,5 +1,58 @@
 # Deploy landing lên signapse.cloud
 
+Các bước public 1–7 bên dưới tiếp tục áp dụng cho `main` / `signapse.cloud`. Dev áp dụng mục riêng sau đây; không dùng Variables/domain public cho dev.
+
+## Dev và public từ 2026-10-16
+
+| Nhánh | Worker | Custom Domain | Build environment |
+| --- | --- | --- | --- |
+| `dev` | `signapse-landing-dev` | `dev.signapse.cloud` | `CLOUDFLARE_ENV=dev` |
+| `main` | `signapse-landing` | `signapse.cloud` | default, không đặt tên environment |
+
+Feature → PR `dev` → review/CI → merge và kiểm chứng dev → PR `dev` vào `main` do coordinator duyệt → kiểm chứng public. Không push trực tiếp các nhánh phát hành. Assigned worker chỉ merge feature vào dev và bàn giao dev; promotion public là release riêng. Bootstrap cấu hình dùng PR đã review vào main trước khi tạo dev.
+
+## GitHub Variables và secrets
+
+Giữ Secrets `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN` hiện có ngoài source/app env. Deploy token cần Workers Scripts Edit trong account, Workers Routes Edit và Zone Read cho zone signapse.cloud; kiểm quyền thực tế khi bootstrap Custom Domain.
+
+| Public variable | Dev variable | Giá trị hiện tại |
+| --- | --- | --- |
+| `PUBLIC_APP_ORIGIN` | `DEV_PUBLIC_APP_ORIGIN` | `https://dev-dashboard.signapse.cloud` |
+| `PUBLIC_CONTACT_API_ORIGIN` | `DEV_PUBLIC_CONTACT_API_ORIGIN` | `https://dev-api.signapse.cloud` |
+| `PUBLIC_BLOG_API_ORIGIN` | `DEV_PUBLIC_BLOG_API_ORIGIN` | `https://dev-api.signapse.cloud` |
+| `SIGNAPSE_PUBLIC_ORIGIN` | `DEV_SIGNAPSE_PUBLIC_ORIGIN` | Public: `https://signapse.cloud`; dev: `https://dev.signapse.cloud` |
+
+Public giữ `SIGNAPSE_LANDING_INDEXABLE` hiện có; dev luôn false. Analytics giữ false. Hai landing dùng chung API/dữ liệu dev; tách Worker không tách database. Dashboard CTA tiếp tục ẩn.
+
+## Build và pipeline
+
+App/contact/landing metadata compile lúc build; blog origin là runtime binding và được khai báo riêng trong `env.dev.vars`. Astro 7 chọn environment lúc build: `CLOUDFLARE_ENV=dev pnpm build` cho dev; public không đặt environment. Không dùng artifact public rồi đổi tên khi deploy. [Astro environments](https://docs.astro.build/en/guides/integrations-guide/cloudflare/#changed-deploy-to-cloudflare-environment).
+
+[Verify](../../.github/workflows/ci.yml) chạy PR/branch checks. Chỉ push/merge hoặc manual dispatch trên dev/main mới publish. PR không deploy. Mỗi nhánh có concurrency riêng, không hủy release đang chạy; kiểm đúng branch HEAD ngay trước publish để run cũ không ghi đè bản mới.
+
+CI chạy frozen install, origins/types/lint/format/build, kiểm tên Worker và domain trong generated `dist/server/wrangler.json`, model tests và browser fixtures. Publish đúng output đã kiểm tra cùng run, inject blog binding qua Wrangler --var. `SIGNAPSE_BUILD_REVISION=github.sha` tạo `/build-revision.json` no-store.
+
+Variables thay đổi cần build/deploy lại. Manual deploy: Actions → Verify → Run workflow → chọn dev hoặc main; không rerun bản cũ hơn revision đang phục vụ.
+
+## Bootstrap, domain và HTTPS
+
+1. Merge bootstrap PR đã review/CI vào main và xác minh public.
+2. Tạo dev từ revision bootstrap đã merge; push tạo nhánh chạy CI/deploy Worker dev.
+3. `env.dev.routes` khai báo Custom Domain dev.signapse.cloud. Cloudflare tạo DNS/chứng chỉ; không tạo CNAME về Vercel hay workers.dev. Thiếu quyền thì owner nối Custom Domain bằng Cloudflare MCP/dashboard và đối soát release, không mở rộng token ngoài scope.
+4. Kiểm TLS và HTTP dev redirect về HTTPS cùng hostname/path/query. Rules www/HTTP apex hiện tại chỉ match signapse.cloud, không được redirect dev sang public.
+
+Dev tắt workers.dev và preview URLs. Giữ apex/www/mail/dashboard mới. [Custom Domains](https://developers.cloudflare.com/workers/configuration/routing/custom-domains/).
+
+## Verification và rollback
+
+Kiểm root/VI/EN, privacy, Blog SSR, locale switch, assets, slash redirects và 404. Dev phải noindex, canonical/hreflang/social dùng dev origin; `/build-revision.json` khớp successful publish SHA và build chứa contribution. Kiểm CORS preflight contact; không gửi live form chỉ để smoke. Public được kiểm song song; HTTP 200/CI xanh riêng lẻ không chứng minh identity hay feature acceptance.
+
+Giữ Worker version/revision tốt gần nhất trước release. Owner rollback riêng Worker dev về version tốt, xác minh lại binding/metadata/domain và bảo toàn public/BE data. Không khôi phục CNAME dashboard cũ. Assigned worker không có grant rollback tự động. Website delivery và Symphony activation có evidence riêng.
+
+Local dùng Node 24.21.0 / pnpm 10.34.5, `.env.example` cho build-time, `.dev.vars.example` cho preview blog binding. Giữ cùng environment khi build/browser/dry-run. Browser runner dùng HTTP fixture và khôi phục vars sau test; shared host áp dụng [browser isolation](../symphony.md#browser-isolation-trên-shared-host). `wrangler deploy --dry-run` không chứng minh token/TLS/live delivery.
+
+## Pipeline và lịch sử public
+
 Stack: **Astro prerendered homepage + Cloudflare Worker SSR blog → GitHub Actions → Worker Static Assets → Custom Domain signapse.cloud**. Homepage `/`, `/vi` và `/en` vẫn static; blog list/detail gọi public API theo từng request và trả `no-store`. [Wrangler config](../../wrangler.jsonc), [workflow Verify](../../.github/workflows/ci.yml) và browser tests đã được chuẩn bị trong repo.
 
 Mỗi push/merge vào `main` tự chạy CI rồi deploy sau khi toàn bộ checks và tests pass. PR và push ở nhánh khác chạy verification với noindex. Nút **Run workflow** trên `main` dùng để deploy lại khi cần. Workflow dùng chính `dist/` đã kiểm tra để publish; các run trên `main` chạy nối tiếp trong cùng concurrency group để tránh publish đồng thời. [GitHub push trigger](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#push), [concurrency](https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/control-workflow-concurrency).
@@ -8,7 +61,7 @@ Concurrency mặc định giữ một run đang chạy và một run pending; pu
 
 ## Assigned autonomous delivery
 
-For the delegated dev-with-PR profile, apply [review/delivery](../delivery.md) before merge/publication/Done. CI embeds the checked SHA in `/build-revision.json`; null preview identity is not hosted evidence. The historical release records below remain dated observations, not verification of a new release or current account variables. Cutover/bootstrap settings remain release-owner work.
+For the delegated dev-with-PR profile, apply [review/delivery](../runbooks/review-and-delivery.md) before merge/publication/Done. CI embeds the checked SHA in `/build-revision.json`; null preview identity is not hosted evidence. The historical release records below remain dated observations, not verification of a new release or current account variables. Cutover/bootstrap settings remain release-owner work.
 
 ## Trạng thái triển khai ngày 2026-10-07
 
@@ -30,7 +83,7 @@ Dashboard VI đã mở được trong phiên Chrome đăng nhập hiện tại. 
 
 ## 1. Chốt origin ứng dụng và đưa cấu hình lên main
 
-Cập nhật ngày 2026-10-16: dev FE dùng `https://dev-dashboard.signapse.cloud`; `https://dev.signapse.cloud` tiếp tục hoạt động song song. BE giữ `https://dev-api.signapse.cloud`. Các snapshot release bên trên giữ nguyên URL lịch sử.
+Cập nhật ngày 2026-10-16: dev FE dùng `https://dev-dashboard.signapse.cloud`; `https://dev.signapse.cloud` được thu hồi khỏi dashboard để chuẩn bị triển khai dev của landing; bước thu hồi chưa triển khai landing lên hostname này. BE giữ `https://dev-api.signapse.cloud`. Các snapshot release bên trên giữ nguyên URL lịch sử.
 
 Landing sẽ sở hữu mọi path trên `signapse.cloud`. Dashboard, authentication và Articles phải có origin ứng dụng thực riêng. Nếu app hiện dùng apex, chuẩn bị origin đó và kế hoạch giữ URL cũ trước bước nối domain. Repo landing không thay đổi ứng dụng sản phẩm.
 

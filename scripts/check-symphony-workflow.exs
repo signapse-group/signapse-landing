@@ -48,7 +48,7 @@ hook_lines = String.split(settings.hooks.after_create, "\n")
 
 assert ~s(: "${SYMPHONY_GIT_CREDENTIAL_HELPER:?Set the host Git credential helper}") in hook_lines
 
-assert ~s(git -c credential.helper="$SYMPHONY_GIT_CREDENTIAL_HELPER" clone --depth 1 https://github.com/signapse-group/signapse-landing.git .) in hook_lines
+assert ~s(git -c credential.helper="$SYMPHONY_GIT_CREDENTIAL_HELPER" clone --depth 1 --branch dev https://github.com/signapse-group/signapse-landing.git .) in hook_lines
 
 assert ~s(git config --local credential.helper "$SYMPHONY_GIT_CREDENTIAL_HELPER") in hook_lines
 

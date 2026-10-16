@@ -60,15 +60,13 @@ Request-language negotiation và domain redirects cần cấu hình tại hostin
 
 Footer gồm brand, Khám phá (Tính năng/Xem demo/Dành cho ai/Blog/Chính sách quyền riêng tư) và Liên hệ (Gửi lời nhắn/email/điện thoại); Privacy Policy xuất hiện sau Blog, labels phản ánh đúng đích, mobile links tối thiểu 44 px. Typography landing giữ copy: Hero 32/48/56 px, Audience H2 30/36 px như Providers/contact, Audience item titles 18/20/22 px. Các ngưỡng là base/640/1024 px; showcase và Blog không đổi kích thước chữ.
 
-## Deploy signapse.cloud
+## Deploy dev và public
 
-Landing dùng Cloudflare Worker với Static Assets qua `wrangler.jsonc`: homepage được prerender, còn blog list/detail gọi API và SSR theo request với cache tắt. Mỗi push/merge vào `main` chạy workflow **Verify**: checks/build/model/browser tests pass rồi tự deploy output đã kiểm tra lên `signapse.cloud`. PR và push ở nhánh khác chạy CI. Nút **Run workflow** trên `main` vẫn có thể dùng để deploy lại. Các run trên `main` dùng chung concurrency group và chạy nối tiếp để tránh publish đồng thời.
+Feature PR vào `dev`; merge/push `dev` chạy Verify rồi deploy Worker `signapse-landing-dev` tại `https://dev.signapse.cloud`. Sau kiểm thử dev, coordinator duyệt PR `dev` → `main`; main deploy Worker `signapse-landing` tại `https://signapse.cloud`. Không push thẳng lên các nhánh phát hành. PR chỉ chạy checks, không publish.
 
-GitHub giữ một run đang chạy và một run chờ trong group; push mới có thể thay run đang chờ bằng revision mới nhất.
+Hai môi trường build riêng; dev chọn `CLOUDFLARE_ENV=dev` ngay lúc build, luôn noindex và Analytics off. GitHub Variables dev có prefix `DEV_`, public giữ tên hiện có; API/blog hiện dùng chung `https://dev-api.signapse.cloud`. Worker/runtime bindings và domain được tách, database/API không được nhân bản. Dashboard CTA vẫn ẩn.
 
-Origins, gồm `PUBLIC_BLOG_API_ORIGIN`, và `SIGNAPSE_LANDING_INDEXABLE` lưu trong GitHub Variables; Cloudflare token/account ID lưu trong GitHub Secrets. Blog API origin phải là HTTPS origin public, không kèm path/query/credential; workflow kiểm tra biến trước deploy. Indexing mặc định tắt và hiện variable là `false`; đổi thành `true` sau khi hoàn tất go-live. Push `main` và deploy thủ công đều dùng cùng cấu hình.
-
-Làm theo [hướng dẫn deploy signapse.cloud](docs/deployment/signapse-cloud.md). [Bản nghiên cứu tại planning](https://github.com/signapse-group/signapse-planing/blob/main/docs/research/landing-cloudflare-deployment.md) giải thích lựa chọn hosting và các giới hạn. Bật indexing không đổi root `/`: root tiếp tục là landing VI noindex.
+[Runbook deployment](docs/deployment/signapse-cloud.md) sở hữu cấu hình, bootstrap, CI/revision/domain verification và rollback. [Symphony consumer](docs/symphony.md) giữ stable control checkout main; issue workspace clone dev, PR/delivery dev. Release public là operation riêng do coordinator duyệt.
 
 ## Kiểm tra
 

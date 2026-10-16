@@ -10,22 +10,23 @@ permissions:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/dev' }}
 
 jobs:
   check:
-    if: github.event_name != 'workflow_dispatch' || github.ref == 'refs/heads/main'
+    if: github.event_name != 'workflow_dispatch' || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
       SIGNAPSE_BUILD_REVISION: ${{ github.sha }}
-      DEPLOY_TO_CLOUDFLARE: ${{ github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') }}
-      PUBLIC_APP_ORIGIN: ${{ github.ref == 'refs/heads/main' && vars.PUBLIC_APP_ORIGIN || 'http://localhost:3000' }}
-      PUBLIC_CONTACT_API_ORIGIN: ${{ github.ref == 'refs/heads/main' && vars.PUBLIC_CONTACT_API_ORIGIN || 'https://dev-api.signapse.cloud' }}
-      CONTACT_API_ORIGIN_CONFIGURED: ${{ vars.PUBLIC_CONTACT_API_ORIGIN != '' }}
-      PUBLIC_BLOG_API_ORIGIN: ${{ github.ref == 'refs/heads/main' && vars.PUBLIC_BLOG_API_ORIGIN || 'https://dev-api.signapse.cloud' }}
-      BLOG_API_ORIGIN_CONFIGURED: ${{ vars.PUBLIC_BLOG_API_ORIGIN != '' }}
-      SIGNAPSE_PUBLIC_ORIGIN: ${{ github.ref == 'refs/heads/main' && vars.SIGNAPSE_PUBLIC_ORIGIN || 'https://landing.example.test' }}
+      LANDING_ENVIRONMENT: ${{ (github.ref == 'refs/heads/dev' || github.base_ref == 'dev') && 'dev' || '' }}
+      DEPLOY_TO_CLOUDFLARE: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev') && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') }}
+      PUBLIC_APP_ORIGIN: ${{ github.ref == 'refs/heads/dev' && vars.DEV_PUBLIC_APP_ORIGIN || github.ref == 'refs/heads/main' && vars.PUBLIC_APP_ORIGIN || 'http://localhost:3000' }}
+      PUBLIC_CONTACT_API_ORIGIN: ${{ github.ref == 'refs/heads/dev' && vars.DEV_PUBLIC_CONTACT_API_ORIGIN || github.ref == 'refs/heads/main' && vars.PUBLIC_CONTACT_API_ORIGIN || 'https://dev-api.signapse.cloud' }}
+      CONTACT_API_ORIGIN_CONFIGURED: ${{ github.ref == 'refs/heads/dev' && vars.DEV_PUBLIC_CONTACT_API_ORIGIN != '' || github.ref == 'refs/heads/main' && vars.PUBLIC_CONTACT_API_ORIGIN != '' }}
+      PUBLIC_BLOG_API_ORIGIN: ${{ github.ref == 'refs/heads/dev' && vars.DEV_PUBLIC_BLOG_API_ORIGIN || github.ref == 'refs/heads/main' && vars.PUBLIC_BLOG_API_ORIGIN || 'https://dev-api.signapse.cloud' }}
+      BLOG_API_ORIGIN_CONFIGURED: ${{ github.ref == 'refs/heads/dev' && vars.DEV_PUBLIC_BLOG_API_ORIGIN != '' || github.ref == 'refs/heads/main' && vars.PUBLIC_BLOG_API_ORIGIN != '' }}
+      SIGNAPSE_PUBLIC_ORIGIN: ${{ github.ref == 'refs/heads/dev' && vars.DEV_SIGNAPSE_PUBLIC_ORIGIN || github.ref == 'refs/heads/main' && vars.SIGNAPSE_PUBLIC_ORIGIN || 'https://landing.example.test' }}
       SIGNAPSE_LANDING_INDEXABLE: ${{ github.ref == 'refs/heads/main' && vars.SIGNAPSE_LANDING_INDEXABLE == 'true' && 'true' || 'false' }}
       SIGNAPSE_VERCEL_ANALYTICS: 'false'
     steps:
@@ -54,8 +55,9 @@ jobs:
             const blogApi = new URL(process.env.PUBLIC_BLOG_API_ORIGIN);
             if (app.protocol !== "https:" || app.origin === landing.origin || app.hostname === "www.signapse.cloud")
               throw new Error("PUBLIC_APP_ORIGIN must be a separate HTTPS application origin.");
-            if (landing.origin !== "https://signapse.cloud")
-              throw new Error("Set SIGNAPSE_PUBLIC_ORIGIN to https://signapse.cloud in GitHub Variables.");
+            const expected = process.env.LANDING_ENVIRONMENT === "dev" ? "https://dev.signapse.cloud" : "https://signapse.cloud";
+            if (landing.origin !== expected)
+              throw new Error(`Landing origin must be ${expected} for this branch.`);
             if (process.env.CONTACT_API_ORIGIN_CONFIGURED !== "true")
               throw new Error("Set PUBLIC_CONTACT_API_ORIGIN in GitHub Variables before deploying the contact form.");
             if (contactApi.protocol !== "https:" || contactApi.username || contactApi.password || contactApi.pathname !== "/" || contactApi.search || contactApi.hash)
@@ -77,6 +79,11 @@ jobs:
 
       - name: Build
         run: pnpm build
+        env:
+          CLOUDFLARE_ENV: ${{ env.LANDING_ENVIRONMENT }}
+
+      - name: Verify built deployment target
+        run: node scripts/verify-deployment-target.mjs
 
       - name: Verify demo timelines
         run: pnpm test:models
@@ -87,18 +94,18 @@ jobs:
       - name: Verify production preview in browser
         run: pnpm test:browser
 
-      - name: Check main before publishing
+      - name: Check release branch before publishing
         if: env.DEPLOY_TO_CLOUDFLARE == 'true'
         id: release_head
         shell: bash
         run: |
-          current_main=$(git ls-remote origin refs/heads/main | cut -f1)
-          [[ "$current_main" =~ ^[a-f0-9]{40}$ ]]
-          if [[ "$current_main" == "$GITHUB_SHA" ]]; then
+          current_head=$(git ls-remote origin "refs/heads/$GITHUB_REF_NAME" | cut -f1)
+          [[ "$current_head" =~ ^[a-f0-9]{40}$ ]]
+          if [[ "$current_head" == "$GITHUB_SHA" ]]; then
             echo "current=true" >> "$GITHUB_OUTPUT"
           else
             echo "current=false" >> "$GITHUB_OUTPUT"
-            echo "::notice::Main advanced; use the checked descendant release."
+            echo "::notice::Release branch advanced; use the checked descendant release."
           fi
 
       - name: Deploy verified Worker and static assets to Cloudflare

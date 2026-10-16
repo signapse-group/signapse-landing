@@ -4,11 +4,13 @@ This runbook owns the Survey phase procedure and is loaded only when `WORKFLOW.m
 
 ## Profile and authority
 
-Survey applies to native dev Subtasks in Jira project `SIGN`, with parent Story/Task/Bug, exactly one recognized routing label `route-landing`, output owned by `signapse-group/signapse-landing`, and a PR into `main`. The profile delivers to public `https://signapse.cloud` after later review; no staging environment is added. Direct/no-PR operations retain their separately assigned boundary. Stop and report an out-of-profile assignment.
+Survey applies to native dev Subtasks in Jira project `SIGN`, with parent Story/Task/Bug, exactly one recognized routing label `route-landing`, output owned by `signapse-group/signapse-landing`, and a PR into `dev`. The profile delivers to dev `https://dev.signapse.cloud` after later review; public release is a separate coordinator-approved PR from `dev` into `main`. Direct/no-PR operations retain their separately assigned boundary. Stop and report an out-of-profile assignment.
 
 At `Ready`, survey may read the contract/code/references, run targeted existing checks on isolated local data, clarify already accepted wording/references in the assigned Subtask body and write an owned conditional handoff. It may transition the assigned Subtask to `Progress` or `Blocked` only under the gates below. It must not edit versioned source/tests/config, commit/push/create a PR, merge/deploy or affect shared environments.
 
 Coordinator retains priority/scope, ticket publication, initial Open → Ready dispatch, Blocked resume, Bug/QA/parent lifecycle and acceptance. Planning owns requirements/design; producers own API contracts. Infra/secrets/DNS/indexing/analytics, dashboard access and rollback remain outside the grant.
+
+Public promotion `dev` → `main` requires a separately approved coordinator release.
 
 ## Receive and reconcile
 

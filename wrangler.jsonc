@@ -9,6 +9,17 @@
   "vars": {
     "PUBLIC_BLOG_API_ORIGIN": "https://dev-api.signapse.cloud",
   },
+  "env": {
+    "dev": {
+      "name": "signapse-landing-dev",
+      "workers_dev": false,
+      "preview_urls": false,
+      "routes": [{ "pattern": "dev.signapse.cloud", "custom_domain": true }],
+      "vars": {
+        "PUBLIC_BLOG_API_ORIGIN": "https://dev-api.signapse.cloud",
+      },
+    },
+  },
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
