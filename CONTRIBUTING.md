@@ -42,3 +42,6 @@ Record an accepted decision in the existing owning contract only when authorized
 Keep detailed verification in the existing PR/artifact/session/evidence location, without mandatory reports, snapshots or fingerprints. Local fixtures prove their observed boundary, not producer publication, hosted behavior, authentication or external effects. Pending QA/owner acceptance does not waive missing behavior or required checks. Direct work stops at its requested boundary; Jira, independent review, PR, CI, merge and delivery gates apply only when assigned.
 
 Use Vietnamese for collaboration and handoff; keep code identifiers and the existing document language.
+## Reading Jira dependencies
+
+For Symphony assignments, use the `dependencies` envelope from live `jira_rest GET /rest/api/3/issue/{key}` with `fields=issuelinks`: `blocked_by` lists prerequisites and `blocks` lists downstream issues. Admission requires `complete=true` and `ready=true`; reread missing data rather than treating an empty list as clearance. Retain the envelope when parsing responses, not only `body`. Never use `type.inward || type.outward` or accept either link endpoint as a blocker: Jira supplies both labels. The shared parser and rules are owned by the [Symphony dependency contract](https://github.com/signapse-group/signapse-symphony/blob/main/elixir/README.md#jira-dependency-contract).

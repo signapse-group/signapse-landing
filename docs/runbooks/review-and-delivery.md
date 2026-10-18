@@ -1,5 +1,7 @@
 # Review and delivery — In Review
 
+Read dependencies under the [shared contract](../../CONTRIBUTING.md#reading-jira-dependencies); retain the live tool `dependencies` envelope.
+
 This runbook owns Review and delivery procedure and is loaded only when `WORKFLOW.md` dispatches this phase. A direct review request does not activate Symphony lifecycle actions.
 
 ## Profile and authority
