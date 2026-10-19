@@ -2,7 +2,9 @@ name: Verify
 
 on:
   push:
+    branches: [dev, main]
   pull_request:
+    branches: [dev, main]
   workflow_dispatch:
 
 permissions:
@@ -87,12 +89,6 @@ jobs:
 
       - name: Verify demo timelines
         run: pnpm test:models
-
-      - name: Install browser
-        run: pnpm exec playwright install --with-deps chromium
-
-      - name: Verify production preview in browser
-        run: pnpm test:browser
 
       - name: Check release branch before publishing
         if: env.DEPLOY_TO_CLOUDFLARE == 'true'

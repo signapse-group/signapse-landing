@@ -28,9 +28,9 @@ Public giữ `SIGNAPSE_LANDING_INDEXABLE` hiện có; dev luôn false. Analytics
 
 App/contact/landing metadata compile lúc build; blog origin là runtime binding và được khai báo riêng trong `env.dev.vars`. Astro 7 chọn environment lúc build: `CLOUDFLARE_ENV=dev pnpm build` cho dev; public không đặt environment. Không dùng artifact public rồi đổi tên khi deploy. [Astro environments](https://docs.astro.build/en/guides/integrations-guide/cloudflare/#changed-deploy-to-cloudflare-environment).
 
-[Verify](../../.github/workflows/ci.yml) chạy PR/branch checks. Chỉ push/merge hoặc manual dispatch trên dev/main mới publish. PR không deploy. Mỗi nhánh có concurrency riêng, không hủy release đang chạy; kiểm đúng branch HEAD ngay trước publish để run cũ không ghi đè bản mới.
+[Verify](../../.github/workflows/ci.yml) chạy PR vào dev/main và push hai nhánh này; push feature không chạy riêng. Chỉ push/merge hoặc manual dispatch trên dev/main mới publish. PR không deploy. Mỗi nhánh có concurrency riêng, không hủy release đang chạy; kiểm đúng branch HEAD ngay trước publish để run cũ không ghi đè bản mới.
 
-CI chạy frozen install, origins/types/lint/format/build, kiểm tên Worker và domain trong generated `dist/server/wrangler.json`, model tests và browser fixtures. Publish đúng output đã kiểm tra cùng run, inject blog binding qua Wrangler --var. `SIGNAPSE_BUILD_REVISION=github.sha` tạo `/build-revision.json` no-store.
+CI chạy frozen install, origins/types/lint/format/build, kiểm tên Worker và domain trong generated `dist/server/wrangler.json` và model tests. Browser fixtures chạy local/Symphony trước handoff/review theo [verification selection](../../CONTRIBUTING.md#verification-selection). Publish đúng output đã build và kiểm tra cùng run, inject blog binding qua Wrangler --var. `SIGNAPSE_BUILD_REVISION=github.sha` tạo `/build-revision.json` no-store; reviewer xác nhận revision trên domain thật sau publish theo [review/delivery](../runbooks/review-and-delivery.md#live-revision-and-basic-loading).
 
 Variables thay đổi cần build/deploy lại. Manual deploy: Actions → Verify → Run workflow → chọn dev hoặc main; không rerun bản cũ hơn revision đang phục vụ.
 
@@ -55,7 +55,7 @@ Local dùng Node 24.21.0 / pnpm 10.34.5, `.env.example` cho build-time, `.dev.va
 
 Stack: **Astro prerendered homepage + Cloudflare Worker SSR blog → GitHub Actions → Worker Static Assets → Custom Domain signapse.cloud**. Homepage `/`, `/vi` và `/en` vẫn static; blog list/detail gọi public API theo từng request và trả `no-store`. [Wrangler config](../../wrangler.jsonc), [workflow Verify](../../.github/workflows/ci.yml) và browser tests đã được chuẩn bị trong repo.
 
-Mỗi push/merge vào `main` tự chạy CI rồi deploy sau khi toàn bộ checks và tests pass. PR và push ở nhánh khác chạy verification với noindex. Nút **Run workflow** trên `main` dùng để deploy lại khi cần. Workflow dùng chính `dist/` đã kiểm tra để publish; các run trên `main` chạy nối tiếp trong cùng concurrency group để tránh publish đồng thời. [GitHub push trigger](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#push), [concurrency](https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/control-workflow-concurrency).
+Mỗi push/merge vào `main` tự chạy CI rồi deploy sau khi các checks trong pipeline pass. PR vào dev/main chạy verification với noindex; push feature không chạy riêng. Browser evidence trước merge tuân theo verification selection ở trên. Nút **Run workflow** trên `main` dùng để deploy lại khi cần. Workflow dùng chính `dist/` đã kiểm tra để publish; các run trên `main` chạy nối tiếp trong cùng concurrency group để tránh publish đồng thời. [GitHub push trigger](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#push), [concurrency](https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/control-workflow-concurrency).
 
 Concurrency mặc định giữ một run đang chạy và một run pending; push mới có thể thay run pending bằng revision mới nhất. Run đang publish trên `main` không bị huỷ bởi push mới.
 
@@ -125,7 +125,7 @@ Workflow tự đặt `SIGNAPSE_VERCEL_ANALYTICS=false`. Push `main` và deploy t
 1. Chọn branch **main**.
 2. Bấm **Run workflow**; pipeline dùng GitHub Variables hiện tại.
 
-Workflow cài Node/pnpm đúng pin, install frozen lockfile, kiểm tra application, contact API, blog API và landing origins, types/lint/format/build, model tests và Chromium browser tests, rồi chạy `pnpm exec wrangler deploy` với `PUBLIC_BLOG_API_ORIGIN` từ GitHub Variables. Deploy yêu cầu biến blog API được cấu hình và phải là HTTPS origin hợp lệ.
+Workflow cài Node/pnpm đúng pin, install frozen lockfile, kiểm tra application, contact API, blog API và landing origins, types/lint/format/build, model tests và built deployment target, rồi chạy `pnpm exec wrangler deploy` với `PUBLIC_BLOG_API_ORIGIN` từ GitHub Variables. Browser checks thực hiện local/Symphony theo verification selection ở trên. Deploy yêu cầu biến blog API được cấu hình và phải là HTTPS origin hợp lệ.
 
 Khi thành công, Cloudflare có Worker **signapse-landing**. Mở URL `signapse-landing.<account-subdomain>.workers.dev` được in ở deploy log. Kiểm `/`, `/vi`, `/en`, `/fr` (404), `/vi/` (redirect về `/vi`), locale switch, assets và CTA. HTML ở lần deploy này vẫn noindex.
 
