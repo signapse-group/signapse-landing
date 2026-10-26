@@ -1,5 +1,7 @@
 # Review and delivery — In Review
 
+Read dependencies under the [shared contract](../../CONTRIBUTING.md#reading-jira-dependencies); retain the live tool `dependencies` envelope.
+
 This runbook owns Review and delivery procedure and is loaded only when `WORKFLOW.md` dispatches this phase. A direct review request does not activate Symphony lifecycle actions.
 
 ## Profile and authority
@@ -52,7 +54,7 @@ Do not use `--admin`/`--auto` to bypass gates. Read back ambiguous commands befo
 
 ## Pipeline and release inputs
 
-[Verify](../../.github/workflows/ci.yml) checks PRs/branches. Dev push/merge or dev-only manual dispatch checks/types/lint/format/build/model/browser, then publishes the same built Worker/assets. Dev releases are serialized without cancelling the running release. Read actual run/steps: success with skipped deploy is not delivery.
+[Verify](../../.github/workflows/ci.yml) checks PRs targeting dev/main and pushes to those branches. Dev push/merge or dev-only manual dispatch checks/types/lint/format/build/model and the built deployment target, then publishes the same built Worker/assets. Before merge, verify applicable local/Symphony browser evidence under [verification selection](../../CONTRIBUTING.md#verification-selection); CI does not run browser tests. Dev releases are serialized without cancelling the running release. Read actual run/steps: success with skipped deploy is not delivery.
 
 Immediately before publish, CI reads dev and skips Cloudflare deploy when the run is obsolete; unavailable/invalid dev read fails the gate. Serialization plus this guard prevents obsolete queued reruns overwriting a newer release. Reconcile a checked descendant release containing the contribution; preserve phase/output without adding a rebase/review/base-SHA gate. Newer-dev failures can delay delivery until the owner resolves them.
 
