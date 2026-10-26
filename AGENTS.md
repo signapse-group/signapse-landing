@@ -10,7 +10,7 @@ The product application owns dashboard, authentication and Articles. Integrate t
 
 Implement the assigned scope against requirement/AC and approved design references/revision from planning. Jira project `SIGN` is the shared tracker; execution follows the [planning workflow](https://github.com/signapse-group/signapse-planing/blob/main/workflow/project-execution-workflow.md) and this repository's verification/delivery policy. Missing or conflicting requirements/design go back to the coordinator; do not redefine the contract from current code or publish new issues without authorization.
 
-Design, Pen prototypes and design-system changes are maintained in planning under [UI design instructions](https://github.com/signapse-group/signapse-planing/blob/main/ui-design/AGENTS.override.md), using its shared skills. Read the assigned design through its task references; a planning checkout is not a build/test dependency. Runtime dictionary values and CSS tokens here implement that contract.
+Design, Pen prototypes and design-system changes are maintained in planning under [UI design instructions](https://github.com/signapse-group/signapse-planing/blob/main/ui-design/AGENTS.override.md), using its shared skills. For assigned Jira UI work, read and apply the [UI design gate](https://github.com/signapse-group/signapse-planing/blob/main/workflow/project-execution-workflow.md#ui-design-gate): resolve and open the approved design from the native parent in every Survey/Implement/Review session; child attachments are not required. Direct work keeps its accepted design references and boundary. A planning checkout is not a build/test dependency. Runtime dictionary values and CSS tokens here implement that contract.
 
 ## Assigned execution
 
