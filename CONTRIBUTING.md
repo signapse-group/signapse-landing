@@ -12,7 +12,7 @@ Use UTF-8 and LF for source/config/docs; preserve media bytes and license notice
 
 ## Architecture and affected UI
 
-Apply the [architecture constraints](AGENTS.md#architecture) and [component ownership](docs/architecture.md). For visual/layout/interaction/copy work, apply [design implementation rules](docs/design.md) alongside the approved design revision and compare affected rendered UI with its references, including keyboard/focus and accessibility checks.
+Apply the [architecture constraints](AGENTS.md#architecture) and [component ownership](docs/architecture.md). For visual/layout/interaction/copy work, apply [Design Handoff](docs/design.md#design-handoff) and design implementation rules: representative direction/patterns are sufficient, and landing completes routine detail within scope. Assess affected rendered UI against AC, accepted direction/fixed constraints, usability, responsive, keyboard/focus, accessibility and fallback. Missing detailed mockups and unspecified pixel differences within that authority are not blocking defects; required behavior and evidence remain mandatory.
 
 ## Verification selection
 

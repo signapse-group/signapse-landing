@@ -11,7 +11,7 @@ Apply the accepted request/contract, `AGENTS.md`, scoped instructions and [CONTR
 
 Inspect affected code/callers/types/tests/fixtures/config, current branch/base/output and dirty-file ownership. Reuse contribution output on resume and preserve unrelated work. Identify the smallest complete change and verification seam; do not require a plan file, snapshot or report. Existing code describes current behavior, not the required outcome.
 
-For UI, read approved Planning design/revision and compare the affected rendered result. Preserve Astro static content, island/fallback boundaries, typed VI/EN and disposal requirements from repository architecture. For API integration apply [API consumer standards](../../../docs/api-consumer.md); trace actual HTTP callers and types, with fixtures at external boundaries.
+For UI, apply local [Design Handoff](../../../docs/design.md#design-handoff): representative direction/patterns suffice, routine detail is delegated, and affected rendered behavior/quality and fixed constraints still need verification. Preserve Astro static content, island/fallback boundaries, typed VI/EN and disposal requirements from repository architecture. For API integration apply [API consumer standards](../../../docs/api-consumer.md); trace actual HTTP callers and types, with fixtures at external boundaries.
 
 ## Implement and verify
 
