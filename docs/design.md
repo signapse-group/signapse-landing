@@ -15,7 +15,17 @@ Tài liệu tổng hợp rule UI của `signapse-landing`, dùng khi triển kha
 | [Global styles](../src/styles/global.css), [font faces](../src/styles/fonts.css), [dictionary](../src/i18n/messages.ts) | Font roles, copy VI/EN, fixture labels, accessible text và metadata. |
 | [FE design](https://github.com/signapse-group/signapse-ui/blob/main/docs/design/DESIGN.md) | Tham khảo hierarchy, semantic tokens, trạng thái và accessibility; không áp dụng nguyên bộ dashboard rules cho landing. |
 
-Áp dụng requirement/AC và design revision được giao cùng contract tại planning. Nếu chúng xung đột với tài liệu này hoặc code, ghi rõ điểm lệch và đưa về coordinator/planning; không suy ra requirement từ giao diện đang chạy. [Design-system review](https://github.com/signapse-group/signapse-planing/blob/main/ui-design/pen/landing/design-system-review.md) giữ lịch sử finding trước sửa; dùng handoff hiện hành để xác định trạng thái mới.
+Áp dụng requirement/AC và hướng thiết kế được giao cùng contract tại planning theo Design Handoff bên dưới. Chỉ đưa quyết định mâu thuẫn quan trọng ngoài quyền được giao về coordinator/planning; không suy ra requirement từ giao diện đang chạy. [Design-system review](https://github.com/signapse-group/signapse-planing/blob/main/ui-design/pen/landing/design-system-review.md) giữ lịch sử finding trước sửa; dùng handoff hiện hành để xác định trạng thái mới.
+
+## Design Handoff
+
+Quyết định ngày 2026-10-30: requirement/AC rõ cùng một design đại diện hoặc pattern hiện có được chấp nhận là đủ định hướng để triển khai. Đây là hướng dẫn thực thi cho worker landing; không cần fetch policy Planning để dùng quy tắc này.
+
+- Mỗi phiên Survey/Implement/Review và resume đọc live parent/contract, xem nguồn đại diện hoặc pattern liên quan, nhận diện revision/ngày, căn cứ chấp nhận, phạm vi và phần visual/interaction đã chỉ định cố định. Nguồn có thể là link share đọc chung, ảnh/frame hoặc shared baseline; không bắt export, frame ID hoặc mockup riêng cho mọi state/viewport.
+- Landing tự hoàn thiện spacing, reflow/responsive, loading/empty/error và chi tiết chưa vẽ bằng tokens/components/shared patterns trong scope/AC đã chốt. Không cần approval riêng cho từng chi tiết; giữ composition/brand, hành vi, quyền, copy VI/EN, accessibility và các phần đã chốt. State chưa vẽ vẫn phải có hành vi đúng.
+- Thiếu mockup chi tiết hoặc lỗi mở một reference không tự chặn implementation nếu nguồn còn lại đã đủ định hướng. Ghi giới hạn, dùng nguồn thay thế đã được chấp nhận. Chỉ đưa về coordinator quyết định thiếu/mâu thuẫn ảnh hưởng hành vi, quyền, luồng chính hoặc phần cố định; giữ phần phụ thuộc và tiếp tục phần đã rõ. Chỉ dùng Blocked khi hết việc độc lập có ý nghĩa theo phase.
+- Trước In Review/merge/Done, kiểm UI render theo AC, hướng thiết kế, phần cố định, usability, responsive, accessibility và fallback; giữ ảnh/evidence vùng bị ảnh hưởng gắn candidate và nguồn đại diện/pattern. Reviewer đánh giá độc lập, tái dùng evidence còn đúng. Defect hoặc thiếu evidence cần thiết vẫn chặn handoff; khác biệt pixel chưa được chỉ định chính xác và chi tiết trong quyền landing không tự chặn.
+- Khi hướng/constraint đã chốt đổi, đối soát checks/evidence/review bị ảnh hưởng. Không đổi requirement/expected theo code; hoàn thiện chi tiết trong quyền được giao không đòi sửa mockup trước. Tác vụ trực tiếp giữ boundary đã giao, không tự kích hoạt Jira lifecycle.
 
 ## Ngôn ngữ visual
 

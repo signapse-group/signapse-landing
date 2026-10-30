@@ -8,9 +8,9 @@ The product application owns dashboard, authentication and Articles. Integrate t
 
 ## Task and design handoff
 
-Implement the assigned scope against requirement/AC and approved design references/revision from planning. Jira project `SIGN` is the shared tracker; execution follows the [planning workflow](https://github.com/signapse-group/signapse-planing/blob/main/workflow/project-execution-workflow.md) and this repository's verification/delivery policy. Missing or conflicting requirements/design go back to the coordinator; do not redefine the contract from current code or publish new issues without authorization.
+Implement the assigned scope against requirement/AC and accepted representative design/pattern direction under the local [Design Handoff](docs/design.md#design-handoff). Complete routine detail within that authority; missing detailed mockups alone do not block implementation. Jira project `SIGN` is the shared tracker; execution follows this repository's verification/delivery policy. Consequential missing/conflicting decisions outside the delegated bounds go to the coordinator; do not redefine the contract from current code or publish new issues without authorization.
 
-Design, Pen prototypes and design-system changes are maintained in planning under [UI design instructions](https://github.com/signapse-group/signapse-planing/blob/main/ui-design/AGENTS.override.md), using its shared skills. Read the assigned design through its task references; a planning checkout is not a build/test dependency. Runtime dictionary values and CSS tokens here implement that contract.
+Design, Pen prototypes and design-system changes are maintained in planning under [UI design instructions](https://github.com/signapse-group/signapse-planing/blob/main/ui-design/AGENTS.override.md), using its shared skills. Worker execution uses the complete local [Design Handoff](docs/design.md#design-handoff); Planning policy is maintainer provenance, not a fetch prerequisite. Direct work keeps its accepted references and boundary. A planning checkout is not a build/test dependency. Runtime dictionary values and CSS tokens here implement that contract.
 
 ## Assigned execution
 
