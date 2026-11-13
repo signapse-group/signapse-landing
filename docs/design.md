@@ -102,7 +102,7 @@ Nguồn composition là [LandingPage.astro](../src/components/landing/LandingPag
 
 | Thứ tự | Surface | Quy tắc |
 | --- | --- | --- |
-| 1 | Header | Logo, năm item Tính năng/Xem demo/Dành cho ai/Blog/Liên hệ và locale; bám trên cùng bằng `position: fixed`, đổi surface theo section. |
+| 1 | Header | Logo, năm mục Tính năng/Xem demo/Dành cho ai/Blog/Liên hệ, locale và nút dashboard. Bám trên cùng bằng `position: fixed` và đổi surface theo section. |
 | 2 | Hero `#top` | H1/copy/Contact/proof AI, Context Figure và texture decorative; một cột ở màn hẹp, hai cột từ `lg`. |
 | 3 | Capability `#capability-strip` | Năm capability trong cuối Hero; detail/popover không đổi chiều cao Hero. |
 | 4 | Showcase `#showcase` | Knowledge Graph → Market Chart → AI Conversation → Scheduled Telegram; mỗi bước giữ copy và proof bằng code. |
@@ -111,7 +111,7 @@ Nguồn composition là [LandingPage.astro](../src/components/landing/LandingPag
 | 7 | Contact `#access` | Nội dung/email bên trái, form thật bên phải khi đủ rộng; reflow một cột trên màn hẹp. |
 | 8 | Footer | Brand/copy, Khám phá gồm Tính năng/Xem demo/Dành cho ai/Blog, Gửi lời nhắn, email, điện thoại và disclaimer. |
 
-`#access` hiện triển khai contribution form theo [SIGN-113 reference](https://github.com/signapse-group/signapse-planing/blob/main/ui-design/pen/landing/README.md#form-liên-hệ-công-khai). Bảng baseline trong `LANDING.md` còn mô tả vùng này là Final CTA; đọc cùng phần form của contract và AC/revision được giao, không tự khôi phục nút dashboard tại đây. Theo yêu cầu người dùng ngày 2026-10-08, Header/Footer cũng đã gỡ dashboard entry vì chưa mở quyền user access; chỉ khôi phục sau khi người dùng cho phép rõ ràng.
+`#access` dành cho form liên hệ theo [SIGN-113 reference](https://github.com/signapse-group/signapse-planing/blob/main/ui-design/pen/landing/README.md#form-liên-hệ-công-khai).
 
 Responsive dùng threshold theo từng surface; không coi tất cả là một breakpoint desktop chung.
 
@@ -138,7 +138,8 @@ Responsive dùng threshold theo từng surface; không coi tất cả là một 
 - Locale/mobile disclosure hỗ trợ Enter/Space, Escape, focus restore và outside click. Capability giữ hover/pointer vào popup trên desktop và toggle trên touch, chỉ mở một popup tại một thời điểm.
 - Capability anchors giữ nguyên `#knowledge-graph`, `#live-charts`, `#ai-assistant`, `#telegram`, `#strategy-coding`; direct hash mở đúng detail. Header và nhóm Khám phá trong Footer dẫn tới rail `#capability-strip`, demo `#showcase`, Audience `#audiences` và Blog. Footer Contact action là “Gửi lời nhắn / Send a message”, logo có accessible name “Signapse — Trang chủ / Signapse — Home”; mobile links tối thiểu 44 px, focus outline thống nhất. Theo plan người dùng chốt ngày 2026-10-08, header bỏ mega-menu/roadmap, Footer thay capability shortcuts bằng navigation tới section; copy Hero/capability/showcase/Audience/brand footer giữ nguyên. Typography chỉ giảm các headline đã chỉ định, không áp font-size toàn cục lên mọi H2 hoặc chữ trong demo/Blog.
 - Audience dùng native buttons với `aria-pressed`; direct audience hash chọn đúng option. Selection và scroll không tự cướp focus.
-- Public Blog list/detail dùng route landing được localize trong `src/pages/[lang]/blogs/`. Contact dẫn `#access` từ landing và `/{locale}#access` từ Blog; email và điện thoại `0933.80.99.36` (`tel:+84933809936`) dùng [landing-access.ts](../src/components/landing/landing-access.ts). Điện thoại hiện trong phần liên hệ và Footer cả khi không có JavaScript. Dashboard chưa mở quyền user access nên không render dashboard CTA/link. Dashboard, auth và Articles thuộc ứng dụng sản phẩm.
+- Public Blog list/detail dùng route landing được localize trong `src/pages/[lang]/blogs/`. Contact dẫn `#access` từ landing và `/{locale}#access` từ các trang public khác. Email và điện thoại `0933.80.99.36` (`tel:+84933809936`) dùng [landing-access.ts](../src/components/landing/landing-access.ts). Điện thoại hiện trong phần liên hệ và Footer cả khi không có JavaScript.
+- Shared Header có một link “Truy cập bảng điều khiển / Access dashboard” với kiểu nút và vùng bấm 44 px. Trên mobile, nút hiện cạnh nút mở menu. Link dẫn đến dashboard cùng locale và mở trong tab hiện tại, kể cả khi tắt JavaScript. Ứng dụng sản phẩm xử lý đăng nhập và quyền truy cập.
 - `/vi`, `/en` và root entry VI dùng `SUPPORTED_LOCALES`. Locale switch giữ query và chỉ những hash trong `SUPPORTED_LANDING_HASHES`; không mặc định giữ mọi section/audience hash, không ghi cookie locale. Links giữ `lang`, `hreflang`, `aria-current` phù hợp.
 - Text, accessible names, metadata và fixture labels từ [dictionary VI/EN](../src/i18n/messages.ts), cùng typed shape. Copy tiếng Việt đúng dấu và tự nhiên; tên riêng/feature/eyebrow tiếng Anh đã được duyệt không tạo quy tắc English-only cho landing.
 - Không thêm technical implementation copy vào user flow, sửa claim từ screenshot, hoặc prefill dữ liệu mẫu của reference vào form thật.

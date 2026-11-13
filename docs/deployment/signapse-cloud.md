@@ -15,14 +15,16 @@ Feature → PR `dev` → review/CI → merge và kiểm chứng dev → PR `dev`
 
 Giữ Secrets `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN` hiện có ngoài source/app env. Deploy token cần Workers Scripts Edit trong account, Workers Routes Edit và Zone Read cho zone signapse.cloud; kiểm quyền thực tế khi bootstrap Custom Domain.
 
-| Public variable | Dev variable | Giá trị hiện tại |
+| Public variable | Dev variable | Giá trị dùng khi phát hành |
 | --- | --- | --- |
-| `PUBLIC_APP_ORIGIN` | `DEV_PUBLIC_APP_ORIGIN` | `https://dev-dashboard.signapse.cloud` |
+| `PUBLIC_APP_ORIGIN` | `DEV_PUBLIC_APP_ORIGIN` | Public dùng `https://dashboard.signapse.cloud`, dev dùng `https://dev-dashboard.signapse.cloud`. |
 | `PUBLIC_CONTACT_API_ORIGIN` | `DEV_PUBLIC_CONTACT_API_ORIGIN` | `https://dev-api.signapse.cloud` |
 | `PUBLIC_BLOG_API_ORIGIN` | `DEV_PUBLIC_BLOG_API_ORIGIN` | `https://dev-api.signapse.cloud` |
 | `SIGNAPSE_PUBLIC_ORIGIN` | `DEV_SIGNAPSE_PUBLIC_ORIGIN` | Public: `https://signapse.cloud`; dev: `https://dev.signapse.cloud` |
 
-Public giữ `SIGNAPSE_LANDING_INDEXABLE` hiện có; dev luôn false. Analytics giữ false. Hai landing dùng chung API/dữ liệu dev; tách Worker không tách database. Dashboard CTA tiếp tục ẩn.
+Public dùng `SIGNAPSE_LANDING_INDEXABLE` hiện có và dev luôn dùng `false`. Analytics giữ `false`. Hai landing dùng chung API/dữ liệu dev.
+
+Đợt thêm nút dashboard kiểm thử trên dev trước. Biến `PUBLIC_APP_ORIGIN` của public vẫn trỏ dev tại thời điểm khảo sát 2026-11-13. Trước khi phát hành nút trên public, đặt biến về origin public trong bảng và build lại. Bước validate khi deploy kiểm tra origin ứng dụng theo nhánh.
 
 ## Build và pipeline
 
@@ -45,7 +47,9 @@ Dev tắt workers.dev và preview URLs. Giữ apex/www/mail/dashboard mới. [Cu
 
 ## Verification và rollback
 
-Kiểm root/VI/EN, privacy, Blog SSR, locale switch, assets, slash redirects và 404. Dev phải noindex, canonical/hreflang/social dùng dev origin; `/build-revision.json` khớp successful publish SHA và build chứa contribution. Kiểm CORS preflight contact; không gửi live form chỉ để smoke. Public được kiểm song song; HTTP 200/CI xanh riêng lẻ không chứng minh identity hay feature acceptance.
+Kiểm root/VI/EN, privacy, Blog SSR, locale switch, assets, slash redirects và 404. Dev phải noindex, canonical/hreflang/social dùng dev origin; `/build-revision.json` khớp successful publish SHA và build chứa contribution. Kiểm CORS preflight contact; không gửi live form chỉ để smoke.
+
+Trên [landing dev](https://dev.signapse.cloud/vi), mở nút Header từ `/vi` và `/en` rồi kiểm đúng origin `https://dev-dashboard.signapse.cloud` và path theo locale. Dùng phiên trình duyệt sạch để kiểm chuyển đến sign-in và tài khoản có quyền để kiểm dashboard tải đúng locale. Thực hiện cùng phép kiểm trên public sau khi phát hành, với origin `https://dashboard.signapse.cloud`.
 
 Giữ Worker version/revision tốt gần nhất trước release. Owner rollback riêng Worker dev về version tốt, xác minh lại binding/metadata/domain và bảo toàn public/BE data. Không khôi phục CNAME dashboard cũ. Assigned worker không có grant rollback tự động. Website delivery và Symphony activation có evidence riêng.
 
@@ -87,9 +91,7 @@ Cập nhật ngày 2026-10-16: dev FE dùng `https://dev-dashboard.signapse.clou
 
 Landing sẽ sở hữu mọi path trên `signapse.cloud`. Dashboard, authentication và Articles phải có origin ứng dụng thực riêng. Nếu app hiện dùng apex, chuẩn bị origin đó và kế hoạch giữ URL cũ trước bước nối domain. Repo landing không thay đổi ứng dụng sản phẩm.
 
-Origin app hiện tại đã được xác nhận là **https://dev-dashboard.signapse.cloud**; origin dự kiến khi go-live là **https://dashboard.signapse.cloud**. Dùng dev cho lần thử; chuẩn bị app/DNS/certificate ở dashboard trước khi đổi production origin. Tra DNS công khai ngày 2026-10-05 hiện chưa có record cho `dashboard.signapse.cloud`.
-
-Không đặt `PUBLIC_APP_ORIGIN=https://signapse.cloud` hoặc hostname `www.signapse.cloud` dẫn về landing.
+Dashboard dev và prod đã có origin riêng theo [bảng cấu hình ở trên](#github-variables-và-secrets). Khi build có nút dashboard, dùng origin ứng dụng của nhánh phát hành.
 
 Đưa các thay đổi lên nhánh `main` của [signapse-group/signapse-landing](https://github.com/signapse-group/signapse-landing) để tự chạy CI/deploy. Nút **Run workflow** vẫn có sẵn cho lần deploy thủ công; chỉ chọn `main`. [GitHub manual workflows](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow).
 
@@ -110,7 +112,7 @@ Trong repository GitHub → **Settings → Secrets and variables → Actions**, 
 | --- | --- | --- |
 | Secrets | `CLOUDFLARE_API_TOKEN` | API token vừa tạo. |
 | Secrets | `CLOUDFLARE_ACCOUNT_ID` | Account ID chứa Worker và zone. |
-| Variables | `PUBLIC_APP_ORIGIN` | Lần thử: `https://dev-dashboard.signapse.cloud`; go-live: `https://dashboard.signapse.cloud` sau khi app đã hoạt động. |
+| Variables | `PUBLIC_APP_ORIGIN` | `https://dashboard.signapse.cloud` |
 | Variables | `PUBLIC_CONTACT_API_ORIGIN` | Origin public API contact cho môi trường landing; hiện dev dùng `https://dev-api.signapse.cloud`. API phải cho phép CORS từ `https://signapse.cloud`. |
 | Variables | `PUBLIC_BLOG_API_ORIGIN` | HTTPS origin của API có `GET /blogs/public` và `GET /blogs/public/{slug}` cho môi trường landing. Không thêm path/query/credential; public reading không cần token. |
 | Variables | `SIGNAPSE_PUBLIC_ORIGIN` | `https://signapse.cloud` |
@@ -141,7 +143,7 @@ Cloudflare → **Workers & Pages → signapse-landing → Domains → Add Domain
 
 Cloudflare tạo record và certificate cho hostname. Nếu apex có CNAME cũ, xử lý record xung đột tại cutover; giữ lại mapping để có thể khôi phục. Không đổi nameservers nếu zone đã active; không sửa records mail hoặc subdomain ứng dụng. [Custom Domains](https://developers.cloudflare.com/workers/configuration/routing/custom-domains/).
 
-Mở [VI](https://signapse.cloud/vi) và [EN](https://signapse.cloud/en); kiểm HTTPS, assets, locale, Contact, Blog và 404. Dashboard chưa mở quyền user access nên không có dashboard CTA/link trên landing; xác nhận Header/Footer không render entry này. Tests trong repo không kiểm backend/auth/Articles của ứng dụng sản phẩm.
+Mở [VI](https://signapse.cloud/vi) và [EN](https://signapse.cloud/en) để kiểm HTTPS, assets, locale, Contact, Blog và 404. Với bản phát hành có nút dashboard, áp dụng [các bước kiểm tra đích và phiên đăng nhập](#verification-và-rollback).
 
 ## 5. Cấu hình www và HTTPS
 
@@ -159,7 +161,7 @@ Kiểm `https://www.signapse.cloud/en?source=www` về `https://signapse.cloud/e
 
 ## 6. Bật indexing và đóng hostname phụ
 
-Sau khi domain chính hoạt động và app ở `dashboard.signapse.cloud` đã sẵn sàng, đổi GitHub Variable `PUBLIC_APP_ORIGIN` thành `https://dashboard.signapse.cloud`. Kiểm trực tiếp `/vi/dashboard`, `/en/dashboard`, `/vi/articles`, `/en/articles` trên origin app; ứng dụng đích xử lý đăng nhập. Đổi origin không tự khôi phục dashboard CTA/link trên landing; chỉ thêm lại entry sau khi người dùng cho phép rõ ràng.
+Việc phát hành nút dashboard dùng [cấu hình origin theo môi trường](#github-variables-và-secrets). Các bước dưới đây áp dụng khi phát hành thay đổi indexing hoặc hostname phụ.
 
 Sửa `workers_dev` từ `true` thành `false` trong [wrangler.jsonc](../../wrangler.jsonc), đưa thay đổi lên `main`.
 

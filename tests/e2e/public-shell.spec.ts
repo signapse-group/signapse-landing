@@ -1,8 +1,13 @@
 import { expect, test } from './fixtures';
 
+const appOrigin = process.env.PUBLIC_APP_ORIGIN ?? 'http://localhost:3000';
+
 for (const locale of ['vi', 'en'] as const) {
+  const dashboardHref = new URL(`/${locale}/dashboard`, appOrigin).href;
+  const dashboardLabel =
+    locale === 'vi' ? 'Truy cập bảng điều khiển' : 'Access dashboard';
   for (const javaScriptEnabled of [true, false]) {
-    test(`${locale} shared public shell ${javaScriptEnabled ? 'with JavaScript' : 'without JavaScript'} uses landing controls and hides dashboard access`, async ({
+    test(`${locale} shared public shell ${javaScriptEnabled ? 'with JavaScript' : 'without JavaScript'} uses landing controls and links to the dashboard`, async ({
       browser,
       request,
       baseURL,
@@ -22,17 +27,27 @@ for (const locale of ['vi', 'en'] as const) {
         { path: `/${locale}/blogs/fixture-post`, status: 200 },
         { path: `/${locale}/blogs/missing-post`, status: 404 },
         { path: `/${locale}/blogs/upstream-error`, status: 502 },
+        { path: `/${locale}/privacy-policy`, status: 200 },
         { path: `/${locale}`, status: 200 },
         ...(locale === 'vi' ? [{ path: '/', status: 200 }] : []),
       ];
       try {
-        for (const width of [1440, 1024, 375]) {
+        for (const width of [1440, 1280, 1024, 375]) {
           await page.setViewportSize({ width, height: 900 });
           for (const route of routes) {
             const response = await page.goto(route.path);
             expect(response?.status()).toBe(route.status);
             const header = page.locator('[data-landing-part="header"]');
             await expect(header).toHaveCSS('height', '72px');
+            const dashboard = header.getByRole('link', {
+              name: dashboardLabel,
+              exact: true,
+            });
+            await expect(dashboard).toBeVisible();
+            await expect(dashboard).toBeInViewport({ ratio: 1 });
+            await expect(dashboard).toHaveAttribute('href', dashboardHref);
+            await expect(dashboard).toHaveCSS('height', '44px');
+            await expect(page.locator('a[href$="/dashboard"]')).toHaveCount(1);
             const landingPath =
               route.path === '/' || route.path === `/${locale}`
                 ? ''
@@ -116,7 +131,6 @@ for (const locale of ['vi', 'en'] as const) {
               await expect(menuTrigger).toHaveCSS('width', '44px');
               await expect(menuTrigger).toHaveCSS('border-radius', '8px');
             }
-            await expect(page.locator('a[href*="/dashboard"]')).toHaveCount(0);
             await expect(
               page.locator('footer a[href^="mailto:access@signapse.cloud"]'),
             ).toHaveCount(1);
@@ -202,6 +216,16 @@ for (const locale of ['vi', 'en'] as const) {
                 () => document.documentElement.scrollWidth <= innerWidth,
               ),
             ).toBe(true);
+            if (width === 375 && route.path === `/${locale}`) {
+              await page.route(dashboardHref, (route) =>
+                route.fulfill({ contentType: 'text/plain', body: 'Dashboard' }),
+              );
+              await dashboard.press('Shift+Tab');
+              await page.keyboard.press('Tab');
+              await expect(dashboard).toBeFocused();
+              await page.keyboard.press('Enter');
+              await expect(page).toHaveURL(dashboardHref);
+            }
           }
         }
       } finally {
