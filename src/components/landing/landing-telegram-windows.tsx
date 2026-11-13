@@ -330,7 +330,7 @@ export function LandingTelegramWindows({
                           id={`${id}-asset`}
                           label={labels.assetLabel}
                           target="asset"
-                          options={['XAU/USD', 'BTC/USD']}
+                          options={['XAU/USD', 'BTC/USDT']}
                           selected={frame.at >= timing.assetSelected}
                           open={frame.phase === 'assetOpen'}
                         />

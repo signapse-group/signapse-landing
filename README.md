@@ -28,7 +28,7 @@ pnpm build
 pnpm preview --host 127.0.0.1 --port 4321
 ```
 
-Các route: [VI](http://127.0.0.1:4321/vi), [EN](http://127.0.0.1:4321/en). Landing build/run độc lập; public Blog ở landing. Dashboard, authentication và Articles thuộc ứng dụng sản phẩm; CTA dashboard đã được gỡ vì chưa mở quyền user access.
+Các route: [VI](http://127.0.0.1:4321/vi), [EN](http://127.0.0.1:4321/en). Landing build/run độc lập; public Blog ở landing. Dashboard, authentication và Articles thuộc ứng dụng sản phẩm.
 
 Blog SSR cần Worker binding `PUBLIC_BLOG_API_ORIGIN`. Local production preview dùng ignored `.dev.vars`; tạo từ mẫu trước lần chạy đầu:
 
@@ -45,7 +45,7 @@ Copy `.env.example` sang ignored `.env`, đặt giá trị rồi **build lại**
 
 | Biến                         | Hành vi                                                                                                                                                                                                                                      |
 | ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `PUBLIC_APP_ORIGIN`          | Origin HTTP(S) của ứng dụng sản phẩm, không path/query/credentials. Default `http://localhost:3000`; vẫn được validate tại build/deploy. Landing hiện không render link hoặc CTA dashboard.                                                  |
+| `PUBLIC_APP_ORIGIN`          | Origin HTTP(S) của ứng dụng sản phẩm, không path/query/credentials. Default `http://localhost:3000`. Header dùng origin này cho link `/{locale}/dashboard`.                                                                                  |
 | `PUBLIC_CONTACT_API_ORIGIN`  | Origin HTTPS của API contact, riêng với ứng dụng sản phẩm. `.env.example` dùng `https://dev-api.signapse.cloud`; cấu hình GitHub theo môi trường landing và CORS của API.                                                                    |
 | `PUBLIC_BLOG_API_ORIGIN`     | Worker runtime variable cho API public blog; cấu hình qua GitHub Variable khi deploy, hoặc `wrangler.jsonc` / `.dev.vars` khi local. Không phải build-time `.env`; mặc định local là `https://dev-api.signapse.cloud`. Không cần credential. |
 | `SIGNAPSE_PUBLIC_ORIGIN`     | Origin HTTPS explicit của landing. Thiếu/invalid ở preview: bỏ canonical/hreflang, giữ `noindex`.                                                                                                                                            |
@@ -54,7 +54,9 @@ Copy `.env.example` sang ignored `.env`, đặt giá trị rồi **build lại**
 
 Mọi trang public kế thừa token landing từ `BaseLayout`; `.landingRoot` trong `landing-page.module.css` là nguồn duy nhất của `--landing-*`, không chép lại trong CSS từng trang. Header/Footer dùng chung trên landing, Privacy Policy và Blog, kể cả trạng thái lỗi.
 
-Header có năm item trực tiếp: Tính năng, Xem demo, Dành cho ai, Blog và Liên hệ; mobile dùng menu phẳng với cùng thứ tự. Item Liên hệ dẫn tới `#access`, hoặc `/{locale}#access` từ Blog. Hero “Liên hệ” dẫn tới `#access`; form gửi JSON tới `{PUBLIC_CONTACT_API_ORIGIN}/contact-requests`. Phần liên hệ dùng “Start Your Journey / Contact Us” ở EN và “Bắt đầu hành trình của bạn / Liên hệ với chúng tôi” ở VI; form không có tiêu đề/dòng hướng dẫn đầu card hoặc viền ngoài, vẫn giữ labels và validation. Phần liên hệ và Footer có số `0933.80.99.36` với link `tel:+84933809936`; email `access@signapse.cloud` tiếp tục dùng mailto. Dashboard chưa mở quyền user access, nên Header/Footer không có nút hoặc link vào dashboard; chỉ khôi phục khi người dùng cho phép rõ ràng. Locale switch giữ query và các hash trong `SUPPORTED_LANDING_HASHES`.
+Header có năm mục điều hướng gồm Tính năng, Xem demo, Dành cho ai, Blog và Liên hệ. Menu phẳng trên mobile giữ cùng thứ tự. Nút “Truy cập bảng điều khiển / Access dashboard” nằm cạnh nút menu trên mobile và mở dashboard cùng locale trong tab hiện tại. Root `/` dùng VI. Ứng dụng sản phẩm xử lý đăng nhập cho người dùng đã có tài khoản. Locale switch giữ query và các hash trong `SUPPORTED_LANDING_HASHES`.
+
+Mục Liên hệ dẫn tới `#access` trên landing và `/{locale}#access` từ các trang public khác. Hero “Liên hệ” dẫn tới `#access` và form gửi JSON tới `{PUBLIC_CONTACT_API_ORIGIN}/contact-requests`. Phần liên hệ dùng “Start Your Journey / Contact Us” ở EN và “Bắt đầu hành trình của bạn / Liên hệ với chúng tôi” ở VI. Form giữ labels và validation, không có tiêu đề/dòng hướng dẫn đầu card hoặc viền ngoài. Phần liên hệ và Footer có số `0933.80.99.36` với link `tel:+84933809936` và email `mailto:access@signapse.cloud`.
 
 Request-language negotiation và domain redirects cần cấu hình tại hosting. Hosted CI và deployment được kiểm chứng trong quy trình release; production preview chạy cả static homepage lẫn Worker SSR cho blog.
 
@@ -64,7 +66,7 @@ Footer gồm brand, Khám phá (Tính năng/Xem demo/Dành cho ai/Blog/Chính s�
 
 Feature PR vào `dev`; merge/push `dev` chạy Verify rồi deploy Worker `signapse-landing-dev` tại `https://dev.signapse.cloud`. Sau kiểm thử dev, coordinator duyệt PR `dev` → `main`; main deploy Worker `signapse-landing` tại `https://signapse.cloud`. Không push thẳng lên các nhánh phát hành. PR chỉ chạy checks, không publish.
 
-Hai môi trường build riêng; dev chọn `CLOUDFLARE_ENV=dev` ngay lúc build, luôn noindex và Analytics off. GitHub Variables dev có prefix `DEV_`, public giữ tên hiện có; API/blog hiện dùng chung `https://dev-api.signapse.cloud`. Worker/runtime bindings và domain được tách, database/API không được nhân bản. Dashboard CTA vẫn ẩn.
+Hai môi trường build riêng. Dev chọn `CLOUDFLARE_ENV=dev` ngay lúc build, luôn noindex và Analytics off. Dashboard của dev dùng `DEV_PUBLIC_APP_ORIGIN=https://dev-dashboard.signapse.cloud`. Trước khi phát hành nút trên public, đặt `PUBLIC_APP_ORIGIN=https://dashboard.signapse.cloud` và build lại. API/blog hiện dùng chung `https://dev-api.signapse.cloud` với Worker/runtime bindings và domain riêng cho từng môi trường.
 
 [Runbook deployment](docs/deployment/signapse-cloud.md) sở hữu cấu hình, bootstrap, CI/revision/domain verification và rollback. [Symphony consumer](docs/symphony.md) giữ stable control checkout main; issue workspace clone dev, PR/delivery dev. Release public là operation riêng do coordinator duyệt.
 
@@ -91,9 +93,9 @@ pnpm build
 pnpm test
 ```
 
-Playwright tự mở `pnpm preview --ignore-lock` foreground tại 4321 khi chưa có server, kể cả trong Codex. Browser runner khởi động HTTP fixture API, tạm ghi Worker vars vào `dist/server/.dev.vars`, rồi khôi phục file sau test. Trên shared Symphony host, mọi browser checks đi qua [wrapper của operator](docs/symphony.md#browser-isolation-trên-shared-host) với `CI=1`, shared lock và cache landing riêng. CLI đọc ignored `.env`, với process env được ưu tiên; metadata assertions nhận chế độ indexability và public origin của build. Có thể đổi port bằng `PLAYWRIGHT_PORT`. Navigation tests kiểm Blog/locale/contact và khóa việc không có link dashboard, không yêu cầu backend hay đăng nhập ứng dụng sản phẩm. Trace/report và kết quả JSON nằm trong ignored `test-results/`.
+Playwright tự mở `pnpm preview --ignore-lock` foreground tại 4321 khi chưa có server, kể cả trong Codex. Browser runner khởi động HTTP fixture API, tạm ghi Worker vars vào `dist/server/.dev.vars`, rồi khôi phục file sau test. Trên shared Symphony host, mọi browser checks đi qua [wrapper của operator](docs/symphony.md#browser-isolation-trên-shared-host) với `CI=1`, shared lock và cache landing riêng. CLI đọc ignored `.env`, với process env được ưu tiên. Có thể đổi port bằng `PLAYWRIGHT_PORT`. Navigation tests kiểm Blog, locale, contact và link dashboard qua fixture. Trace/report và kết quả JSON nằm trong ignored `test-results/`.
 
-Browser runner chỉ thay `PUBLIC_BLOG_API_ORIGIN` bằng fixture local; giữ nguyên metadata, indexability và analytics theo env của build. Chạy build và browser tests với cùng `SIGNAPSE_PUBLIC_ORIGIN` / `SIGNAPSE_LANDING_INDEXABLE`; preview không đặt public origin vẫn kiểm tra canonical/hreflang vắng mặt và noindex.
+Browser runner thay `PUBLIC_BLOG_API_ORIGIN` bằng fixture local. Chạy build và browser tests với cùng `PUBLIC_APP_ORIGIN`, `SIGNAPSE_PUBLIC_ORIGIN` và `SIGNAPSE_LANDING_INDEXABLE`. Preview thiếu public origin vẫn kiểm tra canonical/hreflang vắng mặt và noindex.
 
 CI chạy trên PR vào `dev`/`main` và push hai nhánh này: install frozen, check/lint/format/build, kiểm Worker/domain và model tests. Push feature không chạy CI riêng. Browser tests chạy local/Symphony trước handoff/review theo [verification selection](CONTRIBUTING.md#verification-selection). [Verification](docs/verification/README.md) lưu kết quả và giới hạn của các lần chạy thực tế. Chụp lại ảnh của landing bằng `node docs/verification/capture-preview.mjs http://127.0.0.1:4321` khi production preview đang chạy; script dùng riêng repo này.
 
