@@ -9,6 +9,7 @@ export const vi = {
       audiences: 'Dành cho ai',
       blog: 'Blog',
       contact: 'Liên hệ',
+      accessDashboard: 'Truy cập bảng điều khiển',
       openMenu: 'Mở menu landing',
     },
     blogPage: {
@@ -561,6 +562,7 @@ export const en: Dictionary = {
       audiences: 'Who it’s for',
       blog: 'Blog',
       contact: 'Contact',
+      accessDashboard: 'Access dashboard',
       openMenu: 'Open landing menu',
     },
     blogPage: {

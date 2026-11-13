@@ -253,7 +253,7 @@
   color: var(--foreground);
 }
 
-.sectionAction {
+.primaryAction {
   min-height: var(--landing-control-height);
   border-radius: var(--landing-control-radius);
 }

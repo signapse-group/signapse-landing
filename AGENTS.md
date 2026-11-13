@@ -27,7 +27,7 @@ Choose local technical skills when useful; they do not own Symphony lifecycle or
 - Use SUPPORTED_LOCALES and locale helpers. Both Vietnamese and English copy must have the same typed shape. TypeScript is strict and uses the @/ alias.
 - Header/capability hydrate with client:load; context, Audience and the shared showcase hydrate with client:idle and use internal viewport gates. Keep useful SSR/no-JavaScript/reduced-motion/WebGL fallbacks.
 - The four showcase demos stay in one island. Preserve their fixture/model renderers, natural mobile flow, adaptive sticky desktop stage and playback-driven progress. Dispose observers, listeners, timers, frames and GPU resources.
-- Dashboard access is not open to users. Do not render dashboard-entry buttons or links on any public page; restore them only after explicit user authorization. Contact anchors, the contact form and mailto remain available. The product application continues to own dashboard, authentication and Articles.
+- The shared Header links existing users to the locale-specific dashboard on the configured application origin. The product application handles sign-in and access control. Public visitors can still use the Contact anchors, form and mailto.
 - Preview defaults to noindex. Canonical/indexability require explicit env; root remains a Vietnamese noindex entry. Request-language negotiation and domain redirects are hosting responsibilities.
 - public/ contains runtime brand/provider/font/social assets only. Keep screenshots and verification evidence under docs/verification/, outside runtime assets.
 

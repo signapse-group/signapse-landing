@@ -194,7 +194,6 @@ for (const locale of ['vi', 'en'] as const) {
       new RegExp(`/social/${locale}\\.png$`),
     );
     const blogHref = `/${locale}/blogs`;
-    await expect(page.locator('a[href*="/dashboard"]')).toHaveCount(0);
     expect(
       await page
         .locator('[data-landing-part="header"]')
@@ -689,7 +688,6 @@ for (const locale of ['vi', 'en'] as const) {
       await expect(page.locator('[data-telegram-browser]')).toContainText(
         'Market Desk',
       );
-      await expect(page.locator('a[href*="/dashboard"]')).toHaveCount(0);
       await assertNoOverflow(page);
     } finally {
       await context.close();
