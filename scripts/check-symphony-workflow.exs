@@ -1,13 +1,15 @@
 import ExUnit.Assertions
 
-alias SymphonyElixir.{Config, PromptBuilder, Workflow}
+alias SymphonyElixir.{Config, Instructions, Workflow}
 alias SymphonyElixir.Config.Schema
 alias SymphonyElixir.Jira.Client
 alias SymphonyElixir.Tracker.Issue
 
-# Run from the Symphony Elixir project with mix run --no-start and a workflow path.
+# Run from Symphony Elixir with mix run --no-start, a profile path, and a checkout prompt path.
 assert Process.whereis(SymphonyElixir.Supervisor) == nil
-[workflow_path] = System.argv()
+[profile_path, workflow_path] = System.argv()
+root = Path.dirname(Path.expand(workflow_path))
+workflow = Path.basename(workflow_path)
 
 System.put_env(%{
   "JIRA_BASE_URL" => "https://jira.invalid",
@@ -16,9 +18,8 @@ System.put_env(%{
   "SYMPHONY_WORKSPACE_ROOT" => Path.join(System.tmp_dir!(), "landing-workflow-offline")
 })
 
-Application.put_env(:symphony_elixir, :workflow_file_path, Path.expand(workflow_path))
-{:ok, workflow} = Workflow.load(workflow_path)
-{:ok, settings} = Schema.parse(workflow.config)
+{:ok, %{config: config}} = Workflow.load(profile_path)
+{:ok, settings} = Schema.parse(config)
 assert :ok == Config.validate_settings(settings)
 assert settings.tracker.kind == "jira"
 assert settings.tracker.provider["project_key"] == "SIGN"
@@ -124,7 +125,10 @@ fixtures =
       description <- [nil, "", "Offline accepted contract"],
       native_ref <- [nil, %{issue_type: nil, parent: nil}, issue.native_ref] do
     candidate = %{issue | state: state, description: description, native_ref: native_ref}
-    rendered = PromptBuilder.build_prompt(candidate, attempt: attempt)
+
+    assert {:ok, %{prompt: rendered}} =
+             Instructions.checkout_prompt(root, workflow, candidate, settings, attempt)
+
     assert String.contains?(rendered, issue.identifier)
     assert String.contains?(rendered, issue.id)
     assert String.contains?(rendered, issue.title)
@@ -152,7 +156,7 @@ fixtures =
     assert selected == if(runbook, do: [[runbook]], else: [])
 
     if runbook do
-      path = Path.join(Path.dirname(Path.expand(workflow_path)), runbook)
+      path = Path.join(root, runbook)
       assert File.regular?(path)
       refute String.contains?(File.read!(path), "Draft for content acceptance")
     else

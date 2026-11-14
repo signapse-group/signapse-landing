@@ -10,7 +10,7 @@ Astro prerender landing cho `/`, `/vi`, `/en` và Privacy Policy tại `/vi/priv
 
 Jira `SIGN` giữ contract/lifecycle; [WORKFLOW.md](WORKFLOW.md) là điểm vào thực thi assigned Symphony work. [CONTRIBUTING.md](CONTRIBUTING.md) sở hữu standards và cách chọn verification; skills local hỗ trợ kỹ thuật theo nhu cầu. Ordinary requests và cấu hình consumer giữ boundary đã giao.
 
-[Consumer runbook](docs/symphony.md) mô tả offline checker, host inputs, browser isolation và handoff. Phần setup/activation trên server được người dùng thực hiện riêng qua repo Symphony sau cập nhật consumer; repository config không chứng minh runtime đã chạy.
+[Consumer runbook](docs/symphony.md) mô tả offline checker, host inputs, browser isolation và handoff. Profile YAML, setup và activation trên server thuộc Symphony. Kiểm chứng ở checkout xác nhận prompt của repo.
 
 ## Chạy local và production preview
 
