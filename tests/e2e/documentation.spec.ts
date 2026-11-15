@@ -204,3 +204,38 @@ test('unapproved direct guide URLs return 404 without source content', async ({
     await expect(page.locator('body')).not.toContainText(guide.bodyText);
   }
 });
+
+test('unapproved UG08 and UG09 URLs stay private in both locales', async ({
+  page,
+}) => {
+  const unpublishedGuides = [
+    {
+      locale: 'vi',
+      articleId: 'ug08',
+      bodyText: 'Nhận biết tình huống không thấy dữ liệu',
+    },
+    {
+      locale: 'en',
+      articleId: 'ug08',
+      bodyText: 'Recognize missing data or unavailable features',
+    },
+    {
+      locale: 'vi',
+      articleId: 'ug09',
+      bodyText: 'Trang này giải thích cách dùng các thuật ngữ',
+    },
+    {
+      locale: 'en',
+      articleId: 'ug09',
+      bodyText: 'This page explains terms used in the guides',
+    },
+  ];
+
+  for (const guide of unpublishedGuides) {
+    const response = await page.goto(
+      `/${guide.locale}/docs/${guide.articleId}`,
+    );
+    expect(response?.status()).toBe(404);
+    await expect(page.locator('body')).not.toContainText(guide.bodyText);
+  }
+});

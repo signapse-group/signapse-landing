@@ -1,0 +1,100 @@
+{
+  "task": "SIGN-605",
+  "date": "2026-11-15",
+  "candidateBranch": "codex/sign-605-ug08-ug09",
+  "planningSourceRevision": "e734b0cdd39d1551724636487ab68eca7690da57",
+  "guideIds": ["ug08", "ug09"],
+  "importedLocaleVersions": 4,
+  "approvalStatus": "draft",
+  "approvalReference": "",
+  "contentSha256": {
+    "ug08.vi.md": "e3c43a7e7a4f95658eb602269939e30969a6f1edf59d3a6e222ee2dda23205d7",
+    "ug08.en.md": "487d9da87594e31560aa6b356e2477872b8f91ce4c3ac4f58f599529ef555bae",
+    "ug09.vi.md": "cb6c8a7c5ba4e4cb8d326629a9bbcee36b87b8bf1c17707a2ffe407f54ca6f0e",
+    "ug09.en.md": "6d5c764c755cbccf16dd5aa33cf22df3cd3ff20214f3f0c3c5ba9ca1d35231de"
+  },
+  "checks": {
+    "astroCheck": { "command": "pnpm check", "result": "pass", "diagnostics": 0 },
+    "lint": { "command": "pnpm lint", "result": "pass" },
+    "format": { "command": "pnpm format:check", "result": "pass" },
+    "modelTests": {
+      "command": "pnpm test:models",
+      "result": "pass",
+      "passed": 22,
+      "failed": 0
+    },
+    "build": {
+      "command": "$SYMPHONY_LANDING_BROWSER_WRAPPER \"$PWD\" --grep 'documentation|Documentation|Docs disclosure|unapproved direct guide URLs|unapproved UG08' --retries=0",
+      "result": "pass",
+      "generatedDocumentationIndexes": ["/vi/docs", "/en/docs"],
+      "generatedGuideRoutes": 0,
+      "warnings": ["Vite reports a minified chunk larger than 500 kB."]
+    },
+    "sourceComparison": {
+      "result": "pass",
+      "pairs": 4,
+      "localeInternalLinks": 110,
+      "method": "Compared normalized body text to the pinned Planning files after dropping H1/draft banners, mapping relative guide links to locale routes, and normalizing Markdown table whitespace."
+    },
+    "protectedDataScan": {
+      "result": "pass",
+      "matches": 0,
+      "patterns": ["email addresses", "phone numbers", "Telegram token values"]
+    },
+    "approvedFixtureBrowser": {
+      "runner": "Chromium via SYMPHONY_LANDING_BROWSER_WRAPPER",
+      "result": "pass",
+      "passed": 4,
+      "failed": 0,
+      "retries": 0,
+      "viewportWidths": [1440, 768, 375],
+      "coverage": [
+        "VI/EN UG08 and UG09 article rendering",
+        "locale-correct internal links and current TOC item",
+        "keyboard link activation",
+        "axe at 1440 and 375 px",
+        "no horizontal overflow"
+      ],
+      "fixture": "Temporary complete 20-entry approval fixture with placeholder UG04–UG07; removed and source statuses restored before final browser run."
+    },
+    "draftBrowser": {
+      "runner": "Chromium via SYMPHONY_LANDING_BROWSER_WRAPPER",
+      "result": "pass",
+      "passed": 10,
+      "failed": 0,
+      "retries": 0,
+      "coverage": [
+        "VI/EN Documentation index and locale switch",
+        "index responsive layout at 1440/768/375 px and axe",
+        "Docs disclosure hover, keyboard, touch and locale navigation",
+        "UG08 and UG09 VI/EN direct URLs return 404 without body"
+      ]
+    }
+  },
+  "publicationReadiness": {
+    "candidateCollection": "12/20 VI/EN versions on this branch; all are draft",
+    "remainingGuideIds": ["ug04", "ug05", "ug06", "ug07"],
+    "fullApprovedBatchRequired": true,
+    "coordinatorApproval": "pending review of this exact content revision before public release",
+    "applicationRevision": "not supplied; current app labels/actions/statuses remain unverified",
+    "applicationComparison": "not performed",
+    "qaAccountAndApprovedCases": "not supplied for this Implement handoff",
+    "publicRelease": "not performed",
+    "devDeployment": "not performed in Implement"
+  },
+  "evidence": {
+    "contentReview": "content-review.md",
+    "draftBrowserResults": "browser-results.json",
+    "approvedFixtureBrowserResults": "approved-fixture-browser-results.json",
+    "screenshots": [
+      "documentation-vi-1440.png",
+      "documentation-en-375.png",
+      "docs-menu-vi.png",
+      "ug08-vi-1440-approved-fixture.png",
+      "ug08-en-375-approved-fixture.png",
+      "ug09-vi-1440-approved-fixture.png",
+      "ug09-en-375-approved-fixture.png"
+    ]
+  },
+  "deliveryBoundary": "Local implementation and PR handoff only; no application QA, coordinator content approval, dev deployment, or public release is claimed."
+}
