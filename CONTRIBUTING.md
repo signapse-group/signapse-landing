@@ -41,8 +41,36 @@ Record an accepted decision in the existing owning contract only when authorized
 
 Keep detailed verification in the existing PR/artifact/session/evidence location, without mandatory reports, snapshots or fingerprints. Local fixtures prove their observed boundary, not producer publication, hosted behavior, authentication or external effects. Pending QA/owner acceptance does not waive missing behavior or required checks. Direct work stops at its requested boundary; Jira, independent review, PR, CI, merge and delivery gates apply only when assigned.
 
-Use Vietnamese for collaboration and handoff; keep code identifiers and the existing document language.
+Use Vietnamese for collaboration and handoff. Keep code identifiers and the existing document language.
 
 ## Reading Jira dependencies
 
-For Symphony assignments, use the `dependencies` envelope from live `jira_rest GET /rest/api/3/issue/{key}` with `fields=issuelinks`: `blocked_by` lists prerequisites and `blocks` lists downstream issues. Admission requires `complete=true` and `ready=true`; reread missing data rather than treating an empty list as clearance. Retain the envelope when parsing responses, not only `body`. Never use `type.inward || type.outward` or accept either link endpoint as a blocker: Jira supplies both labels. The shared parser and rules are owned by the [Symphony dependency contract](https://github.com/signapse-group/signapse-symphony/blob/main/elixir/README.md#jira-dependency-contract).
+For Symphony assignments, keep the live `dependencies` envelope from `jira_rest GET /rest/api/3/issue/{key}` with `fields=issuelinks`, including its metadata outside `body`. Before admission, Symphony waits for prerequisites in `blocked_by` to reach category `done`. `blocks` lists downstream issues. Require `complete=true` and `ready=true` for native readiness, and reread missing or ambiguous metadata. Use the [Symphony dependency contract](https://github.com/signapse-group/signapse-symphony/blob/main/elixir/README.md#jira-dependency-contract) for link direction. Jira supplies both link type labels, so use the normalized envelope and avoid taking either endpoint or combining the two raw labels to infer direction. After admission, check the actual output the phase needs even if the producer is Done. Record the specific missing or incorrect output, producer and source record.
+
+## Assigned blockers and resume
+
+Classify each point by what it needs:
+
+| Type        | Resolution owner                                                                                                                                                                                                                                         |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Requirement | Planning reconciles missing or conflicting scope, copy, design direction, expected behavior, AC or verification ownership. The coordinator or delegate decides. Landing completes routine details under [Design Handoff](docs/design.md#design-handoff). |
+| Tooling     | Landing fixes its build/test/fixture defects within the assigned scope and grant. The tool owner handles the rest.                                                                                                                                       |
+| Vận hành    | An operator resolves unavailable access, credentials, runner, service, workspace, lease/recovery or required checkout instructions. The coordinator decides any expansion of the grant.                                                                  |
+| Dependency  | The producer delivers the assigned API, asset, fix or other input. Landing records the exact gap under [Jira dependency rules](#reading-jira-dependencies). The coordinator reconciles links and assignment as needed.                                   |
+
+Record each blocker as it arises and continue independent implementation, checks, evidence, cleanup and handoff preparation within the phase and grant. If the cause is unclear, record the observed symptom, hypothesis, next check and who can run it. Use the existing admission/retry mechanism for temporary resource contention. Include cleanup or residue when an operator must recover outside the grant. Pass inputs needed later to that phase's owner in the handoff. Fix in-scope defects in Progress, or return them there with findings from Review.
+
+Hand off known blockers together after meaningful independent work is exhausted. Transition the assigned Subtask to `Blocked` only if mandatory output/AC/check for the current phase still needs an external input, access, decision or action beyond allowed recovery. Update an owned record separate from delivery. Keep prior candidates, concurrent content and links to source evidence. Summarize what is complete and why independent work has ended. For each point identify its type, affected output or check and source/version, why it is needed now, what was tried, one resolution owner/action and observable resume evidence. Distinguish the producer from the person who must act. Ask the coordinator to assign an owner if needed. Shared account identity alone does not show ownership. Annotate an old record only when owned and authorized, otherwise link it.
+
+Optional layout:
+
+```text
+Blocker — <Subtask> · <repo> · <live status trước Blocked>
+Đã làm — <kết quả và evidence>; <vì sao đã hết phần độc lập>.
+- <loại> · <output/AC/check, căn cứ và phase cần dùng> · <đã kiểm/xử lý>.
+  Cần <owner>: <action/output>; tiếp tục khi <evidence>; <link record nguồn nếu có>.
+```
+
+Reread the live issue and assigned phase, route and ownership. Save and read back the record before using the authorized native transition from the live issue. Read back `Blocked` and end the session. Report any unconfirmed write or transition as such. The coordinator records the resolution and resumes the actual previous phase. On resume the worker rechecks the live contract, dependencies, resolution, environment and remaining points before using prior output.
+
+When continuing a non-Done ticket after rollout, reconcile old process/verification wording within the assignment and grant. Record the basis, read back any update and preserve ticket identity, history and evidence for the actual revision. The coordinator owns changes to requirement, scope, AC or environment permissions. Applying a changed technical gate to a historical candidate requires applicable rollout evidence or a coordinator decision.
