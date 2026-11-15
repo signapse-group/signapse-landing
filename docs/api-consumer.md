@@ -45,12 +45,10 @@ scope; unrelated producer documentation work does not block every landing contri
 Fixture/browser success does not prove producer delivery or live integration.
 
 When accepted requirements, OpenAPI and implementation conflict, record the exact
-operation/rule, expected basis, observation and owner. Investigate discoverable facts,
-then use the [decision standards](../CONTRIBUTING.md#decisions-and-evidence) for unresolved material decisions.
-Pause only dependent work while continuing meaningful independent work. The producer
-owns its contract and updates it with implementation; landing does not rewrite producer
-rules or expected results to hide a gap. Missing fields/errors/permissions/revision
-evidence are unmet inputs, not permission to invent a fallback contract.
+operation/rule, expected basis, observation, affected integration and owner. Apply the
+[blocker rules](../CONTRIBUTING.md#assigned-blockers-and-resume) for assigned work.
+The producer owns contract corrections and publication. A missing business decision
+goes to the coordinator. Continue independent work using the accepted contract.
 
 For an accepted producer change, follow the assigned dependency and rollout contract:
 producer deploy/publish → producer handoff → dependent landing integration. Do not

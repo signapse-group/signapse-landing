@@ -8,7 +8,7 @@ Người dùng chấp nhận triển khai consumer ngày **2026-10-07** theo [hi
 
 Assigned worker thực hiện phase do [WORKFLOW.md](../WORKFLOW.md) chọn; direct/no-PR work giữ boundary riêng. [CONTRIBUTING.md](../CONTRIBUTING.md) sở hữu standards và verification selection. Guide này sở hữu host inputs, browser isolation, offline validation và operator handoff, không sở hữu phase procedure.
 
-Symphony nạp profile runtime của operator. Issue workspace mới clone từ `dev` rồi nạp prompt và hướng dẫn local từ checkout; feature PR và delivery nhắm `dev` / `https://dev.signapse.cloud`. Public release dùng PR riêng `dev` → `main`, do coordinator duyệt. Khi cutover, giữ output workspace cũ và đối soát base/PR trước resume; không reset hàng loạt.
+Symphony nạp profile runtime của operator. Issue workspace mới clone từ `dev` rồi nạp prompt và hướng dẫn local từ checkout; feature PR và delivery nhắm `dev` / `https://dev.signapse.cloud`. Public release dùng PR riêng `dev` → `main`, do coordinator duyệt. Khi rollout instructions, xác minh revision đang được nạp trong phiên mới và các checkout có thể resume. Bảo toàn output, branch/PR và trạng thái phiên đang chạy. Quyền cập nhật process/verification của ticket chưa Done theo [quy ước resume](../CONTRIBUTING.md#assigned-blockers-and-resume).
 
 ## Repo profile và deployment profile
 
