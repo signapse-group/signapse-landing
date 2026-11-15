@@ -6,7 +6,7 @@ This runbook owns Review and delivery procedure and is loaded only when `WORKFLO
 
 Applies to native Jira `SIGN` dev Subtasks with parent Story/Task/Bug, exactly one recognized routing label `route-landing`, output owned by `signapse-group/signapse-landing`, PR into `dev` and delivery to dev `https://dev.signapse.cloud`. Public release is a separate coordinator-approved PR from `dev` into `main`. Stop/report an out-of-profile assignment; direct/no-PR operations retain their assigned output and boundary.
 
-The fresh In Review session directly performs independent assessment, owns feedback/handoff, may merge this contribution's PR and perform bounded delivery recovery, and may transition its Subtask to `Progress`, `Blocked` or `Done` under this runbook. Do not delegate a replacement reviewer, edit implementation or resolve conflicts. Technical skills are optional aids and grant no permissions/gates.
+The fresh In Review session directly performs independent assessment, owns feedback/handoff, may [reconcile process/verification wording](../../CONTRIBUTING.md#assigned-blockers-and-resume), merge this contribution's PR, perform bounded delivery recovery and transition its Subtask to `Progress`, `Blocked` or `Done` under this runbook. Do not delegate a replacement reviewer, edit implementation or resolve conflicts. Technical skills are optional aids and grant no permissions/gates.
 
 Coordinator retains priority/scope, new tickets, initial dispatch, Blocked resume, Bug/QA/parent lifecycle and acceptance. Requirement/design/API decisions remain owner-controlled. No rollback of code/data, infra/secrets/domain/DNS/indexing/analytics changes, dashboard entry restoration or other-ticket fixes are authorized. Live feature effects need explicit assigned operation/inputs; public publishing alone does not authorize them.
 
@@ -14,9 +14,9 @@ Public promotion `dev` → `main` requires a separately approved coordinator rel
 
 ## Receive and resume
 
-Read `AGENTS.md`, scoped instructions, [standards](../../CONTRIBUTING.md), README/docs index and approved task references. Through `jira_rest`, read live Subtask/native parent/accepted comments/references/dependencies at start/resume and before mutations/handoff; paginate relevant comments. Verify project/type/parent, route against WORKFLOW's recognized set, output ownership and dependency admission. Category `done` satisfies admission; `Resolved` in an active category or unreadable/ambiguous dependencies do not. Snapshot, assignee and parent readiness do not replace these gates.
+Read `AGENTS.md`, scoped instructions, [standards](../../CONTRIBUTING.md), README/docs index and approved task references. Through `jira_rest`, read live Subtask/native parent/accepted comments/references/dependencies at start/resume and before mutations/handoff; paginate relevant comments. Verify project/type/parent, route against WORKFLOW's recognized set, output ownership and [native dependencies](../../CONTRIBUTING.md#reading-jira-dependencies). Snapshot, assignee and parent readiness do not replace admission.
 
-Inspect existing workspace/branch/PR, implementation, survey/feedback and evidence. Keep prior candidates, delivery runs/deadlines/retry counters and output history. Already merged means reconcile actual merge/review/checks and continue delivery, not merge again. A merged candidate without independent assessment still needs review before Done. On resume verify blocker resolution, not merely the new status. Do not self-resume Blocked or reopen Done.
+Inspect existing workspace/branch/PR, implementation, survey/feedback and evidence. Keep prior candidates, delivery runs/deadlines/retry counters and output history. For an already merged candidate, reconcile actual merge/review/checks and continue delivery. A merged candidate without independent assessment still needs review before Done. After coordinator resume to In Review, [reconcile the blocker and live ticket](../../CONTRIBUTING.md#assigned-blockers-and-resume) before reusing evidence.
 
 For a Bug fix, reread accepted expected/basis and latest QA report/evidence; identify case/version, actual, tested build/environment and assigned impacted regression. Preserve Bug/QA run/report linkage and distinguish FAIL from Blocked/Not Run or another deviation. After delivery provide evidence connecting the fix to its build/environment for QA; never overwrite QA approval or change Bug lifecycle.
 
@@ -37,7 +37,7 @@ Cần sửa:
 - <vị trí/check/evidence>: <vấn đề và ảnh hưởng> → <kết quả cần đạt>.
 ```
 
-Resolve live native transition, return/read back `Progress` and end Review. Implement resumes existing output, not Ready. Optional suggestions do not block. Requirement gaps go to the owner rather than asking Implement to guess; missing required input follows the external-blocker gate.
+Resolve live native transition, return/read back `Progress` and end Review. Implement resumes existing output, not Ready. Optional suggestions do not block. For unsettled expected behavior or a required external input, use the [blocker and owner rules](../../CONTRIBUTING.md#assigned-blockers-and-resume).
 
 ## Merge and reconcile
 
@@ -51,6 +51,8 @@ gh pr view "$PR" --repo signapse-group/signapse-landing --json state,url,headRef
 Do not use `--admin`/`--auto` to bypass gates. Read back ambiguous commands before retry; only MERGED and actual merge SHA confirm success. Post-merge in-scope defects return Progress for a follow-up branch/PR from current dev under the unfinished Subtask; keep prior output/evidence.
 
 ## Pipeline and release inputs
+
+Select delivery evidence by output. For an application change, follow the Cloudflare pipeline, live identity and basic loading checks below. For documentation, verify the merged artifact's accessible location/version and applicable review/checks. For workflow/runtime instructions, also verify activation in the consuming session/checkout when the assignment requires it. Record delivery under [Delivery handoff and Done](#delivery-handoff-and-done).
 
 [Verify](../../.github/workflows/ci.yml) checks PRs/branches. Dev push/merge or dev-only manual dispatch checks/types/lint/format/build/model/browser, then publishes the same built Worker/assets. Dev releases are serialized without cancelling the running release. Read actual run/steps: success with skipped deploy is not delivery.
 
@@ -92,22 +94,11 @@ When successful build is not yet live, retain a propagation deadline 30 minutes 
 
 Transient read failures retry at most three times with 5/10-second backoff. Read back remote state after ambiguous mutations before retry. Before rerun reconcile newer-dev runs and served identity: Actions reruns retain SHA/ref. Reuse suitable checked/running descendants containing the contribution, never obsolete ancestors over a newer served build. Skipped obsolete publish requires descendant deployment evidence.
 
-Transient pipeline infrastructure failure permits at most two reruns for that failure/run. Save counter/attempt/reason before `gh run rerun`, read back and retain original wait budget across restart. Do not dispatch duplicate runs. Code/build/CI defects within assigned scope return Progress with saved/read-back feedback. External input/access/decision/dependency or exhausted recovery goes Blocked only when no independent work remains; pending delivery within valid budget is not a blocker. Dev/site can remain faulty while fixing/waiting; do not waive checks or claim Done.
-
-Before Blocked save/read back a separate owned record, resolve native destination and read back status:
-
-```text
-Blocked — <vướng mắc và output/AC/check bị chặn>.
-Cần <owner>: <hành động hoặc quyết định cụ thể>.
-Tiếp tục tại <live status trước Blocked> khi <điều kiện kiểm chứng được>.
-Bằng chứng: <link liên quan — chỉ khi cần>.
-```
-
-Reuse the owned record preserving history/human content. Missing ownership/write/read-back is reported as unconfirmed. Coordinator records resolution/evidence, remaining blockers and next action, then resumes actual previous phase; annotate an old record only when owned/authorized, otherwise backlink it. Restart resumes assessment/delivery and saved budget/output, not a second merge or new budget.
+Transient pipeline infrastructure failure permits at most two reruns for that failure/run. Save counter/attempt/reason before `gh run rerun`, read back and retain the original budget across restart. Reuse the existing run while delivery is pending and budget remains. At the deadline reread the run, deployed build and served identity, classify the remaining problem and use authorized recovery within its limits. Code/build/CI defects within scope return Progress with saved/read-back feedback. For an unresolved external input, decision, permission or operator action after bounded recovery, apply the [blocker gate and record](../../CONTRIBUTING.md#assigned-blockers-and-resume) before `In Review → Blocked`.
 
 ## Delivery handoff and Done
 
-All applicable independent review/local/PR-CI/merge/post-merge-publish/live-build/basic-load gates must pass. Docs-only output uses artifact/location/version/review/checks instead of app deployment; workflow/runtime activation needs evidence only when assigned. Pending QA/parent acceptance/private QA credentials alone does not prevent contribution completion, but missing required behavior or evidence does. Metadata/link verification can remain coordinator-owned when output is reviewable; report pending rather than verified.
+Require verified independent review, applicable local and PR checks, merge and the delivery evidence applicable to the output. Pending QA/parent acceptance/private QA credentials alone does not prevent contribution completion, but missing required behavior or evidence does. Metadata/link verification can remain coordinator-owned when output is reviewable; report pending rather than verified.
 
 Keep detailed implementation/verification in PR/artifact/evidence; Jira owns coordination/actions. Before Done save/read back this short delivery handoff, omitting inapplicable lines:
 
@@ -119,5 +110,7 @@ Cần <owner>: <hành động cụ thể — chỉ khi có>.
 ```
 
 Do not duplicate title/scope/AC/check lists or comment merely for push, CI, polls or transitions. Keep source/merge/build relation, run IDs, fetch times and actual coverage in linked evidence; distinguish producer contract revision/environment from landing output for API work. Preserve prior candidates and survey/feedback records. Only edit clearly owned records, retaining concurrent content; shared account identity alone is insufficient. Use ADF for REST v3 bodies and read back ambiguous writes before retry.
+
+For artifact delivery, record `Đã bàn giao artifact` with the accessible location and version, the applicable review/checks, and an activation link when required. Name any downstream operation assigned to QA or the coordinator with its input and evidence.
 
 Reread live contract/status/routing/dependencies before handoff, resolve native destination, transition and read back `Done`, then stop. Done confirms this contribution/delivery, not QA/product/parent acceptance. Later work requires a new assigned Subtask; do not reopen Done from a QA FAIL summary.

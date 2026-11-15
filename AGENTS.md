@@ -14,7 +14,7 @@ Design, Pen prototypes and design-system changes are maintained in planning unde
 
 ## Assigned execution
 
-For assigned Symphony work, follow the phase selected by [WORKFLOW.md](WORKFLOW.md). Ordinary requests, configuration/skill maintenance and direct local contracts do not activate tracker lifecycle actions; complete their requested output and delivery boundary.
+For assigned Symphony work, follow the phase selected by [WORKFLOW.md](WORKFLOW.md) and apply [blocker and resume rules](CONTRIBUTING.md#assigned-blockers-and-resume) when work is obstructed or resumed. Ordinary requests, configuration/skill maintenance and direct local contracts keep their assigned delivery boundary without tracker lifecycle actions.
 
 Choose local technical skills when useful; they do not own Symphony lifecycle or grant actions. Keep the explicit invocation policy for `implement`. API work applies [API consumer standards](docs/api-consumer.md). [Consumer guide](docs/symphony.md) covers offline validation and operator handoff; server provisioning/activation remain separate.
 
