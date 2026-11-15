@@ -1,6 +1,6 @@
 # Hướng dẫn công khai
 
-LANDING lưu hướng dẫn trong `src/content/user-guides/` dưới dạng Markdown và dựng route ở build time. Source planning được nhập tại revision [`ccf32983b8e984e3bac3855811e0e188c21914b8`](https://github.com/signapse-group/signapse-planing/tree/ccf32983b8e984e3bac3855811e0e188c21914b8); đó là bản nháp, không phải nội dung đã duyệt công khai. UI Documentation V1 tham chiếu PDF đính kèm SIGN-171, attachment 10269, được coordinator duyệt ngày 2026-11-13; SHA-256 `f2d500cb019195ee62a1ced9a466651bb65ed64b8887d2c0cd243c01fb4ca3c5`.
+LANDING lưu hướng dẫn trong `src/content/user-guides/` dưới dạng Markdown và dựng route ở build time. Các bản nguồn Planning được nhập từ revision [`ccf32983b8e984e3bac3855811e0e188c21914b8`](https://github.com/signapse-group/signapse-planing/tree/ccf32983b8e984e3bac3855811e0e188c21914b8) và [`e734b0cdd39d1551724636487ab68eca7690da57`](https://github.com/signapse-group/signapse-planing/tree/e734b0cdd39d1551724636487ab68eca7690da57); cả hai là bản nháp, không phải nội dung đã duyệt công khai. UI Documentation V1 tham chiếu PDF đính kèm SIGN-171, attachment 10269, được coordinator duyệt ngày 2026-11-13; SHA-256 `f2d500cb019195ee62a1ced9a466651bb65ed64b8887d2c0cd243c01fb4ca3c5`.
 
 ## Định danh và nguồn Markdown
 
@@ -21,9 +21,9 @@ Route công khai là `/{locale}/docs` cho mục lục và `/{locale}/docs/{artic
 
 Trạng thái collection hiện tại:
 
-- UG01–UG03 và UG10 VI/EN được nhập từ planning revision `ccf32983b8e984e3bac3855811e0e188c21914b8`.
-- Cả tám bản vẫn `draft`, chưa có mã duyệt và không sinh route công khai.
-- UG04–UG09 VI/EN cùng nội dung đã duyệt cho cả 20 bản chưa được cung cấp cho nhánh này.
+- UG01–UG03 và UG10 VI/EN được nhập từ planning revision `ccf32983b8e984e3bac3855811e0e188c21914b8`; UG08 và UG09 VI/EN được nhập từ `e734b0cdd39d1551724636487ab68eca7690da57`.
+- Mười hai bản có trong nhánh này vẫn `draft`, chưa có mã duyệt và không sinh route công khai.
+- UG04–UG07 VI/EN và nội dung đã duyệt cho đủ 20 bản chưa có trong nhánh này.
 - Coordinator giữ quyền đối soát nội dung, duyệt đúng phiên bản và quyết định phát hành. Không đổi trạng thái sang `approved` trước khi có hồ sơ duyệt cho đủ bộ.
 
 Trước lần build công khai đầu tiên, coordinator cần xác nhận đủ mười bài/hai mươi bản, một mã duyệt chung và phiên bản nội dung chính xác. Mỗi bản cần được đối soát với phiên bản ứng dụng đang triển khai để xác nhận nhãn giao diện, thao tác, quyền/quota, dữ liệu thiếu, lưu một phần, lệnh Telegram, định tuyến, gửi thử và cảnh báo thực tế. Planning draft ghi nhận các tham chiếu app lịch sử `ed7eaff` và `095f21b`; revision ứng dụng hiện hành và tài khoản QA chưa được cung cấp, nên chưa có bằng chứng rằng thao tác trong bài khớp app đang triển khai. Dữ liệu kiểm thử có kiểm soát chỉ dùng để kiểm tra điều kiện build/local, không chứng minh producer đã cung cấp tính năng.

@@ -2,6 +2,8 @@
 
 Repo này giữ implementation và bằng chứng chạy landing; baseline đã được người dùng xác nhận ngày **2026-10-04**. Kiểm chứng dựa trên task/AC và [contract tại planning](https://github.com/signapse-group/signapse-planing/blob/main/ui-design/references/landing/LANDING.md), code và tests trong repo. [README](../../README.md) mô tả cách chạy; [summary.json](summary.json) ghi kết quả local gần nhất.
 
+Ngày **2026-11-15**, Subtask **SIGN-605** tích hợp UG08/UG09 VI/EN từ Planning revision `e734b0cdd39d1551724636487ab68eca7690da57` dưới dạng draft. `pnpm check`, `pnpm lint`, `pnpm format:check` và `pnpm test:models` (**22/22**) pass. Browser wrapper trên source draft thật: **10/10 pass, không retry**, gồm locale, Docs keyboard/touch, axe/reflow và bốn URL bài trả 404, không lộ body. Fixture approved cục bộ để kiểm reader: **4/4 pass** cho render VI/EN, TOC, locale links, keyboard, axe và reflow 1440/768/375 px; placeholder UG04–UG07 chỉ có trong lượt fixture và đã xóa. Toàn bộ bốn bản vẫn `draft`, chưa có app revision để đối chiếu nhãn/thao tác và chưa được coordinator duyệt; batch 20 bản, dev deployment, QA ứng dụng và public release chưa hoàn tất. [Hồ sơ nội dung, kết quả và ảnh](user-guides/sign-605/README.md).
+
 Chọn required checks theo [CONTRIBUTING](../../CONTRIBUTING.md#verification-selection). Với assigned Symphony work, áp dụng phase được [WORKFLOW](../../WORKFLOW.md) chọn. Local fixture/runtime evidence chỉ chứng minh boundary đã kiểm, không thay hosted delivery, producer publication hay QA/owner acceptance.
 
 ## Checks và bằng chứng
