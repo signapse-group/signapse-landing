@@ -1,4 +1,4 @@
-import { DEFAULT_LOCALE, SUPPORTED_LOCALES, type Locale } from './config';
+import { DEFAULT_LOCALE, SUPPORTED_LOCALES, type Locale } from './config.ts';
 
 export const SUPPORTED_LANDING_HASHES = new Set([
   'top',

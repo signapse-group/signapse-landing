@@ -36,6 +36,17 @@ function isExpectedBlogError(url: string, status: number) {
   }
 }
 
+function isExpectedUnpublishedGuide(url: string, status: number) {
+  try {
+    return (
+      status === 404 &&
+      /^\/(?:vi|en)\/docs\/ug(?:0[1-9]|10)$/.test(new URL(url).pathname)
+    );
+  } catch {
+    return false;
+  }
+}
+
 function isExpectedBrokenImage(url: string) {
   try {
     return new URL(url).pathname === '/missing.png';
@@ -67,7 +78,8 @@ export const test = base.extend<{ runtimeEvidence: RuntimeEvidence }>({
         if (
           response.status() >= 400 &&
           !isContactRequest(response.url()) &&
-          !isExpectedBlogError(response.url(), response.status())
+          !isExpectedBlogError(response.url(), response.status()) &&
+          !isExpectedUnpublishedGuide(response.url(), response.status())
         ) {
           evidence.failedResponses.push({
             url: response.url(),

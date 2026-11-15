@@ -1,0 +1,116 @@
+{
+  "task": "SIGN-595",
+  "date": "2026-11-15",
+  "branch": "codex/sign-595-public-guides",
+  "sourceRevision": "ccf32983b8e984e3bac3855811e0e188c21914b8",
+  "designReference": {
+    "issue": "SIGN-171",
+    "attachment": "10269",
+    "approvedDate": "2026-11-13",
+    "sha256": "f2d500cb019195ee62a1ced9a466651bb65ed64b8887d2c0cd243c01fb4ca3c5"
+  },
+  "checks": {
+    "astroCheck": {
+      "command": "pnpm check",
+      "result": "pass",
+      "diagnostics": 0
+    },
+    "lint": {
+      "command": "pnpm lint",
+      "result": "pass"
+    },
+    "format": {
+      "command": "pnpm format:check",
+      "result": "pass"
+    },
+    "modelTests": {
+      "command": "pnpm test:models",
+      "result": "pass",
+      "passed": 21,
+      "failed": 0
+    },
+    "build": {
+      "command": "$SYMPHONY_LANDING_BROWSER_WRAPPER \"$PWD\" --retries=0",
+      "result": "pass",
+      "generatedDocumentationIndexes": [
+        "/vi/docs",
+        "/en/docs"
+      ],
+      "generatedGuideRoutes": 0,
+      "warnings": [
+        "Vite reports a minified chunk larger than 500 kB."
+      ]
+    },
+    "browser": {
+      "runner": "Chromium via SYMPHONY_LANDING_BROWSER_WRAPPER",
+      "command": "$SYMPHONY_LANDING_BROWSER_WRAPPER \"$PWD\" --retries=0",
+      "result": "pass",
+      "passed": 76,
+      "failed": 0,
+      "retries": 0,
+      "durationMs": 278634.62,
+      "startedAt": "2026-11-15T14:06:53.670Z",
+      "coverage": [
+        "VI/EN index and locale switch",
+        "Desktop/tablet sidebar and mobile Browse documents at 1440/768/375 px",
+        "Axe on Documentation pages and the Docs disclosure",
+        "Hover, keyboard, Escape, touch and direct Documentation navigation",
+        "No horizontal overflow",
+        "Unapproved /vi/docs/ug01 and /en/docs/ug10 return 404 without draft body"
+      ]
+    },
+    "publicOutputScan": {
+      "result": "pass",
+      "directory": "dist/client",
+      "markers": [
+        "Connect a Telegram bot",
+        "Đăng nhập Signapse",
+        "Tài khoản, quyền và hạn mức"
+      ],
+      "matches": 0
+    },
+    "sourceComparison": {
+      "result": "pass",
+      "pairs": 8,
+      "method": "Compared normalized body text with planning source after removing title/draft banner and converting relative article links to localized routes."
+    },
+    "protectedDataScan": {
+      "result": "pass",
+      "method": "Searched imported Markdown for likely personal email/phone, named sample-user and protected fixture markers; reviewed token references as instructions only.",
+      "matches": 0
+    }
+  },
+  "publicationReadiness": {
+    "importedGuides": [
+      "UG01",
+      "UG02",
+      "UG03",
+      "UG10"
+    ],
+    "importedLocaleVersions": 8,
+    "status": "draft",
+    "approvalReference": "",
+    "remainingGuideIds": [
+      "UG04",
+      "UG05",
+      "UG06",
+      "UG07",
+      "UG08",
+      "UG09"
+    ],
+    "fullApprovedBatchRequired": true,
+    "applicationRevision": "not supplied; current app labels/actions remain unverified",
+    "qaAccount": "not supplied",
+    "coordinatorApproval": "pending",
+    "publicRelease": "not performed; coordinator-owned"
+  },
+  "evidence": {
+    "browserResults": "browser-results.json",
+    "screenshots": [
+      "documentation-vi-desktop.png",
+      "documentation-en-mobile.png",
+      "docs-menu-vi.png"
+    ]
+  },
+  "deliveryBoundary": "Local implementation and evidence only; dev deployment and real application QA are not claimed."
+}
