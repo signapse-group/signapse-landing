@@ -148,8 +148,11 @@ test('requires exactly one approved VI and EN version of every guide', () => {
 test('keeps imported VI/EN pairs aligned, linked to the right locale, and marked draft', async () => {
   const directory = new URL('../../src/content/user-guides/', import.meta.url);
   const files = await readdir(directory);
+  const existingDraftFiles = files.filter((file) =>
+    draftedArticleIds.some((articleId) => file.startsWith(`${articleId}.`)),
+  );
 
-  assert.equal(files.length, draftedArticleIds.length * 2);
+  assert.equal(existingDraftFiles.length, draftedArticleIds.length * 2);
 
   for (const articleId of draftedArticleIds) {
     const translations = await Promise.all(
@@ -183,6 +186,125 @@ test('keeps imported VI/EN pairs aligned, linked to the right locale, and marked
           );
         }
         return headingShape;
+      }),
+    );
+
+    assert.deepEqual(translations[0], translations[1], `${articleId} headings`);
+  }
+});
+
+test('imports UG08 and UG09 as localized drafts with source-aligned structure', async () => {
+  const directory = new URL('../../src/content/user-guides/', import.meta.url);
+  const sourceRevision = 'e734b0cdd39d1551724636487ab68eca7690da57';
+  const titles = {
+    ug08: {
+      vi: 'Không thấy dữ liệu hoặc tính năng',
+      en: 'Missing data or features',
+    },
+    ug09: {
+      vi: 'Thuật ngữ và trạng thái dữ liệu',
+      en: 'Glossary and data states',
+    },
+  };
+  const requiredCopy = {
+    'ug08.vi': [
+      'Không thấy menu hoặc không dùng được thao tác',
+      'Mở được trang nhưng dữ liệu trống hoặc thiếu',
+      'Giao diện báo lỗi tải hoặc lưu',
+      'người đã cấp quyền',
+      'không gửi mật khẩu, token bot Telegram hoặc khóa truy cập',
+      'che thông tin riêng tư',
+    ],
+    'ug08.en': [
+      'A menu item is missing or an action is unavailable',
+      'The page opens, but data is empty or incomplete',
+      'The interface reports a loading or saving error',
+      'the person who granted you access',
+      'do not send passwords, Telegram bot tokens, or access keys',
+      'hide unnecessary private information',
+    ],
+    'ug09.vi': [
+      'Asset — Tài sản',
+      'Workspace — Không gian làm việc',
+      'Watchlist — Danh sách tài sản theo dõi',
+      'News Article — Bài viết tin tức',
+      'Event — Sự kiện',
+      'Theme — Chủ đề',
+      'Market Reaction — Phản ứng / Tác động thị trường',
+      'Narrative — Luận điểm thị trường',
+      'Evidence — Bằng chứng',
+      'Provenance — Khả năng truy nguồn',
+      'Múi giờ / UTC',
+      'Số 0',
+      'Không có quyền',
+      'Không thể tải',
+      'Token bot',
+      'Điểm nhận',
+      'Định tuyến',
+      'Ngôn ngữ mặc định Telegram',
+      'Tin nhắn thử',
+    ],
+    'ug09.en': [
+      '| Asset',
+      '| Workspace',
+      '| Watchlist',
+      '| News article',
+      '| Event',
+      '| Theme',
+      '| Market reaction',
+      '| Narrative',
+      '| Evidence',
+      '| Provenance',
+      'Time zone / UTC',
+      '| Zero',
+      'No permission',
+      'Could not load',
+      'Bot token',
+      '| Destination',
+      '| Routing',
+      'Default Telegram language',
+      'Test message',
+    ],
+  };
+
+  for (const articleId of ['ug08', 'ug09']) {
+    const translations = await Promise.all(
+      ['vi', 'en'].map(async (locale) => {
+        const markdown = await readFile(
+          new URL(`${articleId}.${locale}.md`, directory),
+          'utf8',
+        );
+        const [, frontmatter, body] = markdown.split(/^---\s*$/m);
+
+        assert.match(frontmatter, new RegExp(`^articleId: ${articleId}$`, 'm'));
+        assert.match(frontmatter, new RegExp(`^locale: ${locale}$`, 'm'));
+        assert.match(
+          frontmatter,
+          new RegExp(`^title: '${titles[articleId][locale]}'$`, 'm'),
+        );
+        assert.match(
+          frontmatter,
+          new RegExp(`^sourceRevision: ${sourceRevision}$`, 'm'),
+        );
+        assert.match(frontmatter, /^approvalStatus: draft$/m);
+        assert.match(frontmatter, /^approvalReference: (?:''|"")$/m);
+        assert.match(body.trimStart(), /^## /);
+
+        for (const phrase of requiredCopy[`${articleId}.${locale}`]) {
+          assert.ok(body.includes(phrase), `${articleId}.${locale}: ${phrase}`);
+        }
+
+        for (const match of body.matchAll(/\]\(([^)]+)\)/g)) {
+          assert.match(match[1], new RegExp(`^/${locale}/docs/ug\\d{2}$`));
+          const targetArticleId = match[1].split('/').at(-1);
+          assert.ok(articleIds.includes(targetArticleId));
+        }
+
+        return [...body.matchAll(/^(#{2,3}) /gm)].reduce((shape, heading) => {
+          const level = heading[1].length;
+          shape[level] = (shape[level] ?? 0) + 1;
+          return shape;
+        }, {});
       }),
     );
 

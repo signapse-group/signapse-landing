@@ -5,7 +5,7 @@
 - Nguồn Planning: revision `e734b0cdd39d1551724636487ab68eca7690da57`, sáu draft ở `docs/user-guide/{vi,en}/04-reading-the-overview.md`, `05-news-events-and-evidence.md` và `06-reading-market-charts.md`.
 - LANDING giữ ID ổn định `ug04`–`ug06`, locale `vi`/`en`, title trong frontmatter, body bắt đầu từ H2, `approvalStatus: draft` và `approvalReference: ''`.
 - Sáu body khớp nguồn sau khi bỏ H1/banner nháp, đổi 36 link nội bộ sang route theo locale, chuẩn hóa Markdown table và thêm câu retry có điều kiện trong UG05 theo AC5. Không đổi bố cục reader.
-- VI/EN có cấu trúc heading tương ứng và cùng các bước, điều kiện, trạng thái, ngoại lệ. Link UG08 là `/vi/docs/ug08` hoặc `/en/docs/ug08`; bài UG08 chưa được giao ở checkout này.
+- VI/EN có cấu trúc heading tương ứng và cùng các bước, điều kiện, trạng thái, ngoại lệ. Link UG08 là `/vi/docs/ug08` hoặc `/en/docs/ug08`. SIGN-605 đã bàn giao UG08/UG09 trên `dev` tại `1e83ee2a970c9c0d006b39fc0ba015c112034f0c` (Worker `8de48cec-ca71-45b4-9ba0-c4acbef599c3`), nhưng cả hai locale của UG08 vẫn là draft. Smoke của SIGN-605 xác nhận URL draft trả 404/no body; do bộ 20 bài chưa được duyệt, hiện chưa thể mở nội dung đích. Link path và locale đã được kiểm tra.
 
 ## Đối chiếu contract
 
@@ -16,10 +16,11 @@
 
 ## Trạng thái và giới hạn
 
-- Nội dung chưa được coordinator duyệt. Cả 14 bản hiện có vẫn là draft, chưa có approval reference; lần public đầu vẫn phải có đủ 10 bài/20 bản cùng một approval reference.
-- Chưa được cung cấp app revision, môi trường đang triển khai hoặc cách truy cập UI user-level được cho phép. Do đó nhãn, liên kết, quyền và thao tác ứng dụng trong draft chưa được đối chiếu; chưa kết luận chúng khớp hoặc khác ứng dụng.
-- UG08 thuộc SIGN-174/SIGN-605 và chưa được bàn giao. Link route đã dùng đúng ID/locale của reader; nội dung đích và việc mở được route chưa được kiểm tra.
-- Local fixture tạm thời dùng 20 mục được đánh dấu approved với approval reference giả để kiểm reader. Sáu bài UG04–UG06 render, có focus bằng bàn phím, TOC đúng locale, axe sạch và không tràn ngang ở 1440/768/375 px. Fixture và stub đã được xóa; metadata thật được khôi phục về draft trước lượt browser cuối.
+- Nội dung chưa được coordinator duyệt. Collection hiện có 18/20 bản và cả 18 vẫn là draft, chưa có approval reference; lần public đầu vẫn phải có đủ 10 bài/20 bản cùng một approval reference.
+- Môi trường đối chiếu được chỉ định là `https://dev-dashboard.signapse.cloud`, nhưng chưa có exact app revision hoặc UI user-level/evidence tương đương. Thử đọc origin từ worker session trả HTTP 429; browser tool cũng không truy cập được. Do đó nhãn, quyền, trạng thái và thao tác trong draft chưa được đối chiếu; chưa kết luận chúng khớp hoặc khác ứng dụng.
+- UG08 thuộc SIGN-174/SIGN-605 và đã được bàn giao trên dev dưới dạng draft. Link route dùng đúng ID/locale của reader; mở nội dung đích chưa thể kiểm tra vì approval gate cố ý giữ URL bài ở 404 cho đến khi đủ bộ 20 bản được duyệt.
+- Local fixture tạm thời dùng 20 mục được đánh dấu approved với approval reference giả để kiểm reader. Sáu bài UG04–UG06 render, có focus bằng bàn phím, TOC đúng locale, axe sạch và không tràn ngang ở 1440/768/375 px. Fixture và stub đã được xóa; metadata thật được khôi phục về draft trước lượt browser cuối. Đây là kiểm tra renderer, không xác nhận app hoặc công khai bài.
+- Sau khi đồng bộ base SIGN-605, lượt capture bổ sung **1/1** cho body UG04 VI desktop, UG05 EN desktop và UG06 VI mobile; report và ảnh được lưu trong README evidence. Capture đầu tiên kỳ vọng sai heading đầu bài UG05 (`Main reading flow` thay vì `Goal`); đã sửa harness tạm và chạy lại pass, không thay source content. UG07 placeholder và metadata approved fixture đã được khôi phục/xóa.
 - Browser cuối trên collection thật xác nhận index không liệt kê bài và cả sáu URL trực tiếp trả 404, không có body bài. Bởi vậy screenshots kèm theo chỉ là mục lục rỗng/menu dùng chung; không đại diện cho bài UG04–UG06 đã công khai.
 
 ## Fingerprint sáu file Markdown

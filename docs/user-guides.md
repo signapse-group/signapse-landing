@@ -1,6 +1,6 @@
 # Hướng dẫn công khai
 
-LANDING lưu hướng dẫn trong `src/content/user-guides/` dưới dạng Markdown và dựng route ở build time. Các bản nháp Planning đã nhập từ revision [`ccf32983b8e984e3bac3855811e0e188c21914b8`](https://github.com/signapse-group/signapse-planing/tree/ccf32983b8e984e3bac3855811e0e188c21914b8) (UG01–UG03, UG10) và [`e734b0cdd39d1551724636487ab68eca7690da57`](https://github.com/signapse-group/signapse-planing/tree/e734b0cdd39d1551724636487ab68eca7690da57) (UG04–UG06); các revision được giữ riêng trong frontmatter. Đây là bản nháp, không phải nội dung đã duyệt công khai. UI Documentation V1 tham chiếu PDF đính kèm SIGN-171, attachment 10269, được coordinator duyệt ngày 2026-11-13; SHA-256 `f2d500cb019195ee62a1ced9a466651bb65ed64b8887d2c0cd243c01fb4ca3c5`.
+LANDING lưu hướng dẫn trong `src/content/user-guides/` dưới dạng Markdown và dựng route ở build time. UG01–UG03 và UG10 lấy từ Planning revision [`ccf32983b8e984e3bac3855811e0e188c21914b8`](https://github.com/signapse-group/signapse-planing/tree/ccf32983b8e984e3bac3855811e0e188c21914b8); UG04–UG06 và UG08–UG09 lấy từ [`e734b0cdd39d1551724636487ab68eca7690da57`](https://github.com/signapse-group/signapse-planing/tree/e734b0cdd39d1551724636487ab68eca7690da57). Revision riêng được giữ trong frontmatter. Cả hai nguồn đều là bản nháp, không phải nội dung đã duyệt công khai. UI Documentation V1 tham chiếu PDF đính kèm SIGN-171, attachment 10269, được coordinator duyệt ngày 2026-11-13; SHA-256 `f2d500cb019195ee62a1ced9a466651bb65ed64b8887d2c0cd243c01fb4ca3c5`.
 
 ## Định danh và nguồn Markdown
 
@@ -17,15 +17,15 @@ Route công khai là `/{locale}/docs` cho mục lục và `/{locale}/docs/{artic
 
 ## Điều kiện sinh route
 
-`getPublicGuideEntries` chỉ trả nội dung khi collection có chính xác 20 entry, đủ mười ID × hai locale, mỗi entry mang trạng thái `approved`, không trùng, và tất cả dùng cùng `approvalReference` không rỗng. Nếu bộ thiếu, còn draft, trùng hoặc trộn mã duyệt, mục lục không có link bài và static route bài không được sinh. Vì vậy tám bản hiện tại không trở thành một lần phát hành riêng; URL trực tiếp của chúng trả 404.
+`getPublicGuideEntries` chỉ trả nội dung khi collection có chính xác 20 entry, đủ mười ID × hai locale, mỗi entry mang trạng thái `approved`, không trùng, và tất cả dùng cùng `approvalReference` không rỗng. Nếu bộ thiếu, còn draft, trùng hoặc trộn mã duyệt, mục lục không có link bài và static route bài không được sinh. Vì vậy 18 bản nháp hiện tại không trở thành một lần phát hành riêng; URL trực tiếp của chúng trả 404.
 
 Trạng thái collection hiện tại:
 
-- UG01–UG06 và UG10 có đủ 14 bản VI/EN; UG01–UG03, UG10 lấy từ revision `ccf32983b8e984e3bac3855811e0e188c21914b8`, UG04–UG06 từ `e734b0cdd39d1551724636487ab68eca7690da57`.
-- Cả 14 bản vẫn `draft`, chưa có mã duyệt và không sinh route công khai.
-- UG07–UG09 VI/EN cùng nội dung đã duyệt cho cả 20 bản chưa được cung cấp cho nhánh này.
+- UG01–UG03, UG10, UG04–UG06 và UG08–UG09 có đủ 18 bản VI/EN. UG01–UG03 và UG10 lấy từ revision `ccf32983b8e984e3bac3855811e0e188c21914b8`; UG04–UG06 và UG08–UG09 lấy từ `e734b0cdd39d1551724636487ab68eca7690da57`.
+- Cả 18 bản vẫn `draft`, chưa có mã duyệt và không sinh route công khai.
+- UG07 VI/EN và approval cho đủ 20 bản chưa được cung cấp cho nhánh này.
 - Coordinator giữ quyền đối soát nội dung, duyệt đúng phiên bản và quyết định phát hành. Không đổi trạng thái sang `approved` trước khi có hồ sơ duyệt cho đủ bộ.
 
-Trước lần build công khai đầu tiên, coordinator cần xác nhận đủ mười bài/hai mươi bản, một mã duyệt chung và phiên bản nội dung chính xác. Mỗi bản cần được đối soát với phiên bản ứng dụng đang triển khai để xác nhận nhãn giao diện, thao tác, quyền/quota, dữ liệu thiếu, lưu một phần, lệnh Telegram, định tuyến, gửi thử và cảnh báo thực tế. Planning draft ghi nhận các tham chiếu app lịch sử `ed7eaff` và `095f21b`; revision ứng dụng hiện hành, môi trường và cách truy cập UI user-level chưa được cung cấp, nên chưa có bằng chứng rằng thao tác trong bài khớp app đang triển khai. Các bản UG04–UG06 hiện nhập từ draft source revision `e734b0cdd39d1551724636487ab68eca7690da57`, với UG05 bổ sung retry có điều kiện theo AC5; nội dung này chưa được coordinator duyệt. Dữ liệu kiểm thử có kiểm soát chỉ dùng để kiểm tra điều kiện build/local, không chứng minh producer đã cung cấp tính năng.
+Trước lần build công khai đầu tiên, coordinator cần xác nhận đủ mười bài/hai mươi bản, một mã duyệt chung và phiên bản nội dung chính xác. Mỗi bản cần được đối soát với phiên bản ứng dụng đang triển khai để xác nhận nhãn giao diện, thao tác, quyền/quota và các trạng thái thực tế. Planning draft ghi nhận các tham chiếu app lịch sử `ed7eaff` và `095f21b`; exact revision ứng dụng và user-level access hoặc bằng chứng UI tương đương chưa được cung cấp, nên chưa có bằng chứng rằng thao tác trong bài khớp app đang triển khai. Các bản UG04–UG06 hiện nhập từ draft source revision `e734b0cdd39d1551724636487ab68eca7690da57`, với UG05 bổ sung retry có điều kiện theo AC5; UG08–UG09 cũng vẫn là draft. Dữ liệu kiểm thử có kiểm soát chỉ dùng để kiểm tra điều kiện build/local, không chứng minh producer đã cung cấp tính năng.
 
 Không đưa token, thông tin cá nhân hoặc dữ liệu kiểm thử cần bảo vệ vào Markdown, ảnh chụp hay yêu cầu hỗ trợ. Hướng dẫn Telegram yêu cầu che bot token và chỉ gửi thông tin chẩn đoán sau khi bỏ bí mật.
