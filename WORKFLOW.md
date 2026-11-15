@@ -20,6 +20,8 @@ You are executing Jira Subtask `{{ issue.identifier }}` in `signapse-group/signa
 - Follow-up attempt #{{ attempt }}
 {% endif %}
 
+Apply [blocker and resume rules](CONTRIBUTING.md#assigned-blockers-and-resume) when work is obstructed or resumed.
+
 Description:
 {% if issue.description and issue.description != "" %}
 {{ issue.description }}
