@@ -1,0 +1,1127 @@
+{
+  "task": "SIGN-595",
+  "command": "$SYMPHONY_LANDING_BROWSER_WRAPPER \"$PWD\" --retries=0",
+  "browser": "Chromium",
+  "startedAt": "2026-11-15T14:06:53.670Z",
+  "durationMs": 278634.62,
+  "summary": {
+    "passed": 76,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "retries": 0
+  },
+  "suites": [
+    {
+      "title": "audience-navigation.spec.ts",
+      "tests": [
+        {
+          "title": "vi repeated audience anchors restore the selected content",
+          "file": "audience-navigation.spec.ts",
+          "line": 4,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 1598,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "en repeated audience anchors restore the selected content",
+          "file": "audience-navigation.spec.ts",
+          "line": 4,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 1466,
+              "retries": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "blog.spec.ts",
+      "tests": [
+        {
+          "title": "public blog list is rendered by the server with metadata and route links",
+          "file": "blog.spec.ts",
+          "line": 27,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 1246,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "list HTML includes pagination and locale destinations when JavaScript is disabled",
+          "file": "blog.spec.ts",
+          "line": 102,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 570,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "an out-of-range list page redirects to the last available page",
+          "file": "blog.spec.ts",
+          "line": 158,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 257,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "public blog detail renders structured v1 content, metadata and locale navigation",
+          "file": "blog.spec.ts",
+          "line": 182,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 3018,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "approved Vietnamese blog detail content matches the desktop design",
+          "file": "blog.spec.ts",
+          "line": 345,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 439,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "public blog maps missing, private and failed API reads to safe HTTP states",
+          "file": "blog.spec.ts",
+          "line": 389,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 620,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "public blog list renders its empty state from a successful empty API response",
+          "file": "blog.spec.ts",
+          "line": 422,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 239,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "each new blog read reflects publish state from the server API",
+          "file": "blog.spec.ts",
+          "line": 445,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 393,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "blog layouts fit mobile, remain keyboard reachable and keep content ordered",
+          "file": "blog.spec.ts",
+          "line": 477,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 322,
+              "retries": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "deployment-revision.spec.ts",
+      "tests": [
+        {
+          "title": "built output identifies its source revision independently of the backend",
+          "file": "deployment-revision.spec.ts",
+          "line": 3,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 13,
+              "retries": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "documentation.spec.ts",
+      "tests": [
+        {
+          "title": "vi documentation index is localized and hides the unapproved draft batch",
+          "file": "documentation.spec.ts",
+          "line": 32,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 397,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "vi documentation index adapts contents navigation and passes axe",
+          "file": "documentation.spec.ts",
+          "line": 69,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 2079,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "vi Docs disclosure supports hover, keyboard and its Documentation link",
+          "file": "documentation.spec.ts",
+          "line": 113,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 3626,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "en documentation index is localized and hides the unapproved draft batch",
+          "file": "documentation.spec.ts",
+          "line": 32,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 414,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "en documentation index adapts contents navigation and passes axe",
+          "file": "documentation.spec.ts",
+          "line": 69,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 2062,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "en Docs disclosure supports hover, keyboard and its Documentation link",
+          "file": "documentation.spec.ts",
+          "line": 113,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 3793,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "unapproved direct guide URLs return 404 without source content",
+          "file": "documentation.spec.ts",
+          "line": 191,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 137,
+              "retries": 0
+            }
+          ]
+        }
+      ],
+      "suites": [
+        {
+          "title": "Documentation disclosure on touch devices",
+          "tests": [
+            {
+              "title": "vi compact Docs disclosure opens by touch",
+              "file": "documentation.spec.ts",
+              "line": 171,
+              "passed": true,
+              "attempts": [
+                {
+                  "project": "chromium",
+                  "status": "passed",
+                  "durationMs": 1067,
+                  "retries": 0
+                }
+              ]
+            },
+            {
+              "title": "en compact Docs disclosure opens by touch",
+              "file": "documentation.spec.ts",
+              "line": 171,
+              "passed": true,
+              "attempts": [
+                {
+                  "project": "chromium",
+                  "status": "passed",
+                  "durationMs": 1049,
+                  "retries": 0
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "footer-typography.spec.ts",
+      "tests": [
+        {
+          "title": "vi footer and headline sizes follow the approved scale with JavaScript",
+          "file": "footer-typography.spec.ts",
+          "line": 5,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 10548,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "vi footer and headline sizes follow the approved scale without JavaScript",
+          "file": "footer-typography.spec.ts",
+          "line": 5,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 7153,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "en footer and headline sizes follow the approved scale with JavaScript",
+          "file": "footer-typography.spec.ts",
+          "line": 5,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 10803,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "en footer and headline sizes follow the approved scale without JavaScript",
+          "file": "footer-typography.spec.ts",
+          "line": 5,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 7143,
+              "retries": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "landing.spec.ts",
+      "tests": [
+        {
+          "title": "vi public shell, localized metadata and Blog navigation",
+          "file": "landing.spec.ts",
+          "line": 154,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 1725,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "vi desktop keeps all four demos in readable responsive layout",
+          "file": "landing.spec.ts",
+          "line": 225,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 2074,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "vi tablet keeps all four demos in readable responsive layout",
+          "file": "landing.spec.ts",
+          "line": 225,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 2209,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "vi mobile keeps all four demos in readable responsive layout",
+          "file": "landing.spec.ts",
+          "line": 225,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 2205,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "vi short keeps all four demos in readable responsive layout",
+          "file": "landing.spec.ts",
+          "line": 225,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 2145,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "vi locale switch keeps supported query/hash and clears retired anchors",
+          "file": "landing.spec.ts",
+          "line": 301,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 10236,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "en public shell, localized metadata and Blog navigation",
+          "file": "landing.spec.ts",
+          "line": 154,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 1516,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "en desktop keeps all four demos in readable responsive layout",
+          "file": "landing.spec.ts",
+          "line": 225,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 2330,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "en tablet keeps all four demos in readable responsive layout",
+          "file": "landing.spec.ts",
+          "line": 225,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 2184,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "en mobile keeps all four demos in readable responsive layout",
+          "file": "landing.spec.ts",
+          "line": 225,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 2121,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "en short keeps all four demos in readable responsive layout",
+          "file": "landing.spec.ts",
+          "line": 225,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 2197,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "en locale switch keeps supported query/hash and clears retired anchors",
+          "file": "landing.spec.ts",
+          "line": 301,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 10999,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "desktop direct navigation reaches landing sections and locale disclosure supports Escape and outside clicks",
+          "file": "landing.spec.ts",
+          "line": 349,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 1488,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "mobile native navigation works by keyboard and capability details work by touch",
+          "file": "landing.spec.ts",
+          "line": 382,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 1824,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "five capability popovers open from keyboard, direct links and repeated anchors",
+          "file": "landing.spec.ts",
+          "line": 431,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 5306,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "story scroll and keyboard controls select all four steps without stealing focus",
+          "file": "landing.spec.ts",
+          "line": 474,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 1940,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "all demo progress follows playback and pauses for hidden pages and offscreen stages",
+          "file": "landing.spec.ts",
+          "line": 507,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 6313,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "demo selection restarts Graph and Telegram at the first frame",
+          "file": "landing.spec.ts",
+          "line": 558,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 18632,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "AI playback keeps both question rounds, streaming responses and looped composer visible",
+          "file": "landing.spec.ts",
+          "line": 588,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 12636,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "vi no JavaScript keeps useful Hero and four renderer proofs",
+          "file": "landing.spec.ts",
+          "line": 648,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 1106,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "en no JavaScript keeps useful Hero and four renderer proofs",
+          "file": "landing.spec.ts",
+          "line": 648,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 1078,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "reduced motion renders stable final proofs and static provider logos",
+          "file": "landing.spec.ts",
+          "line": 698,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 2599,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "WebGL unavailable preserves visible fallback and navigation",
+          "file": "landing.spec.ts",
+          "line": 726,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 1191,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "Hero WebGL interaction uses keyboard and pointer semantics when available",
+          "file": "landing.spec.ts",
+          "line": 760,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 2085,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "zoom, keyboard skip link and accessibility keep content reachable",
+          "file": "landing.spec.ts",
+          "line": 787,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 3139,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "fixed landing palette preserves stored dashboard theme preferences",
+          "file": "landing.spec.ts",
+          "line": 820,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 1493,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "without IntersectionObserver all previews stay in the natural document flow",
+          "file": "landing.spec.ts",
+          "line": 836,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 1273,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "Market Chart retains annotation, outcomes and its close-detail control",
+          "file": "landing.spec.ts",
+          "line": 873,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 1509,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "vi audience choices and every demo pass accessibility in both wide and mobile layouts",
+          "file": "landing.spec.ts",
+          "line": 898,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 12003,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "en audience choices and every demo pass accessibility in both wide and mobile layouts",
+          "file": "landing.spec.ts",
+          "line": 898,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 12373,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "root is a useful default landing entry with locale links and noindex",
+          "file": "landing.spec.ts",
+          "line": 930,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 1876,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "vi contact form exposes labels, validation, focus and localized copy",
+          "file": "landing.spec.ts",
+          "line": 957,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 2202,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "vi contact form sends the producer payload and accepts an empty 201",
+          "file": "landing.spec.ts",
+          "line": 1056,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 822,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "vi contact form submits values at the published producer limits",
+          "file": "landing.spec.ts",
+          "line": 1092,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 941,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "vi contact form keeps a useful email path when JavaScript is disabled",
+          "file": "landing.spec.ts",
+          "line": 1119,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 610,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "vi contact layout fits the assigned widths and 200% zoom",
+          "file": "landing.spec.ts",
+          "line": 1151,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 2423,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "en contact form exposes labels, validation, focus and localized copy",
+          "file": "landing.spec.ts",
+          "line": 957,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 2147,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "en contact form sends the producer payload and accepts an empty 201",
+          "file": "landing.spec.ts",
+          "line": 1056,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 858,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "en contact form submits values at the published producer limits",
+          "file": "landing.spec.ts",
+          "line": 1092,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 978,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "en contact form keeps a useful email path when JavaScript is disabled",
+          "file": "landing.spec.ts",
+          "line": 1119,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 544,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "en contact layout fits the assigned widths and 200% zoom",
+          "file": "landing.spec.ts",
+          "line": 1151,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 2261,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "contact API errors, unreadable bodies and network failure never lose input or retry",
+          "file": "landing.spec.ts",
+          "line": 1239,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 1894,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "contact submission in flight ignores repeated click and Enter submits",
+          "file": "landing.spec.ts",
+          "line": 1313,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 1140,
+              "retries": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "privacy-policy.spec.ts",
+      "tests": [
+        {
+          "title": "vi Privacy Policy renders, navigates and reflows with JavaScript",
+          "file": "privacy-policy.spec.ts",
+          "line": 55,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 3371,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "vi Privacy Policy renders, navigates and reflows without JavaScript",
+          "file": "privacy-policy.spec.ts",
+          "line": 55,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 2578,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "en Privacy Policy renders, navigates and reflows with JavaScript",
+          "file": "privacy-policy.spec.ts",
+          "line": 55,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 3240,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "en Privacy Policy renders, navigates and reflows without JavaScript",
+          "file": "privacy-policy.spec.ts",
+          "line": 55,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 2523,
+              "retries": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "public-shell.spec.ts",
+      "tests": [
+        {
+          "title": "vi shared public shell with JavaScript uses landing controls and links to the dashboard",
+          "file": "public-shell.spec.ts",
+          "line": 10,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 18263,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "vi shared public shell without JavaScript uses landing controls and links to the dashboard",
+          "file": "public-shell.spec.ts",
+          "line": 10,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 12853,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "en shared public shell with JavaScript uses landing controls and links to the dashboard",
+          "file": "public-shell.spec.ts",
+          "line": 10,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 12113,
+              "retries": 0
+            }
+          ]
+        },
+        {
+          "title": "en shared public shell without JavaScript uses landing controls and links to the dashboard",
+          "file": "public-shell.spec.ts",
+          "line": 10,
+          "passed": true,
+          "attempts": [
+            {
+              "project": "chromium",
+              "status": "passed",
+              "durationMs": 8803,
+              "retries": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

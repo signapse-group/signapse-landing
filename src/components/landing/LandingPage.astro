@@ -1,6 +1,8 @@
 ---
+import { getCollection } from 'astro:content';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n/messages';
+import { getPublicGuideMenu } from '@/lib/user-guides';
 import LandingActionButton from './LandingActionButton.astro';
 import LandingFooter from './LandingFooter.astro';
 import LandingCurrencyBackground from './LandingCurrencyBackground.astro';
@@ -26,6 +28,10 @@ interface Props {
 
 const { dictionary, locale } = Astro.props;
 const t = dictionary.landing;
+const guideGroups = getPublicGuideMenu(
+  await getCollection('userGuides'),
+  locale,
+);
 ---
 
 <div class="min-h-svh overflow-x-clip bg-background text-foreground">
@@ -35,7 +41,12 @@ const t = dictionary.landing;
   >
     {t.accessibility.skipToContent}
   </a>
-  <LandingHeader dictionary={dictionary} locale={locale} client:load />
+  <LandingHeader
+    dictionary={dictionary}
+    locale={locale}
+    guideGroups={guideGroups}
+    client:load
+  />
   <main id="main-content" tabindex="-1">
     <section
       id="top"

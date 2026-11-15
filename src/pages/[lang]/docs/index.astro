@@ -1,0 +1,124 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import BlogShell from '@/components/landing/BlogShell.astro';
+import DocumentationTableOfContents from '@/components/landing/DocumentationTableOfContents.astro';
+import landingStyles from '@/components/landing/landing-page.module.css';
+import styles from '@/components/landing/public-documentation.module.css';
+import { messages } from '@/i18n/messages';
+import { SUPPORTED_LOCALES, type Locale } from '@/i18n/config';
+import { withLocalePath } from '@/i18n/routing';
+import { getPublicGuideGroups, guideHref } from '@/lib/user-guides';
+
+export function getStaticPaths() {
+  return SUPPORTED_LOCALES.map((locale) => ({
+    params: { lang: locale },
+    props: { locale },
+  }));
+}
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const dictionary = messages[locale];
+const copy = dictionary.landing.documentation;
+const guides = await getCollection('userGuides');
+const groups = getPublicGuideGroups(guides, locale);
+const hasGuides = groups.some((group) => group.articles.length > 0);
+const canonicalPaths = {
+  vi: withLocalePath('/docs', 'vi'),
+  en: withLocalePath('/docs', 'en'),
+};
+---
+
+<BaseLayout
+  locale={locale}
+  {...copy.metadata}
+  canonicalPaths={canonicalPaths}
+  socialImageAlt={copy.metadata.socialImageAlt}
+>
+  <BlogShell
+    dictionary={dictionary}
+    locale={locale}
+    headerSurface="dark"
+    currentPath={Astro.url.pathname}
+    currentQuery={Astro.url.search.slice(1)}
+  >
+    <main id="main-content" tabindex="-1">
+      <header
+        class={`${styles.hero} ${landingStyles.darkSurface}`}
+        data-landing-surface="dark"
+      >
+        <div class={styles.heroInner}>
+          <nav
+            class={styles.breadcrumbs}
+            aria-label={dictionary.landing.blogPage.breadcrumbLabel}
+          >
+            <a href={withLocalePath('/', locale)}>
+              {dictionary.landing.blogPage.breadcrumbHome}
+            </a>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">{copy.pageTitle}</span>
+          </nav>
+          <h1 class={styles.title}>{copy.pageTitle}</h1>
+          <p class={styles.introduction}>{copy.introduction}</p>
+        </div>
+      </header>
+
+      <div class={styles.catalogLayout} data-landing-surface="light">
+        <DocumentationTableOfContents
+          dictionary={dictionary}
+          groups={groups}
+          locale={locale}
+        />
+        <section aria-label={copy.pageTitle}>
+          {!hasGuides && (
+            <p class={styles.emptyMessage} role="status">
+              {copy.emptyMessage}
+            </p>
+          )}
+          <div class={styles.overviewGroups}>
+            {groups.map((group) => (
+              <section
+                class={styles.overviewGroup}
+                data-docs-overview-group
+              >
+                <h2>{copy.groups[group.id]}</h2>
+                {group.articles.length > 0 && (
+                  <ul class={styles.overviewLinks}>
+                    {group.articles.map((article) => (
+                      <li>
+                        <a
+                          class={styles.overviewLink}
+                          href={guideHref(locale, article.data.articleId)}
+                        >
+                          <span>{article.data.title}</span>
+                          <svg
+                            aria-hidden="true"
+                            class={styles.overviewArrow}
+                            viewBox="0 0 24 24"
+                            fill="none"
+                          >
+                            <path
+                              d="M5 12h14m-6-6 6 6-6 6"
+                              stroke="currentColor"
+                              stroke-width="1.7"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                          </svg>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </section>
+            ))}
+          </div>
+        </section>
+      </div>
+    </main>
+  </BlogShell>
+</BaseLayout>

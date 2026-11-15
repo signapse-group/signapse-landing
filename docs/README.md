@@ -10,6 +10,7 @@ Repository Astro này giữ tài liệu **thực thi landing**: kiến trúc sou
 | [Shared standards](../CONTRIBUTING.md) | Coding conventions, verification selection, decisions và evidence. |
 | [API consumer standards](api-consumer.md) | Lookup producer contract, discrepancies và HTTP-boundary verification khi task phụ thuộc API. |
 | [Architecture](architecture.md)                                           | Ownership theo file, hydration, playback, renderer và assets.              |
+| [Public user guides](user-guides.md)                                       | Route, schema Markdown và điều kiện duyệt/phát hành bộ hướng dẫn VI/EN.   |
 | [Design rules](design.md)                                                 | Rule triển khai visual, tokens, typography, responsive, interaction và accessibility; tham chiếu contract tại planning. |
 | [Verification](verification/README.md)                                    | Ma trận kiểm tra trên Astro, lệnh tái tạo và bằng chứng hiện tại.          |
 | [Historical consumer evidence](verification/symphony-consumer-2026-10-07.md) | Kết quả consumer local ngày 2026-10-07; không phải procedure hiện hành. |

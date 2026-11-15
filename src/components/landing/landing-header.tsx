@@ -3,10 +3,12 @@ import { PUBLIC_APP_ORIGIN } from 'astro:env/client';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n/messages';
 import { withLocalePath } from '@/i18n/routing';
+import type { UserGuideMenuGroup } from '@/lib/user-guides';
 import { buttonVariants } from '@/components/ui/button';
 import styles from './landing-page.module.css';
 import { LandingHeaderShell } from './landing-header-shell';
 import { LandingLocaleLinks, LandingLocaleMenu } from './landing-locale-links';
+import { LandingDocsNavigation } from './landing-docs-navigation';
 import { LandingNavigationDisclosure } from './landing-navigation-disclosure';
 import { Logo } from '@/components/logo';
 
@@ -17,6 +19,7 @@ export function LandingHeader({
   currentPath,
   currentQuery = '',
   initialSurface = 'dark',
+  guideGroups = [],
 }: {
   dictionary: Dictionary;
   locale: Locale;
@@ -24,6 +27,7 @@ export function LandingHeader({
   currentPath?: string;
   currentQuery?: string;
   initialSurface?: 'dark' | 'light';
+  guideGroups?: UserGuideMenuGroup[];
 }) {
   const t = dictionary.landing;
   const dashboardHref = new URL(
@@ -32,11 +36,13 @@ export function LandingHeader({
   ).href;
   const sectionHref = (id: string) =>
     isLandingPage ? `#${id}` : `${withLocalePath('/', locale)}#${id}`;
-  const links = [
+  const linksBeforeDocs = [
     { href: sectionHref('capability-strip'), label: t.nav.features },
     { href: sectionHref('showcase'), label: t.nav.demos },
     { href: sectionHref('audiences'), label: t.nav.audiences },
     { href: withLocalePath('/blogs', locale), label: t.nav.blog },
+  ];
+  const linksAfterDocs = [
     { href: sectionHref('access'), label: t.nav.contact },
   ];
 
@@ -72,7 +78,22 @@ export function LandingHeader({
           aria-label={t.accessibility.headerNavigation}
           className="hidden items-center justify-center gap-2 text-sm text-muted-foreground xl:flex"
         >
-          {links.map((link) => (
+          {linksBeforeDocs.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className={styles.headerNavItem}
+            >
+              {link.label}
+            </a>
+          ))}
+          <LandingDocsNavigation
+            dictionary={dictionary}
+            guideGroups={guideGroups}
+            locale={locale}
+            currentPath={currentPath}
+          />
+          {linksAfterDocs.map((link) => (
             <a
               key={link.href}
               href={link.href}
@@ -129,7 +150,23 @@ export function LandingHeader({
                 aria-label={t.accessibility.headerNavigation}
                 className="flex flex-col gap-1"
               >
-                {links.map((link) => (
+                {linksBeforeDocs.map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    className={styles.headerMenuItem}
+                  >
+                    {link.label}
+                  </a>
+                ))}
+                <LandingDocsNavigation
+                  dictionary={dictionary}
+                  guideGroups={guideGroups}
+                  locale={locale}
+                  currentPath={currentPath}
+                  compact
+                />
+                {linksAfterDocs.map((link) => (
                   <a
                     key={link.href}
                     href={link.href}
