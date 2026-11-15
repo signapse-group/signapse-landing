@@ -51,12 +51,12 @@ For Symphony assignments, keep the live `dependencies` envelope from `jira_rest 
 
 Classify each point by what it needs:
 
-| Type | Resolution owner |
-| --- | --- |
+| Type        | Resolution owner                                                                                                                                                                                                                                         |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Requirement | Planning reconciles missing or conflicting scope, copy, design direction, expected behavior, AC or verification ownership. The coordinator or delegate decides. Landing completes routine details under [Design Handoff](docs/design.md#design-handoff). |
-| Tooling | Landing fixes its build/test/fixture defects within the assigned scope and grant. The tool owner handles the rest. |
-| Vận hành | An operator resolves unavailable access, credentials, runner, service, workspace, lease/recovery or required checkout instructions. The coordinator decides any expansion of the grant. |
-| Dependency | The producer delivers the assigned API, asset, fix or other input. Landing records the exact gap under [Jira dependency rules](#reading-jira-dependencies). The coordinator reconciles links and assignment as needed. |
+| Tooling     | Landing fixes its build/test/fixture defects within the assigned scope and grant. The tool owner handles the rest.                                                                                                                                       |
+| Vận hành    | An operator resolves unavailable access, credentials, runner, service, workspace, lease/recovery or required checkout instructions. The coordinator decides any expansion of the grant.                                                                  |
+| Dependency  | The producer delivers the assigned API, asset, fix or other input. Landing records the exact gap under [Jira dependency rules](#reading-jira-dependencies). The coordinator reconciles links and assignment as needed.                                   |
 
 Record each blocker as it arises and continue independent implementation, checks, evidence, cleanup and handoff preparation within the phase and grant. If the cause is unclear, record the observed symptom, hypothesis, next check and who can run it. Use the existing admission/retry mechanism for temporary resource contention. Include cleanup or residue when an operator must recover outside the grant. Pass inputs needed later to that phase's owner in the handoff. Fix in-scope defects in Progress, or return them there with findings from Review.
 
