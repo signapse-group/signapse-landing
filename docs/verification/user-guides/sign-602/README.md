@@ -1,30 +1,32 @@
-# SIGN-602 — UG07 source migration and local verification
-
-Checked on 2026-11-15 from branch `codex/sign-602-ug07`, based on `ab2178e3252ff6d37cf3e2acbe81f06773e55cae`.
+# SIGN-602 — UG07 source and verification
 
 ## Candidate
 
-The VI/EN drafts at planning revision `e734b0cdd39d1551724636487ab68eca7690da57` were moved to `src/content/user-guides/ug07.vi.md` and `ug07.en.md`. The Markdown body is preserved apart from removing the planning-only H1/draft banner and converting links to locale routes: UG02, UG03, UG05 and UG08.
+UG07 VI/EN is imported from Planning revision [`e734b0cdd39d1551724636487ab68eca7690da57`](https://github.com/signapse-group/signapse-planing/tree/e734b0cdd39d1551724636487ab68eca7690da57). The exact content revision is commit `0e8d163` on `codex/sign-602-ug07`, rebased onto `dev` `7b32cc7daec4db2afa97294b071537fef8436921`.
 
-Both entries use `articleId: ug07`, their matching locale, localized titles, the planning source revision, `approvalStatus: draft` and an empty `approvalReference`. The shared reader and publication gate are unchanged.
+| File | SHA-256 |
+| --- | --- |
+| `src/content/user-guides/ug07.vi.md` | `2104fa12bfa81b9900aafa6da7db6965e8dc3c5eb4986b72f292c06d13b6e972` |
+| `src/content/user-guides/ug07.en.md` | `34cb5ce6000a8705176a458d19f809d2340a5720adb06ac56bf2d6d33532ba67` |
 
-The source copy covers the SIGN-173 AC2–AC5 topics: account permission and AI-turn limits; the active workspace watchlist for new and follow-up questions; identifying absent or removed assets; checking supplied sources and distinguishing source statements from interpretation; asking about missing sources or scope; reopening saved history, its distinction from AI memory, and no new AI turn for reading; and recovery guidance for permission, quota, send and history errors with a UG08 link. The VI/EN heading structures and localized link targets are checked by `pnpm test:models`. The sample BTC question is explicitly illustrative; no AI response transcript or personal test data is included.
+Both files use `articleId: ug07`, their matching locale, localized title, the Planning source revision, `approvalStatus: draft` and an empty `approvalReference`. Links point to UG02, UG03, UG05 and UG08 at locale-specific reader URLs. The VI/EN headings and links are checked by `pnpm test:models`.
 
-## Verification
+The content covers permission and AI-turn limits; the current workspace watchlist for new and follow-up questions; recognizing absent or removed assets; checking provided sources and distinguishing source statements from interpretation; asking about missing sources or scope; and recovering from permission, quota, send and history errors. The sample BTC question is explicitly illustrative and contains no AI response transcript or personal test data.
 
-- `pnpm check` — pass, 82 files; 0 errors, warnings or hints.
-- `pnpm lint` — pass.
-- `pnpm format:check` — pass after formatting the two imported Markdown files. The first run identified only those files.
-- `pnpm test:models` — final run pass, 21/21. The first run exposed an outdated fixture variable after the metadata test was extended; that fixture was corrected before the passing run.
-- `"$SYMPHONY_LANDING_BROWSER_WRAPPER" "$PWD" --grep 'documentation|unapproved direct guide URLs|Docs disclosure'` — pass, 9/9 Chromium tests, no retries. Coverage includes VI/EN catalog gating, 1440/768/375 px layout and axe, keyboard/touch Docs navigation, and direct VI/EN UG07 URLs returning 404 without draft body text.
-- The wrapper build passed. It generated `/vi/docs` and `/en/docs` indexes, with no UG07 route because the complete set of 20 approved locale entries is not present. The existing Vite warning for chunks over 500 kB remains.
+At the start of the history instructions, both locales now state the AC4 prerequisite: the app version must support history and the current workspace must contain a saved conversation. They then explain reopening saved content, how it differs from AI memory and that reading it does not use an AI turn.
 
-The shared-host evidence ID is `SIGN-602.20261115T160759Z.0fZTRm`. The [browser results](browser-results.json) are retained here; the wrapper's build and browser logs remain in the shared-host evidence archive. The built candidate was based on the revision above with the listed files uncommitted; it was a local check, not a deployment.
+## Local verification
 
-The article itself is intentionally not rendered through a direct public route while it remains draft. Therefore keyboard/reflow/axe checks cover the shared catalog and navigation, not the unpublished UG07 article page.
+For page rendering only, a temporary complete 20-entry approval fixture was used in the assigned checkout. The wrapper restored the source Markdown after the run; all 20 tracked files remain `draft` with empty approval references. This fixture does not assert coordinator approval or publishable content.
 
-## Required before content approval
+The shared-host wrapper run `SIGN-602.20261116T035006Z.L0RXaC` passed **2/2 Chromium cases**, VI and EN. Each article rendered at 1440, 768 and 375 px; all six links were keyboard reachable and opened the matching locale routes; axe reported zero violations and no viewport overflow. There were no page errors, console errors or failed responses. Results: [Playwright report](article-render-browser-results.json), [VI runtime evidence](article-render-vi-evidence.json), [EN runtime evidence](article-render-en-evidence.json), [VI desktop capture](ug07-vi-1440-approved-fixture.png) and [EN mobile capture](ug07-en-375-approved-fixture.png).
 
-SIGN-173 and SIGN-170 require operation labels and steps to be checked against the exact app revision provided to users, with the environment/revision recorded. Neither the live SIGN-602 record nor its prior handoff comment identifies that app revision, environment or access. UI strings in the imported draft have not been verified against a deployed application. Coordinator action is required to identify the target revision and environment and provide access or assign an operator. After that input, compare the labels and steps, record any copy changes and the final content revision, then request coordinator approval for that exact revision. Keep UG07 draft and do not expose it until the V1 approval gate is satisfied for all 20 locale entries.
+The initial temporary harness had link-count expectations inconsistent with the source: six links total (UG02 twice, UG03 twice, UG05 and UG08). The harness was corrected without changing the guide, and the final run passed. The source was restored to draft after each fixture run.
 
-The local build and fixtures do not establish app feature availability, QA completion, deployed landing behavior or public release.
+On the draft-only candidate, `pnpm check` passed for 82 files with 0 diagnostics; `pnpm lint`, `pnpm format:check` and `pnpm test:models` passed (22/22). The wrapper run `SIGN-602.20261116T035421Z.BWHnub` built the normal draft collection and passed **10/10 Chromium cases** for VI/EN index gating, keyboard/touch navigation, axe/reflow and direct URLs. The build generated only `/vi/docs` and `/en/docs`; both UG07 direct URLs returned 404 without draft body text. Results: [browser-results.json](browser-results.json). The existing Vite warning for chunks over 500 kB remains. Earlier pre-sync report `SIGN-602.20261115T160759Z.0fZTRm` remains at [browser-before-base-sync.json](browser-before-base-sync.json).
+
+## Ownership and release
+
+Coordinator comment 11410 resumes LANDING from `Progress`, replaces the app-access blocker in comment 11399, asks that the AC4 condition precede the history steps and directs the app comparison to QA SIGN-604. LANDING has not verified dashboard labels or behavior; QA owns that comparison and its environment/revision evidence.
+
+UG07 remains draft. No coordinator content approval, V1 public release, hosted landing deployment or application QA is claimed by this local evidence. Keep the shared reader gate in force until the coordinator approves the complete 20-locale V1 batch.

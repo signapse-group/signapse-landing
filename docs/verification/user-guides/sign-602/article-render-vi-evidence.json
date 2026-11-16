@@ -1,0 +1,85 @@
+{
+  "pageErrors": [],
+  "consoleErrors": [],
+  "failedResponses": [],
+  "results": [
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "articleTitle": "Làm việc với Trợ lý AI",
+      "localizedLinks": [
+        "/vi/docs/ug02",
+        "/vi/docs/ug03",
+        "/vi/docs/ug03",
+        "/vi/docs/ug05",
+        "/vi/docs/ug02",
+        "/vi/docs/ug08"
+      ],
+      "focusedLinks": [
+        "Tài khoản, quyền và hạn mức",
+        "Workspace và watchlist",
+        "Workspace và watchlist",
+        "Đọc tin, sự kiện và bằng chứng",
+        "Tài khoản, quyền và hạn mức",
+        "Không thấy dữ liệu hoặc tính năng"
+      ],
+      "overflow": false,
+      "axeViolations": 0
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 900
+      },
+      "status": 200,
+      "articleTitle": "Làm việc với Trợ lý AI",
+      "localizedLinks": [
+        "/vi/docs/ug02",
+        "/vi/docs/ug03",
+        "/vi/docs/ug03",
+        "/vi/docs/ug05",
+        "/vi/docs/ug02",
+        "/vi/docs/ug08"
+      ],
+      "focusedLinks": [
+        "Tài khoản, quyền và hạn mức",
+        "Workspace và watchlist",
+        "Workspace và watchlist",
+        "Đọc tin, sự kiện và bằng chứng",
+        "Tài khoản, quyền và hạn mức",
+        "Không thấy dữ liệu hoặc tính năng"
+      ],
+      "overflow": false,
+      "axeViolations": 0
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 900
+      },
+      "status": 200,
+      "articleTitle": "Làm việc với Trợ lý AI",
+      "localizedLinks": [
+        "/vi/docs/ug02",
+        "/vi/docs/ug03",
+        "/vi/docs/ug03",
+        "/vi/docs/ug05",
+        "/vi/docs/ug02",
+        "/vi/docs/ug08"
+      ],
+      "focusedLinks": [
+        "Tài khoản, quyền và hạn mức",
+        "Workspace và watchlist",
+        "Workspace và watchlist",
+        "Đọc tin, sự kiện và bằng chứng",
+        "Tài khoản, quyền và hạn mức",
+        "Không thấy dữ liệu hoặc tính năng"
+      ],
+      "overflow": false,
+      "axeViolations": 0
+    }
+  ]
+}

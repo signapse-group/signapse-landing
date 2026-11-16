@@ -94,9 +94,10 @@ test('publishes the complete approved VI/EN batch in the four group order', () =
 });
 
 test('keeps every drafted guide private instead of publishing a partial batch', () => {
-  const draftGuides = makeEntries().filter(({ data }) =>
-    draftedArticleIds.includes(data.articleId),
-  );
+  const draftGuides = makeEntries().map((entry) => ({
+    ...entry,
+    data: { ...entry.data, approvalStatus: 'draft', approvalReference: '' },
+  }));
 
   assert.deepEqual(getPublicGuideEntries(draftGuides), []);
   assert.deepEqual(
