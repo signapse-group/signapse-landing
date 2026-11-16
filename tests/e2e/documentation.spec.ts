@@ -227,6 +227,6 @@ for (const locale of ['vi', 'en'] as const) {
         page.locator('[data-desktop-docs-contents] a[aria-current="page"]'),
       ).toHaveAttribute('href', path);
     }
-    expect((await page.goto(`/${locale}/docs/ug11`))?.status()).toBe(404);
+    expect((await page.request.get(`/${locale}/docs/ug11`)).status()).toBe(404);
   });
 }
