@@ -1,12 +1,25 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from './fixtures';
 
+const articleIds = [
+  'ug01',
+  'ug02',
+  'ug03',
+  'ug04',
+  'ug05',
+  'ug06',
+  'ug07',
+  'ug08',
+  'ug09',
+  'ug10',
+];
+
 for (const locale of ['vi', 'en'] as const) {
   const copy =
     locale === 'vi'
       ? {
           title: 'Tài liệu hướng dẫn',
-          empty: 'Chưa có hướng dẫn nào được công khai.',
+
           groups: [
             'Bắt đầu',
             'Theo dõi thị trường',
@@ -18,7 +31,7 @@ for (const locale of ['vi', 'en'] as const) {
         }
       : {
           title: 'Documentation',
-          empty: 'No guides are published yet.',
+
           groups: [
             'Getting started',
             'Following the market',
@@ -29,7 +42,7 @@ for (const locale of ['vi', 'en'] as const) {
           navigation: 'Landing navigation',
         };
 
-  test(`${locale} documentation index is localized and hides the unapproved draft batch`, async ({
+  test(`${locale} documentation index lists all ten approved guides`, async ({
     page,
   }) => {
     const response = await page.goto(`/${locale}/docs`);
@@ -39,13 +52,19 @@ for (const locale of ['vi', 'en'] as const) {
     await expect(
       page.getByRole('heading', { level: 1, name: copy.title }),
     ).toBeVisible();
-    await expect(page.getByRole('status')).toHaveText(copy.empty);
     const overviewHeadings = page.locator('[data-docs-overview-group] h2');
     await expect(overviewHeadings).toHaveCount(4);
     for (const group of copy.groups) {
       await expect(overviewHeadings.filter({ hasText: group })).toBeVisible();
     }
-    await expect(page.locator('a[href*="/docs/ug"]')).toHaveCount(0);
+    const links = page.locator(
+      '[data-docs-overview-group] a[href*="/docs/ug"]',
+    );
+    await expect(links).toHaveCount(articleIds.length);
+    const actual = await links.evaluateAll((items) =>
+      items.map((link) => link.getAttribute('href')).sort(),
+    );
+    expect(actual).toEqual(articleIds.map((id) => `/${locale}/docs/${id}`));
     await expect(
       page
         .locator('[data-landing-part="header"] a[aria-current="page"]')
@@ -84,7 +103,9 @@ for (const locale of ['vi', 'en'] as const) {
         await expect(mobileContents.locator('summary')).toHaveText(copy.browse);
         await mobileContents.locator('summary').click();
         await expect(mobileContents).toHaveAttribute('open', '');
-        await expect(mobileContents.getByRole('link')).toHaveCount(1);
+        await expect(mobileContents.getByRole('link')).toHaveCount(
+          articleIds.length + 1,
+        );
       }
 
       if (
@@ -129,7 +150,12 @@ for (const locale of ['vi', 'en'] as const) {
 
     await docsRoot.hover();
     await expect(panel).toBeVisible();
-    await expect(panel).toContainText(copy.empty);
+    const articleLinks = panel.locator('a[href*="/docs/ug"]');
+    await expect(articleLinks).toHaveCount(articleIds.length);
+    const actual = await articleLinks.evaluateAll((items) =>
+      items.map((link) => link.getAttribute('href')).sort(),
+    );
+    expect(actual).toEqual(articleIds.map((id) => `/${locale}/docs/${id}`));
     await expect(toggle).toHaveAttribute('aria-expanded', 'true');
     const accessibility = await new AxeBuilder({ page })
       .include('[data-docs-navigation]')
@@ -179,79 +205,28 @@ test.describe('Documentation disclosure on touch devices', () => {
 
       await toggle.tap();
       await expect(docs.locator('[data-docs-menu-panel]')).toBeVisible();
-      await expect(docs).toContainText(
-        locale === 'vi'
-          ? 'Chưa có hướng dẫn nào được công khai.'
-          : 'No guides are published yet.',
-      );
+      await expect(
+        docs.locator('[data-docs-menu-panel] a[href*="/docs/ug"]'),
+      ).toHaveCount(articleIds.length);
     });
   }
 });
 
-test('unapproved direct guide URLs return 404 without source content', async ({
-  page,
-}) => {
-  const unpublishedGuides = [
-    { locale: 'vi', articleId: 'ug01', bodyText: 'Đăng nhập Signapse' },
-    { locale: 'en', articleId: 'ug10', bodyText: 'Connect a Telegram bot' },
-    { locale: 'vi', articleId: 'ug04', bodyText: 'Nhận biết workspace' },
-    { locale: 'en', articleId: 'ug04', bodyText: 'Identify the workspace' },
-    { locale: 'vi', articleId: 'ug05', bodyText: 'Luồng đọc chính' },
-    { locale: 'en', articleId: 'ug05', bodyText: 'The main reading flow' },
-    { locale: 'vi', articleId: 'ug06', bodyText: 'Chọn đúng tài sản' },
-    { locale: 'en', articleId: 'ug06', bodyText: 'Choose the intended asset' },
-    {
-      locale: 'vi',
-      articleId: 'ug07',
-      bodyText: 'Nhắc tên tài sản trong câu hỏi hoặc hội thoại cũ',
-    },
-    {
-      locale: 'en',
-      articleId: 'ug07',
-      bodyText: 'Naming an asset in a question or old conversation',
-    },
-  ];
-
-  for (const guide of unpublishedGuides) {
-    const response = await page.goto(
-      `/${guide.locale}/docs/${guide.articleId}`,
-    );
-    expect(response?.status()).toBe(404);
-    await expect(page.locator('body')).not.toContainText(guide.bodyText);
-  }
-});
-
-test('unapproved UG08 and UG09 URLs stay private in both locales', async ({
-  page,
-}) => {
-  const unpublishedGuides = [
-    {
-      locale: 'vi',
-      articleId: 'ug08',
-      bodyText: 'Nhận biết tình huống không thấy dữ liệu',
-    },
-    {
-      locale: 'en',
-      articleId: 'ug08',
-      bodyText: 'Recognize missing data or unavailable features',
-    },
-    {
-      locale: 'vi',
-      articleId: 'ug09',
-      bodyText: 'Trang này giải thích cách dùng các thuật ngữ',
-    },
-    {
-      locale: 'en',
-      articleId: 'ug09',
-      bodyText: 'This page explains terms used in the guides',
-    },
-  ];
-
-  for (const guide of unpublishedGuides) {
-    const response = await page.goto(
-      `/${guide.locale}/docs/${guide.articleId}`,
-    );
-    expect(response?.status()).toBe(404);
-    await expect(page.locator('body')).not.toContainText(guide.bodyText);
-  }
-});
+for (const locale of ['vi', 'en'] as const) {
+  test(`${locale} approved guide URLs render with the current article in the table of contents`, async ({
+    page,
+  }) => {
+    for (const id of articleIds) {
+      const path = `/${locale}/docs/${id}`;
+      const response = await page.goto(path);
+      expect(response?.status(), path).toBe(200);
+      await expect(page.locator('html')).toHaveAttribute('lang', locale);
+      await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+      await expect(page.locator('main article h2').first()).toBeVisible();
+      await expect(
+        page.locator('[data-desktop-docs-contents] a[aria-current="page"]'),
+      ).toHaveAttribute('href', path);
+    }
+    expect((await page.goto(`/${locale}/docs/ug11`))?.status()).toBe(404);
+  });
+}

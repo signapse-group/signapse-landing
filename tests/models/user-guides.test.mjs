@@ -21,30 +21,7 @@ const articleIds = [
   'ug09',
   'ug10',
 ];
-const draftedArticleIds = [
-  'ug01',
-  'ug02',
-  'ug03',
-  'ug04',
-  'ug05',
-  'ug06',
-  'ug07',
-  'ug08',
-  'ug09',
-  'ug10',
-];
-const sourceRevisions = {
-  ug01: 'ccf32983b8e984e3bac3855811e0e188c21914b8',
-  ug02: 'ccf32983b8e984e3bac3855811e0e188c21914b8',
-  ug03: 'ccf32983b8e984e3bac3855811e0e188c21914b8',
-  ug04: 'e734b0cdd39d1551724636487ab68eca7690da57',
-  ug05: 'e734b0cdd39d1551724636487ab68eca7690da57',
-  ug06: 'e734b0cdd39d1551724636487ab68eca7690da57',
-  ug07: 'e734b0cdd39d1551724636487ab68eca7690da57',
-  ug08: 'e734b0cdd39d1551724636487ab68eca7690da57',
-  ug09: 'e734b0cdd39d1551724636487ab68eca7690da57',
-  ug10: 'ccf32983b8e984e3bac3855811e0e188c21914b8',
-};
+const sourceRevision = 'b1915e0c96e7e758326942dc081b1b9adc6574c0';
 
 function makeEntries() {
   return articleIds.flatMap((articleId) =>
@@ -54,7 +31,7 @@ function makeEntries() {
         articleId,
         locale,
         title: `${articleId} ${locale}`,
-        sourceRevision: sourceRevisions[articleId],
+        sourceRevision,
         approvalStatus: 'approved',
         approvalReference: 'SIGN-170 release approval',
       },
@@ -152,16 +129,16 @@ test('requires exactly one approved VI and EN version of every guide', () => {
   }
 });
 
-test('keeps imported VI/EN pairs aligned, linked to the right locale, and marked draft', async () => {
+test('keeps imported VI/EN pairs aligned, linked to the right locale, and approved as one batch', async () => {
   const directory = new URL('../../src/content/user-guides/', import.meta.url);
   const files = await readdir(directory);
-  const existingDraftFiles = files.filter((file) =>
-    draftedArticleIds.some((articleId) => file.startsWith(`${articleId}.`)),
+  const existingGuideFiles = files.filter((file) =>
+    articleIds.some((articleId) => file.startsWith(`${articleId}.`)),
   );
 
-  assert.equal(existingDraftFiles.length, draftedArticleIds.length * 2);
+  assert.equal(existingGuideFiles.length, articleIds.length * 2);
 
-  for (const articleId of draftedArticleIds) {
+  for (const articleId of articleIds) {
     const translations = await Promise.all(
       ['vi', 'en'].map(async (locale) => {
         const markdown = await readFile(
@@ -173,10 +150,13 @@ test('keeps imported VI/EN pairs aligned, linked to the right locale, and marked
         assert.match(frontmatter, new RegExp(`^locale: ${locale}$`, 'm'));
         assert.match(
           frontmatter,
-          new RegExp(`^sourceRevision: ${sourceRevisions[articleId]}$`, 'm'),
+          new RegExp(`^sourceRevision: ${sourceRevision}$`, 'm'),
         );
-        assert.match(frontmatter, /^approvalStatus: draft$/m);
-        assert.match(frontmatter, /^approvalReference: (?:''|"")$/m);
+        assert.match(frontmatter, /^approvalStatus: approved$/m);
+        assert.match(
+          frontmatter,
+          /^approvalReference: 'SIGN-170: coordinator 2026-11-16'$/m,
+        );
 
         const headingShape = [...body.matchAll(/^(#{2,3}) /gm)].reduce(
           (shape, heading) => {
@@ -220,9 +200,8 @@ test('keeps imported VI/EN pairs aligned, linked to the right locale, and marked
   }
 });
 
-test('imports UG08 and UG09 as localized drafts with source-aligned structure', async () => {
+test('imports UG08 and UG09 as localized guides with source-aligned structure', async () => {
   const directory = new URL('../../src/content/user-guides/', import.meta.url);
-  const sourceRevision = 'e734b0cdd39d1551724636487ab68eca7690da57';
   const titles = {
     ug08: {
       vi: 'Không thấy dữ liệu hoặc tính năng',
@@ -284,7 +263,7 @@ test('imports UG08 and UG09 as localized drafts with source-aligned structure', 
       '| Provenance',
       'Time zone / UTC',
       '| Zero',
-      'No permission',
+      'Access denied',
       'Could not load',
       'Bot token',
       '| Destination',
@@ -313,8 +292,11 @@ test('imports UG08 and UG09 as localized drafts with source-aligned structure', 
           frontmatter,
           new RegExp(`^sourceRevision: ${sourceRevision}$`, 'm'),
         );
-        assert.match(frontmatter, /^approvalStatus: draft$/m);
-        assert.match(frontmatter, /^approvalReference: (?:''|"")$/m);
+        assert.match(frontmatter, /^approvalStatus: approved$/m);
+        assert.match(
+          frontmatter,
+          /^approvalReference: 'SIGN-170: coordinator 2026-11-16'$/m,
+        );
         assert.match(body.trimStart(), /^## /);
 
         for (const phrase of requiredCopy[`${articleId}.${locale}`]) {
