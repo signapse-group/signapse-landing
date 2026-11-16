@@ -9,7 +9,7 @@ Tài liệu tổng hợp rule UI của `signapse-landing`, dùng khi triển kha
 | Nguồn | Vai trò |
 | --- | --- |
 | [Landing contract](https://github.com/signapse-group/signapse-planing/blob/main/ui-design/references/landing/LANDING.md) | Quy tắc được duy trì tại planning về composition, navigation, demo, responsive và accessibility. |
-| Ticket nguồn Jira được Subtask dẫn tới | File design đã duyệt, phiên bản, phạm vi áp dụng và phần visual/tương tác đã chốt. |
+| Ticket nguồn Jira được Subtask dẫn tới | PNG thiết kế đã duyệt và mục `Design` ghi phiên bản, phạm vi áp dụng và phần visual/tương tác đã chốt. |
 | [ADR-0011](https://github.com/signapse-group/signapse-planing/blob/main/docs/adr/landing/0011-fixed-branded-public-landing-composition.md) và [ADR-0010](https://github.com/signapse-group/signapse-planing/blob/main/docs/adr/landing/0010-use-progressive-webgl-for-landing-context-figure.md) | Palette cố định và progressive WebGL. |
 | [Landing composition](../src/components/landing/LandingPage.astro), [landing CSS](../src/components/landing/landing-page.module.css), [showcase CSS](../src/components/landing/landing-feature-showcase.module.css) | Bố cục, token và treatment đang triển khai. |
 | [Global styles](../src/styles/global.css), [font faces](../src/styles/fonts.css), [dictionary](../src/i18n/messages.ts) | Font roles, copy VI/EN, fixture labels, accessible text và metadata. |
@@ -21,9 +21,11 @@ Tài liệu tổng hợp rule UI của `signapse-landing`, dùng khi triển kha
 
 Quyết định ngày 2026-10-30: requirement/AC rõ cùng một design đại diện hoặc pattern hiện có được chấp nhận là đủ định hướng để triển khai. Đây là hướng dẫn thực thi cho worker landing; không cần fetch policy Planning để dùng quy tắc này.
 
-- Mỗi phiên Survey/Implement/Review, kể cả resume, đọc live parent/contract và theo tham chiếu design của Subtask tới ticket nguồn Jira. Mở attachment đã duyệt chỉ định trong mục `Design`, xác nhận phiên bản, phạm vi và phần visual/tương tác cố định. Với phần kế thừa, dùng pattern được contract xác định. Link Pen/GitHub bổ sung ngữ cảnh.
+- Mỗi phiên Survey/Implement/Review, kể cả resume, đọc live parent/contract. Khi phạm vi dựa vào design đã duyệt, kể cả design dùng chung, theo tham chiếu của Subtask tới ticket nguồn Jira. Từ mục `Design`, chọn PNG đang áp dụng theo phần UI, viewport hoặc trạng thái được giao. Đối chiếu tên file và attachment ID với danh sách attachment của ticket nguồn.
+- Dùng `downloadJiraIssueAttachment` tải đúng ID vào thư mục tạm riêng của lượt chạy. Nếu connector trả `downloadCommand`, thực thi lệnh tải trong cùng lượt gọi công cụ và chỉ ghi kết quả cần thiết vào log. Dùng `view_image` mở chính tệp PNG vừa tải, rồi đối chiếu phần visual/tương tác cố định. Khi bàn giao hoặc review, ghi ticket nguồn, ảnh đã mở và chi tiết đã đối chiếu.
+- Khi không có ảnh đã duyệt áp dụng và pattern hiện có đủ định hướng, dùng pattern và phần áp dụng đã ghi trong contract.
 - Landing tự hoàn thiện spacing, reflow/responsive, loading/empty/error và chi tiết chưa vẽ bằng tokens/components/shared patterns trong scope/AC đã chốt. Không cần approval riêng cho từng chi tiết; giữ composition/brand, hành vi, quyền, copy VI/EN, accessibility và các phần đã chốt. State chưa vẽ vẫn phải có hành vi đúng.
-- Khi attachment đã duyệt thiếu, không mở được hoặc mâu thuẫn với AC, nêu đầu ra hoặc phép kiểm bị ảnh hưởng và chuyển coordinator xử lý theo [quy ước blocker](../CONTRIBUTING.md#assigned-blockers-and-resume). Làm tiếp phần độc lập. Kiểm các state và viewport bị ảnh hưởng trên bản render theo AC và standards.
+- Khi PNG bắt buộc thiếu, không mở được hoặc mâu thuẫn với AC, nêu ticket nguồn và AC, đầu ra hoặc phép kiểm bị ảnh hưởng. Chuyển coordinator xử lý theo [quy ước blocker](../CONTRIBUTING.md#assigned-blockers-and-resume) và làm tiếp phần độc lập. Kiểm các state và viewport bị ảnh hưởng trên bản render theo AC và standards.
 - Trước In Review/merge/Done, kiểm UI render theo AC, hướng thiết kế, phần cố định, usability, responsive, accessibility và fallback; giữ ảnh/evidence vùng bị ảnh hưởng gắn candidate và nguồn đại diện/pattern. Reviewer đánh giá độc lập, tái dùng evidence còn đúng. Defect hoặc thiếu evidence cần thiết vẫn chặn handoff; khác biệt pixel chưa được chỉ định chính xác và chi tiết trong quyền landing không tự chặn.
 - Khi hướng/constraint đã chốt đổi, đối soát checks/evidence/review bị ảnh hưởng. Không đổi requirement/expected theo code; hoàn thiện chi tiết trong quyền được giao không đòi sửa mockup trước. Tác vụ trực tiếp giữ boundary đã giao, không tự kích hoạt Jira lifecycle.
 
