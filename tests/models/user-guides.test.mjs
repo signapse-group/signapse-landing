@@ -21,8 +21,24 @@ const articleIds = [
   'ug09',
   'ug10',
 ];
-const draftedArticleIds = ['ug01', 'ug02', 'ug03', 'ug10'];
-const sourceRevision = 'ccf32983b8e984e3bac3855811e0e188c21914b8';
+const draftedArticleIds = [
+  'ug01',
+  'ug02',
+  'ug03',
+  'ug04',
+  'ug05',
+  'ug06',
+  'ug10',
+];
+const sourceRevisions = {
+  ug01: 'ccf32983b8e984e3bac3855811e0e188c21914b8',
+  ug02: 'ccf32983b8e984e3bac3855811e0e188c21914b8',
+  ug03: 'ccf32983b8e984e3bac3855811e0e188c21914b8',
+  ug04: 'e734b0cdd39d1551724636487ab68eca7690da57',
+  ug05: 'e734b0cdd39d1551724636487ab68eca7690da57',
+  ug06: 'e734b0cdd39d1551724636487ab68eca7690da57',
+  ug10: 'ccf32983b8e984e3bac3855811e0e188c21914b8',
+};
 
 function makeEntries() {
   return articleIds.flatMap((articleId) =>
@@ -32,7 +48,7 @@ function makeEntries() {
         articleId,
         locale,
         title: `${articleId} ${locale}`,
-        sourceRevision,
+        sourceRevision: sourceRevisions[articleId] ?? sourceRevisions.ug01,
         approvalStatus: 'approved',
         approvalReference: 'SIGN-170 release approval',
       },
@@ -71,19 +87,21 @@ test('publishes the complete approved VI/EN batch in the four group order', () =
   assert.deepEqual(paths[1].params, { lang: 'en', articleId: 'ug01' });
 });
 
-test('keeps four drafted guides private instead of publishing them as a partial batch', () => {
-  const fourGuides = makeEntries().filter(({ data }) =>
-    ['ug01', 'ug02', 'ug03', 'ug10'].includes(data.articleId),
+test('keeps seven drafted guides private instead of publishing them as a partial batch', () => {
+  const sevenGuides = makeEntries().filter(({ data }) =>
+    draftedArticleIds.includes(data.articleId),
   );
 
-  assert.deepEqual(getPublicGuideEntries(fourGuides), []);
+  assert.deepEqual(getPublicGuideEntries(sevenGuides), []);
   assert.deepEqual(
-    getPublicGuideGroups(fourGuides, 'vi').map(({ articles }) => articles),
+    getPublicGuideGroups(sevenGuides, 'vi').map(({ articles }) => articles),
     [[], [], [], []],
   );
-  assert.deepEqual(getPublicGuidePaths(fourGuides), []);
+  assert.deepEqual(getPublicGuidePaths(sevenGuides), []);
   assert.equal(guideHref('vi', 'ug01'), '/vi/docs/ug01');
   assert.equal(guideHref('en', 'ug01'), '/en/docs/ug01');
+  assert.equal(guideHref('vi', 'ug04'), '/vi/docs/ug04');
+  assert.equal(guideHref('en', 'ug06'), '/en/docs/ug06');
 });
 
 test('requires exactly one approved VI and EN version of every guide', () => {
@@ -127,7 +145,7 @@ test('requires exactly one approved VI and EN version of every guide', () => {
   }
 });
 
-test('keeps the imported VI/EN article pairs structurally aligned and marked draft', async () => {
+test('keeps imported VI/EN pairs aligned, linked to the right locale, and marked draft', async () => {
   const directory = new URL('../../src/content/user-guides/', import.meta.url);
   const files = await readdir(directory);
   const existingDraftFiles = files.filter((file) =>
@@ -148,7 +166,7 @@ test('keeps the imported VI/EN article pairs structurally aligned and marked dra
         assert.match(frontmatter, new RegExp(`^locale: ${locale}$`, 'm'));
         assert.match(
           frontmatter,
-          new RegExp(`^sourceRevision: ${sourceRevision}$`, 'm'),
+          new RegExp(`^sourceRevision: ${sourceRevisions[articleId]}$`, 'm'),
         );
         assert.match(frontmatter, /^approvalStatus: draft$/m);
         assert.match(frontmatter, /^approvalReference: (?:''|"")$/m);
