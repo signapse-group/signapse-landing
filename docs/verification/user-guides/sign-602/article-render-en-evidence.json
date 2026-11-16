@@ -1,0 +1,85 @@
+{
+  "pageErrors": [],
+  "consoleErrors": [],
+  "failedResponses": [],
+  "results": [
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "articleTitle": "Working with the AI Assistant",
+      "localizedLinks": [
+        "/en/docs/ug02",
+        "/en/docs/ug03",
+        "/en/docs/ug03",
+        "/en/docs/ug05",
+        "/en/docs/ug02",
+        "/en/docs/ug08"
+      ],
+      "focusedLinks": [
+        "Account, permissions and limits",
+        "Workspaces and watchlists",
+        "Workspaces and watchlists",
+        "Reading news, events and evidence",
+        "Account, permissions and limits",
+        "Missing data or features"
+      ],
+      "overflow": false,
+      "axeViolations": 0
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 900
+      },
+      "status": 200,
+      "articleTitle": "Working with the AI Assistant",
+      "localizedLinks": [
+        "/en/docs/ug02",
+        "/en/docs/ug03",
+        "/en/docs/ug03",
+        "/en/docs/ug05",
+        "/en/docs/ug02",
+        "/en/docs/ug08"
+      ],
+      "focusedLinks": [
+        "Account, permissions and limits",
+        "Workspaces and watchlists",
+        "Workspaces and watchlists",
+        "Reading news, events and evidence",
+        "Account, permissions and limits",
+        "Missing data or features"
+      ],
+      "overflow": false,
+      "axeViolations": 0
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 900
+      },
+      "status": 200,
+      "articleTitle": "Working with the AI Assistant",
+      "localizedLinks": [
+        "/en/docs/ug02",
+        "/en/docs/ug03",
+        "/en/docs/ug03",
+        "/en/docs/ug05",
+        "/en/docs/ug02",
+        "/en/docs/ug08"
+      ],
+      "focusedLinks": [
+        "Account, permissions and limits",
+        "Workspaces and watchlists",
+        "Workspaces and watchlists",
+        "Reading news, events and evidence",
+        "Account, permissions and limits",
+        "Missing data or features"
+      ],
+      "overflow": false,
+      "axeViolations": 0
+    }
+  ]
+}

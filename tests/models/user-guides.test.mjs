@@ -28,6 +28,9 @@ const draftedArticleIds = [
   'ug04',
   'ug05',
   'ug06',
+  'ug07',
+  'ug08',
+  'ug09',
   'ug10',
 ];
 const sourceRevisions = {
@@ -37,6 +40,9 @@ const sourceRevisions = {
   ug04: 'e734b0cdd39d1551724636487ab68eca7690da57',
   ug05: 'e734b0cdd39d1551724636487ab68eca7690da57',
   ug06: 'e734b0cdd39d1551724636487ab68eca7690da57',
+  ug07: 'e734b0cdd39d1551724636487ab68eca7690da57',
+  ug08: 'e734b0cdd39d1551724636487ab68eca7690da57',
+  ug09: 'e734b0cdd39d1551724636487ab68eca7690da57',
   ug10: 'ccf32983b8e984e3bac3855811e0e188c21914b8',
 };
 
@@ -48,7 +54,7 @@ function makeEntries() {
         articleId,
         locale,
         title: `${articleId} ${locale}`,
-        sourceRevision: sourceRevisions[articleId] ?? sourceRevisions.ug01,
+        sourceRevision: sourceRevisions[articleId],
         approvalStatus: 'approved',
         approvalReference: 'SIGN-170 release approval',
       },
@@ -87,17 +93,18 @@ test('publishes the complete approved VI/EN batch in the four group order', () =
   assert.deepEqual(paths[1].params, { lang: 'en', articleId: 'ug01' });
 });
 
-test('keeps seven drafted guides private instead of publishing them as a partial batch', () => {
-  const sevenGuides = makeEntries().filter(({ data }) =>
-    draftedArticleIds.includes(data.articleId),
-  );
+test('keeps every drafted guide private instead of publishing a partial batch', () => {
+  const draftGuides = makeEntries().map((entry) => ({
+    ...entry,
+    data: { ...entry.data, approvalStatus: 'draft', approvalReference: '' },
+  }));
 
-  assert.deepEqual(getPublicGuideEntries(sevenGuides), []);
+  assert.deepEqual(getPublicGuideEntries(draftGuides), []);
   assert.deepEqual(
-    getPublicGuideGroups(sevenGuides, 'vi').map(({ articles }) => articles),
+    getPublicGuideGroups(draftGuides, 'vi').map(({ articles }) => articles),
     [[], [], [], []],
   );
-  assert.deepEqual(getPublicGuidePaths(sevenGuides), []);
+  assert.deepEqual(getPublicGuidePaths(draftGuides), []);
   assert.equal(guideHref('vi', 'ug01'), '/vi/docs/ug01');
   assert.equal(guideHref('en', 'ug01'), '/en/docs/ug01');
   assert.equal(guideHref('vi', 'ug04'), '/vi/docs/ug04');
@@ -183,6 +190,26 @@ test('keeps imported VI/EN pairs aligned, linked to the right locale, and marked
           assert.match(
             match[1],
             new RegExp(`^/${locale}/docs/ug\\d{2}(?:#.*)?$`),
+          );
+        }
+        if (articleId === 'ug07') {
+          const condition =
+            locale === 'vi'
+              ? 'Nếu phiên bản ứng dụng bạn đang sử dụng hỗ trợ lịch sử hội thoại và workspace hiện tại có hội thoại đã lưu, bạn có thể tìm và mở lại hội thoại như sau.'
+              : 'If the app version you are using supports conversation history and your current workspace has saved conversations, you can find and reopen one as follows.';
+          const instruction =
+            locale === 'vi'
+              ? 'Mở **Lịch sử hội thoại**'
+              : 'Open **Conversation history**';
+          const conditionIndex = body.indexOf(condition);
+          const instructionIndex = body.indexOf(instruction);
+
+          assert.notEqual(conditionIndex, -1);
+          assert.notEqual(instructionIndex, -1);
+          assert.ok(conditionIndex < instructionIndex);
+          assert.match(
+            body.slice(conditionIndex + condition.length, instructionIndex),
+            /^\s*$/,
           );
         }
         return headingShape;

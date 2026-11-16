@@ -200,6 +200,16 @@ test('unapproved direct guide URLs return 404 without source content', async ({
     { locale: 'en', articleId: 'ug05', bodyText: 'The main reading flow' },
     { locale: 'vi', articleId: 'ug06', bodyText: 'Chọn đúng tài sản' },
     { locale: 'en', articleId: 'ug06', bodyText: 'Choose the intended asset' },
+    {
+      locale: 'vi',
+      articleId: 'ug07',
+      bodyText: 'Nhắc tên tài sản trong câu hỏi hoặc hội thoại cũ',
+    },
+    {
+      locale: 'en',
+      articleId: 'ug07',
+      bodyText: 'Naming an asset in a question or old conversation',
+    },
   ];
 
   for (const guide of unpublishedGuides) {
