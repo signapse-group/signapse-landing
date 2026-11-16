@@ -1,0 +1,79 @@
+{
+  "checkedAt": "2026-11-16T02:53:27.834Z",
+  "sourceCommitBeforeEvidenceUpdate": "3063a12ed635878bc1b969d58a03dc6ceb9162b8",
+  "guideSourceRevision": "e734b0cdd39d1551724636487ab68eca7690da57",
+  "fixture": "All real guide entries temporarily approved with one fixture-only reference; temporary UG07 VI/EN placeholders completed the 20-entry batch. All metadata and placeholders were restored/removed before the draft-only build.",
+  "checks": [
+    {
+      "kind": "target",
+      "locale": "vi",
+      "path": "/vi/docs/ug08",
+      "status": 200,
+      "title": "Không thấy dữ liệu hoặc tính năng"
+    },
+    {
+      "kind": "source-link",
+      "locale": "vi",
+      "articleId": "ug04",
+      "path": "/vi/docs/ug04",
+      "status": 200,
+      "ug08Href": "/vi/docs/ug08"
+    },
+    {
+      "kind": "source-link",
+      "locale": "vi",
+      "articleId": "ug05",
+      "path": "/vi/docs/ug05",
+      "status": 200,
+      "ug08Href": "/vi/docs/ug08"
+    },
+    {
+      "kind": "source-link",
+      "locale": "vi",
+      "articleId": "ug06",
+      "path": "/vi/docs/ug06",
+      "status": 200,
+      "ug08Href": "/vi/docs/ug08"
+    },
+    {
+      "kind": "target",
+      "locale": "en",
+      "path": "/en/docs/ug08",
+      "status": 200,
+      "title": "Missing data or features"
+    },
+    {
+      "kind": "source-link",
+      "locale": "en",
+      "articleId": "ug04",
+      "path": "/en/docs/ug04",
+      "status": 200,
+      "ug08Href": "/en/docs/ug08"
+    },
+    {
+      "kind": "source-link",
+      "locale": "en",
+      "articleId": "ug05",
+      "path": "/en/docs/ug05",
+      "status": 200,
+      "ug08Href": "/en/docs/ug08"
+    },
+    {
+      "kind": "source-link",
+      "locale": "en",
+      "articleId": "ug06",
+      "path": "/en/docs/ug06",
+      "status": 200,
+      "ug08Href": "/en/docs/ug08"
+    }
+  ],
+  "guideSha256": {
+    "ug04.en.md": "cd54c675b269fb7fdb6067c6dc1503943d19dcda86c296a3a9b7284bb1710f31",
+    "ug04.vi.md": "447e2968567881bf81a7e4087ff4975538cda7e299230f75e2d831b4555711e8",
+    "ug05.en.md": "341baccaab79c10d0bceeb51dc3bbb44a2a133224f976a69917322639e11a7d1",
+    "ug05.vi.md": "70b501677616accbe4cafee92abd46b95c31679a8bd4c28a672724a01cc63ade",
+    "ug06.en.md": "343d31a524fdd345fcac2786254b0e9bfcc5efac01d5e9bea516d7f0ec530345",
+    "ug06.vi.md": "eda08efeefabfebbb516d404f2c1fac709ccfcf59a4bda693a871c7951809a21"
+  },
+  "result": "8/8 route/link assertions passed; restored 18 real guide entries remain draft and no UG07 placeholders remain."
+}

@@ -1,0 +1,63 @@
+{
+  "checkedAt": "2026-11-16T02:54:34.651Z",
+  "origin": "https://dev.signapse.cloud",
+  "buildRevision": {
+    "status": 200,
+    "revision": "1e83ee2a970c9c0d006b39fc0ba015c112034f0c"
+  },
+  "indexes": [
+    {
+      "path": "/vi/docs",
+      "status": 200,
+      "guideLinks": []
+    },
+    {
+      "path": "/en/docs",
+      "status": 200,
+      "guideLinks": []
+    }
+  ],
+  "draftRoutes": [
+    {
+      "path": "/vi/docs/ug04",
+      "status": 404,
+      "guideContentMarkers": []
+    },
+    {
+      "path": "/vi/docs/ug05",
+      "status": 404,
+      "guideContentMarkers": []
+    },
+    {
+      "path": "/vi/docs/ug06",
+      "status": 404,
+      "guideContentMarkers": []
+    },
+    {
+      "path": "/vi/docs/ug08",
+      "status": 404,
+      "guideContentMarkers": []
+    },
+    {
+      "path": "/en/docs/ug04",
+      "status": 404,
+      "guideContentMarkers": []
+    },
+    {
+      "path": "/en/docs/ug05",
+      "status": 404,
+      "guideContentMarkers": []
+    },
+    {
+      "path": "/en/docs/ug06",
+      "status": 404,
+      "guideContentMarkers": []
+    },
+    {
+      "path": "/en/docs/ug08",
+      "status": 404,
+      "guideContentMarkers": []
+    }
+  ],
+  "result": "10/10 hosted checks pass: deployed revision matches SIGN-605; both indexes are available without draft links and all eight draft article URLs return 404 without guide content."
+}
