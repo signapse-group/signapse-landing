@@ -1,0 +1,332 @@
+{
+  "config": {
+    "configFile": "/opt/apps/symphony/workspaces-landing-jira/SIGN-598/playwright.config.ts",
+    "rootDir": "/opt/apps/symphony/workspaces-landing-jira/SIGN-598/tests/e2e",
+    "forbidOnly": true,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/opt/apps/symphony/workspaces-landing-jira/SIGN-598/test-results/browser",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/opt/apps/symphony/workspaces-landing-jira/SIGN-598/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "test-results/report",
+          "open": "never"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "runAgents": "none",
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.58.2",
+    "workers": 1,
+    "webServer": {
+      "command": "pnpm preview --host 127.0.0.1 --port 4321 --ignore-lock",
+      "url": "http://127.0.0.1:4321/vi",
+      "timeout": 60000,
+      "reuseExistingServer": false
+    }
+  },
+  "suites": [
+    {
+      "title": "sign598-content-render.spec.ts",
+      "file": "sign598-content-render.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "SIGN-598 approved guide fixture vi ug04 renders and reflows",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1668,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T15:27:22.314Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "runtime-evidence.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJwYWdlRXJyb3JzIjogW10sCiAgImNvbnNvbGVFcnJvcnMiOiBbXSwKICAiZmFpbGVkUmVzcG9uc2VzIjogW10sCiAgImZhaWxlZFJlcXVlc3RzIjogW10KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "35f3e766e222253ed1fc-cb5f95659b3578ca5bc6",
+          "file": "sign598-content-render.spec.ts",
+          "line": 27,
+          "column": 5
+        },
+        {
+          "title": "SIGN-598 approved guide fixture vi ug05 renders and reflows",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1486,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T15:27:24.058Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "runtime-evidence.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJwYWdlRXJyb3JzIjogW10sCiAgImNvbnNvbGVFcnJvcnMiOiBbXSwKICAiZmFpbGVkUmVzcG9uc2VzIjogW10sCiAgImZhaWxlZFJlcXVlc3RzIjogW10KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "35f3e766e222253ed1fc-c14653000d875dd77e9e",
+          "file": "sign598-content-render.spec.ts",
+          "line": 27,
+          "column": 5
+        },
+        {
+          "title": "SIGN-598 approved guide fixture vi ug06 renders and reflows",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1537,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T15:27:25.556Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "runtime-evidence.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJwYWdlRXJyb3JzIjogW10sCiAgImNvbnNvbGVFcnJvcnMiOiBbXSwKICAiZmFpbGVkUmVzcG9uc2VzIjogW10sCiAgImZhaWxlZFJlcXVlc3RzIjogW10KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "35f3e766e222253ed1fc-3200041e42fb555c4df2",
+          "file": "sign598-content-render.spec.ts",
+          "line": 27,
+          "column": 5
+        },
+        {
+          "title": "SIGN-598 approved guide fixture en ug04 renders and reflows",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1404,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T15:27:27.105Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "runtime-evidence.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJwYWdlRXJyb3JzIjogW10sCiAgImNvbnNvbGVFcnJvcnMiOiBbXSwKICAiZmFpbGVkUmVzcG9uc2VzIjogW10sCiAgImZhaWxlZFJlcXVlc3RzIjogW10KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "35f3e766e222253ed1fc-7a16d2da386f79b55057",
+          "file": "sign598-content-render.spec.ts",
+          "line": 27,
+          "column": 5
+        },
+        {
+          "title": "SIGN-598 approved guide fixture en ug05 renders and reflows",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1423,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T15:27:28.521Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "runtime-evidence.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJwYWdlRXJyb3JzIjogW10sCiAgImNvbnNvbGVFcnJvcnMiOiBbXSwKICAiZmFpbGVkUmVzcG9uc2VzIjogW10sCiAgImZhaWxlZFJlcXVlc3RzIjogW10KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "35f3e766e222253ed1fc-91894b43b2c4c7f54c47",
+          "file": "sign598-content-render.spec.ts",
+          "line": 27,
+          "column": 5
+        },
+        {
+          "title": "SIGN-598 approved guide fixture en ug06 renders and reflows",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1439,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T15:27:29.955Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "runtime-evidence.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJwYWdlRXJyb3JzIjogW10sCiAgImNvbnNvbGVFcnJvcnMiOiBbXSwKICAiZmFpbGVkUmVzcG9uc2VzIjogW10sCiAgImZhaWxlZFJlcXVlc3RzIjogW10KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "35f3e766e222253ed1fc-e816c07e92199b538233",
+          "file": "sign598-content-render.spec.ts",
+          "line": 27,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-15T15:27:17.602Z",
+    "duration": 13892.972,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

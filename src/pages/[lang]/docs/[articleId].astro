@@ -1,0 +1,103 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import BlogShell from '@/components/landing/BlogShell.astro';
+import DocumentationTableOfContents from '@/components/landing/DocumentationTableOfContents.astro';
+import landingStyles from '@/components/landing/landing-page.module.css';
+import styles from '@/components/landing/public-documentation.module.css';
+import { messages } from '@/i18n/messages';
+import { type Locale } from '@/i18n/config';
+import { withLocalePath } from '@/i18n/routing';
+import { getPublicGuideGroups, getPublicGuidePaths } from '@/lib/user-guides';
+
+export async function getStaticPaths() {
+  return getPublicGuidePaths(await getCollection('userGuides'));
+}
+
+interface Props {
+  guide: CollectionEntry<'userGuides'>;
+}
+
+const { guide } = Astro.props;
+const locale = Astro.params.lang as Locale;
+const dictionary = messages[locale];
+const copy = dictionary.landing.documentation;
+const groups = getPublicGuideGroups(
+  await getCollection('userGuides'),
+  locale,
+);
+const canonicalPaths = {
+  vi: withLocalePath(`/docs/${guide.data.articleId}`, 'vi'),
+  en: withLocalePath(`/docs/${guide.data.articleId}`, 'en'),
+};
+const { Content } = await render(guide);
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${guide.data.title} | Signapse`}
+  description={copy.metadata.description}
+  socialImageAlt={`${guide.data.title} — Signapse`}
+  canonicalPaths={canonicalPaths}
+  openGraphType="article"
+>
+  <BlogShell
+    dictionary={dictionary}
+    locale={locale}
+    headerSurface="dark"
+    currentPath={Astro.url.pathname}
+    currentQuery={Astro.url.search.slice(1)}
+  >
+    <main id="main-content" tabindex="-1">
+      <header
+        class={`${styles.hero} ${landingStyles.darkSurface}`}
+        data-landing-surface="dark"
+      >
+        <div class={styles.heroInner}>
+          <a class={styles.backLink} href={withLocalePath('/docs', locale)}>
+            <svg
+              aria-hidden="true"
+              class={styles.backIcon}
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="M19 12H5m6 6-6-6 6-6"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            {copy.backToDocumentation}
+          </a>
+          <nav
+            class={styles.breadcrumbs}
+            aria-label={dictionary.landing.blogPage.breadcrumbLabel}
+          >
+            <a href={withLocalePath('/', locale)}>
+              {dictionary.landing.blogPage.breadcrumbHome}
+            </a>
+            <span aria-hidden="true">/</span>
+            <a href={withLocalePath('/docs', locale)}>{copy.pageTitle}</a>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">{guide.data.title}</span>
+          </nav>
+          <h1 class={styles.title}>{guide.data.title}</h1>
+        </div>
+      </header>
+
+      <div class={styles.articleLayout} data-landing-surface="light">
+        <DocumentationTableOfContents
+          dictionary={dictionary}
+          groups={groups}
+          locale={locale}
+          currentArticleId={guide.data.articleId}
+        />
+        <article class={styles.article}>
+          <Content />
+        </article>
+      </div>
+    </main>
+  </BlogShell>
+</BaseLayout>

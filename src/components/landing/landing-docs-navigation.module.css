@@ -1,0 +1,189 @@
+.docsNavigation {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.125rem;
+}
+
+.docsTrigger {
+  display: inline-flex;
+  width: var(--landing-control-height);
+  min-height: var(--landing-control-height);
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: var(--landing-control-radius);
+  color: var(--foreground);
+}
+
+.docsTrigger:hover {
+  background: var(--muted);
+}
+
+.docsTrigger:focus-visible,
+.docsLink:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+
+.chevron {
+  width: 1rem;
+  height: 1rem;
+  transition: transform 120ms ease;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+.docsPanel {
+  position: fixed;
+  top: calc(var(--landing-header-height) + 0.5rem);
+  left: 50%;
+  z-index: 40;
+  width: min(56rem, calc(100vw - 2rem));
+  transform: translateX(-50%);
+  border: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+  border-radius: var(--landing-card-radius);
+  background: color-mix(in oklab, var(--background) 97%, transparent);
+  padding: 1.25rem;
+  box-shadow: 0 1.25rem 3rem
+    color-mix(in oklab, var(--foreground) 14%, transparent);
+  -webkit-backdrop-filter: blur(18px) saturate(130%);
+  backdrop-filter: blur(18px) saturate(130%);
+}
+
+.docsPanel::before {
+  position: absolute;
+  top: -0.5rem;
+  right: 0;
+  left: 0;
+  height: 0.5rem;
+  content: '';
+}
+
+.docsPanel[hidden] {
+  display: none;
+}
+
+.docsGroups {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem 1.25rem;
+}
+
+.docsEmpty {
+  margin: 0.25rem;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.docsGroup {
+  min-width: 0;
+}
+
+.docsGroupTitle {
+  display: flex;
+  min-height: 2rem;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid color-mix(in oklab, var(--border) 65%, transparent);
+  padding-bottom: 0.625rem;
+  color: var(--foreground);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.groupIcon {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  color: var(--chart-1);
+}
+
+.docsLinks {
+  display: grid;
+  gap: 0.125rem;
+  margin-top: 0.5rem;
+  border-left: 1px solid color-mix(in oklab, var(--border) 65%, transparent);
+  padding: 0;
+  list-style: none;
+}
+
+.docsLink {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border-radius: var(--landing-control-radius);
+  padding: 0.5rem 0.75rem;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.docsLink:hover,
+.docsLink[aria-current='page'] {
+  background: var(--muted);
+  color: var(--foreground);
+}
+
+.linkIcon {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  color: var(--chart-1);
+}
+
+.compact {
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.compact > a {
+  flex: 1 1 auto;
+}
+
+.compactTrigger {
+  width: var(--landing-control-height);
+  border-color: color-mix(in oklab, var(--border) 65%, transparent);
+}
+
+.compact .docsPanel {
+  position: static;
+  width: 100%;
+  margin-top: 0.25rem;
+  padding: 0.75rem;
+  transform: none;
+}
+
+.compact .docsGroups {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .docsGroups {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .compact .docsGroups {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .docsGroups {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chevron {
+    transition: none;
+  }
+}

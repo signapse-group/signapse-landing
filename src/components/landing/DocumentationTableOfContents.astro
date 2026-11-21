@@ -1,0 +1,111 @@
+---
+import type { Dictionary } from '@/i18n/messages';
+import { withLocalePath } from '@/i18n/routing';
+import type { Locale } from '@/i18n/config';
+import {
+  guideHref,
+  type GuideId,
+  type UserGuideGroup,
+} from '@/lib/user-guides';
+import styles from './public-documentation.module.css';
+
+interface Props {
+  dictionary: Dictionary;
+  groups: UserGuideGroup[];
+  locale: Locale;
+  currentArticleId?: GuideId;
+}
+
+const { dictionary, groups, locale, currentArticleId } = Astro.props;
+const copy = dictionary.landing.documentation;
+---
+
+<aside class={styles.contentsAside} aria-label={copy.contentsLabel}>
+  <nav
+    class={styles.desktopContents}
+    data-desktop-docs-contents
+    aria-label={copy.contentsLabel}
+  >
+    <a
+      href={withLocalePath('/docs', locale)}
+      class:list={[
+        styles.contentsHome,
+        !currentArticleId && styles.contentsCurrent,
+      ]}
+      aria-current={!currentArticleId ? 'page' : undefined}
+    >
+      {copy.contentsLabel}
+    </a>
+    {groups.map((group) => (
+      <section class={styles.contentsGroup}>
+        <h2>{copy.groups[group.id]}</h2>
+        <ul>
+          {group.articles.map((article) => (
+            <li>
+              <a
+                href={guideHref(locale, article.data.articleId)}
+                class:list={[
+                  styles.contentsLink,
+                  currentArticleId === article.data.articleId &&
+                    styles.contentsCurrent,
+                ]}
+                aria-current={
+                  currentArticleId === article.data.articleId
+                    ? 'page'
+                    : undefined
+                }
+              >
+                {article.data.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+  </nav>
+
+  <details class={styles.mobileContents} data-mobile-docs-contents>
+    <summary>
+      <span>{copy.browseDocuments}</span>
+      <span aria-hidden="true" class={styles.mobileContentsChevron}></span>
+    </summary>
+    <nav class={styles.mobileContentsPanel} aria-label={copy.contentsLabel}>
+      <a
+        href={withLocalePath('/docs', locale)}
+        class:list={[
+          styles.contentsHome,
+          !currentArticleId && styles.contentsCurrent,
+        ]}
+        aria-current={!currentArticleId ? 'page' : undefined}
+      >
+        {copy.contentsLabel}
+      </a>
+      {groups.map((group) => (
+        <section class={styles.contentsGroup}>
+          <h2>{copy.groups[group.id]}</h2>
+          <ul>
+            {group.articles.map((article) => (
+              <li>
+                <a
+                  href={guideHref(locale, article.data.articleId)}
+                  class:list={[
+                    styles.contentsLink,
+                    currentArticleId === article.data.articleId &&
+                      styles.contentsCurrent,
+                  ]}
+                  aria-current={
+                    currentArticleId === article.data.articleId
+                      ? 'page'
+                      : undefined
+                  }
+                >
+                  {article.data.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </nav>
+  </details>
+</aside>

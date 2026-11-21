@@ -70,6 +70,7 @@ for (const locale of ['vi', 'en'] as const) {
                 locale === 'vi' ? 'Dành cho ai' : 'Who it’s for',
               ],
               [`/${locale}/blogs`, 'Blog'],
+              [`/${locale}/docs`, 'Docs'],
               [
                 `${landingPath}#access`,
                 locale === 'vi' ? 'Liên hệ' : 'Contact',
@@ -79,7 +80,7 @@ for (const locale of ['vi', 'en'] as const) {
               width >= 1280 ? navigation.first() : navigation.last();
             if (width < 1280)
               await header.locator('[data-mobile-menu] > summary').click();
-            await expect(activeNavigation.getByRole('link')).toHaveCount(5);
+            await expect(activeNavigation.getByRole('link')).toHaveCount(6);
             for (const [href, label] of expectedLinks) {
               await expect(
                 activeNavigation.getByRole('link', {

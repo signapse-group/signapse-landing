@@ -8,9 +8,33 @@ export const vi = {
       demos: 'Xem demo',
       audiences: 'Dành cho ai',
       blog: 'Blog',
+      docs: 'Docs',
       contact: 'Liên hệ',
       accessDashboard: 'Truy cập bảng điều khiển',
       openMenu: 'Mở menu landing',
+    },
+    documentation: {
+      menuOpen: 'Mở menu tài liệu hướng dẫn',
+      menuClose: 'Đóng menu tài liệu hướng dẫn',
+      pageTitle: 'Tài liệu hướng dẫn',
+      metadata: {
+        title: 'Tài liệu hướng dẫn — Signapse',
+        description:
+          'Bắt đầu sử dụng Signapse, theo dõi thị trường và tìm trợ giúp khi cần.',
+        socialImageAlt: 'Tài liệu hướng dẫn — Signapse',
+      },
+      introduction:
+        'Bắt đầu sử dụng Signapse, theo dõi thị trường và tìm trợ giúp khi cần.',
+      browseDocuments: 'Duyệt tài liệu',
+      contentsLabel: 'Tài liệu hướng dẫn',
+      backToDocumentation: 'Quay lại Tài liệu hướng dẫn',
+      emptyMessage: 'Chưa có hướng dẫn nào được công khai.',
+      groups: {
+        'getting-started': 'Bắt đầu',
+        market: 'Theo dõi thị trường',
+        ai: 'Làm việc với AI',
+        troubleshooting: 'Tra cứu và xử lý vấn đề',
+      },
     },
     blogPage: {
       listTitle: 'Bài viết',
@@ -561,9 +585,33 @@ export const en: Dictionary = {
       demos: 'View demos',
       audiences: 'Who it’s for',
       blog: 'Blog',
+      docs: 'Docs',
       contact: 'Contact',
       accessDashboard: 'Access dashboard',
       openMenu: 'Open landing menu',
+    },
+    documentation: {
+      menuOpen: 'Open documentation menu',
+      menuClose: 'Close documentation menu',
+      pageTitle: 'Documentation',
+      metadata: {
+        title: 'Documentation — Signapse',
+        description:
+          'Get started with Signapse, follow the markets, and find help when you need it.',
+        socialImageAlt: 'Documentation — Signapse',
+      },
+      introduction:
+        'Get started with Signapse, follow the markets, and find help when you need it.',
+      browseDocuments: 'Browse documents',
+      contentsLabel: 'Documentation',
+      backToDocumentation: 'Back to Documentation',
+      emptyMessage: 'No guides are published yet.',
+      groups: {
+        'getting-started': 'Getting started',
+        market: 'Following the market',
+        ai: 'Working with AI',
+        troubleshooting: 'Reference and troubleshooting',
+      },
     },
     blogPage: {
       listTitle: 'Articles',

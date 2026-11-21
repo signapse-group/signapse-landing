@@ -1,0 +1,103 @@
+{
+  "task": "SIGN-598",
+  "date": "2026-11-15",
+  "candidateBranch": "codex/sign-598-market-guides",
+  "targetBranch": "dev",
+  "verifiedBaseRevision": "1e83ee2a970c9c0d006b39fc0ba015c112034f0c",
+  "planningSourceRevision": "e734b0cdd39d1551724636487ab68eca7690da57",
+  "guideIds": ["ug04", "ug05", "ug06"],
+  "importedLocaleVersions": 6,
+  "currentGuideCollection": {
+    "versions": 18,
+    "drafts": 18,
+    "approved": 0,
+    "missing": ["ug07.vi", "ug07.en"],
+    "publicArticleRoutes": 0
+  },
+  "contentSha256": {
+    "ug04.vi.md": "447e2968567881bf81a7e4087ff4975538cda7e299230f75e2d831b4555711e8",
+    "ug04.en.md": "cd54c675b269fb7fdb6067c6dc1503943d19dcda86c296a3a9b7284bb1710f31",
+    "ug05.vi.md": "70b501677616accbe4cafee92abd46b95c31679a8bd4c28a672724a01cc63ade",
+    "ug05.en.md": "341baccaab79c10d0bceeb51dc3bbb44a2a133224f976a69917322639e11a7d1",
+    "ug06.vi.md": "eda08efeefabfebbb516d404f2c1fac709ccfcf59a4bda693a871c7951809a21",
+    "ug06.en.md": "343d31a524fdd345fcac2786254b0e9bfcc5efac01d5e9bea516d7f0ec530345"
+  },
+  "checks": {
+    "astroCheck": { "command": "pnpm check", "result": "pass", "diagnostics": 0 },
+    "lint": { "command": "pnpm lint", "result": "pass" },
+    "format": { "command": "pnpm format:check", "result": "pass" },
+    "modelTests": { "command": "pnpm test:models", "result": "pass", "passed": 22, "failed": 0 },
+    "build": {
+      "command": "pnpm build",
+      "result": "pass",
+      "draftCollectionRouteOutput": ["/vi/docs", "/en/docs"],
+      "guideArticleRoutes": 0,
+      "warnings": ["Vite reports a minified chunk larger than 500 kB."]
+    },
+    "sourceComparison": {
+      "result": "pass",
+      "pairs": 6,
+      "localeInternalLinks": 36,
+      "method": "Compared normalized source and landing bodies after removing H1/draft banners, mapping relative guide links to locale routes, and applying the AC5 conditional retry sentence in UG05."
+    },
+    "protectedDataScan": { "result": "pass", "matches": 0 },
+    "approvedFixtureBrowser": {
+      "runner": "Chromium via SYMPHONY_LANDING_BROWSER_WRAPPER",
+      "result": "pass",
+      "passed": 6,
+      "failed": 0,
+      "retries": 0,
+      "viewportWidths": [1440, 768, 375],
+      "coverage": ["VI/EN guide rendering", "locale-correct internal links", "keyboard focus", "selected TOC page", "axe", "horizontal overflow"],
+      "note": "Temporary local-only complete approval fixture with placeholder UG07–UG09; fixture and placeholders removed after the run."
+    },
+    "approvedFixtureCapture": {
+      "runner": "Chromium via SYMPHONY_LANDING_BROWSER_WRAPPER",
+      "result": "pass",
+      "passed": 1,
+      "failed": 0,
+      "retries": 0,
+      "renderedPages": ["/vi/docs/ug04", "/en/docs/ug05", "/vi/docs/ug06"],
+      "fixture": "Current 18 guide drafts temporarily marked approved with one local-only reference; temporary UG07 VI/EN placeholders completed the 20-entry gate",
+      "cleanup": "Restored all original draft metadata and removed the temporary UG07 files and capture spec",
+      "note": "The first capture harness expected the wrong UG05 first heading; corrected it from 'Main reading flow' to 'Goal' and reran successfully. No source content changed.",
+      "resultFile": "approved-fixture-capture-results.json"
+    },
+    "draftBrowser": {
+      "runner": "Chromium via SYMPHONY_LANDING_BROWSER_WRAPPER",
+      "result": "pass",
+      "passed": 10,
+      "failed": 0,
+      "retries": 0,
+      "coverage": ["VI/EN Documentation index", "1440/768/375 responsive layouts", "axe", "Docs hover/keyboard/touch", "six UG04–UG06 direct URLs and four UG08–UG09 direct URLs return 404 without body"],
+      "resultFile": "browser-after-base-sync.json"
+    }
+  },
+  "publicationReadiness": {
+    "ug04ToUg06Approval": "pending coordinator review of exact Markdown revision",
+    "approvalReference": "empty; drafts remain private",
+    "fullApprovedBatchRequired": true,
+    "applicationRevision": "not supplied",
+    "applicationEnvironment": "dev-dashboard.signapse.cloud, named in the coordinator handoff",
+    "userLevelAccess": "not available in this session; GET to the dashboard origin returned HTTP 429 and the browser tool could not open it",
+    "applicationComparison": "blocked; no labels/actions, scopes, permissions or data states were asserted against the deployed app",
+    "ug08Destination": "SIGN-605 is Done and delivered UG08/UG09 on dev at 1e83ee2a970c9c0d006b39fc0ba015c112034f0c (Worker 8de48cec-ca71-45b4-9ba0-c4acbef599c3). Correct locale paths are present; article URLs intentionally remain 404 until all 20 versions are approved",
+    "coordinatorApproval": "pending review of the exact six-file content revision; approvalReference remains empty",
+    "publicRelease": "not performed",
+    "devDeployment": "SIGN-598 candidate not deployed; dev currently contains SIGN-605 base only"
+  },
+  "evidence": {
+    "contentReview": "content-review.md",
+    "draftBrowserResults": "browser-results.json",
+    "approvedFixtureBrowserResults": "approved-fixture-browser-results.json",
+    "screenshots": [
+      "documentation-vi-1440.png",
+      "documentation-en-375.png",
+      "docs-menu-vi.png",
+      "ug04-vi-1440-approved-fixture.png",
+      "ug05-en-1440-approved-fixture.png",
+      "ug06-vi-375-approved-fixture.png"
+    ]
+  },
+  "deliveryBoundary": "Local SIGN-598 candidate and checks only; SIGN-605 base delivery is separate. No application UI comparison, coordinator approval, QA acceptance, public release, or SIGN-598 deployment is claimed."
+}
