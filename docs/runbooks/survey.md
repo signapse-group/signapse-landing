@@ -1,5 +1,7 @@
 # Survey — Ready
 
+Read dependencies under the [shared contract](../../CONTRIBUTING.md#reading-jira-dependencies); retain the live tool `dependencies` envelope.
+
 This runbook owns the Survey phase procedure and is loaded only when `WORKFLOW.md` dispatches this phase. A direct request to survey or review does not activate Symphony lifecycle actions.
 
 ## Profile and authority

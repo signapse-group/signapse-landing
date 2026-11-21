@@ -20,7 +20,7 @@ You are executing Jira Subtask `{{ issue.identifier }}` in `signapse-group/signa
 - Follow-up attempt #{{ attempt }}
 {% endif %}
 
-Use the local checkout instructions. Apply [blocker and resume rules](CONTRIBUTING.md#assigned-blockers-and-resume) when a required reference fails, work is obstructed or you resume. Report missing required local instructions as deployment drift and hold the dependent work.
+Apply [blocker and resume rules](CONTRIBUTING.md#assigned-blockers-and-resume) when a required reference fails, work is obstructed or you resume.
 
 Description:
 {% if issue.description and issue.description != "" %}
@@ -28,6 +28,8 @@ Description:
 {% else %}
 No description in the snapshot.
 {% endif %}
+
+Retain the live Jira `dependencies` envelope and apply the [dependency contract](https://github.com/signapse-group/signapse-symphony/blob/main/elixir/README.md#jira-dependency-contract). Read instructions and runbooks in this checkout. Report missing required local instructions as deployment drift and hold the dependent work. Use the assigned checkout for execution policy.
 
 {% if state == "ready" %}
 ## Phase: Survey
