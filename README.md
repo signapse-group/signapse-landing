@@ -97,6 +97,6 @@ Playwright tự mở `pnpm preview --ignore-lock` foreground tại 4321 khi chư
 
 Browser runner thay `PUBLIC_BLOG_API_ORIGIN` bằng fixture local. Chạy build và browser tests với cùng `PUBLIC_APP_ORIGIN`, `SIGNAPSE_PUBLIC_ORIGIN` và `SIGNAPSE_LANDING_INDEXABLE`. Preview thiếu public origin vẫn kiểm tra canonical/hreflang vắng mặt và noindex.
 
-CI khai báo install frozen, check/lint/format/build, model tests và browser tests. [Verification](docs/verification/README.md) lưu kết quả và giới hạn của các lần chạy thực tế. Chụp lại ảnh của landing bằng `node docs/verification/capture-preview.mjs http://127.0.0.1:4321` khi production preview đang chạy; script dùng riêng repo này.
+CI chạy trên PR vào `dev`/`main` và push hai nhánh này: install frozen, check/lint/format/build, kiểm Worker/domain và model tests. Push feature không chạy CI riêng. Browser tests chạy local/Symphony trước handoff/review theo [verification selection](CONTRIBUTING.md#verification-selection). [Verification](docs/verification/README.md) lưu kết quả và giới hạn của các lần chạy thực tế. Chụp lại ảnh của landing bằng `node docs/verification/capture-preview.mjs http://127.0.0.1:4321` khi production preview đang chạy; script dùng riêng repo này.
 
 Fonts Geist, Geist Mono và Inter được self-host; giấy phép đi kèm trong `public/fonts/`. Provider assets có NOTICE trong `public/images/providers/`.

@@ -1,5 +1,7 @@
 # Implement — Progress
 
+Read dependencies under the [shared contract](../../CONTRIBUTING.md#reading-jira-dependencies); retain the live tool `dependencies` envelope.
+
 This runbook owns the Implement phase procedure and is loaded only when `WORKFLOW.md` dispatches this phase. A direct implementation request does not activate Symphony lifecycle actions.
 
 ## Profile and authority
